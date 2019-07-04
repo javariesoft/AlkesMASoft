@@ -1,0 +1,95 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.model.piutang;
+import com.erv.model.piutangbayar;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+
+/**
+ *
+ * @author erwadi
+ */
+public class piutangbayarDao {
+
+    public static boolean insertIntoPIUTANGBAYAR(Connection con, piutangbayar p) throws SQLException {
+        String sql = "INSERT INTO PIUTANGBAYAR "
+                + "VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, p.getID());
+        statement.setString(2, p.getKODEPIUTANGBAYAR());
+        statement.setInt(3, p.getIDPIUTANG());
+        statement.setDate(4, p.getTANGGAL());
+        statement.setDouble(5, p.getJUMLAH());
+        boolean hasil = statement.execute();
+        statement.close();
+        return !hasil;
+    }
+
+    public static boolean updatePIUTANGBAYAR(Connection con, piutangbayar p) throws SQLException {
+        String sql = "SELECT * FROM PIUTANGBAYAR WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        statement.setInt(1, p.getID());
+        ResultSet entry = statement.executeQuery();
+
+        entry.last();
+        int rows = entry.getRow();
+        entry.beforeFirst();
+        if (rows == 0) {
+            entry.close();
+            statement.close();
+            return false;
+        }
+        entry.next();
+
+        if (p.getKODEPIUTANGBAYAR() != null) {
+            entry.updateString("KODEPIUTANGBAYAR", p.getKODEPIUTANGBAYAR());
+        }
+        entry.updateInt("IDPIUTANG", p.getIDPIUTANG());
+        if (p.getTANGGAL() != null) {
+            entry.updateDate("TANGGAL", p.getTANGGAL());
+        }
+        entry.updateDouble("JUMLAH", p.getJUMLAH());
+
+        entry.updateRow();
+        entry.close();
+        statement.close();
+        return true;
+    }
+    public static void deleteFromPIUTANGBAYAR(Connection con, int keyId) throws SQLException {
+        String sql = "DELETE FROM PIUTANGBAYAR WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, keyId);
+        statement.executeUpdate();
+        statement.close();
+    }
+    public static int getID(Connection c) throws SQLException{
+        int hasil=1;
+        PreparedStatement pstmt = c.prepareStatement("select max(id) from PIUTANGBAYAR");
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString(1)!=null){
+                hasil=rs.getInt(1)+1;
+            }
+        }
+        return hasil;
+    }
+    public static String getKodePiutangBayar(Connection con){
+        String hasil="";
+        String tgl = com.erv.function.Util.toDateStringSql(new Date());
+        try {
+            hasil="PB" + com.erv.function.Util.getbln(tgl) + com.erv.function.Util.getthn(tgl) + getID(con);
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+        return hasil;
+    }
+}

@@ -1,0 +1,123 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+import java.sql.Date;
+
+/**
+ *
+ * @author erwadi
+ */
+public class penjualan {
+    private int ID;
+    private String FAKTUR;
+    private Date TANGGAL;
+    private String KODEPELANGGAN;
+    private String CASH;
+    private Date TGLLUNAS;
+    private float PPN;
+    private float DP;
+    private float DISKON;
+    private String STATUS;
+    private String IDSALES;
+    public penjualan() {
+        this.ID = 0;
+        this.FAKTUR = "";
+        this.KODEPELANGGAN = "";
+        this.CASH = "0";
+        this.PPN = 0f;
+        this.DP = 0f;
+        this.DISKON = 0f;
+        this.STATUS = "0";
+        this.IDSALES= "0";
+    }
+    public String getCASH() {
+        return CASH;
+    }
+
+    public void setCASH(String CASH) {
+        this.CASH = CASH;
+    }
+
+    public String getFAKTUR() {
+        return FAKTUR;
+    }
+
+    public void setFAKTUR(String FAKTUR) {
+        this.FAKTUR = FAKTUR;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getKODEPELANGGAN() {
+        return KODEPELANGGAN;
+    }
+
+    public void setKODEPELANGGAN(String KODEPELANGGAN) {
+        this.KODEPELANGGAN = KODEPELANGGAN;
+    }
+
+    public float getPPN() {
+        return PPN;
+    }
+
+    public void setPPN(float PPN) {
+        this.PPN = PPN;
+    }
+
+    public Date getTANGGAL() {
+        return TANGGAL;
+    }
+
+    public void setTANGGAL(Date TANGGAL) {
+        this.TANGGAL = TANGGAL;
+    }
+
+    public Date getTGLLUNAS() {
+        return TGLLUNAS;
+    }
+
+    public void setTGLLUNAS(Date TGLLUNAS) {
+        this.TGLLUNAS = TGLLUNAS;
+    }
+
+    public float getDISKON() {
+        return DISKON;
+    }
+
+    public void setDISKON(float DISKON) {
+        this.DISKON = DISKON;
+    }
+
+    public float getDP() {
+        return DP;
+    }
+
+    public void setDP(float DP) {
+        this.DP = DP;
+    }
+
+    public String getSTATUS() {
+        return STATUS;
+    }
+
+    public void setSTATUS(String STATUS) {
+        this.STATUS = STATUS;
+    }
+
+    public String getIDSALES() {
+        return IDSALES;
+    }
+
+    public void setIDSALES(String IDSALES) {
+        this.IDSALES = IDSALES;
+    }
+    
+}

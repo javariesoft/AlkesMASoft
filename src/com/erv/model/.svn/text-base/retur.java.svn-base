@@ -1,0 +1,71 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+
+import java.sql.Date;
+
+/**
+ *
+ * @author erwadi
+ */
+public class retur {
+    private int ID;
+    private String KODERETUR;
+    private Date TANGGAL;
+    private String KODEPELANGGAN;
+    private String KETERANGAN;
+    private int IDPENJUALAN;
+    
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    
+    public String getKETERANGAN() {
+        return KETERANGAN;
+    }
+
+    public void setKETERANGAN(String KETERANGAN) {
+        this.KETERANGAN = KETERANGAN;
+    }
+
+    public String getKODEPELANGGAN() {
+        return KODEPELANGGAN;
+    }
+
+    public void setKODEPELANGGAN(String KODEPELANGGAN) {
+        this.KODEPELANGGAN = KODEPELANGGAN;
+    }
+
+    public String getKODERETUR() {
+        return KODERETUR;
+    }
+
+    public void setKODERETUR(String KODERETUR) {
+        this.KODERETUR = KODERETUR;
+    }
+
+    public Date getTANGGAL() {
+        return TANGGAL;
+    }
+
+    public void setTANGGAL(Date TANGGAL) {
+        this.TANGGAL = TANGGAL;
+    }
+
+    public int getIDPENJUALAN() {
+        return IDPENJUALAN;
+    }
+
+    public void setIDPENJUALAN(int IDPENJUALAN) {
+        this.IDPENJUALAN = IDPENJUALAN;
+    }
+    
+    
+}

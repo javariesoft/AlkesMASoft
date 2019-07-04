@@ -1,0 +1,85 @@
+# Resources for the JavarieSoftView class
+
+# top-level menus
+
+fileMenu.text = File
+helpMenu.text = Help
+
+# @Action resources
+
+showAboutBox.Action.text = &About...
+showAboutBox.Action.shortDescription = Show the application's information dialog
+
+# status bar resources
+
+StatusBar.messageTimeout = 5000
+StatusBar.busyAnimationRate = 30
+StatusBar.idleIcon = busyicons/idle-icon.png
+StatusBar.busyIcons[0]  = busyicons/busy-icon0.png
+StatusBar.busyIcons[1]  = busyicons/busy-icon1.png
+StatusBar.busyIcons[2]  = busyicons/busy-icon2.png
+StatusBar.busyIcons[3]  = busyicons/busy-icon3.png
+StatusBar.busyIcons[4]  = busyicons/busy-icon4.png
+StatusBar.busyIcons[5]  = busyicons/busy-icon5.png
+StatusBar.busyIcons[6]  = busyicons/busy-icon6.png
+StatusBar.busyIcons[7]  = busyicons/busy-icon7.png
+StatusBar.busyIcons[8]  = busyicons/busy-icon8.png
+StatusBar.busyIcons[9]  = busyicons/busy-icon9.png
+StatusBar.busyIcons[10] = busyicons/busy-icon10.png
+StatusBar.busyIcons[11] = busyicons/busy-icon11.png
+StatusBar.busyIcons[12] = busyicons/busy-icon12.png
+StatusBar.busyIcons[13] = busyicons/busy-icon13.png
+StatusBar.busyIcons[14] = busyicons/busy-icon14.png
+jMenuItem1.text=Data Barang
+jMenu1.text=Transaksi
+jMenuItem2.text=Penjualan
+jMenuItem3.text=Perkiraan
+jMenuItem4.text=Jenis Barang
+jMenuItem5.text=Jurnal
+jMenuItem6.text=Pembelian
+jMenu2.text=Barang
+jMenuItem7.text=Pelanggan
+jMenuItem8.text=Supplier
+jMenuItem9.text=Bank
+#NOI18N
+jMenuItem3.icon=image/Bank-USD.png
+#NOI18N
+jMenu2.icon=image/Card-file.png
+#NOI18N
+jMenuItem4.icon=image/Bank-hot.png
+#NOI18N
+jMenuItem1.icon=image/Basket-hot.png
+#NOI18N
+jMenuItem7.icon=image/Man_Black.png
+#NOI18N
+jMenuItem8.icon=image/Man_DBrown.png
+#NOI18N
+jMenuItem9.icon=image/Piggy-Bank-hot.png
+#NOI18N
+exitMenuItem.icon=image/SignOut.png
+#NOI18N
+jMenuItem5.icon=image/Safety-Box-hot.png
+#NOI18N
+jMenuItem2.icon=image/shopping-cart.png
+#NOI18N
+jMenuItem6.icon=image/Shopping-Basket.png
+#NOI18N
+aboutMenuItem.icon=image/Man_Grey.png
+jMenuItem10.text=Setting
+jMenu3.text=Laporan
+jMenu4.text=Penjualan
+jMenuItem11.text=Penjualan Harian
+jMenu5.text=Buku Besar
+jMenuItem13.text=Buku Besar Detail
+jMenu6.text=Barang
+jMenuItem14.text=Barang Per Jenis
+jMenuItem15.text=Hutang
+jMenuItem16.text=Neraca
+jMenuItem12.text=Piutang
+jMenuItem17.text=Saldo Awal
+jMenuItem18.text=Tutup Buku
+jMenuItem19.text=Jurnal
+jMenuItem20.text=Kartu Stok
+jMenuItem21.text=Rekap Harian
+jMenuItem22.text=Rugi Laba
+jMenuItem23.text=Sales

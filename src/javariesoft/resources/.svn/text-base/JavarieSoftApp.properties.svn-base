@@ -1,0 +1,11 @@
+# Application global resources
+
+Application.name = JavarieSoft
+Application.title = Javarie Software
+Application.version = 1.0
+Application.vendor = JavarieSoft
+Application.homepage = http\://appframework.dev.java.net/
+Application.description = Sistim Informasi Penjualan
+Application.vendorId = Sun
+Application.id = JavarieSoft
+Application.lookAndFeel = system

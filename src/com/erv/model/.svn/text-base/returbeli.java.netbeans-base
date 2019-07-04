@@ -1,0 +1,69 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+
+import java.sql.Date;
+
+/**
+ *
+ * @author erwadi
+ */
+public class returbeli {
+    private int ID;
+    private String KODERETURBELI;
+    private Date TANGGAL;
+    private String IDSUPPLIER;
+    private String KETERANGAN;
+    private int IDPEMBELIAN;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getIDSUPPLIER() {
+        return IDSUPPLIER;
+    }
+
+    public void setIDSUPPLIER(String IDSUPPLIER) {
+        this.IDSUPPLIER = IDSUPPLIER;
+    }
+
+    public String getKETERANGAN() {
+        return KETERANGAN;
+    }
+
+    public void setKETERANGAN(String KETERANGAN) {
+        this.KETERANGAN = KETERANGAN;
+    }
+
+    public String getKODERETURBELI() {
+        return KODERETURBELI;
+    }
+
+    public void setKODERETURBELI(String KODERETURBELI) {
+        this.KODERETURBELI = KODERETURBELI;
+    }
+
+    public Date getTANGGAL() {
+        return TANGGAL;
+    }
+
+    public void setTANGGAL(Date TANGGAL) {
+        this.TANGGAL = TANGGAL;
+    }
+
+    public int getIDPEMBELIAN() {
+        return IDPEMBELIAN;
+    }
+
+    public void setIDPEMBELIAN(int IDPEMBELIAN) {
+        this.IDPEMBELIAN = IDPEMBELIAN;
+    }
+   
+}

@@ -1,0 +1,173 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.function.PrintfFormat;
+import com.erv.function.Util;
+import com.erv.model.penjualan;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import org.h2.api.Trigger;
+
+/**
+ *
+ * @author erwadi
+ */
+public class penjualanDao {
+    Connection con;
+
+    public penjualanDao(Connection con) {
+        this.con = con;
+    }
+     public boolean insert(penjualan bb) throws SQLException
+     {
+        String sql="insert into PENJUALAN values (?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        //set values to prepared statement object by getting values from bean object
+        pstmt.setInt(1,bb.getID());
+        pstmt.setString(2,bb.getFAKTUR());
+        pstmt.setDate(3,bb.getTANGGAL());
+        pstmt.setString(4,bb.getKODEPELANGGAN());
+        pstmt.setString(5,bb.getCASH());
+        pstmt.setDate(6,bb.getTGLLUNAS());
+        pstmt.setDouble(7,bb.getPPN());
+        pstmt.setDouble(8,bb.getDP());
+        pstmt.setDouble(9,bb.getDISKON());
+        pstmt.setString(10,bb.getSTATUS());
+        pstmt.setString(11,bb.getIDSALES());
+        boolean i = pstmt.execute();
+        return i;
+     }
+     public penjualan getDetails(int id)throws SQLException, ClassNotFoundException
+    {
+       //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("select * from PENJUALAN where ID=?");
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        penjualan ubean = new penjualan();
+        while(rs.next())
+        {
+            ubean.setID(rs.getInt(1));
+            ubean.setFAKTUR(rs.getString(2));
+            ubean.setTANGGAL(rs.getDate(3));
+            ubean.setKODEPELANGGAN(rs.getString(4));
+            ubean.setCASH(rs.getString(5));
+            ubean.setTGLLUNAS(rs.getDate(6));
+            ubean.setPPN(rs.getFloat(7));
+            ubean.setDP(rs.getFloat(8));
+            ubean.setDISKON(rs.getFloat(9));
+            ubean.setSTATUS(rs.getString(10));
+            ubean.setIDSALES(rs.getString(11));
+        }
+        
+        return ubean;
+    }
+    public boolean update(penjualan bb) throws SQLException
+     {
+        String sql="update PENJUALAN set FAKTUR=?,TANGGAL=?,KODEPELANGGAN=?,CASH=?,"
+                + "TGLLUNAS=?,PPN=?,DP=?,DISKON=?,STATUS=?,IDSALES=? where ID=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        //set values to prepared statement object by getting values from bean object
+        pstmt.setString(1,bb.getFAKTUR());
+        pstmt.setDate(2,bb.getTANGGAL());
+        pstmt.setString(3,bb.getKODEPELANGGAN());
+        pstmt.setString(4,bb.getCASH());
+        pstmt.setDate(5,bb.getTGLLUNAS());
+        pstmt.setFloat(6,bb.getPPN());
+        pstmt.setFloat(7,bb.getDP());
+        pstmt.setFloat(8,bb.getDISKON());
+        pstmt.setString(9,bb.getSTATUS());
+        pstmt.setString(10,bb.getIDSALES());
+        pstmt.setInt(11,bb.getID());
+        boolean i = pstmt.execute();
+        return i;
+     }
+    public void deleteDetails(int id)throws SQLException, ClassNotFoundException
+    {
+       //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("delete from PENJUALAN where ID=?");
+        pstmt.setInt(1, id);
+        pstmt.executeUpdate();
+    }
+    public int getID() throws SQLException{
+        int hasil=1;
+        PreparedStatement pstmt = con.prepareStatement("select max(id) from PENJUALAN");
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString(1)!=null){
+                hasil=rs.getInt(1)+1;
+            }
+        }
+        return hasil;
+    }
+    public String getAkun(String kode) throws SQLException{
+        String hasil="";
+        Statement stat=con.createStatement();
+        ResultSet rs=stat.executeQuery("select AKUN from SETTING where KODE='"+kode+"'");
+        if(rs.next()){
+            hasil=rs.getString(1);
+        }
+        return hasil;
+    }
+    public static String setFaktur(Connection conn) {
+        String hasil="";
+        int jum=0;
+        String tgl = com.erv.function.Util.toDateStringSql(new Date());
+        try {
+            Statement stat=conn.createStatement();
+            ResultSet rs=stat.executeQuery("select count(id) from PENJUALAN where left(FAKTUR,2)='"+Util.getthn(tgl).substring(2,4)+"'");
+            if(rs.next()){
+            if(rs.getString(1)!=null){
+                jum=rs.getInt(1)+1;
+            }
+        }
+            hasil=(com.erv.function.Util.getthn(tgl).substring(2,4)+"."+ new PrintfFormat("%06d").sprintf(jum));
+            rs.close();
+            stat.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return hasil;
+    }
+     public static class triggerPenjualan implements Trigger {
+
+        public void init(Connection conn, String schemaName, String triggerName, String tableName, boolean before, int type) {
+            // initialize the trigger object is necessary
+        }
+
+        /**
+         * This method is called for each triggered action.
+         *
+         * @param conn a connection to the database
+         * @param oldRow the old row, or null if no old row is available (for INSERT)
+         * @param newRow the new row, or null if no new row is available (for DELETE)
+         * @throws SQLException if the operation must be undone
+         */
+        public void fire(Connection conn,
+                Object[] oldRow, Object[] newRow)
+                throws SQLException {
+            if (newRow != null && oldRow == null) {
+            }else if (newRow == null && oldRow != null) {
+                 Statement stat=conn.createStatement();
+                 stat.execute("delete from RINCIPENJUALAN where IDPENJUALAN="+oldRow[0].toString()+"");
+                 stat.execute("delete from JURNAL where KODEJURNAL='"+oldRow[1].toString()+"'");
+                 System.out.println("Delete Penjualan, Rinci Penjualan, Jurnal");
+            }
+        }
+
+        public void close() {
+            // ignore
+        }
+
+        public void remove() {
+            // ignore
+        }
+    }
+    
+}

@@ -1,0 +1,105 @@
+jLabel2.text=Kode Piutang
+#NOI18N
+jLabel2.foreground=0, 0, 0
+#NOI18N
+jLabel2.font=Tahoma 12 Bold
+#NOI18N
+jLabel3.font=Tahoma 12 Bold
+jLabel3.text=No. Faktur
+#NOI18N
+jLabel3.foreground=0, 0, 0
+jLabel4.text=Jumlah Hutang
+#NOI18N
+jLabel4.foreground=0, 0, 0
+#NOI18N
+jLabel4.font=Tahoma 12 Bold
+#NOI18N
+jLabel7.font=Tahoma 12 Bold
+jLabel7.text=Jumlah Bayar
+#NOI18N
+jLabel7.foreground=0, 0, 0
+#NOI18N
+jLabel8.font=Tahoma 12 Bold
+jLabel8.text=Jatuh Tempo
+#NOI18N
+jLabel8.foreground=0, 0, 0
+txtJumlahHutang.text=jFormattedTextField1
+txtUangMuka.text=jFormattedTextField2
+txtJumlahRetur.text=jFormattedTextField3
+txtJumlahBayar.text=jFormattedTextField4
+#NOI18N
+cboCaraBayar.font=Tahoma-Bold-12
+#NOI18N
+cboBank.font=Tahoma-Bold-12
+txtKodePiutang.text=jTextField1
+#NOI18N
+txtKodePiutang.font=Tahoma-Bold-12
+jLabel1.text=Keterangan
+#NOI18N
+jLabel1.foreground=0, 0, 0
+#NOI18N
+jLabel1.font=Tahoma-Bold-12
+jPanel1.TabConstraints.tabTitle=Piutang
+jPanel2.TabConstraints.tabTitle=Penerimaan Piutang
+#NOI18N
+tglPiutang.dch_combo_fieldFont=Tahoma-Bold-12
+#NOI18N
+jLabel11.font=Tahoma 12 12 Bold
+jLabel11.text=Tanggal
+#NOI18N
+tglJatuhTempo.dch_combo_fieldFont=Tahoma-Bold-12
+txtNamaPelanggan.text=jTextField1
+txtKodePelanggan.text=jTextField1
+#NOI18N
+txtKodePelanggan.font=Tahoma-Bold-12
+#NOI18N
+txtNamaPelanggan.font=Tahoma-Bold-12
+jLabel12.text=Pelanggan
+#NOI18N
+jLabel12.font=Tahoma 12 Bold
+txtJumlahPiutang.text=jFormattedTextField1
+#NOI18N
+jLabel13.font=Tahoma 12 Bold
+jLabel13.text=Jumlah Piutang
+txtKeterangan.text=jTextField1
+#NOI18N
+txtKeterangan.font=Tahoma-Bold-12
+#NOI18N
+cmdInsert1.font=Tahoma 12 12 Bold
+cmdInsert1.text=Insert
+btnUpdate.text=Update
+#NOI18N
+btnUpdate.font=Tahoma 12 Bold
+#NOI18N
+jLabel15.font=Tahoma 12 12 Bold
+txtNoTrans.text=jTextField1
+#NOI18N
+txtNoTrans.font=Tahoma 12 Bold
+jLabel15.text=No. Transaksi
+jLabel16.text=Tanggal Bayar
+#NOI18N
+jLabel16.font=Tahoma 12 12 12 Bold
+#NOI18N
+jLabel14.font=Tahoma 12 12 12 Bold
+jLabel14.text=Cara Bayar
+#NOI18N
+jLabel17.font=Tahoma 12 12 Bold
+txtNamaPelanggan1.text=jTextField1
+#NOI18N
+txtNamaPelanggan1.font=Tahoma 12 Bold
+txtKodePelanggan1.text=jTextField1
+#NOI18N
+txtKodePelanggan1.font=Tahoma 12 Bold
+jLabel17.text=Pelanggan
+#NOI18N
+btnSimpan.font=Tahoma 12 Bold
+btnSimpan.text=Simpan
+#NOI18N
+txtTotalPiutang.font=Tahoma-Bold-12
+txtNoReff.text=jTextField2
+#NOI18N
+txtNoReff.font=Tahoma-Bold-12
+#NOI18N
+tglBayar.dch_combo_fieldFont=Tahoma-Bold-12
+#NOI18N
+jTabbedPane1.font=Tahoma-Bold-12

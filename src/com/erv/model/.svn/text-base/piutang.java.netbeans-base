@@ -1,0 +1,96 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+
+import java.sql.Date;
+
+/**
+ *
+ * @author erwadi
+ */
+public class piutang {
+    private int ID;
+    private String KODEPIUTANG;
+    private int IDPENJUALAN;
+    private Date TANGGAL;
+    private double JUMLAH;
+    private String IDPELANGGAN;
+    private Date JATUHTEMPO;
+    private String KETERANGAN;
+    private String STATUS;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getKODEPIUTANG() {
+        return KODEPIUTANG;
+    }
+
+    public void setKODEPIUTANG(String KODEPIUTANG) {
+        this.KODEPIUTANG = KODEPIUTANG;
+    }
+
+    public int getIDPENJUALAN() {
+        return IDPENJUALAN;
+    }
+
+    public void setIDPENJUALAN(int IDPENJUALAN) {
+        this.IDPENJUALAN = IDPENJUALAN;
+    }
+
+    public double getJUMLAH() {
+        return JUMLAH;
+    }
+
+    public void setJUMLAH(double JUMLAH) {
+        this.JUMLAH = JUMLAH;
+    }
+
+    public Date getTANGGAL() {
+        return TANGGAL;
+    }
+
+    public void setTANGGAL(Date TANGGAL) {
+        this.TANGGAL = TANGGAL;
+    }
+
+    public String getIDPELANGGAN() {
+        return IDPELANGGAN;
+    }
+
+    public void setIDPELANGGAN(String IDPELANGGAN) {
+        this.IDPELANGGAN = IDPELANGGAN;
+    }
+
+    public Date getJATUHTEMPO() {
+        return JATUHTEMPO;
+    }
+
+    public void setJATUHTEMPO(Date JATUHTEMPO) {
+        this.JATUHTEMPO = JATUHTEMPO;
+    }
+
+    public String getKETERANGAN() {
+        return KETERANGAN;
+    }
+
+    public void setKETERANGAN(String KETERANGAN) {
+        this.KETERANGAN = KETERANGAN;
+    }
+
+    public String getSTATUS() {
+        return STATUS;
+    }
+
+    public void setSTATUS(String STATUS) {
+        this.STATUS = STATUS;
+    }
+    
+}

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RekapPenjualanAllMerk1" language="groovy" pageWidth="820" pageHeight="612" orientation="Landscape" columnWidth="780" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tahun" class="java.lang.String"/>
+	<field name="idmerk" class="java.lang.String"/>
+	<field name="merk" class="java.lang.String"/>
+	<field name="penjualan_1" class="java.lang.Double"/>
+	<field name="ppn_1" class="java.lang.Double"/>
+	<field name="retur_1" class="java.lang.Double"/>
+	<field name="penjualan_2" class="java.lang.Double"/>
+	<field name="ppn_2" class="java.lang.Double"/>
+	<field name="retur_2" class="java.lang.Double"/>
+	<field name="penjualan_3" class="java.lang.Double"/>
+	<field name="ppn_3" class="java.lang.Double"/>
+	<field name="retur_3" class="java.lang.Double"/>
+	<field name="penjualan_4" class="java.lang.Double"/>
+	<field name="ppn_4" class="java.lang.Double"/>
+	<field name="retur_4" class="java.lang.Double"/>
+	<field name="penjualan_5" class="java.lang.Double"/>
+	<field name="ppn_5" class="java.lang.Double"/>
+	<field name="retur_5" class="java.lang.Double"/>
+	<field name="penjualan_6" class="java.lang.Double"/>
+	<field name="ppn_6" class="java.lang.Double"/>
+	<field name="retur_6" class="java.lang.Double"/>
+	<field name="penjualan_7" class="java.lang.Double"/>
+	<field name="ppn_7" class="java.lang.Double"/>
+	<field name="retur_7" class="java.lang.Double"/>
+	<field name="penjualan_8" class="java.lang.Double"/>
+	<field name="ppn_8" class="java.lang.Double"/>
+	<field name="retur_8" class="java.lang.Double"/>
+	<field name="penjualan_9" class="java.lang.Double"/>
+	<field name="ppn_9" class="java.lang.Double"/>
+	<field name="retur_9" class="java.lang.Double"/>
+	<field name="penjualan_10" class="java.lang.Double"/>
+	<field name="ppn_10" class="java.lang.Double"/>
+	<field name="retur_10" class="java.lang.Double"/>
+	<field name="penjualan_11" class="java.lang.Double"/>
+	<field name="ppn_11" class="java.lang.Double"/>
+	<field name="retur_11" class="java.lang.Double"/>
+	<field name="penjualan_12" class="java.lang.Double"/>
+	<field name="ppn_12" class="java.lang.Double"/>
+	<field name="retur_12" class="java.lang.Double"/>
+	<variable name="penjualan_1_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_1}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_2_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{penjualan_2}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_2_2" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{penjualan_2}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_2_3" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_2}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_3_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_3}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_4_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_4}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_5_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_5}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_6_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_6}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_7_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_7}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_8_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_8}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_9_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_9}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_10_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_10}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_11_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_11}]]></variableExpression>
+	</variable>
+	<variable name="penjualan_12_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{penjualan_12}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="243" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT.MIRANTI ADILHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="17" width="279" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laporan Rekap Penjualan Semua Merk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="35" width="65" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tahun   :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="65" y="35" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{tahun}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="12" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="33" y="0" width="186" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Merk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Januari]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="65" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Februari]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="130" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Maret]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="195" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[April]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="33" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="260" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mei]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="325" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Juni]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="390" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Juli]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="455" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Agustus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="520" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[September]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="585" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Oktober]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="650" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[November]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="715" y="20" width="65" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desember]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="33" y="0" width="127" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{merk}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="0" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="65" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement mode="Transparent" x="130" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_3}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="195" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="33" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement mode="Transparent" x="260" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_5}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="325" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_6}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement mode="Transparent" x="390" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_7}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="455" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_8}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="520" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_9}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="585" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_10}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="650" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_11}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="715" y="20" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{penjualan_12}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="8" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="45" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="0" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_1_1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="790" height="1"/>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="65" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_2_3}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="130" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_3_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="195" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_4_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="260" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_5_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="325" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_6_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="390" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_7_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="455" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_8_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="520" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_9_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="585" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_10_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="650" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_11_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="715" y="25" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{penjualan_12_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TestRekapDistribusi" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2fec353-2132-480f-89a5-97dac283a707">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     DO."ID" AS DO_ID,
+     DORINCI."IDDO" AS DORINCI_IDDO,
+     DO."KODEDO" AS DO_KODEDO,
+     DO."TANGGAL" AS DO_TANGGAL,
+     DO."KODEPELANGGAN" AS DO_KODEPELANGGAN,
+     PELANGGAN."KODEPELANGGAN" AS PELANGGAN_KODEPELANGGAN,
+     PELANGGAN."NAMA" AS PELANGGAN_NAMA,
+     PELANGGAN."ALAMAT" AS PELANGGAN_ALAMAT,
+     PELANGGAN."NAMAPEMILIK" AS PELANGGAN_NAMAPEMILIK,
+     PELANGGAN."STATUSAKTIF" AS PELANGGAN_STATUSAKTIF,
+     DO."STATUS" AS DO_STATUS,
+     DO."TGLTUTUP" AS DO_TGLTUTUP,
+     DO."STATUSAKTIF" AS DO_STATUSAKTIF,
+     DORINCI."KODEBARANG" AS DORINCI_KODEBARANG,
+     RINCIPENJUALAN."KODEBARANG" AS RINCIPENJUALAN_KODEBARANG,
+     DORINCI."JUMLAH" AS DORINCI_JUMLAH,
+     RINCIPENJUALAN."JUMLAH" AS RINCIPENJUALAN_JUMLAH,
+     DORINCI."SATUAN" AS DORINCI_SATUAN,
+     RINCIPENJUALAN."SATUAN" AS RINCIPENJUALAN_SATUAN,
+     DORINCI."KODEBATCH" AS DORINCI_KODEBATCH,
+     RINCIPENJUALAN."KODEBATCH" AS RINCIPENJUALAN_KODEBATCH,
+     DORINCI."EXPIRE" AS DORINCI_EXPIRE,
+     DORINCI."JUMLAHKECIL" AS DORINCI_JUMLAHKECIL,
+     RINCIPENJUALAN."ID" AS RINCIPENJUALAN_ID,
+     RINCIPENJUALAN."IDPENJUALAN" AS RINCIPENJUALAN_IDPENJUALAN,
+     RINCIPENJUALAN."HARGA" AS RINCIPENJUALAN_HARGA,
+     RINCIPENJUALAN."DISKON" AS RINCIPENJUALAN_DISKON,
+     RINCIPENJUALAN."TOTAL" AS RINCIPENJUALAN_TOTAL,
+     RINCIPENJUALAN."PPN" AS RINCIPENJUALAN_PPN,
+     RINCIPENJUALAN."IDDO" AS RINCIPENJUALAN_IDDO,
+     RINCIPENJUALAN."JUMLAHKECIL" AS RINCIPENJUALAN_JUMLAHKECIL,
+     RINCIPENJUALAN."COGS" AS RINCIPENJUALAN_COGS,
+     RINCIPENJUALAN."EXPIRE" AS RINCIPENJUALAN_EXPIRE,
+     RINCIPENJUALAN."DISKONP" AS RINCIPENJUALAN_DISKONP,
+     RINCIPENJUALAN."BONUS" AS RINCIPENJUALAN_BONUS,
+     BARANG."KODEBARANG" AS BARANG_KODEBARANG,
+     BARANG."NAMABARANG" AS BARANG_NAMABARANG,
+     BARANG."SATUAN" AS BARANG_SATUAN,
+     BARANG."IDKATEGORI" AS BARANG_IDKATEGORI,
+     BARANG."IDJENIS" AS BARANG_IDJENIS,
+     BARANG."STATUS" AS BARANG_STATUS,
+     BARANG."SATUAN1" AS BARANG_SATUAN1,
+     BARANG."JUMLAH1" AS BARANG_JUMLAH1,
+     BARANG."SATUAN2" AS BARANG_SATUAN2,
+     BARANG."JUMLAH2" AS BARANG_JUMLAH2,
+     BARANGSTOK."ID" AS BARANGSTOK_ID,
+     BARANGSTOK."IDGUDANG" AS BARANGSTOK_IDGUDANG,
+     BARANGSTOK."KODEBARANG" AS BARANGSTOK_KODEBARANG,
+     BARANGSTOK."STOK" AS BARANGSTOK_STOK,
+     BARANGSTOK."COGS" AS BARANGSTOK_COGS,
+     BARANGSTOK."HARGAJUAL" AS BARANGSTOK_HARGAJUAL,
+     BARANGSTOKBATCH."ID" AS BARANGSTOKBATCH_ID,
+     BARANGSTOKBATCH."IDBARANGSTOK" AS BARANGSTOKBATCH_IDBARANGSTOK,
+     BARANGSTOKBATCH."KODEBATCH" AS BARANGSTOKBATCH_KODEBATCH,
+     BARANGSTOKBATCH."EXPIRE" AS BARANGSTOKBATCH_EXPIRE,
+     BARANGSTOKBATCH."STOK" AS BARANGSTOKBATCH_STOK
+FROM
+     "PUBLIC"."RINCIPENJUALAN" RINCIPENJUALAN INNER JOIN "PUBLIC"."DORINCI" DORINCI ON RINCIPENJUALAN."KODEBARANG" = DORINCI."KODEBARANG"
+     AND RINCIPENJUALAN."KODEBATCH" = DORINCI."KODEBATCH"
+     AND RINCIPENJUALAN."SATUAN" = DORINCI."SATUAN"
+     INNER JOIN "PUBLIC"."DO" DO ON DORINCI."IDDO" = DO."ID"
+     INNER JOIN "PUBLIC"."BARANG" BARANG ON DORINCI."KODEBARANG" = BARANG."KODEBARANG"
+     INNER JOIN "PUBLIC"."BARANGSTOK" BARANGSTOK ON BARANG."KODEBARANG" = BARANGSTOK."KODEBARANG"
+     INNER JOIN "PUBLIC"."BARANGSTOKBATCH" BARANGSTOKBATCH ON BARANGSTOK."ID" = BARANGSTOKBATCH."IDBARANGSTOK"
+     AND RINCIPENJUALAN."IDDO" = DO."ID"
+     INNER JOIN "PUBLIC"."PELANGGAN" PELANGGAN ON DO."KODEPELANGGAN" = PELANGGAN."KODEPELANGGAN"
+WHERE
+     DO."ID" = '2']]>
+	</queryString>
+	<field name="DO_ID" class="java.lang.Integer"/>
+	<field name="DORINCI_IDDO" class="java.lang.Integer"/>
+	<field name="DO_KODEDO" class="java.lang.String"/>
+	<field name="DO_TANGGAL" class="java.sql.Date"/>
+	<field name="DO_KODEPELANGGAN" class="java.lang.String"/>
+	<field name="PELANGGAN_KODEPELANGGAN" class="java.lang.String"/>
+	<field name="PELANGGAN_NAMA" class="java.lang.String"/>
+	<field name="PELANGGAN_ALAMAT" class="java.lang.String"/>
+	<field name="PELANGGAN_NAMAPEMILIK" class="java.lang.String"/>
+	<field name="PELANGGAN_STATUSAKTIF" class="java.lang.Integer"/>
+	<field name="DO_STATUS" class="java.lang.String"/>
+	<field name="DO_TGLTUTUP" class="java.sql.Date"/>
+	<field name="DO_STATUSAKTIF" class="java.lang.String"/>
+	<field name="DORINCI_KODEBARANG" class="java.lang.String"/>
+	<field name="RINCIPENJUALAN_KODEBARANG" class="java.lang.String"/>
+	<field name="DORINCI_JUMLAH" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_JUMLAH" class="java.lang.Integer"/>
+	<field name="DORINCI_SATUAN" class="java.lang.String"/>
+	<field name="RINCIPENJUALAN_SATUAN" class="java.lang.String"/>
+	<field name="DORINCI_KODEBATCH" class="java.lang.String"/>
+	<field name="RINCIPENJUALAN_KODEBATCH" class="java.lang.String"/>
+	<field name="DORINCI_EXPIRE" class="java.sql.Date"/>
+	<field name="DORINCI_JUMLAHKECIL" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_ID" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_IDPENJUALAN" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_HARGA" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_DISKON" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_TOTAL" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_PPN" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_IDDO" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_JUMLAHKECIL" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_COGS" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_EXPIRE" class="java.sql.Date"/>
+	<field name="RINCIPENJUALAN_DISKONP" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_BONUS" class="java.lang.String"/>
+	<field name="BARANG_KODEBARANG" class="java.lang.String"/>
+	<field name="BARANG_NAMABARANG" class="java.lang.String"/>
+	<field name="BARANG_SATUAN" class="java.lang.String"/>
+	<field name="BARANG_IDKATEGORI" class="java.lang.String"/>
+	<field name="BARANG_IDJENIS" class="java.lang.String"/>
+	<field name="BARANG_STATUS" class="java.lang.Integer"/>
+	<field name="BARANG_SATUAN1" class="java.lang.String"/>
+	<field name="BARANG_JUMLAH1" class="java.lang.Integer"/>
+	<field name="BARANG_SATUAN2" class="java.lang.String"/>
+	<field name="BARANG_JUMLAH2" class="java.lang.Integer"/>
+	<field name="BARANGSTOK_ID" class="java.lang.Integer"/>
+	<field name="BARANGSTOK_IDGUDANG" class="java.lang.Integer"/>
+	<field name="BARANGSTOK_KODEBARANG" class="java.lang.String"/>
+	<field name="BARANGSTOK_STOK" class="java.lang.Integer"/>
+	<field name="BARANGSTOK_COGS" class="java.lang.Double"/>
+	<field name="BARANGSTOK_HARGAJUAL" class="java.lang.Double"/>
+	<field name="BARANGSTOKBATCH_ID" class="java.lang.Integer"/>
+	<field name="BARANGSTOKBATCH_IDBARANGSTOK" class="java.lang.Integer"/>
+	<field name="BARANGSTOKBATCH_KODEBATCH" class="java.lang.String"/>
+	<field name="BARANGSTOKBATCH_EXPIRE" class="java.sql.Date"/>
+	<field name="BARANGSTOKBATCH_STOK" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="25" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ca585aab-c8e2-4a88-b2cd-a45d57483e74" x="2" y="15" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PELANGGAN_KODEPELANGGAN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="085c2f0d-7701-48e7-8577-bf4b7c87ff7f" x="104" y="15" width="165" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PELANGGAN_NAMA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d952cb25-973c-4681-94db-a14884c96afd" x="1" y="0" width="53" height="20"/>
+				<textElement/>
+				<text><![CDATA[Kode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="caf52330-3d70-414c-8c3c-2173bc8ee39a" x="55" y="0" width="159" height="20"/>
+				<textElement/>
+				<text><![CDATA[NAMABARANG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c38ae4b-bea4-4477-9de4-d222fee3bdaa" x="218" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DORINCI_JUMLAH]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="e06f4134-873d-4b57-8bcf-2102a862ea89" x="1" y="0" width="53" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{DORINCI_KODEBARANG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="779f6a3a-826a-4c5b-90f0-21121b253bd1" x="55" y="0" width="159" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{BARANG_NAMABARANG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1e762d27-58db-4909-b1a0-442512b923ce" x="218" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{DORINCI_JUMLAH}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

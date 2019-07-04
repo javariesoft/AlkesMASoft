@@ -1,0 +1,60 @@
+jLabel1.text=Nama Perkiraan
+#NOI18N
+jLabel1.font=Tahoma-Bold-12
+#NOI18N
+jLabel1.foreground=255, 255, 255
+jLabel2.text=Grup
+#NOI18N
+jLabel2.foreground=255, 255, 255
+#NOI18N
+jLabel2.font=Tahoma 12 Bold
+jLabel3.text=Kode Perkiraan
+#NOI18N
+jLabel3.foreground=255, 255, 255
+#NOI18N
+jLabel3.font=Tahoma 12 Bold
+#NOI18N
+jLabel4.font=Tahoma-Bold-12
+jLabel4.text=Grup
+#NOI18N
+jLabel4.foreground=255, 255, 255
+jLabel5.text=Tipe
+#NOI18N
+jLabel5.foreground=255, 255, 255
+#NOI18N
+jLabel5.font=Tahoma-Bold-12
+kodeperkiraan.text=
+namaperkiraan.text=
+#NOI18N
+namaperkiraan.font=Tahoma-Bold-12
+btninsert.text=Insert
+btnedit.text=Edit
+#NOI18N
+btnedit.font=Tahoma-Bold-12
+btndelete.text=Delete
+#NOI18N
+cbogrupfilter.font=Tahoma-Bold-12
+#NOI18N
+cboGrup.font=Tahoma-Bold-12
+#NOI18N
+jTable1.font=Tahoma-Bold-12
+rbHeader.text=HEADER
+rbdetil.text=DETAIL
+#NOI18N
+rbdetil.font=Tahoma-Bold-12
+#NOI18N
+kodeterbentuk.font=Tahoma-Bold-12
+kodeterbentuk.text=1.
+#NOI18N
+kodeterbentuk.foreground=255, 255, 255
+#NOI18N
+kodeperkiraan.font=Tahoma-Bold-12
+#NOI18N
+btninsert.font=Tahoma-Bold-12
+#NOI18N
+btndelete.font=Tahoma-Bold-12
+#NOI18N
+rbHeader.font=Tahoma-Bold-12
+rbsubheader.text=SUB HEADER
+#NOI18N
+rbsubheader.font=Tahoma-Bold-12

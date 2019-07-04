@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapLogHistory" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03777162-97ec-4278-aa5a-84b8b93b1718">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Ptgl1" class="java.lang.String"/>
+	<parameter name="Ptgl2" class="java.lang.String"/>
+	<parameter name="Puser" class="java.lang.String"/>
+	<parameter name="Ptabel" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     LOGHISTORY."ID" AS LOGHISTORY_ID,
+     LOGHISTORY."USERIDENTITY" AS LOGHISTORY_USERIDENTITY,
+     LOGHISTORY."TANGGAL" AS LOGHISTORY_TANGGAL,
+     LOGHISTORY."JAM" AS LOGHISTORY_JAM,
+     LOGHISTORY."TABEL" AS LOGHISTORY_TABEL,
+     LOGHISTORY."NOREFF" AS LOGHISTORY_NOREFF,
+     LOGHISTORY."AKSI" AS LOGHISTORY_AKSI,
+     LOGHISTORY."KETERANGAN" AS LOGHISTORY_KETERANGAN
+FROM
+     "PUBLIC"."LOGHISTORY" LOGHISTORY
+WHERE LOGHISTORY."TANGGAL" >= $P{Ptgl1} AND LOGHISTORY."TANGGAL" <= $P{Ptgl2} AND LOGHISTORY."USERIDENTITY"=$P{Puser}
+AND LOGHISTORY."TABEL"=$P{Ptabel}
+ORDER BY LOGHISTORY."TANGGAL",LOGHISTORY."JAM"]]>
+	</queryString>
+	<field name="LOGHISTORY_ID" class="java.lang.Integer"/>
+	<field name="LOGHISTORY_USERIDENTITY" class="java.lang.String"/>
+	<field name="LOGHISTORY_TANGGAL" class="java.sql.Date"/>
+	<field name="LOGHISTORY_JAM" class="java.lang.String"/>
+	<field name="LOGHISTORY_TABEL" class="java.lang.String"/>
+	<field name="LOGHISTORY_NOREFF" class="java.lang.String"/>
+	<field name="LOGHISTORY_AKSI" class="java.lang.String"/>
+	<field name="LOGHISTORY_KETERANGAN" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e0b74af8-a871-4103-8b16-a79c17bfc6fe" x="2" y="0" width="243" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT.MIRANTI ADILHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d38a4248-23ea-4ada-9512-bcd8b1af242d" x="1" y="17" width="230" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Log History User]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bff4e1c5-6afb-4bb0-8035-52348c12924c" x="2" y="35" width="70" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Per Tanggal :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bff4e1c5-6afb-4bb0-8035-52348c12924c" x="131" y="35" width="27" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[s / d]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8eff6d0c-7cb4-4c44-b939-fc78d6f77162" x="72" y="35" width="59" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Ptgl1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2c153b73-03b6-4cd0-b389-9fed80585ee9" x="160" y="35" width="100" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Ptgl2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<rectangle radius="2">
+				<reportElement uuid="bdb2ddf5-c6e4-40fb-8691-1446e9db8f36" x="0" y="32" width="803" height="18" backcolor="#99CCFF"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="1f973488-dbca-4023-ae2d-eba63ac7111a" x="88" y="34" width="43" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0287c94c-6780-4220-b007-5b6c5b038b35" x="7" y="35" width="22" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="282a334d-d0a4-41e1-a5f9-92e4bb54232f" x="36" y="34" width="48" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0287c94c-6780-4220-b007-5b6c5b038b35" x="7" y="0" width="40" height="15"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[User]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0287c94c-6780-4220-b007-5b6c5b038b35" x="47" y="0" width="22" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0287c94c-6780-4220-b007-5b6c5b038b35" x="7" y="15" width="40" height="15"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tabel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0287c94c-6780-4220-b007-5b6c5b038b35" x="47" y="15" width="22" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="282a334d-d0a4-41e1-a5f9-92e4bb54232f" x="135" y="34" width="82" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO Reff]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1f973488-dbca-4023-ae2d-eba63ac7111a" x="221" y="34" width="72" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1f973488-dbca-4023-ae2d-eba63ac7111a" x="297" y="34" width="502" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detail]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7ecb8a65-62e6-44cb-9664-139213c95bca" x="69" y="0" width="100" height="15"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Puser}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4ef7966b-2fed-4638-8d50-c3709bd4a676" x="69" y="15" width="100" height="15"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Ptabel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="6ebac7fb-3f53-4c6e-9f30-3a6757d10d6c" stretchType="RelativeToBandHeight" x="0" y="0" width="803" height="16"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="8520ac7d-fa90-40af-9674-dc55194b9be5" x="36" y="1" width="48" height="15" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGHISTORY_TANGGAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm.ss">
+				<reportElement uuid="23022568-2417-4f7c-9241-759338ca4608" x="88" y="1" width="43" height="15"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGHISTORY_JAM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6de8c4a7-8037-46b6-8ea7-787176e64bb7" x="135" y="1" width="82" height="15"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGHISTORY_NOREFF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="efeed454-6f9f-4c3d-bbb8-c77ff876124f" x="221" y="0" width="72" height="15"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGHISTORY_AKSI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="93e89d31-a3b1-4416-8d2e-72490ddde298" stretchType="RelativeToBandHeight" x="297" y="0" width="502" height="15"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGHISTORY_KETERANGAN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="42bf8eaa-29f7-4715-bece-b413f2b4943e" x="2" y="1" width="30" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="a5bd7346-ebbd-48f8-a642-4a9bc8be0814" stretchType="RelativeToBandHeight" x="33" y="-18" width="1" height="34"/>
+			</line>
+			<line>
+				<reportElement uuid="a5bd7346-ebbd-48f8-a642-4a9bc8be0814" stretchType="RelativeToBandHeight" x="85" y="-18" width="1" height="34"/>
+			</line>
+			<line>
+				<reportElement uuid="a5bd7346-ebbd-48f8-a642-4a9bc8be0814" stretchType="RelativeToBandHeight" x="132" y="-18" width="1" height="34"/>
+			</line>
+			<line>
+				<reportElement uuid="a5bd7346-ebbd-48f8-a642-4a9bc8be0814" stretchType="RelativeToBandHeight" x="218" y="-18" width="1" height="34"/>
+			</line>
+			<line>
+				<reportElement uuid="a5bd7346-ebbd-48f8-a642-4a9bc8be0814" stretchType="RelativeToBandHeight" x="294" y="-18" width="1" height="34"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

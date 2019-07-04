@@ -1,0 +1,19 @@
+jLabel1.text=Perkiraan
+#NOI18N
+jLabel1.font=Tahoma-Bold-12
+#NOI18N
+cboAkun.font=Tahoma-Bold-12
+btnKeluar.text=Exit
+#NOI18N
+btnKeluar.font=Tahoma 12 12 Bold
+btnOk.text=Ok
+#NOI18N
+btnOk.font=Tahoma 12 12 Bold
+Form.title=Laporan Detail Buku Besar
+#NOI18N
+jLabel2.font=Tahoma 12 12 Bold
+#NOI18N
+txtTahun.font=Tahoma 12 Bold
+#NOI18N
+cboBulan.font=Tahoma 12 Bold
+jLabel2.text=Periode

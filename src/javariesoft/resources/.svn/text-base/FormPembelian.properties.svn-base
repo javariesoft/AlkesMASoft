@@ -1,0 +1,26 @@
+
+Form.title=Pembelian
+#NOI18N
+btnAdd.font=Tahoma 12 Bold
+btnview.text=Retur
+#NOI18N
+btnview.font=Tahoma 12 Bold
+#NOI18N
+cboStatus.font=Tahoma 12 Bold
+btnFilter.text=Filter
+#NOI18N
+btnFilter.font=Tahoma 12 Bold
+#NOI18N
+cbokriteria.font=Tahoma 12 Bold
+#NOI18N
+txtKriteria.font=Tahoma 12 Bold
+jLabel1.text=Kriteria
+#NOI18N
+jLabel1.font=Tahoma 12 Bold
+btnAdd.text=Add
+btnDelete.text=Delete
+#NOI18N
+btnDelete.font=Tahoma 12 Bold
+btnBayar.text=Pembayaran
+#NOI18N
+btnBayar.font=Tahoma-Bold-12

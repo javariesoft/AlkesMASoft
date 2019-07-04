@@ -1,0 +1,44 @@
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+
+Form.title=Tutup Buku
+jLabel1.text=Saldo
+#NOI18N
+jLabel1.font=Tahoma-Bold-12
+#NOI18N
+jLabel1.foreground=255, 255, 255
+txtTahun.text=
+#NOI18N
+cboBulan.font=Tahoma-Bold-12
+#NOI18N
+txtTahun.font=Tahoma-Bold-12
+cboTutupBuku.text=Tutup Buku
+#NOI18N
+cboTutupBuku.font=Tahoma-Bold-12
+#NOI18N
+txtDebet.font=Tahoma 12 Bold
+#NOI18N
+txtSisa.font=Tahoma 12 Bold
+#NOI18N
+txtKredit.font=Tahoma 12 Bold
+#NOI18N
+jLabel2.font=Tahoma 12 Bold
+jLabel2.text=Periode
+#NOI18N
+jLabel2.foreground=255, 255, 255
+#NOI18N
+jLabel3.font=Tahoma 12 Bold
+jLabel3.text=Kode Akun
+#NOI18N
+jLabel3.foreground=255, 255, 255
+#NOI18N
+txtSaldo.font=Tahoma 12 Bold
+cboUpdate.text=Update
+#NOI18N
+cboUpdate.font=Tahoma-Bold-12
+txtKodeAkun.text=jTextField1
+txtNamaAkun.text=jTextField1
+#NOI18N
+txtKodeAkun.font=Tahoma-Bold-12
+#NOI18N
+txtNamaAkun.font=Tahoma-Bold-12

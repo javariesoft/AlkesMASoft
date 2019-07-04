@@ -1,0 +1,89 @@
+jLabel1.text=Kriteria
+#NOI18N
+jLabel1.foreground=255, 255, 255
+jTextField1.text=jTextField1
+#NOI18N
+jLabel2.foreground=255, 255, 255
+jLabel2.text=Jenis Barang
+jTextField2.text=jTextField2
+jLabel3.text=Nama Barang
+#NOI18N
+jLabel3.foreground=255, 255, 255
+jTextField3.text=jTextField3
+jLabel5.text=Satuan
+#NOI18N
+jLabel5.foreground=255, 255, 255
+jTextField4.text=jTextField4
+jLabel6.text=Supplier
+#NOI18N
+jLabel6.foreground=255, 255, 255
+#NOI18N
+jLabel7.foreground=255, 255, 255
+jLabel7.text=Pendapatan
+#NOI18N
+jLabel8.foreground=255, 255, 255
+jLabel8.text=HPP Akun
+jTextField5.text=jTextField5
+jLabel9.text=Harga Pokok
+#NOI18N
+jLabel9.foreground=255, 255, 255
+jTextField6.text=jTextField6
+jButton1.text=Insert
+jButton2.text=Edit
+jButton3.text=Delete
+#NOI18N
+jLabel3.font=Tahoma-Bold-12
+#NOI18N
+jTextField1.font=Tahoma-Bold-12
+#NOI18N
+jButton2.font=Tahoma-Bold-12
+Form.title=Entri Data Barang
+#NOI18N
+jLabel4.font=Tahoma-Bold-12
+jLabel4.text=Stok
+#NOI18N
+jLabel4.foreground=255, 255, 255
+jTextField7.text=jTextField7
+jButton5.text=Cari
+#NOI18N
+jComboBox3.font=Tahoma-Bold-12
+#NOI18N
+jTextField7.font=Tahoma-Bold-12
+#NOI18N
+jButton5.font=Tahoma-Bold-12
+#NOI18N
+jLabel10.font=Tahoma-Bold-12
+jLabel10.text=Harga
+#NOI18N
+jLabel10.foreground=255, 255, 255
+idsupplier.text=jTextField9
+#NOI18N
+idsupplier.font=Tahoma-Bold-12
+#NOI18N
+namasupplier.font=Tahoma-Bold-12
+namasupplier.text=jTextField10
+#NOI18N
+jLabel11.font=Tahoma-Bold-12
+jLabel11.text=Kode Barang
+#NOI18N
+jLabel11.foreground=255, 255, 255
+#NOI18N
+cboJenisbarang.font=Tahoma-Bold-12
+kodeakun.text=jTextField8
+#NOI18N
+kodeakun.font=Tahoma-Bold-12
+#NOI18N
+jLabel12.font=Tahoma 12 Bold
+jLabel12.text=Persediaan
+#NOI18N
+jLabel12.foreground=255, 255, 255
+#NOI18N
+cboPendapatan.font=Tahoma-Bold-12
+#NOI18N
+jButton1.icon=image/DISK12.png
+#NOI18N
+jButton2.icon=image/CRDFLE13.png
+#NOI18N
+jButton3.icon=image/TRASH02B.png
+#NOI18N
+jButton5.icon=image/electronic-billing-machine.png

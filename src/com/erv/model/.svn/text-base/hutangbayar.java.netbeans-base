@@ -1,0 +1,60 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+
+import java.sql.Date;
+
+/**
+ *
+ * @author erwadi
+ */
+public class hutangbayar {
+    private int ID;
+    private String KODEHUTANGBAYAR;
+    private int IDHUTANG;
+    private Date TANGGAL;
+    private double JUMLAH;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getIDHUTANG() {
+        return IDHUTANG;
+    }
+
+    public void setIDHUTANG(int IDHUTANG) {
+        this.IDHUTANG = IDHUTANG;
+    }
+
+    public double getJUMLAH() {
+        return JUMLAH;
+    }
+
+    public void setJUMLAH(double JUMLAH) {
+        this.JUMLAH = JUMLAH;
+    }
+
+    public String getKODEHUTANGBAYAR() {
+        return KODEHUTANGBAYAR;
+    }
+
+    public void setKODEHUTANGBAYAR(String KODEHUTANGBAYAR) {
+        this.KODEHUTANGBAYAR = KODEHUTANGBAYAR;
+    }
+
+    public Date getTANGGAL() {
+        return TANGGAL;
+    }
+
+    public void setTANGGAL(Date TANGGAL) {
+        this.TANGGAL = TANGGAL;
+    }
+    
+}

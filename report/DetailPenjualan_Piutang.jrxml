@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetailPenjualan_Piutang" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="03f5b623-2560-4309-bdc3-8e25dd8d2b05">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IDJUAL" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E:\\PROJECT\\MANPRO JAVARIESOFT\\MIRANTIADILHA\\ALKESMIRANTI\\ALKESMIRANTI1.8\\AlkesMASoft\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     PIUTANG."ID" AS PIUTANG_ID,
+     PIUTANG."KODEPIUTANG" AS PIUTANG_KODEPIUTANG,
+     PIUTANG."IDPENJUALAN" AS PIUTANG_IDPENJUALAN,
+     PIUTANG."TANGGAL" AS PIUTANG_TANGGAL,
+     PIUTANG."JUMLAH" AS PIUTANG_JUMLAH,
+     PIUTANG."IDPELANGGAN" AS PIUTANG_IDPELANGGAN,
+     PIUTANG."JATUHTEMPO" AS PIUTANG_JATUHTEMPO,
+     PIUTANG."KETERANGAN" AS PIUTANG_KETERANGAN,
+     PIUTANG."STATUS" AS PIUTANG_STATUS,
+     PIUTANGBAYAR."ID" AS PIUTANGBAYAR_ID,
+     PIUTANGBAYAR."KODEPIUTANGBAYAR" AS PIUTANGBAYAR_KODEPIUTANGBAYAR,
+     PIUTANGBAYAR."IDPIUTANG" AS PIUTANGBAYAR_IDPIUTANG,
+     PIUTANGBAYAR."TANGGAL" AS PIUTANGBAYAR_TANGGAL,
+     PIUTANGBAYAR."JUMLAH" AS PIUTANGBAYAR_JUMLAH,
+     PIUTANGBAYAR."REF" AS PIUTANGBAYAR_REF
+FROM
+     "PUBLIC"."PIUTANG" PIUTANG,
+     "PUBLIC"."PIUTANGBAYAR" PIUTANGBAYAR
+WHERE
+     PIUTANG.ID = PIUTANGBAYAR.IDPIUTANG
+and PIUTANG."IDPENJUALAN"=$P{IDJUAL}]]>
+	</queryString>
+	<field name="PIUTANG_ID" class="java.lang.Integer"/>
+	<field name="PIUTANG_KODEPIUTANG" class="java.lang.String"/>
+	<field name="PIUTANG_IDPENJUALAN" class="java.lang.Integer"/>
+	<field name="PIUTANG_TANGGAL" class="java.sql.Date"/>
+	<field name="PIUTANG_JUMLAH" class="java.lang.Double"/>
+	<field name="PIUTANG_IDPELANGGAN" class="java.lang.String"/>
+	<field name="PIUTANG_JATUHTEMPO" class="java.sql.Date"/>
+	<field name="PIUTANG_KETERANGAN" class="java.lang.String"/>
+	<field name="PIUTANG_STATUS" class="java.lang.String"/>
+	<field name="PIUTANGBAYAR_ID" class="java.lang.Integer"/>
+	<field name="PIUTANGBAYAR_KODEPIUTANGBAYAR" class="java.lang.String"/>
+	<field name="PIUTANGBAYAR_IDPIUTANG" class="java.lang.Integer"/>
+	<field name="PIUTANGBAYAR_TANGGAL" class="java.sql.Date"/>
+	<field name="PIUTANGBAYAR_JUMLAH" class="java.lang.Double"/>
+	<field name="PIUTANGBAYAR_REF" class="java.lang.String"/>
+	<variable name="PIUTANGBAYAR_JUMLAH_1" class="java.lang.Double" resetType="Group" resetGroup="piutang" calculation="Sum">
+		<variableExpression><![CDATA[$F{PIUTANGBAYAR_JUMLAH}]]></variableExpression>
+	</variable>
+	<group name="piutang">
+		<groupExpression><![CDATA[$F{PIUTANG_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement uuid="f7e1bf03-1164-4914-856c-f96a838dbe5e" x="75" y="0" width="79" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{PIUTANG_KODEPIUTANG}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement uuid="3c45dd1a-c46a-4e28-ac3b-4c525676740b" x="222" y="0" width="82" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{PIUTANG_TANGGAL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement uuid="d06877fa-fcbe-48e0-a6c7-a582baaf12db" x="452" y="0" width="103" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{PIUTANG_JUMLAH}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="58267632-613a-4ffd-b7a1-5f0a0b7c81b9" mode="Opaque" x="0" y="20" width="100" height="20" backcolor="#FFCCFF"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Kode Angsuran]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="62e2b95a-4dcb-4020-bbad-66219b93688d" mode="Opaque" x="100" y="20" width="183" height="20" backcolor="#FFCCFF"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tanggal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="c81eae0c-fc32-4232-8de8-5484b3dedd1b" mode="Opaque" x="452" y="20" width="103" height="20" backcolor="#FFCCFF"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Angsuran]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="e6b0126f-7b4f-4ba2-9997-3c18c0c5b16f" x="0" y="0" width="75" height="20"/>
+					<textElement/>
+					<text><![CDATA[Kode Piutang :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="54fee301-ef03-420a-8dcb-3d8c79c78f33" x="164" y="0" width="58" height="20"/>
+					<textElement/>
+					<text><![CDATA[Tanggal :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="5b6ae190-d845-4820-8e19-66c6586a0e16" x="375" y="0" width="77" height="20"/>
+					<textElement/>
+					<text><![CDATA[Nilai Piutang  :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="c5211b65-4ee4-4500-ac15-b4df5bc687ca" mode="Opaque" x="283" y="20" width="169" height="20" backcolor="#FFCCFF"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Referensi]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="#,##0.00">
+					<reportElement uuid="372ce241-0926-4c8c-ae7c-82ba95e218a6" x="452" y="0" width="103" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PIUTANGBAYAR_JUMLAH_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="09f85249-4fbd-4f9a-9b78-c285047624ad" x="365" y="0" width="87" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Angsuran  :]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="44fa8e8a-4b84-4231-8321-30d74c06384b" x="0" y="0" width="555" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c444a3fb-6135-460c-b0cd-7c2a560c797b" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PIUTANGBAYAR_KODEPIUTANGBAYAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="eb19ae5e-827f-497b-b43f-d6f27c446aec" x="100" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PIUTANGBAYAR_TANGGAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="cc78f830-7992-4e18-831e-ffdac3168637" x="452" y="0" width="103" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{PIUTANGBAYAR_JUMLAH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7ccb473c-a7a4-4f4a-8236-07ba5c2c4bf8" x="283" y="0" width="106" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PIUTANGBAYAR_REF}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

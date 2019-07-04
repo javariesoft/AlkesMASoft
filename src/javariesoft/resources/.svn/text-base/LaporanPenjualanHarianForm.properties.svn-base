@@ -1,0 +1,16 @@
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+
+#NOI18N
+jLabel1.font=Tahoma 12 Bold
+btnKeluar.text=Exit
+#NOI18N
+btnKeluar.font=Tahoma 12 Bold
+btnOk.text=Ok
+#NOI18N
+btnOk.font=Tahoma 12 Bold
+jLabel2.text=Sampai
+#NOI18N
+jLabel2.font=Tahoma 12 Bold
+jLabel1.text=Dari
+Form.title=Laporan Penjualan Harian

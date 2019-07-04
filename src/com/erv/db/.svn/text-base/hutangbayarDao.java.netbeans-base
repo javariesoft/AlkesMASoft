@@ -1,0 +1,96 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.model.hutangbayar;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+
+/**
+ *
+ * @author erwadi
+ */
+public class hutangbayarDao {
+
+    public static boolean insertIntoHUTANGBAYAR(Connection con, hutangbayar h) throws SQLException {
+        String sql = "INSERT INTO HUTANGBAYAR "
+                + "VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        statement.setInt(1, h.getID());
+        statement.setString(2, h.getKODEHUTANGBAYAR());
+        statement.setInt(3, h.getIDHUTANG());
+        statement.setDate(4, h.getTANGGAL());
+        statement.setDouble(5, h.getJUMLAH());
+        boolean hasil = statement.execute();
+        statement.close();
+        return !hasil;
+    }
+
+    public static boolean updateHUTANGBAYAR(Connection con, int keyId, hutangbayar h) throws SQLException {
+        String sql = "SELECT * FROM HUTANGBAYAR WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        statement.setInt(1, keyId);
+        ResultSet entry = statement.executeQuery();
+
+        entry.last();
+        int rows = entry.getRow();
+        entry.beforeFirst();
+        if (rows == 0) {
+            entry.close();
+            statement.close();
+            return false;
+        }
+        entry.next();
+
+        if (h.getKODEHUTANGBAYAR() != null) {
+            entry.updateString("KODEHUTANGBAYAR", h.getKODEHUTANGBAYAR());
+        }
+        entry.updateInt("IDHUTANG", h.getIDHUTANG());
+        if (h.getTANGGAL() != null) {
+            entry.updateDate("TANGGAL", h.getTANGGAL());
+        }
+        entry.updateDouble("JUMLAH", h.getJUMLAH());
+
+        entry.updateRow();
+        entry.close();
+        statement.close();
+        return true;
+    }
+
+    public static void deleteFromHUTANGBAYAR(Connection con, int keyId) throws SQLException {
+        String sql = "DELETE FROM HUTANGBAYAR WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, keyId);
+        statement.executeUpdate();
+        statement.close();
+    }
+    
+    public static int getID(Connection c) throws SQLException{
+        int hasil=1;
+        PreparedStatement pstmt = c.prepareStatement("select max(id) from HUTANGBAYAR");
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString(1)!=null){
+                hasil=rs.getInt(1)+1;
+            }
+        }
+        return hasil;
+    }
+    public static String getKodeHutangBayar(Connection con){
+        String hasil="";
+        String tgl = com.erv.function.Util.toDateStringSql(new Date());
+        try {
+            hasil="HB" + com.erv.function.Util.getbln(tgl) + com.erv.function.Util.getthn(tgl) + getID(con);
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+        return hasil;
+    }
+}

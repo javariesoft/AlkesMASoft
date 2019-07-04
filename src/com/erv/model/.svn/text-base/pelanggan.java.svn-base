@@ -1,0 +1,89 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+
+import java.sql.Date;
+
+/**
+ *
+ * @author erwadi
+ */
+public class pelanggan {
+    private String KODEPELANGGAN;
+    private String NAMA;
+    private String ALAMAT;
+    private String HP;
+    private Date TGLREG;
+    private float BATASKREDIT;
+    private String KODEAKUN;
+
+    public pelanggan() {
+        this.KODEPELANGGAN = "";
+        this.NAMA = "";
+        this.ALAMAT = "";
+        this.HP = "";
+        this.TGLREG = java.sql.Date.valueOf(com.erv.function.Util.toDateStringSql(new java.util.Date()));
+        this.BATASKREDIT = 0;
+        this.KODEAKUN = "";
+    }
+
+    
+    public String getHP() {
+        return HP;
+    }
+
+    public void setHP(String HP) {
+        this.HP = HP;
+    }
+
+    public String getKODEPELANGGAN() {
+        return KODEPELANGGAN;
+    }
+
+    public void setKODEPELANGGAN(String KODEPELANGGAN) {
+        this.KODEPELANGGAN = KODEPELANGGAN;
+    }
+
+    public String getNAMA() {
+        return NAMA;
+    }
+
+    public void setNAMA(String NAMA) {
+        this.NAMA = NAMA;
+    }
+
+    public String getALAMAT() {
+        return ALAMAT;
+    }
+
+    public void setALAMAT(String ALAMAT) {
+        this.ALAMAT = ALAMAT;
+    }
+
+    public float getBATASKREDIT() {
+        return BATASKREDIT;
+    }
+
+    public void setBATASKREDIT(float BATASKREDIT) {
+        this.BATASKREDIT = BATASKREDIT;
+    }
+
+    public Date getTGLREG() {
+        return TGLREG;
+    }
+
+    public void setTGLREG(Date TGLREG) {
+        this.TGLREG = TGLREG;
+    }
+
+    public String getKODEAKUN() {
+        return KODEAKUN;
+    }
+
+    public void setKODEAKUN(String KODEAKUN) {
+        this.KODEAKUN = KODEAKUN;
+    }
+    
+}

@@ -1,0 +1,99 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.model.sales;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+/**
+ *
+ * @author erwadi
+ */
+public class salesDao {
+
+    public static boolean insertIntoSALES(Connection con, sales s) throws SQLException {
+        String sql = "INSERT INTO SALES "
+                + "VALUES (?, ?, ?, ?)";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setString(1, s.getIDSALES());
+        statement.setString(2, s.getNAMA());
+        statement.setString(3, s.getALAMAT());
+        statement.setString(4, s.getHP());
+        boolean h = statement.execute();
+        statement.close();
+        return !h;
+    }
+
+    public static boolean updateSALES(Connection con, sales s) throws SQLException {
+        String sql = "SELECT * FROM SALES WHERE IDSALES = ?";
+        PreparedStatement statement = con.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        statement.setString(1, s.getIDSALES());
+        ResultSet entry = statement.executeQuery();
+
+        entry.last();
+        int rows = entry.getRow();
+        entry.beforeFirst();
+        if (rows == 0) {
+            entry.close();
+            statement.close();
+            return false;
+        }
+        entry.next();
+
+        if (s.getNAMA() != null) {
+            entry.updateString("NAMA", s.getNAMA());
+        }
+        if (s.getALAMAT() != null) {
+            entry.updateString("ALAMAT", s.getALAMAT());
+        }
+        if (s.getHP() != null) {
+            entry.updateString("HP", s.getHP());
+        }
+
+        entry.updateRow();
+        entry.close();
+        statement.close();
+        return true;
+    }
+
+    public static void deleteFromSALES(Connection con, String keyId) throws SQLException {
+        String sql = "DELETE FROM SALES WHERE IDSALES = ?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setString(1, keyId);
+        statement.executeUpdate();
+        statement.close();
+    }
+    public static int getID(Connection con) throws SQLException{
+        int hasil=1;
+        PreparedStatement pstmt = con.prepareStatement("select max(IDSALES) from SALES");
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString(1)!=null){
+                hasil=rs.getInt(1)+1;
+            }
+        }
+        return hasil;
+    }
+    public static sales getDetails(Connection con, String id)throws SQLException, ClassNotFoundException
+    {
+       //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("select * from SALES where IDSALES=?");
+        pstmt.setString(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        sales ubean = new sales();
+        while(rs.next())
+        {
+            ubean.setIDSALES(rs.getString(1));
+            ubean.setNAMA(rs.getString(2));
+            ubean.setALAMAT(rs.getString(3));
+            ubean.setHP(rs.getString(4));
+        }
+        return ubean;
+    }
+}

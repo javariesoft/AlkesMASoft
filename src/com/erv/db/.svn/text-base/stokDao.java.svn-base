@@ -1,0 +1,126 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.model.stok;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import org.h2.api.Trigger;
+
+/**
+ *
+ * @author erwadi
+ */
+public class stokDao {
+
+    public static boolean insertIntoSTOK(Connection con, stok s) throws SQLException {
+        String sql = "INSERT INTO STOK VALUES(?,?,?,?,?,?)";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, s.getIDPENJUALAN());
+        statement.setString(2, s.getKODEBARANG());
+        statement.setDate(3, s.getTANGGAL());
+        statement.setInt(4, s.getIN());
+        statement.setInt(5, s.getOUT());
+        statement.setString(6, s.getKODETRANS());
+        boolean i = statement.execute();
+        statement.close();
+        return !i;
+    }
+
+    public static boolean updateSTOK(Connection con, stok s) throws SQLException {
+        String sql = "SELECT * FROM STOK WHERE IDPENJUALAN = ? and KODEBARANG=? and KODETRANS=?";
+        PreparedStatement statement = con.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        statement.setInt(1, s.getIDPENJUALAN());
+        statement.setString(2, s.getKODEBARANG());
+        statement.setString(3, s.getKODETRANS());
+        ResultSet entry = statement.executeQuery();
+
+        entry.last();
+        int rows = entry.getRow();
+        entry.beforeFirst();
+        if (rows == 0) {
+            entry.close();
+            statement.close();
+            return false;
+        }
+        entry.next();
+        if (s.getTANGGAL() != null) {
+            entry.updateDate("TANGGAL", s.getTANGGAL());
+        }
+        entry.updateInt("IN", s.getIN());
+        entry.updateInt("OUT", s.getOUT());
+        if (s.getKODETRANS() != null) {
+            entry.updateString("KODETRANS", s.getKODETRANS());
+        }
+        entry.updateRow();
+        entry.close();
+        statement.close();
+        return true;
+    }
+
+    public static void deleteFromSTOK(Connection con, int id1,String id2,String id3) throws SQLException {
+        String sql = "DELETE FROM STOK WHERE IDPENJUALAN = ? AND KODEBARANG=? AND KODETRANS=?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, id1);
+        statement.setString(2, id2);
+        statement.setString(3, id3);
+        statement.executeUpdate();
+        statement.close();
+    }
+    public static class triggerStok implements Trigger {
+
+        public void init(Connection conn, String schemaName, String triggerName, String tableName, boolean before, int type) {
+            // initialize the trigger object is necessary
+        }
+
+        /**
+         * This method is called for each triggered action.
+         *
+         * @param conn a connection to the database
+         * @param oldRow the old row, or null if no old row is available (for INSERT)
+         * @param newRow the new row, or null if no new row is available (for DELETE)
+         * @throws SQLException if the operation must be undone
+         */
+        public void fire(Connection conn,
+                Object[] oldRow, Object[] newRow)
+                throws SQLException {
+            Statement stat=conn.createStatement();;
+            if (newRow != null && oldRow == null) {
+                if(Integer.parseInt(newRow[3].toString())!=0){
+                    stat.execute("Update Barang set STOK=STOK+"+ Integer.parseInt(newRow[3].toString()) +" where KODEBARANG='"+ newRow[1].toString() +"'");
+                }
+                if(Integer.parseInt(newRow[4].toString())!=0){
+                    stat.execute("Update Barang set STOK=STOK-"+ Integer.parseInt(newRow[4].toString()) +" where KODEBARANG='"+ newRow[1].toString() +"'");
+                }
+                System.out.println("Insert Stok Update Barang");
+                
+            }else if (newRow == null && oldRow != null) {
+                String sql="";
+                if(Integer.parseInt(oldRow[3].toString())!=0){
+                    sql="Update Barang set STOK=STOK-"+ Integer.parseInt(oldRow[3].toString()) +" where KODEBARANG='"+ oldRow[1].toString() +"'";
+                    stat.execute(sql);
+                }
+                if(Integer.parseInt(oldRow[4].toString())!=0){
+                    sql="Update Barang set STOK=STOK+"+ Integer.parseInt(oldRow[4].toString()) +" where KODEBARANG='"+ oldRow[1].toString() +"'";
+                    stat.execute(sql);
+                }
+                System.out.println("Delete Stok Update Barang : "+sql);
+            }
+        }
+
+        public void close() {
+            // ignore
+        }
+
+        public void remove() {
+            // ignore
+        }
+    }
+    
+}

@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapSisaDOPelangganAllRecord" language="groovy" pageWidth="612" pageHeight="842" columnWidth="547" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26d95568-6466-4fed-abb0-17535fbbddd1">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tgl1" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2015-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tgl2" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2015-12-01"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DO.ID,
+       DO.KODEDO AS DO_KODEDO,
+       DO.TANGGAL,
+       DO.KODEPELANGGAN,
+       casewhen(DO."STATUS"='A','Delivery Order','Close') AS STATUSDO,
+       DO.TGLTUTUP,
+       DO.STATUSAKTIF,
+       PELANGGAN.NAMA,
+       BARANGDO.KODEBARANG,
+       BARANG.NAMABARANG,
+       JENISBARANG.JENIS,
+       IFNULL((SELECT BDO.KODEBATCH FROM BARANGDO BDO WHERE BARANGDO.IDDO=BDO.IDDO AND BARANGDO.KODEBARANG=BDO.KODEBARANG AND BARANGDO.KODEBATCH=BDO.KODEBATCH),'-') AS BARANGDO_KODEBATCH,
+IFNULL((SELECT DR.SATUAN FROM DORINCI DR WHERE BARANGDO.IDDO=DR.IDDO AND BARANGDO.KODEBARANG=DR.KODEBARANG AND BARANGDO.KODEBATCH=DR.KODEBATCH),'-') AS DORINCI_SATUAN,
+       IFNULL((SELECT SUM(BDO.STOKDO-BDO.STOKRETURDO-BDO.STOKDOFAKTUR) FROM BARANGDO BDO WHERE BARANGDO.IDDO=BDO.IDDO AND BARANGDO.KODEBARANG=BDO.KODEBARANG AND BARANGDO.KODEBATCH=BDO.KODEBATCH),0) AS SISASTOK
+FROM DO INNER JOIN BARANGDO ON DO.ID=BARANGDO.IDDO
+    INNER JOIN PELANGGAN ON DO.KODEPELANGGAN=PELANGGAN.KODEPELANGGAN
+    INNER JOIN BARANG ON BARANGDO.KODEBARANG = BARANG.KODEBARANG
+    INNER JOIN JENISBARANG ON BARANG.IDJENIS = JENISBARANG.ID
+   /* LEFT JOIN DORINCI ON DO.ID=DORINCI.IDDO*/
+WHERE (SELECT SUM(BDO.STOKDO-BDO.STOKRETURDO-BDO.STOKDOFAKTUR) FROM BARANGDO BDO WHERE DO.ID=BDO.IDDO AND BARANGDO.KODEBARANG=BDO.KODEBARANG AND BARANGDO.KODEBATCH=BDO.KODEBATCH) <> 0 AND DO.TANGGAL >= $P{tgl1} AND DO.TANGGAL <= $P{tgl2} ORDER BY DO.ID]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DO_KODEDO" class="java.lang.String"/>
+	<field name="TANGGAL" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KODEPELANGGAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATUSDO" class="java.lang.String"/>
+	<field name="TGLTUTUP" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATUSAKTIF" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAMA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KODEBARANG" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAMABARANG" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="JENIS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BARANGDO_KODEBATCH" class="java.lang.String"/>
+	<field name="DORINCI_SATUAN" class="java.lang.String"/>
+	<field name="SISASTOK" class="java.lang.Long"/>
+	<group name="transaksi">
+		<groupExpression><![CDATA[$F{DO_KODEDO}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<rectangle>
+					<reportElement uuid="96c4fda7-5915-4e0a-a112-6ddfa08b7797" x="0" y="0" width="547" height="23" backcolor="#FFFFCC"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement uuid="2e32de33-a5b5-44d1-86bd-fa880c495ac5" x="0" y="2" width="49" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No. DO ]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="5ea9e0a3-1f8e-4efe-9669-7f448b621d4c" x="74" y="2" width="74" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DO_KODEDO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="b640eec6-35e8-4b43-993f-680fc93b1ccb" x="321" y="13" width="53" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tanggal DO]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement uuid="e5053563-d54c-4956-b05f-e34c450d6851" x="383" y="13" width="60" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TANGGAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="05775dfc-b259-4adf-9d14-4cf29961a929" x="383" y="2" width="160" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NAMA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="c770934b-e59c-4470-8504-4e453008a708" x="66" y="2" width="9" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="0aa78727-30a3-446c-9f92-b432e4b73e2e" x="0" y="13" width="66" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Status]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="db7cc27e-df31-445f-a3b7-3f110419877b" x="66" y="13" width="9" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="7e64980d-d973-4d4f-86a0-74efe0725e8e" x="321" y="2" width="52" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pelanggan ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="432b9b03-6f04-42d8-af6b-d3d5546f09a2" x="374" y="2" width="9" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="cc0f43dc-e035-4dc8-9547-4436db4b743d" x="75" y="13" width="73" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{STATUSDO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="432b9b03-6f04-42d8-af6b-d3d5546f09a2" x="374" y="13" width="9" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="3">
+				<line>
+					<reportElement uuid="6796821e-9b35-45ff-9b84-6c712001e073" x="0" y="0" width="547" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="69af9e57-4276-4d6e-8703-bb89484dc6c8" x="2" y="18" width="323" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laporan Sisa Stok Delivery Order Pelanggan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a332657e-13e1-4fa8-8aaf-2958695eb8bc" x="2" y="34" width="57" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periode :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4cd23c60-9789-47c2-a3dd-2be37d264722" x="59" y="34" width="68" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tgl1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cbdcfcad-ee34-45cf-a51d-33663e7597c9" x="149" y="34" width="100" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tgl2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e69721c0-6894-46af-bf2f-a645677d1576" x="127" y="34" width="22" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[s/d]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="226ba731-8865-4e32-a30b-ded36de2b119" x="2" y="1" width="261" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT.MIRANTI ADILHA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="3b8ee30c-a979-49e6-966a-5294c5b84715" mode="Opaque" x="0" y="4" width="547" height="25" forecolor="#66FF66" backcolor="#CCFFCC"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="225062b2-533f-45cc-9ed8-0f06828178d0" x="0" y="4" width="38" height="25"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kode Barang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="410b1104-365b-4a4e-bed4-95f7ab75189f" x="39" y="9" width="232" height="16"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Barang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="90355b19-0a8e-4db5-b85d-559180e04957" x="446" y="9" width="45" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bce79f2a-81e5-46fc-afeb-686b9cd16dd3" x="495" y="9" width="50" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Satuan]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="31e8f303-595b-4f7a-994e-7e94d40581f8" x="0" y="3" width="547" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="5f5958a2-935e-4534-9c46-5a8f3e854f3d" x="0" y="29" width="547" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="90355b19-0a8e-4db5-b85d-559180e04957" x="338" y="9" width="105" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Merk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="90355b19-0a8e-4db5-b85d-559180e04957" x="272" y="9" width="65" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kode Batch]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d611157c-606f-41f2-9dc3-67f4f900ae45" x="2" y="0" width="36" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KODEBARANG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="61a84218-471c-4524-b5ca-af972874d4d9" x="39" y="0" width="232" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMABARANG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fc87e0be-05b0-4037-a2b6-bd7c4aaff341" x="338" y="0" width="105" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JENIS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="490b47f3-c300-460a-9798-a0aa2a6d8de9" x="446" y="0" width="45" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SISASTOK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f78ee146-da6e-40dd-9cc6-2e184cf190b2" x="495" y="0" width="50" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DORINCI_SATUAN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ae662d7c-860b-4690-940c-3c51040264a4" x="272" y="0" width="65" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BARANGDO_KODEBATCH}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement uuid="8418ac81-7921-4daf-94f0-3668786bb977" x="187" y="1" width="80" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="60d8437a-17af-4958-adb1-c7cc6c1acfef" x="267" y="1" width="40" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement uuid="5619ac2d-377c-41b9-8a76-9a30650547d9" x="395" y="1" width="139" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="26" splitType="Stretch"/>
+	</summary>
+</jasperReport>

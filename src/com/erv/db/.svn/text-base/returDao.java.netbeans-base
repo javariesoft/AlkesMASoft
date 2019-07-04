@@ -1,0 +1,145 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.function.PrintfFormat;
+import com.erv.function.Util;
+import com.erv.model.retur;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import org.h2.api.Trigger;
+
+/**
+ *
+ * @author erwadi
+ */
+public class returDao {
+
+    public static boolean insertIntoRETUR(Connection con, retur r) throws SQLException {
+        String sql = "INSERT INTO RETUR "
+                + "VALUES (?, ?, ?, ?, ?,?)";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, r.getID());
+        statement.setString(2, r.getKODERETUR());
+        statement.setDate(3, r.getTANGGAL());
+        statement.setString(4, r.getKODEPELANGGAN());
+        statement.setString(5, r.getKETERANGAN());
+        statement.setInt(6, r.getIDPENJUALAN());
+        boolean h = statement.execute();
+        statement.close();
+        return !h;
+    }
+
+    public static boolean updateRETUR(Connection con, retur r) throws SQLException {
+        String sql = "SELECT * FROM RETUR WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        statement.setInt(1, r.getID());
+        ResultSet entry = statement.executeQuery();
+
+        entry.last();
+        int rows = entry.getRow();
+        entry.beforeFirst();
+        if (rows == 0) {
+            entry.close();
+            statement.close();
+            return false;
+        }
+        entry.next();
+        if (r.getKODERETUR() != null) {
+            entry.updateString("KODERETUR", r.getKODERETUR());
+        }
+        if (r.getTANGGAL() != null) {
+            entry.updateDate("TANGGAL", r.getTANGGAL());
+        }
+        if (r.getKODEPELANGGAN() != null) {
+            entry.updateString("KODEPELANGGAN", r.getKODEPELANGGAN());
+        }
+        if (r.getKETERANGAN() != null) {
+            entry.updateString("KETERANGAN", r.getKETERANGAN());
+        }
+        entry.updateInt("IDPENJUALAN", r.getIDPENJUALAN());
+        entry.updateRow();
+        entry.close();
+        statement.close();
+        return true;
+    }
+
+    public static void deleteFromRETUR(Connection con, int keyId) throws SQLException {
+        String sql = "DELETE FROM RETUR WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, keyId);
+        statement.executeUpdate();
+        statement.close();
+    }
+    public static int getID(Connection c) throws SQLException{
+        int hasil=1;
+        PreparedStatement pstmt = c.prepareStatement("select max(id) from RETUR");
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString(1)!=null){
+                hasil=rs.getInt(1)+1;
+            }
+        }
+        return hasil;
+    }
+    public static String setRetur(Connection conn) {
+        String hasil="";
+        int jum=0;
+        String tgl = com.erv.function.Util.toDateStringSql(new Date());
+        try {
+            Statement stat=conn.createStatement();
+            ResultSet rs=stat.executeQuery("select count(id) from RETUR where left(KODERETUR,2)='"+Util.getthn(tgl).substring(2,4)+"'");
+            if(rs.next()){
+            if(rs.getString(1)!=null){
+                jum=rs.getInt(1)+1;
+            }
+        }
+            hasil=(com.erv.function.Util.getthn(tgl).substring(2,4)+".NR"+ new PrintfFormat("%04d").sprintf(jum));
+            rs.close();
+            stat.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return hasil;
+    }
+    public static class triggerRetur implements Trigger {
+
+        public void init(Connection conn, String schemaName, String triggerName, String tableName, boolean before, int type) {
+            // initialize the trigger object is necessary
+        }
+
+        /**
+         * This method is called for each triggered action.
+         *
+         * @param conn a connection to the database
+         * @param oldRow the old row, or null if no old row is available (for INSERT)
+         * @param newRow the new row, or null if no new row is available (for DELETE)
+         * @throws SQLException if the operation must be undone
+         */
+        public void fire(Connection conn,
+                Object[] oldRow, Object[] newRow)
+                throws SQLException {
+            if (newRow != null && oldRow == null) {
+            }else if (newRow == null && oldRow != null) {
+                 Statement stat=conn.createStatement();
+                 stat.execute("delete from RETURRINCI where IDRETUR='"+oldRow[0].toString()+"'");
+                 System.out.println("Delete Retur Rinci");
+            }
+        }
+
+        public void close() {
+            // ignore
+        }
+
+        public void remove() {
+            // ignore
+        }
+    }
+}

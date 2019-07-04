@@ -1,0 +1,156 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.model.hutang;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import org.h2.api.Trigger;
+
+/**
+ *
+ * @author erwadi
+ */
+public class hutangDao {
+
+    public static boolean insertIntoHUTANG(Connection con, hutang h) throws SQLException {
+        String sql = "INSERT INTO HUTANG "
+                + "VALUES (?, ?, ?, ?,?,?,?,?,?)";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, h.getID());
+        statement.setString(2, h.getKODEHUTANG());
+        statement.setInt(3, h.getIDPEMBELIAN());
+        statement.setDate(4, h.getTANGGAL());
+        statement.setDouble(5, h.getJUMLAH());
+        statement.setString(6, h.getIDSUPPLIER());
+        statement.setDate(7, h.getJATUHTEMPO());
+        statement.setString(8, h.getKETERANGAN());
+        statement.setString(9, h.getSTATUS());
+        boolean hs = statement.execute();
+        statement.close();
+        return !hs;
+    }
+    public static boolean updateHUTANG(Connection con, int keyId,hutang h) throws SQLException {
+        String sql = "SELECT * FROM HUTANG WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        statement.setInt(1, keyId);
+        ResultSet entry = statement.executeQuery();
+
+        entry.last();
+        int rows = entry.getRow();
+        entry.beforeFirst();
+        if (rows == 0) {
+            entry.close();
+            statement.close();
+            return false;
+        }
+        entry.next();
+
+        if (h.getKODEHUTANG() != null) {
+            entry.updateString("KODEHUTANG", h.getKODEHUTANG());
+        }
+        entry.updateInt("IDPEMBELIAN", h.getIDPEMBELIAN());
+        if (h.getTANGGAL() != null) {
+            entry.updateDate("TANGGAL", h.getTANGGAL());
+        }
+        entry.updateDouble("JUMLAH", h.getJUMLAH());
+        if (h.getIDSUPPLIER() != null) {
+            entry.updateString("IDSUPPLIER", h.getIDSUPPLIER());
+        }
+        if (h.getJATUHTEMPO() != null) {
+            entry.updateDate("JATUHTEMPO", h.getJATUHTEMPO());
+        }
+        if (h.getKETERANGAN() != null) {
+            entry.updateString("KETERANGAN", h.getKETERANGAN());
+        }
+        if (h.getSTATUS() != null) {
+            entry.updateString("STATUS", h.getSTATUS());
+        }
+        entry.updateRow();
+        entry.close();
+        statement.close();
+        return true;
+    }
+    public static int getID(Connection c) throws SQLException{
+        int hasil=1;
+        PreparedStatement pstmt = c.prepareStatement("select max(id) from HUTANG");
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString(1)!=null){
+                hasil=rs.getInt(1)+1;
+            }
+        }
+        return hasil;
+    }
+    public static String getKodeHutang(Connection con){
+        String hasil="";
+        String tgl = com.erv.function.Util.toDateStringSql(new Date());
+        try {
+            hasil="H" + com.erv.function.Util.getbln(tgl) + com.erv.function.Util.getthn(tgl) + getID(con);
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+        return hasil;
+    }
+     public static hutang getDetails(Connection con, int id)throws SQLException, ClassNotFoundException
+    {
+       //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("select * from HUTANG where ID=?");
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        hutang ubean = new hutang();
+        while(rs.next())
+        {
+            ubean.setID(rs.getInt(1));
+            ubean.setKODEHUTANG(rs.getString(2));
+            ubean.setIDPEMBELIAN(rs.getInt(3));
+            ubean.setTANGGAL(rs.getDate(4));
+            ubean.setJUMLAH(rs.getDouble(5));
+            ubean.setIDSUPPLIER(rs.getString(6));
+            ubean.setJATUHTEMPO(rs.getDate(7));
+            ubean.setKETERANGAN(rs.getString(8));
+            ubean.setSTATUS(rs.getString(9));
+        }
+        return ubean;
+    }
+     public static class triggerHutang implements Trigger {
+
+        public void init(Connection conn, String schemaName, String triggerName, String tableName, boolean before, int type) {
+            // initialize the trigger object is necessary
+        }
+
+        /**
+         * This method is called for each triggered action.
+         *
+         * @param conn a connection to the database
+         * @param oldRow the old row, or null if no old row is available (for INSERT)
+         * @param newRow the new row, or null if no new row is available (for DELETE)
+         * @throws SQLException if the operation must be undone
+         */
+        public void fire(Connection conn,
+                Object[] oldRow, Object[] newRow)
+                throws SQLException {
+            if (newRow != null && oldRow == null) {
+            }else if (newRow == null && oldRow != null) {
+                 Statement stat=conn.createStatement();
+                 stat.execute("delete from HUTANGBAYAR where IDHUTANG="+oldRow[0].toString()+"");
+                 System.out.println("Delete Hutang Bayar");
+            }
+        }
+
+        public void close() {
+            // ignore
+        }
+
+        public void remove() {
+            // ignore
+        }
+    }
+}

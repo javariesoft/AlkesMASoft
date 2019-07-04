@@ -1,0 +1,133 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.model.jurnal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import org.h2.api.Trigger;
+
+/**
+ *
+ * @author erwadi
+ */
+public class jurnalDao {
+
+    public static boolean insertIntoJURNAL(Connection con, jurnal j) throws SQLException {
+        String sql = "INSERT INTO JURNAL (ID,KODEJURNAL, "
+                + "TANGGAL, DESKRIPSI)"
+                + "VALUES (?,?, ?, ?)";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, j.getID());
+        statement.setString(2, j.getKODEJURNAL());
+        statement.setDate(3, j.getTANGGAL());
+        statement.setString(4, j.getDESKRIPSI());
+        boolean i = statement.execute();
+        statement.close();
+        return i;
+    }
+
+    public static boolean updateJURNAL(Connection con, int keyId, jurnal j) throws SQLException {
+        String sql = "SELECT * FROM JURNAL WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        statement.setInt(1, keyId);
+        ResultSet entry = statement.executeQuery();
+        entry.last();
+        int rows = entry.getRow();
+        entry.beforeFirst();
+        if (rows == 0) {
+            entry.close();
+            statement.close();
+            con.close();
+            return false;
+        }
+        entry.next();
+        if (j.getKODEJURNAL() != null) {
+            entry.updateString("KODEJURNAL", j.getKODEJURNAL());
+        }
+        if (j.getTANGGAL() != null) {
+            entry.updateDate("TANGGAL", j.getTANGGAL());
+        }
+        if (j.getDESKRIPSI() != null) {
+            entry.updateString("DESKRIPSI", j.getDESKRIPSI());
+        }
+        entry.updateRow();
+        entry.close();
+        statement.close();
+        return true;
+    }
+
+    public static void deleteFromJURNAL(Connection con, int keyId) throws SQLException {
+        String sql = "DELETE FROM JURNAL WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, keyId);
+        statement.executeUpdate();
+        statement.close();
+    }
+
+    public jurnal getJurnal(Connection conn,String keyId) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement("select ID, KODEJURNAL, TANGGAL, DESKRIPSI from JURNAL");
+        ResultSet rs = statement.executeQuery();
+        jurnal bean = new jurnal();
+        while (rs.next()) {
+            bean.setID(rs.getInt("ID"));
+            bean.setKODEJURNAL(rs.getString("KODEJURNAL"));
+            bean.setTANGGAL(rs.getDate("TANGGAL"));
+            bean.setDESKRIPSI(rs.getString("DESKRIPSI"));
+            // Process data here
+        }
+        rs.close();
+        statement.close();
+        return bean;
+    }
+    public static int getIDJurnal(Connection con) throws SQLException{
+        int hasil=1;
+        PreparedStatement pstmt = con.prepareStatement("select max(ID) from JURNAL");
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString(1)!=null){
+                hasil=(rs.getInt(1)+1);
+            }
+        }
+        return hasil;
+    }
+     public static class triggerJurnal implements Trigger {
+
+        public void init(Connection conn, String schemaName, String triggerName, String tableName, boolean before, int type) {
+            // initialize the trigger object is necessary
+        }
+
+        /**
+         * This method is called for each triggered action.
+         *
+         * @param conn a connection to the database
+         * @param oldRow the old row, or null if no old row is available (for INSERT)
+         * @param newRow the new row, or null if no new row is available (for DELETE)
+         * @throws SQLException if the operation must be undone
+         */
+        public void fire(Connection conn,
+                Object[] oldRow, Object[] newRow)
+                throws SQLException {
+            if (newRow != null && oldRow == null) {
+            }else if (newRow == null && oldRow != null) {
+                 Statement stat=conn.createStatement();
+                 stat.execute("delete from RINCIJURNAL where KODEJURNAL="+oldRow[0]+"");
+                 System.out.println("Delete Rinci Jurnal");
+            }
+        }
+        public void close() {
+            // ignore
+        }
+
+        public void remove() {
+            // ignore
+        }
+    }
+    
+}

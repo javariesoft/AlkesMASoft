@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db
+END
+bankDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/bankDao.java
+END
+perkiraanDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/server/!svn/ver/1/JavarieSoft/src/com/erv/db/perkiraanDao.java
+END
+penjualanDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/penjualanDao.java
+END
+settingDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/settingDao.java
+END
+koneksi.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/server/!svn/ver/9/JavarieSoft/src/com/erv/db/koneksi.java
+END
+rincijurnalDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/rincijurnalDao.java
+END
+stokDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/server/!svn/ver/13/JavarieSoft/src/com/erv/db/stokDao.java
+END
+rincipembelianDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/server/!svn/ver/9/JavarieSoft/src/com/erv/db/rincipembelianDao.java
+END
+returbelirinciDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/server/!svn/ver/9/JavarieSoft/src/com/erv/db/returbelirinciDao.java
+END
+jenisbarangDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/jenisbarangDao.java
+END
+piutangbayarDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/piutangbayarDao.java
+END
+rincireturDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/rincireturDao.java
+END
+hutangDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/hutangDao.java
+END
+barangDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/barangDao.java
+END
+jurnalDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/server/!svn/ver/8/JavarieSoft/src/com/erv/db/jurnalDao.java
+END
+pembelianDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/pembelianDao.java
+END
+pelangganDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/pelangganDao.java
+END
+returbeliDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/server/!svn/ver/13/JavarieSoft/src/com/erv/db/returbeliDao.java
+END
+returDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/returDao.java
+END
+rincipenjualanDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/rincipenjualanDao.java
+END
+supplierDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/supplierDao.java
+END
+hutangbayarDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/hutangbayarDao.java
+END
+piutangDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/piutangDao.java
+END
+salesDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/salesDao.java
+END
+saldoperiodeDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/server/!svn/ver/14/JavarieSoft/src/com/erv/db/saldoperiodeDao.java
+END

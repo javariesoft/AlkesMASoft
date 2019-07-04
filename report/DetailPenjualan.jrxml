@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetailPenjualan" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="06355668-b6d3-4300-977b-76170596b1a9">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="30"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E:\\PROJECT\\MANPRO JAVARIESOFT\\MIRANTIADILHA\\ALKESMIRANTI\\ALKESMIRANTI1.8\\AlkesMASoft\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tgl1" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2018-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tgl2" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2018-01-30"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PKdPel" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     PENJUALAN."FAKTUR" AS PENJUALAN_FAKTUR,
+     PENJUALAN."TANGGAL" AS PENJUALAN_TANGGAL,
+     PENJUALAN."KODEPELANGGAN" AS PENJUALAN_KODEPELANGGAN,
+     PENJUALAN."CASH" AS PENJUALAN_CASH,
+     PENJUALAN."TGLLUNAS" AS PENJUALAN_TGLLUNAS,
+     PENJUALAN."ID" AS PENJUALAN_ID,
+     RINCIPENJUALAN."KODEBARANG" AS RINCIPENJUALAN_KODEBARANG,
+     RINCIPENJUALAN."JUMLAH" AS RINCIPENJUALAN_JUMLAH,
+     RINCIPENJUALAN."HARGA" AS RINCIPENJUALAN_HARGA,
+     RINCIPENJUALAN."DISKON" AS RINCIPENJUALAN_DISKON,
+     RINCIPENJUALAN."TOTAL" AS RINCIPENJUALAN_TOTAL,
+     RINCIPENJUALAN."PPN" AS RINCIPENJUALAN_PPN,
+     RINCIPENJUALAN."IDDO" AS RINCIPENJUALAN_IDDO,
+     RINCIPENJUALAN."SATUAN" AS RINCIPENJUALAN_SATUAN,
+     RINCIPENJUALAN."JUMLAHKECIL" AS RINCIPENJUALAN_JUMLAHKECIL,
+     RINCIPENJUALAN."COGS" AS RINCIPENJUALAN_COGS,
+     RINCIPENJUALAN."KODEBATCH" AS RINCIPENJUALAN_KODEBATCH,
+     RINCIPENJUALAN."EXPIRE" AS RINCIPENJUALAN_EXPIRE,
+     RINCIPENJUALAN."DISKONP" AS RINCIPENJUALAN_DISKONP,
+     RINCIPENJUALAN."BONUS" AS RINCIPENJUALAN_BONUS,
+     PELANGGAN.NAMA as NAMAPELANGGAN
+FROM
+     "PUBLIC"."PENJUALAN" PENJUALAN INNER JOIN "PUBLIC"."RINCIPENJUALAN" RINCIPENJUALAN ON PENJUALAN."ID" = RINCIPENJUALAN."IDPENJUALAN"
+INNER JOIN PELANGGAN ON PENJUALAN."KODEPELANGGAN" = PELANGGAN.KODEPELANGGAN
+where PENJUALAN."KODEPELANGGAN"=$P{PKdPel} AND PENJUALAN."TANGGAL" >= $P{tgl1} AND PENJUALAN."TANGGAL" <= $P{tgl2}]]>
+	</queryString>
+	<field name="PENJUALAN_FAKTUR" class="java.lang.String"/>
+	<field name="PENJUALAN_TANGGAL" class="java.sql.Date"/>
+	<field name="PENJUALAN_KODEPELANGGAN" class="java.lang.String"/>
+	<field name="PENJUALAN_CASH" class="java.lang.String"/>
+	<field name="PENJUALAN_TGLLUNAS" class="java.sql.Date"/>
+	<field name="PENJUALAN_ID" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_KODEBARANG" class="java.lang.String"/>
+	<field name="RINCIPENJUALAN_JUMLAH" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_HARGA" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_DISKON" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_TOTAL" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_PPN" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_IDDO" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_SATUAN" class="java.lang.String"/>
+	<field name="RINCIPENJUALAN_JUMLAHKECIL" class="java.lang.Integer"/>
+	<field name="RINCIPENJUALAN_COGS" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_KODEBATCH" class="java.lang.String"/>
+	<field name="RINCIPENJUALAN_EXPIRE" class="java.sql.Date"/>
+	<field name="RINCIPENJUALAN_DISKONP" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_BONUS" class="java.lang.String"/>
+	<field name="NAMAPELANGGAN" class="java.lang.String"/>
+	<variable name="RINCIPENJUALAN_TOTAL_1" class="java.lang.Double" resetType="Group" resetGroup="faktur" calculation="Sum">
+		<variableExpression><![CDATA[$F{RINCIPENJUALAN_TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="RINCIPENJUALAN_TOTAL_2" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{RINCIPENJUALAN_TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="RINCIPENJUALAN_TOTAL_3" class="java.lang.Double" resetType="Group" resetGroup="faktur" calculation="Sum">
+		<variableExpression><![CDATA[$F{RINCIPENJUALAN_TOTAL}]]></variableExpression>
+	</variable>
+	<group name="faktur">
+		<groupExpression><![CDATA[$F{PENJUALAN_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="69">
+				<textField hyperlinkType="ReportExecution">
+					<reportElement uuid="d6309f18-7df9-4bc1-b8ac-b6aff95f7a90" x="0" y="21" width="74" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{PENJUALAN_FAKTUR}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement uuid="25cee33c-7ef2-467d-9b53-bc44ab4bbe24" x="74" y="21" width="71" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{PENJUALAN_TANGGAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="d35f950f-bd4c-4c36-8d67-fc4530882eaa" x="396" y="21" width="59" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[( $F{PENJUALAN_CASH}=='0' ? "Lunas" : ( $F{PENJUALAN_CASH}=='1' ? "Kredit" : "Bank" ) )]]></textFieldExpression>
+				</textField>
+				<subreport>
+					<reportElement uuid="c4aed040-6a85-4bd0-9d5d-227588211d61" mode="Opaque" x="0" y="41" width="555" height="28" isRemoveLineWhenBlank="true" backcolor="#CCFFFF"/>
+					<subreportParameter name="IDJUAL">
+						<subreportParameterExpression><![CDATA[$F{PENJUALAN_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DetailPenjualan_Piutang.jasper"]]></subreportExpression>
+				</subreport>
+				<textField>
+					<reportElement uuid="df0e81e7-547a-4cf9-8f7b-0717d93553d0" x="145" y="21" width="251" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{NAMAPELANGGAN}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="faktur" pattern="#,##0.00">
+					<reportElement uuid="99f11633-68e5-4012-8573-af1a8ca3c979" x="455" y="21" width="100" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{RINCIPENJUALAN_TOTAL_3}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="38acb8e6-c5d8-4b5e-b5b2-dcf90cab8988" mode="Opaque" x="0" y="0" width="74" height="20" backcolor="#CCCCFF"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[No Faktur]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="a3fdf6e9-3f43-4add-8aac-dd1b4e794f18" mode="Opaque" x="74" y="0" width="71" height="20" backcolor="#CCCCFF"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tanggal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="415ceb3d-9963-4e6b-b62a-2e6d102c9d0c" mode="Opaque" x="145" y="0" width="251" height="20" backcolor="#CCCCFF"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pelanggan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="d1cd7daf-62a7-4058-918d-5563c87a716a" mode="Opaque" x="396" y="0" width="59" height="20" backcolor="#CCCCFF"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Status]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="72f3b0a8-a761-4847-81cd-33832e974566" mode="Opaque" x="455" y="0" width="100" height="20" backcolor="#CCCCFF"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nilai Penjualan]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e2ee9d84-c2bd-47a1-b024-9975f07e3dc8" x="0" y="0" width="243" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT.MIRANTI ADILHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1f7a192c-11b1-4208-92eb-696ea11a5698" x="0" y="18" width="243" height="18"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laporan Penjualan]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

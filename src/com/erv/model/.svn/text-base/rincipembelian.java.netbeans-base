@@ -1,0 +1,69 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+
+/**
+ *
+ * @author erwadi
+ */
+public class rincipembelian {
+    private int ID;
+    private int IDPEMBELIAN;
+    private String KODEBARANG;
+    private int JUMLAH;
+    private double HARGA;
+    private double TOTAL;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getIDPEMBELIAN() {
+        return IDPEMBELIAN;
+    }
+
+    public void setIDPEMBELIAN(int IDPEMBELIAN) {
+        this.IDPEMBELIAN = IDPEMBELIAN;
+    }
+
+    public String getKODEBARANG() {
+        return KODEBARANG;
+    }
+
+    public void setKODEBARANG(String KODEBARANG) {
+        this.KODEBARANG = KODEBARANG;
+    }
+
+    public double getHARGA() {
+        return HARGA;
+    }
+
+    public void setHARGA(double HARGA) {
+        this.HARGA = HARGA;
+    }
+
+    public int getJUMLAH() {
+        return JUMLAH;
+    }
+
+    public void setJUMLAH(int JUMLAH) {
+        this.JUMLAH = JUMLAH;
+    }
+
+    public double getTOTAL() {
+        return TOTAL;
+    }
+
+    public void setTOTAL(double TOTAL) {
+        this.TOTAL = TOTAL;
+    }
+
+   
+    
+}

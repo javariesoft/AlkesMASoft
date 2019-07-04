@@ -1,0 +1,84 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+
+/**
+ *
+ * @author erwadi
+ */
+public class rincipenjualan {
+    private int ID;
+    private int IDPENJUALAN;
+    private String KODEBARANG;
+    private int JUMLAH;
+    private double HARGA;
+    private float DISKON;
+    private double TOTAL;
+    private float PPN;
+    public double getHARGA() {
+        return HARGA;
+    }
+
+    public void setHARGA(double HARGA) {
+        this.HARGA = HARGA;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getIDPENJUALAN() {
+        return IDPENJUALAN;
+    }
+
+    public void setIDPENJUALAN(int IDPENJUALAN) {
+        this.IDPENJUALAN = IDPENJUALAN;
+    }
+
+    public int getJUMLAH() {
+        return JUMLAH;
+    }
+
+    public void setJUMLAH(int JUMLAH) {
+        this.JUMLAH = JUMLAH;
+    }
+
+    public String getKODEBARANG() {
+        return KODEBARANG;
+    }
+
+    public void setKODEBARANG(String KODEBARANG) {
+        this.KODEBARANG = KODEBARANG;
+    }
+
+    public float getDISKON() {
+        return DISKON;
+    }
+
+    public void setDISKON(float DISKON) {
+        this.DISKON = DISKON;
+    }
+
+    public double getTOTAL() {
+        return TOTAL;
+    }
+
+    public void setTOTAL(double TOTAL) {
+        this.TOTAL = TOTAL;
+    }
+
+    public float getPPN() {
+        return PPN;
+    }
+
+    public void setPPN(float PPN) {
+        this.PPN = PPN;
+    }
+    
+}

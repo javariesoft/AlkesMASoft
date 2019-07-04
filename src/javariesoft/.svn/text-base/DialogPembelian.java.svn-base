@@ -1,0 +1,1588 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * DialogPembelian.java
+ *
+ * Created on Dec 2, 2011, 6:29:48 AM
+ */
+package javariesoft;
+
+import com.erv.db.barangDao;
+import com.erv.db.hutangDao;
+import com.erv.db.jurnalDao;
+import com.erv.db.koneksi;
+import com.erv.db.pembelianDao;
+import com.erv.db.returbeliDao;
+import com.erv.db.returbelirinciDao;
+import com.erv.db.rincipembelianDao;
+import com.erv.db.settingDao;
+import com.erv.db.stokDao;
+import com.erv.db.supplierDao;
+import com.erv.function.JDBCAdapter;
+import com.erv.model.barang;
+import com.erv.model.hutang;
+import com.erv.model.jurnal;
+import com.erv.model.pembelian;
+import com.erv.model.returbeli;
+import com.erv.model.returbelirinci;
+import com.erv.model.rincipembelian;
+import com.erv.model.stok;
+import com.erv.model.supplier;
+import java.awt.Font;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
+/**
+ *
+ * @author erwadi
+ */
+public class DialogPembelian extends javax.swing.JDialog {
+    String nofak="",noretur="";
+    java.text.DateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+    double tppn,tdiskon,ttotalbayar,tdp,total,hpp;
+    Connection cm;
+    Connection c;
+    int IDBELI=0,IDretur=0;
+    pembelian p=null;
+    Statement stat = null;
+    barangDao dbbarang=null;
+    int IDJurnal=0;
+    String pilSupplier= "0";
+    returbeli r = null;
+    barang brg;
+    hutang ht;
+    double sisa = 0;
+    /** Creates new form DialogPembelian */
+    public DialogPembelian(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        awal();
+    }
+    public DialogPembelian(int id, double tot){
+        initComponents();
+        awal();
+         try {
+            // TODO add your handling code here:
+            p = pembelianDao.getDetails(c,id);
+            IDBELI = p.getID();
+            nofaktur.setText(p.getNOFAKTUR());
+            Calendar cld = Calendar.getInstance();
+            cld.setTime(p.getTANGGAL());
+            tanggal.setSelectedDate(cld);
+            kodeSupplier.setText(p.getIDSUPPLIER());
+            kodeSupplier1.setText(p.getIDSUPPLIER());
+            supplier plg = new supplierDao().getDetails(c,p.getIDSUPPLIER());
+            namaSupplier.setText(plg.getNAMA());
+            namaSupplier1.setText(plg.getNAMA());
+            cbostatusBeli.setSelectedIndex(Integer.parseInt(p.getCASH()));
+            cld.setTime(p.getTGLBAYAR());
+            tglBayar.setSelectedDate(cld);
+            diskon.setText("" + p.getDISKON());
+            cboStatDiskon.setSelectedIndex(1);
+            total = tot;
+            hasilAkhir();
+            ResultSet re = c.createStatement().executeQuery("select * from RINCIPEMBELIAN where IDPEMBELIAN=" + p.getID() + "");
+            hapusTabel();
+            buatTabel();
+            while (re.next()) {
+                brg = new barangDao(c).getDetails(re.getString(3));
+                stat.execute("insert into rinci values('" + re.getString(3)
+                        + "','" + brg.getNAMABARANG()
+                        + "'," + re.getInt(4)
+                        + "," + re.getString(5)
+                        + "," + re.getString(6) + ")");
+            }
+            total = 0;
+            hpp = 0;
+            hasilBayar.setText("0"); 
+            reloadData();
+            jTabbedPane2.setSelectedIndex(1); 
+        } catch (Exception ex) {
+        }
+    }
+    void awal(){
+        jScrollPane3.setSize(500, 150);
+        jScrollPane2.setSize(500, 150);
+        tanggal.setDateFormat(d);
+        tglBayar.setDateFormat(d);
+        tglRetur.setDateFormat(d);
+        p=new pembelian();
+        jScrollPane2.setVisible(false);
+        jScrollPane3.setVisible(false);
+        try {
+            cm=koneksi.getKoneksiM();
+            c=koneksi.getKoneksiJ();
+            stat=cm.createStatement();
+            dbbarang=new barangDao(c);
+            r=new returbeli();
+            ht=new hutang();
+            buatTabel();
+        } catch (Exception ex) {
+            Logger.getLogger(DialogPembelian.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        kosongFaktur();
+        kosongBarang();
+        kosongRetur();
+        setFaktur();
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        panelCool1 = new com.erv.function.PanelCool();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        nofaktur = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        tanggal = new datechooser.beans.DateChooserCombo();
+        jLabel3 = new javax.swing.JLabel();
+        kodeSupplier = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        namaSupplier = new javax.swing.JTextField();
+        btnTambah = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        cbostatusBeli = new javax.swing.JComboBox();
+        jLabel9 = new javax.swing.JLabel();
+        tglBayar = new datechooser.beans.DateChooserCombo();
+        jLabel10 = new javax.swing.JLabel();
+        diskon = new javax.swing.JTextField();
+        cboStatDiskon = new javax.swing.JComboBox();
+        jLabel11 = new javax.swing.JLabel();
+        ppn = new javax.swing.JTextField();
+        cboStatPPN = new javax.swing.JComboBox();
+        txtkodeFaktur = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        txtkodeRetur = new javax.swing.JTextField();
+        tglRetur = new datechooser.beans.DateChooserCombo();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        kodeSupplier1 = new javax.swing.JTextField();
+        namaSupplier1 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        kodeBarang = new javax.swing.JTextField();
+        namaBarang = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        hargaBarang = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jumlahBarang = new javax.swing.JTextField();
+        btnInsert = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        hasilTotal = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        hasilDiskon = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        hasilBayar = new javax.swing.JTextField();
+        hasilSisa = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        hasilTotalBayar = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        hasilppn = new javax.swing.JTextField();
+        btnSimpanHasil = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        btnFaktur = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(DialogPembelian.class);
+        setTitle(resourceMap.getString("Form.title")); // NOI18N
+        setName("Form"); // NOI18N
+
+        panelCool1.setName("panelCool1"); // NOI18N
+        panelCool1.setLayout(null);
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        jTable3.setName("jTable3"); // NOI18N
+        jTable3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable3KeyPressed(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTable3);
+
+        panelCool1.add(jScrollPane3);
+        jScrollPane3.setBounds(140, 130, 20, 20);
+
+        jTabbedPane2.setFont(resourceMap.getFont("jTabbedPane2.font")); // NOI18N
+        jTabbedPane2.setName("jTabbedPane2"); // NOI18N
+        jTabbedPane2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane2StateChanged(evt);
+            }
+        });
+
+        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setLayout(null);
+
+        jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(20, 11, 80, 15);
+
+        nofaktur.setFont(resourceMap.getFont("nofaktur.font")); // NOI18N
+        nofaktur.setText(resourceMap.getString("nofaktur.text")); // NOI18N
+        nofaktur.setName("nofaktur"); // NOI18N
+        nofaktur.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nofakturKeyPressed(evt);
+            }
+        });
+        jPanel1.add(nofaktur);
+        nofaktur.setBounds(230, 10, 100, 21);
+
+        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(20, 40, 90, 15);
+
+        tanggal.setFieldFont(resourceMap.getFont("tanggal.dch_combo_fieldFont")); // NOI18N
+        jPanel1.add(tanggal);
+        tanggal.setBounds(130, 40, 155, 20);
+
+        jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(20, 70, 100, 15);
+
+        kodeSupplier.setFont(resourceMap.getFont("kodeSupplier.font")); // NOI18N
+        kodeSupplier.setText(resourceMap.getString("kodeSupplier.text")); // NOI18N
+        kodeSupplier.setName("kodeSupplier"); // NOI18N
+        kodeSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kodeSupplierActionPerformed(evt);
+            }
+        });
+        kodeSupplier.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                kodeSupplierKeyPressed(evt);
+            }
+        });
+        jPanel1.add(kodeSupplier);
+        kodeSupplier.setBounds(130, 70, 130, 21);
+
+        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(20, 100, 100, 15);
+
+        namaSupplier.setFont(resourceMap.getFont("namaSupplier.font")); // NOI18N
+        namaSupplier.setText(resourceMap.getString("namaSupplier.text")); // NOI18N
+        namaSupplier.setName("namaSupplier"); // NOI18N
+        jPanel1.add(namaSupplier);
+        namaSupplier.setBounds(130, 100, 220, 21);
+
+        btnTambah.setFont(resourceMap.getFont("btnTambah.font")); // NOI18N
+        btnTambah.setIcon(resourceMap.getIcon("btnTambah.icon")); // NOI18N
+        btnTambah.setText(resourceMap.getString("btnTambah.text")); // NOI18N
+        btnTambah.setName("btnTambah"); // NOI18N
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTambah);
+        btnTambah.setBounds(20, 123, 110, 30);
+
+        jLabel8.setFont(resourceMap.getFont("jLabel8.font")); // NOI18N
+        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
+        jLabel8.setName("jLabel8"); // NOI18N
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(370, 10, 120, 15);
+
+        cbostatusBeli.setFont(resourceMap.getFont("cbostatusBeli.font")); // NOI18N
+        cbostatusBeli.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CASH", "HUTANG" }));
+        cbostatusBeli.setName("cbostatusBeli"); // NOI18N
+        jPanel1.add(cbostatusBeli);
+        cbostatusBeli.setBounds(480, 10, 110, 21);
+
+        jLabel9.setFont(resourceMap.getFont("jLabel9.font")); // NOI18N
+        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
+        jLabel9.setName("jLabel9"); // NOI18N
+        jPanel1.add(jLabel9);
+        jLabel9.setBounds(370, 40, 90, 15);
+
+        tglBayar.setFieldFont(resourceMap.getFont("tglBayar.dch_combo_fieldFont")); // NOI18N
+        jPanel1.add(tglBayar);
+        tglBayar.setBounds(480, 40, 155, 20);
+
+        jLabel10.setFont(resourceMap.getFont("jLabel10.font")); // NOI18N
+        jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
+        jLabel10.setName("jLabel10"); // NOI18N
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(370, 70, 100, 15);
+
+        diskon.setFont(resourceMap.getFont("diskon.font")); // NOI18N
+        diskon.setName("diskon"); // NOI18N
+        diskon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                diskonKeyPressed(evt);
+            }
+        });
+        jPanel1.add(diskon);
+        diskon.setBounds(480, 70, 150, 22);
+
+        cboStatDiskon.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "%", "CASH" }));
+        cboStatDiskon.setName("cboStatDiskon"); // NOI18N
+        jPanel1.add(cboStatDiskon);
+        cboStatDiskon.setBounds(640, 70, 52, 20);
+
+        jLabel11.setFont(resourceMap.getFont("jLabel11.font")); // NOI18N
+        jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
+        jLabel11.setName("jLabel11"); // NOI18N
+        jPanel1.add(jLabel11);
+        jLabel11.setBounds(370, 100, 100, 15);
+
+        ppn.setFont(resourceMap.getFont("ppn.font")); // NOI18N
+        ppn.setName("ppn"); // NOI18N
+        ppn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ppnKeyPressed(evt);
+            }
+        });
+        jPanel1.add(ppn);
+        ppn.setBounds(480, 100, 150, 22);
+
+        cboStatPPN.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "%", "CASH" }));
+        cboStatPPN.setName("cboStatPPN"); // NOI18N
+        jPanel1.add(cboStatPPN);
+        cboStatPPN.setBounds(640, 100, 52, 20);
+
+        txtkodeFaktur.setFont(resourceMap.getFont("txtkodeFaktur.font")); // NOI18N
+        txtkodeFaktur.setText(resourceMap.getString("txtkodeFaktur.text")); // NOI18N
+        txtkodeFaktur.setEnabled(false);
+        txtkodeFaktur.setName("txtkodeFaktur"); // NOI18N
+        jPanel1.add(txtkodeFaktur);
+        txtkodeFaktur.setBounds(130, 10, 100, 21);
+
+        jTabbedPane2.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
+
+        jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setLayout(null);
+
+        txtkodeRetur.setFont(resourceMap.getFont("txtkodeRetur.font")); // NOI18N
+        txtkodeRetur.setText(resourceMap.getString("txtkodeRetur.text")); // NOI18N
+        txtkodeRetur.setName("txtkodeRetur"); // NOI18N
+        txtkodeRetur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtkodeReturActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtkodeRetur);
+        txtkodeRetur.setBounds(130, 10, 140, 22);
+
+        tglRetur.setFieldFont(resourceMap.getFont("tglRetur.dch_combo_fieldFont")); // NOI18N
+        jPanel2.add(tglRetur);
+        tglRetur.setBounds(130, 40, 150, 20);
+
+        jLabel21.setFont(resourceMap.getFont("jLabel21.font")); // NOI18N
+        jLabel21.setText(resourceMap.getString("jLabel21.text")); // NOI18N
+        jLabel21.setName("jLabel21"); // NOI18N
+        jPanel2.add(jLabel21);
+        jLabel21.setBounds(20, 10, 90, 20);
+
+        jLabel20.setFont(resourceMap.getFont("jLabel20.font")); // NOI18N
+        jLabel20.setText(resourceMap.getString("jLabel20.text")); // NOI18N
+        jLabel20.setName("jLabel20"); // NOI18N
+        jPanel2.add(jLabel20);
+        jLabel20.setBounds(20, 40, 90, 20);
+
+        jLabel22.setFont(resourceMap.getFont("jLabel22.font")); // NOI18N
+        jLabel22.setText(resourceMap.getString("jLabel22.text")); // NOI18N
+        jLabel22.setName("jLabel22"); // NOI18N
+        jPanel2.add(jLabel22);
+        jLabel22.setBounds(20, 70, 120, 20);
+
+        jLabel24.setFont(resourceMap.getFont("jLabel24.font")); // NOI18N
+        jLabel24.setText(resourceMap.getString("jLabel24.text")); // NOI18N
+        jLabel24.setName("jLabel24"); // NOI18N
+        jPanel2.add(jLabel24);
+        jLabel24.setBounds(20, 100, 120, 20);
+
+        kodeSupplier1.setFont(resourceMap.getFont("kodeSupplier1.font")); // NOI18N
+        kodeSupplier1.setName("kodeSupplier1"); // NOI18N
+        kodeSupplier1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kodeSupplier1ActionPerformed(evt);
+            }
+        });
+        kodeSupplier1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                kodeSupplier1KeyPressed(evt);
+            }
+        });
+        jPanel2.add(kodeSupplier1);
+        kodeSupplier1.setBounds(130, 70, 150, 22);
+
+        namaSupplier1.setFont(resourceMap.getFont("namaSupplier1.font")); // NOI18N
+        namaSupplier1.setEnabled(false);
+        namaSupplier1.setName("namaSupplier1"); // NOI18N
+        jPanel2.add(namaSupplier1);
+        namaSupplier1.setBounds(130, 100, 270, 22);
+
+        jTabbedPane2.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
+
+        panelCool1.add(jTabbedPane2);
+        jTabbedPane2.setBounds(10, 10, 880, 190);
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        jTable2.setName("jTable2"); // NOI18N
+        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable2KeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
+        panelCool1.add(jScrollPane2);
+        jScrollPane2.setBounds(10, 240, 20, 20);
+
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        jTable1.setName("jTable1"); // NOI18N
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        panelCool1.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 250, 880, 170);
+
+        jPanel4.setName("jPanel4"); // NOI18N
+        jPanel4.setLayout(null);
+
+        jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel5.setName("jLabel5"); // NOI18N
+        jPanel4.add(jLabel5);
+        jLabel5.setBounds(90, 0, 380, 20);
+
+        kodeBarang.setFont(resourceMap.getFont("kodeBarang.font")); // NOI18N
+        kodeBarang.setText(resourceMap.getString("kodeBarang.text")); // NOI18N
+        kodeBarang.setName("kodeBarang"); // NOI18N
+        kodeBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kodeBarangActionPerformed(evt);
+            }
+        });
+        kodeBarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                kodeBarangKeyPressed(evt);
+            }
+        });
+        jPanel4.add(kodeBarang);
+        kodeBarang.setBounds(0, 20, 90, 21);
+
+        namaBarang.setFont(resourceMap.getFont("kodeBarang.font")); // NOI18N
+        namaBarang.setText(resourceMap.getString("namaBarang.text")); // NOI18N
+        namaBarang.setName("namaBarang"); // NOI18N
+        jPanel4.add(namaBarang);
+        namaBarang.setBounds(90, 20, 380, 21);
+
+        jLabel18.setFont(resourceMap.getFont("jLabel18.font")); // NOI18N
+        jLabel18.setText(resourceMap.getString("jLabel18.text")); // NOI18N
+        jLabel18.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel18.setName("jLabel18"); // NOI18N
+        jPanel4.add(jLabel18);
+        jLabel18.setBounds(0, 0, 90, 20);
+
+        hargaBarang.setFont(resourceMap.getFont("hargaBarang.font")); // NOI18N
+        hargaBarang.setText(resourceMap.getString("hargaBarang.text")); // NOI18N
+        hargaBarang.setName("hargaBarang"); // NOI18N
+        jPanel4.add(hargaBarang);
+        hargaBarang.setBounds(470, 20, 120, 21);
+
+        jLabel7.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
+        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
+        jLabel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel7.setName("jLabel7"); // NOI18N
+        jPanel4.add(jLabel7);
+        jLabel7.setBounds(470, 0, 120, 20);
+
+        jLabel6.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel6.setName("jLabel6"); // NOI18N
+        jPanel4.add(jLabel6);
+        jLabel6.setBounds(680, 0, 200, 20);
+
+        jumlahBarang.setFont(resourceMap.getFont("kodeBarang.font")); // NOI18N
+        jumlahBarang.setText(resourceMap.getString("jumlahBarang.text")); // NOI18N
+        jumlahBarang.setName("jumlahBarang"); // NOI18N
+        jumlahBarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jumlahBarangKeyPressed(evt);
+            }
+        });
+        jPanel4.add(jumlahBarang);
+        jumlahBarang.setBounds(590, 20, 90, 21);
+
+        btnInsert.setFont(resourceMap.getFont("btnInsert.font")); // NOI18N
+        btnInsert.setText(resourceMap.getString("btnInsert.text")); // NOI18N
+        btnInsert.setName("btnInsert"); // NOI18N
+        btnInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnInsert);
+        btnInsert.setBounds(690, 20, 80, 23);
+
+        btnDelete.setFont(resourceMap.getFont("btnDelete.font")); // NOI18N
+        btnDelete.setText(resourceMap.getString("btnDelete.text")); // NOI18N
+        btnDelete.setName("btnDelete"); // NOI18N
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnDelete);
+        btnDelete.setBounds(770, 20, 80, 23);
+
+        jLabel19.setFont(resourceMap.getFont("jLabel19.font")); // NOI18N
+        jLabel19.setText(resourceMap.getString("jLabel19.text")); // NOI18N
+        jLabel19.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel19.setName("jLabel19"); // NOI18N
+        jPanel4.add(jLabel19);
+        jLabel19.setBounds(590, 0, 90, 20);
+
+        panelCool1.add(jPanel4);
+        jPanel4.setBounds(10, 200, 880, 50);
+
+        jPanel3.setName("jPanel3"); // NOI18N
+        jPanel3.setLayout(null);
+
+        jLabel12.setFont(resourceMap.getFont("jLabel12.font")); // NOI18N
+        jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
+        jLabel12.setName("jLabel12"); // NOI18N
+        jPanel3.add(jLabel12);
+        jLabel12.setBounds(20, 10, 110, 20);
+
+        hasilTotal.setFont(resourceMap.getFont("hasilTotal.font")); // NOI18N
+        hasilTotal.setEnabled(false);
+        hasilTotal.setName("hasilTotal"); // NOI18N
+        jPanel3.add(hasilTotal);
+        hasilTotal.setBounds(140, 10, 180, 22);
+
+        jLabel13.setFont(resourceMap.getFont("jLabel13.font")); // NOI18N
+        jLabel13.setText(resourceMap.getString("jLabel13.text")); // NOI18N
+        jLabel13.setName("jLabel13"); // NOI18N
+        jPanel3.add(jLabel13);
+        jLabel13.setBounds(20, 40, 100, 20);
+
+        hasilDiskon.setFont(resourceMap.getFont("hasilDiskon.font")); // NOI18N
+        hasilDiskon.setEnabled(false);
+        hasilDiskon.setName("hasilDiskon"); // NOI18N
+        hasilDiskon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                hasilDiskonKeyPressed(evt);
+            }
+        });
+        jPanel3.add(hasilDiskon);
+        hasilDiskon.setBounds(140, 40, 180, 22);
+
+        jLabel14.setFont(resourceMap.getFont("jLabel14.font")); // NOI18N
+        jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
+        jLabel14.setName("jLabel14"); // NOI18N
+        jPanel3.add(jLabel14);
+        jLabel14.setBounds(340, 40, 100, 20);
+
+        jLabel15.setFont(resourceMap.getFont("jLabel15.font")); // NOI18N
+        jLabel15.setText(resourceMap.getString("jLabel15.text")); // NOI18N
+        jLabel15.setName("jLabel15"); // NOI18N
+        jPanel3.add(jLabel15);
+        jLabel15.setBounds(340, 70, 90, 20);
+
+        hasilBayar.setFont(resourceMap.getFont("hasilBayar.font")); // NOI18N
+        hasilBayar.setName("hasilBayar"); // NOI18N
+        hasilBayar.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                hasilBayarCaretUpdate(evt);
+            }
+        });
+        hasilBayar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                hasilBayarKeyPressed(evt);
+            }
+        });
+        jPanel3.add(hasilBayar);
+        hasilBayar.setBounds(440, 40, 200, 22);
+
+        hasilSisa.setFont(resourceMap.getFont("hasilSisa.font")); // NOI18N
+        hasilSisa.setEnabled(false);
+        hasilSisa.setName("hasilSisa"); // NOI18N
+        jPanel3.add(hasilSisa);
+        hasilSisa.setBounds(440, 70, 200, 22);
+
+        jLabel17.setFont(resourceMap.getFont("jLabel17.font")); // NOI18N
+        jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
+        jLabel17.setName("jLabel17"); // NOI18N
+        jPanel3.add(jLabel17);
+        jLabel17.setBounds(340, 10, 110, 20);
+
+        hasilTotalBayar.setFont(resourceMap.getFont("hasilTotalBayar.font")); // NOI18N
+        hasilTotalBayar.setEnabled(false);
+        hasilTotalBayar.setName("hasilTotalBayar"); // NOI18N
+        jPanel3.add(hasilTotalBayar);
+        hasilTotalBayar.setBounds(440, 10, 200, 22);
+
+        jLabel16.setFont(resourceMap.getFont("jLabel16.font")); // NOI18N
+        jLabel16.setText(resourceMap.getString("jLabel16.text")); // NOI18N
+        jLabel16.setName("jLabel16"); // NOI18N
+        jPanel3.add(jLabel16);
+        jLabel16.setBounds(20, 70, 70, 14);
+
+        hasilppn.setFont(resourceMap.getFont("hasilppn.font")); // NOI18N
+        hasilppn.setEnabled(false);
+        hasilppn.setName("hasilppn"); // NOI18N
+        jPanel3.add(hasilppn);
+        hasilppn.setBounds(140, 70, 180, 22);
+
+        btnSimpanHasil.setFont(resourceMap.getFont("btnSimpanHasil.font")); // NOI18N
+        btnSimpanHasil.setIcon(resourceMap.getIcon("btnSimpanHasil.icon")); // NOI18N
+        btnSimpanHasil.setText(resourceMap.getString("btnSimpanHasil.text")); // NOI18N
+        btnSimpanHasil.setName("btnSimpanHasil"); // NOI18N
+        btnSimpanHasil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanHasilActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnSimpanHasil);
+        btnSimpanHasil.setBounds(680, 10, 150, 25);
+
+        jButton3.setFont(resourceMap.getFont("jButton3.font")); // NOI18N
+        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setName("jButton3"); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3);
+        jButton3.setBounds(680, 40, 0, 25);
+
+        btnFaktur.setFont(resourceMap.getFont("btnFaktur.font")); // NOI18N
+        btnFaktur.setIcon(resourceMap.getIcon("btnFaktur.icon")); // NOI18N
+        btnFaktur.setText(resourceMap.getString("btnFaktur.text")); // NOI18N
+        btnFaktur.setName("btnFaktur"); // NOI18N
+        btnFaktur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFakturActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnFaktur);
+        btnFaktur.setBounds(680, 40, 150, 25);
+
+        panelCool1.add(jPanel3);
+        jPanel3.setBounds(10, 430, 880, 110);
+
+        getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
+
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-917)/2, (screenSize.height-588)/2, 917, 588);
+    }// </editor-fold>//GEN-END:initComponents
+
+private void diskonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_diskonKeyPressed
+// TODO add your handling code here:
+    if (evt.getKeyCode() == 10) {
+        hasilAkhir();
+        ppn.requestFocus();
+    }
+}//GEN-LAST:event_diskonKeyPressed
+
+private void ppnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ppnKeyPressed
+// TODO add your handling code here:
+    if (evt.getKeyCode() == 10) {
+        hasilAkhir();
+        kodeBarang.requestFocus();
+    }
+}//GEN-LAST:event_ppnKeyPressed
+
+private void hasilDiskonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hasilDiskonKeyPressed
+// TODO add your handling code here:
+    if (evt.getKeyCode() == 10) {
+        //thasilDiskon = Double.parseDouble(hasilDiskon.getText());
+        hasilBayar.requestFocus();
+        hasilAkhir();
+    }
+    //hasilDiskon.setText(com.erv.function.Util.toMoney(thasilDiskon));
+}//GEN-LAST:event_hasilDiskonKeyPressed
+
+private void hasilBayarCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_hasilBayarCaretUpdate
+// TODO add your handling code here:
+    if (hasilBayar.getText().length() > 0) {
+        sisa = ttotalbayar - Double.parseDouble(hasilBayar.getText());
+        hasilSisa.setText(com.erv.function.Util.toMoney(sisa));
+    } else {
+        hasilSisa.setText("");
+    }
+}//GEN-LAST:event_hasilBayarCaretUpdate
+
+private void hasilBayarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hasilBayarKeyPressed
+// TODO add your handling code here:
+    if (evt.getKeyCode() == 10) {
+        if (sisa > 0) {
+            cbostatusBeli.setSelectedIndex(1);
+        } else {
+            cbostatusBeli.setSelectedIndex(0);
+        }
+        btnSimpanHasil.requestFocus();
+    }
+}//GEN-LAST:event_hasilBayarKeyPressed
+
+private void btnSimpanHasilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanHasilActionPerformed
+// TODO add your handling code here:
+    sisa = ttotalbayar - Double.parseDouble(hasilBayar.getText());
+        hasilSisa.setText(com.erv.function.Util.toMoney(sisa));
+    if (sisa > 0) {
+            cbostatusBeli.setSelectedIndex(1);
+        } else {
+            cbostatusBeli.setSelectedIndex(0);
+        }
+    tdp = Float.parseFloat(hasilBayar.getText());
+    hasilAkhir();
+    int x = JOptionPane.showConfirmDialog(this, "Apakah Data Disimpan?", "", JOptionPane.YES_NO_OPTION);
+    if (x == 0) {
+        if (jTabbedPane2.getSelectedIndex()==0) {
+            prosesSimpan();
+            insertJurnal("BELI");
+            insertRinciJurnal();
+            selesai();
+            cetakFaktur();
+        }else{
+            prosesSimpanRetur();
+            insertJurnal("RETUR");
+            insertRinciJurnalRetur();
+            selesai();
+            cetakRetur();
+        }
+        
+    } else {
+        System.out.print("tidak");
+    }
+}//GEN-LAST:event_btnSimpanHasilActionPerformed
+
+private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+// TODO add your handling code here:
+    try {
+        // TODO add your handling code here:
+        Statement s = cm.createStatement();
+        ResultSet rs = s.executeQuery("select * from rinci where KODEBARANG='" + jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString() + "'");
+        if (rs.next()) {
+            kodeBarang.setText(rs.getString(1));
+            namaBarang.setText(rs.getString(2));
+            jumlahBarang.setText(rs.getString(3));
+            hargaBarang.setText(rs.getString(4));
+        }
+        s.execute("delete from rinci where KODEBARANG='"+ jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString() +"'");
+        reloadData();
+        rs.close();
+    } catch (SQLException ex) {
+    }
+}//GEN-LAST:event_jTable1MouseClicked
+
+private void jTable3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable3KeyPressed
+// TODO add your handling code here:
+    if (evt.getKeyCode() == 10) {
+        try {
+            supplier b = new supplier();
+            b = supplierDao.getDetails(c,jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
+            if(pilSupplier.equals("0")){
+                kodeSupplier.setText(b.getIDSUPPLIER());
+                namaSupplier.setText(b.getNAMA());
+                jScrollPane3.setVisible(false);
+                diskon.requestFocus();
+            }else if(pilSupplier.equals("1")){
+                kodeSupplier1.setText(b.getIDSUPPLIER());
+                namaSupplier1.setText(b.getNAMA());
+                jScrollPane3.setVisible(false);
+                kodeBarang.requestFocus();
+            }
+            
+        } catch (Exception ex) {
+            
+        }
+    }
+}//GEN-LAST:event_jTable3KeyPressed
+
+private void kodeBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeBarangActionPerformed
+// TODO add your handling code here:
+    jScrollPane2.setVisible(true);
+    JDBCAdapter ja = new JDBCAdapter(c);
+    ja.executeQuery("select KODEBARANG,NAMABARANG from BARANG where KODEBARANG like '" + kodeBarang.getText() + "%' or lower(NAMABARANG) like '" + kodeBarang.getText().toLowerCase() + "%' order by KODEBARANG");
+    jScrollPane2.getViewport().remove(jTable2);
+    jTable2 = new JTable(ja);
+    jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+
+            @Override
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+            jTable2KeyPressed(evt);
+        }
+    });
+    jTable2.setFont(new Font("Tahoma", Font.BOLD, 12));
+    jScrollPane2.getViewport().add(jTable2);
+    jScrollPane2.repaint();
+}//GEN-LAST:event_kodeBarangActionPerformed
+
+private void kodeSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeSupplierActionPerformed
+// TODO add your handling code here:
+     jScrollPane3.setVisible(true);
+    JDBCAdapter ja = new JDBCAdapter(c);
+    ja.executeQuery("select IDSUPPLIER,NAMA from SUPPLIER where IDSUPPLIER like '" + kodeSupplier.getText() + "%' or lower(NAMA) like '" + kodeSupplier.getText().toLowerCase() + "%'");
+    jScrollPane3.getViewport().remove(jTable3);
+    jTable3 = new JTable(ja);
+    jTable3.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+            jTable3KeyPressed(evt);
+        }
+    });
+    jTable3.setFont(new Font("Tahoma", Font.BOLD, 12));
+    jScrollPane3.getViewport().add(jTable3);
+    jScrollPane3.repaint();
+}//GEN-LAST:event_kodeSupplierActionPerformed
+
+private void kodeSupplierKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kodeSupplierKeyPressed
+// TODO add your handling code here:
+     System.out.print(evt.getKeyCode());
+    if (evt.getKeyCode() == 40) {
+        pilSupplier="0";
+        jScrollPane3.setVisible(true);
+        jTable3.requestFocus();
+        jTable3.getSelectionModel().setSelectionInterval(0, 0);
+    }
+    if (evt.getKeyCode() == 27) {
+        jScrollPane3.setVisible(false);
+    }
+}//GEN-LAST:event_kodeSupplierKeyPressed
+
+private void kodeBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kodeBarangKeyPressed
+// TODO add your handling code here:
+    System.out.print(evt.getKeyCode());
+    if (evt.getKeyCode() == 40) {
+        jScrollPane2.setVisible(true);
+        jTable2.requestFocus();
+        jTable2.getSelectionModel().setSelectionInterval(0, 0);
+    }
+    if (evt.getKeyCode() == 27) {
+        jScrollPane2.setVisible(false);
+    }
+}//GEN-LAST:event_kodeBarangKeyPressed
+
+private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+// TODO add your handling code here:
+     try {
+        // TODO add your handling code here:
+        double tot = Integer.parseInt(jumlahBarang.getText()) * Double.parseDouble(hargaBarang.getText()) - getDiskonitem();
+        stat.execute("insert into rinci values('" + kodeBarang.getText()
+                + "','" + namaBarang.getText()
+                + "'," + jumlahBarang.getText()
+                + "," + hargaBarang.getText()
+                + "," + tot + ")");
+        total=0;hpp=0;
+        reloadData();
+        kosongBarang();
+        kodeBarang.requestFocus();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, ex.toString());
+    }
+}//GEN-LAST:event_btnInsertActionPerformed
+
+private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
+// TODO add your handling code here:
+    if (evt.getKeyCode() == 10) {
+        try {
+            barang b = new barang();
+
+            b = dbbarang.getDetails(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString());
+            kodeBarang.setText(b.getKODEBARANG());
+            namaBarang.setText(b.getNAMABARANG());
+            hargaBarang.setText("" + b.getHARGA());
+            jScrollPane2.setVisible(false);
+            jumlahBarang.requestFocus();
+        } catch (Exception ex) {
+            
+        }
+
+    }
+}//GEN-LAST:event_jTable2KeyPressed
+
+private void nofakturKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nofakturKeyPressed
+// TODO add your handling code here:
+    if(evt.getKeyCode()==10){
+        kodeSupplier.requestFocus();
+    }
+}//GEN-LAST:event_nofakturKeyPressed
+
+private void jumlahBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumlahBarangKeyPressed
+// TODO add your handling code here:
+    if(evt.getKeyCode()==10){
+        btnInsert.requestFocus();
+    }
+}//GEN-LAST:event_jumlahBarangKeyPressed
+
+private void txtkodeReturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkodeReturActionPerformed
+// TODO add your handling code here:
+}//GEN-LAST:event_txtkodeReturActionPerformed
+
+private void kodeSupplier1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kodeSupplier1ActionPerformed
+// TODO add your handling code here:
+    pilSupplier = "1";
+    jScrollPane3.setVisible(true);
+    JDBCAdapter ja = new JDBCAdapter(c);
+    ja.executeQuery("select IDSUPPLIER,NAMA from SUPPLIER where IDSUPPLIER like '" + kodeSupplier1.getText() + "%' or lower(NAMA) like '" + kodeSupplier1.getText().toLowerCase() + "%'");
+    jScrollPane3.getViewport().remove(jTable3);
+    jTable3 = new JTable(ja);
+    jTable3.addKeyListener(new java.awt.event.KeyAdapter() {
+
+            @Override
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+            jTable3KeyPressed(evt);
+        }
+    });
+    jTable3.setFont(new Font("Tahoma", Font.BOLD, 12));
+    jScrollPane3.getViewport().add(jTable3);
+    jScrollPane3.repaint();
+}//GEN-LAST:event_kodeSupplier1ActionPerformed
+
+private void kodeSupplier1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kodeSupplier1KeyPressed
+// TODO add your handling code here:
+    System.out.print(evt.getKeyCode());
+    if (evt.getKeyCode() == 40) {
+        pilSupplier="1";
+        jScrollPane3.setVisible(true);
+        jTable3.requestFocus();
+        jTable3.getSelectionModel().setSelectionInterval(0, 0);
+    }
+    if (evt.getKeyCode() == 27) {
+        jScrollPane3.setVisible(false);
+    }
+}//GEN-LAST:event_kodeSupplier1KeyPressed
+
+private void jTabbedPane2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane2StateChanged
+// TODO add your handling code here:
+    if (jTabbedPane2.getSelectedIndex() == 0) {
+        kodeSupplier.requestFocus();
+    } else if (jTabbedPane2.getSelectedIndex() == 1) {
+        setRetur();
+        kodeSupplier1.requestFocus();
+    }
+}//GEN-LAST:event_jTabbedPane2StateChanged
+
+private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+// TODO add your handling code here:
+    try {
+        // TODO add your handling code here:
+        stat.execute("delete from rinci where KODEBARANG='" + kodeBarang.getText() + "'");
+        total = 0;
+        hpp = 0;
+        reloadData();
+        kosongBarang();
+        kodeBarang.requestFocus();
+    } catch (SQLException ex) {
+    }
+}//GEN-LAST:event_btnDeleteActionPerformed
+
+private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+// TODO add your handling code here:
+    kosongFaktur();
+    kosongBarang();
+    kosongHasil();
+    hapusTabel();
+    buatTabel();
+    total = 0;
+    hpp = 0;
+    setFaktur();
+    reloadData();
+}//GEN-LAST:event_btnTambahActionPerformed
+
+private void btnFakturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFakturActionPerformed
+// TODO add your handling code here:
+    cetakFaktur();
+}//GEN-LAST:event_btnFakturActionPerformed
+
+private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+// TODO add your handling code here:
+    sisa = ttotalbayar - Double.parseDouble(hasilBayar.getText());
+        hasilSisa.setText(com.erv.function.Util.toMoney(sisa));
+    tdp = Float.parseFloat(hasilBayar.getText());
+    hasilAkhir();
+    int x = JOptionPane.showConfirmDialog(this, "Apakah Data Di Update?", "", JOptionPane.YES_NO_OPTION);
+    if (x == 0) {
+        prosesUpdate();
+        insertJurnal("BELI");
+        insertRinciJurnal();
+        selesai();
+    } else {
+        System.out.print("tidak");
+    }
+}//GEN-LAST:event_jButton3ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DialogPembelian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DialogPembelian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DialogPembelian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DialogPembelian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                DialogPembelian dialog = new DialogPembelian(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnFaktur;
+    private javax.swing.JButton btnInsert;
+    private javax.swing.JButton btnSimpanHasil;
+    private javax.swing.JButton btnTambah;
+    private javax.swing.JComboBox cboStatDiskon;
+    private javax.swing.JComboBox cboStatPPN;
+    private javax.swing.JComboBox cbostatusBeli;
+    private javax.swing.JTextField diskon;
+    private javax.swing.JTextField hargaBarang;
+    private javax.swing.JTextField hasilBayar;
+    private javax.swing.JTextField hasilDiskon;
+    private javax.swing.JTextField hasilSisa;
+    private javax.swing.JTextField hasilTotal;
+    private javax.swing.JTextField hasilTotalBayar;
+    private javax.swing.JTextField hasilppn;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTextField jumlahBarang;
+    private javax.swing.JTextField kodeBarang;
+    private javax.swing.JTextField kodeSupplier;
+    private javax.swing.JTextField kodeSupplier1;
+    private javax.swing.JTextField namaBarang;
+    private javax.swing.JTextField namaSupplier;
+    private javax.swing.JTextField namaSupplier1;
+    private javax.swing.JTextField nofaktur;
+    private com.erv.function.PanelCool panelCool1;
+    private javax.swing.JTextField ppn;
+    private datechooser.beans.DateChooserCombo tanggal;
+    private datechooser.beans.DateChooserCombo tglBayar;
+    private datechooser.beans.DateChooserCombo tglRetur;
+    private javax.swing.JTextField txtkodeFaktur;
+    private javax.swing.JTextField txtkodeRetur;
+    // End of variables declaration//GEN-END:variables
+
+    void kosongFaktur(){
+        nofak=txtkodeFaktur.getText()+""+nofaktur.getText();
+        noretur=txtkodeRetur.getText();
+        nofaktur.setText("");
+        kodeSupplier.setText("");
+        namaSupplier.setText("");
+        diskon.setText("0");
+        ppn.setText("0");
+        txtkodeFaktur.setText("");
+    }
+    
+    void kosongBarang(){
+        kodeBarang.setText("");
+        namaBarang.setText("");
+        jumlahBarang.setText("");
+        hargaBarang.setText("");
+    }
+    void hasilAkhir() {
+        tppn=getPPN();
+        tdiskon=getDiskon();
+        ttotalbayar = total + tppn - tdiskon;
+        // hasilBayar.setText(com.erv.function.Util.toMoney(tdp));
+        
+        hasilppn.setText(com.erv.function.Util.toMoney(tppn));
+        hasilTotal.setText(com.erv.function.Util.toMoney(total));
+        hasilDiskon.setText(com.erv.function.Util.toMoney(tdiskon));
+        hasilTotalBayar.setText(com.erv.function.Util.toMoney(ttotalbayar));
+    }
+    float getDiskon() {
+        float hasil = 0;
+        if (cboStatDiskon.getSelectedIndex() == 0) {
+            hasil = Float.parseFloat(diskon.getText()) / 100 * (float) total;
+        } else if (cboStatDiskon.getSelectedIndex() == 1) {
+            hasil = Float.parseFloat(diskon.getText());
+        }
+        return hasil;
+    }
+
+    float getPPN() {
+        float hasil = 0;
+        if (cboStatPPN.getSelectedIndex() == 0) {
+            hasil = Float.parseFloat(ppn.getText()) / 100 * (float) total;
+        } else if (cboStatPPN.getSelectedIndex() == 1) {
+            hasil = Float.parseFloat(ppn.getText());
+        }
+        return hasil;
+    }
+    void buatTabel() {
+        String sqlCreate = "create table rinci (KODEBARANG varchar(20) primary key, "
+                + "NAMABARANG varchar(50), "
+                + "JUMLAH int, "
+                + "HARGA double, "
+                + "TOTAL double)";
+        try {
+            stat.execute(sqlCreate);
+        } catch (SQLException ex) {
+           
+        }
+    }
+    void hapusTabel() {
+        try {
+            stat.execute("drop table rinci");
+        } catch (SQLException ex) {
+            
+        }
+    }
+    void reloadData() {
+        JDBCAdapter j = new JDBCAdapter(cm);
+        j.executeQuery("select * from rinci");
+        jScrollPane1.getViewport().remove(jTable1);
+        jTable1 = new JTable(j);
+        jTable1.setFont(new Font("Tahoma", Font.BOLD, 12));
+        TableColumn col=jTable1.getColumnModel().getColumn(1);
+        col.setPreferredWidth(200);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setFocusable(false);
+        jTable1.setFocusable(false);
+        jScrollPane1.getViewport().add(jTable1);
+        jScrollPane1.repaint();
+        try {
+            Statement s = cm.createStatement();
+            ResultSet r = s.executeQuery("select * from rinci");
+            while(r.next()) {
+                total += r.getDouble(5);
+                hpp +=r.getDouble(4) * r.getInt(3);                  
+            }
+            hasilAkhir();
+            r.close();
+        } catch (Exception ex) {
+           System.out.println("Error "+ex.toString());
+        }
+
+    }
+    void prosesSimpan() {
+        try {
+            IDBELI=pembelianDao.getID(c);
+            p.setID(IDBELI);
+            p.setNOFAKTUR(txtkodeFaktur.getText() +""+ nofaktur.getText());
+            p.setIDSUPPLIER(kodeSupplier.getText());
+            p.setCASH(cbostatusBeli.getSelectedIndex()+"");
+            p.setSTATUS(cbostatusBeli.getSelectedIndex()+"");
+            p.setTGLBAYAR(java.sql.Date.valueOf(tanggal.getText()));
+            p.setPAJAK(getPPN());
+            if (cbostatusBeli.getSelectedIndex() == 1) {
+                p.setDP(tdp);
+            } else {
+                p.setDP(0.0);
+            }
+            p.setDISKON(getDiskon());
+            p.setTANGGAL(java.sql.Date.valueOf(tanggal.getText()));
+            if (!pembelianDao.insertIntoPEMBELIAN(c,p)) {
+                JOptionPane.showMessageDialog(this, "Entri Penjualan Ok");
+                Statement s = cm.createStatement();
+                ResultSet r = s.executeQuery("select * from rinci");
+                stok st=new stok();
+                rincipembelian rp = new rincipembelian();
+                while (r.next()) {
+                    rp.setID(rincipembelianDao.getID(c));
+                    rp.setIDPEMBELIAN(IDBELI);
+                    rp.setKODEBARANG(r.getString(1));
+                    rp.setJUMLAH(r.getInt(3));
+                    rp.setHARGA(r.getDouble(4));
+                    rp.setTOTAL(r.getDouble(5));
+                    rincipembelianDao.insertIntoRINCIPEMBELIAN(c,rp);
+                    barang b=dbbarang.getDetails(r.getString(1));
+                    b.setCOGS((b.getCOGS() + r.getDouble(4))/2);
+                    dbbarang.update(b);
+                    st.setIDPENJUALAN(IDBELI);
+                    st.setKODEBARANG(r.getString(1));
+                    st.setIN(r.getInt(3));
+                    st.setOUT(0);
+                    st.setTANGGAL(java.sql.Date.valueOf(tanggal.getText()));
+                    st.setKODETRANS("B");
+                    stokDao.insertIntoSTOK(c, st); 
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Entri Penjualan Gagal");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.toString());
+        }
+    }
+    void insertJurnal(String pil) {
+        jurnal j = new jurnal();
+        try {
+            IDJurnal=jurnalDao.getIDJurnal(c);
+            j.setID(IDJurnal);
+            
+            j.setTANGGAL(java.sql.Date.valueOf(tanggal.getText()));
+            if(pil.equals("BELI")){
+                j.setKODEJURNAL(txtkodeFaktur.getText() +"."+ nofaktur.getText());
+                j.setDESKRIPSI("Pembelian Dari " + namaSupplier.getText()); 
+            }else if(pil.equals("RETUR")){
+                j.setKODEJURNAL(txtkodeRetur.getText());
+                j.setDESKRIPSI("Pengebalian Barang Ke " + namaSupplier.getText()); 
+            }
+            jurnalDao.insertIntoJURNAL(c, j);
+        } catch (Exception ex) {
+            System.out.println("Error :"+ex.toString());
+        }
+    }
+   void insertRinciJurnal() {
+        Statement s;
+        try {
+            s = c.createStatement();
+            if(cbostatusBeli.getSelectedIndex()==0){
+                if(tdiskon==0 && tppn==0){
+                    s.execute("insert into RINCIJURNAL values(" + IDJurnal + ",'" + settingDao.getAkun(c,"PERSEDIAAN") + "',"+hpp+",0,1)");
+                    s.execute("insert into RINCIJURNAL values(" + IDJurnal + ",'" + settingDao.getAkun(c,"KAS") + "',0,"+ttotalbayar+",2)");                   
+                }else if(tdiskon!=0 && tppn==0){
+                    s.execute("insert into RINCIJURNAL values(" + IDJurnal + ",'" + settingDao.getAkun(c,"PERSEDIAAN") + "',"+hpp+",0,1)");
+                    s.execute("insert into RINCIJURNAL values(" + IDJurnal + ",'" + settingDao.getAkun(c,"KAS") + "',0,"+ttotalbayar+",2)");
+                }
+            }else if(cbostatusBeli.getSelectedIndex()==1){
+                s.execute("insert into RINCIJURNAL values(" + IDJurnal + ",'" + settingDao.getAkun(c,"PERSEDIAAN") + "',"+hpp+",0,1)");
+                s.execute("insert into RINCIJURNAL values(" + IDJurnal + ",'" + settingDao.getAkun(c,"KAS") + "',0,"+tdp+",2)");
+                s.execute("insert into RINCIJURNAL values(" + IDJurnal + ",'" + supplierDao.getDetails(c, kodeSupplier.getText()).getKODEAKUN() + "',0,"+sisa+",3)");
+                prosesSimpanHutang();
+            }
+                s.close();
+        } catch (Exception ex) {
+            
+        }
+    }
+   void insertRinciJurnalRetur() {
+        Statement s;
+        try {
+            s = c.createStatement();
+            s.execute("insert into RINCIJURNAL values(" + IDJurnal + ",'" + settingDao.getAkun(c, "PERSEDIAAN") + "',0," + hpp + ")");
+            s.execute("insert into RINCIJURNAL values(" + IDJurnal + ",'" + settingDao.getAkun(c, "HUTANG") + "'," + hpp + ",0)");
+            s.close();
+        } catch (Exception ex) {
+        }
+    }
+   
+   void selesai() {
+        hapusTabel();
+        buatTabel();
+        total=0;
+        hpp=0;
+        reloadData();
+        kosongFaktur();
+        kosongBarang();
+        kosongHasil();
+        jTabbedPane2.setSelectedIndex(0);
+        setFaktur();
+        nofaktur.requestFocus();
+    }
+   void kosongHasil() {
+        hasilBayar.setText("0");
+        hasilDiskon.setText("0");
+        hasilSisa.setText("0");
+        hasilTotal.setText("0");
+        hasilTotalBayar.setText("0");
+        hasilppn.setText("0");
+    }
+   
+   void prosesUpdate() {
+        try {
+            p.setID(IDBELI);
+            p.setNOFAKTUR(txtkodeFaktur.getText() + "" + nofaktur.getText());
+            p.setIDSUPPLIER(kodeSupplier.getText());
+            p.setCASH(cbostatusBeli.getSelectedIndex()+"");
+            p.setSTATUS(cbostatusBeli.getSelectedIndex()+"");
+            p.setTGLBAYAR(java.sql.Date.valueOf(tanggal.getText()));
+            p.setPAJAK(getPPN());
+            if (cbostatusBeli.getSelectedIndex() == 1) {
+                p.setDP(tdp);
+            } else {
+                p.setDP(0.0);
+            }
+            p.setDISKON(getDiskon());
+            p.setTANGGAL(java.sql.Date.valueOf(tanggal.getText()));
+            if (!pembelianDao.updatePEMBELIAN(c,IDBELI,p)) {
+                JOptionPane.showMessageDialog(this, "Update Pembelian Ok");
+                Statement s = cm.createStatement();
+                ResultSet r = s.executeQuery("select * from rinci");
+                rincipembelian rp = new rincipembelian();
+                stok st = new stok();
+                Statement sf = c.createStatement();
+                sf.execute("delete from RINCIPEMBELIAN where IDPEMBELIAN=" + IDBELI + "");
+                sf.execute("delete from JURNAL where KODEJURNAL='"+nofaktur.getText()+"'");
+                sf.execute("delete from STOK where IDPENJUALAN="+ IDBELI +" AND KODETRANS='B'");
+                while (r.next()) {
+                    rp.setID(rincipembelianDao.getID(c));
+                    rp.setIDPEMBELIAN(IDBELI);
+                    rp.setKODEBARANG(r.getString(1));
+                    rp.setJUMLAH(r.getInt(3));
+                    rp.setHARGA(r.getDouble(4));
+                    rp.setTOTAL(r.getDouble(5));
+                    rincipembelianDao.insertIntoRINCIPEMBELIAN(c,rp);
+                    st.setIDPENJUALAN(IDBELI);
+                    st.setKODEBARANG(r.getString(1));
+                    st.setIN(r.getInt(3));
+                    st.setOUT(0);
+                    st.setTANGGAL(java.sql.Date.valueOf(tanggal.getText()));
+                    st.setKODETRANS("B");
+                    stokDao.insertIntoSTOK(c, st); 
+                }
+                r.close();
+                sf.close();
+                s.close();
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Update Penjualan Gagal");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.toString());
+        }
+    }
+   void prosesDelete() {
+        try {
+            Statement sf = c.createStatement();
+            //sf.execute("delete from RINCIPENJUALAN where IDPENJUALAN=" + IDjual + "");
+            sf.execute("delete from PEMBELIAN where ID=" + IDBELI + "");
+            JOptionPane.showMessageDialog(this, "Delete Ok");
+            sf.close();
+            hapusTabel();
+            buatTabel();
+            hpp=0;
+            total=0;
+            reloadData();
+            kosongFaktur();
+            kosongBarang();
+            kosongHasil();
+            jTabbedPane2.setSelectedIndex(0);
+            nofaktur.requestFocus();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.toString());
+        }
+    }
+   float getDiskonitem() {
+        float hasil = 0;
+        return hasil;
+    }
+
+   void kosongRetur() {
+        txtkodeRetur.setText("");
+        kodeSupplier1.setText("");
+        namaSupplier1.setText("");
+    }
+   void prosesSimpanRetur() {
+        try {
+            r.setID(IDretur);
+            r.setKODERETURBELI(txtkodeRetur.getText());
+            r.setTANGGAL(java.sql.Date.valueOf(tglRetur.getText()));
+            r.setIDSUPPLIER(kodeSupplier1.getText());
+            r.setKETERANGAN("Pengembalian Barang Ke "+namaSupplier1.getText());
+            r.setIDPEMBELIAN(IDBELI);
+            if (returbeliDao.insertIntoRETURBELI(c, r)) {
+                JOptionPane.showMessageDialog(this, "Entri Retur Ok");
+                Statement s = cm.createStatement();
+                ResultSet r = s.executeQuery("select * from rinci");
+                returbelirinci rr = new returbelirinci();
+                stok st = new stok();
+                while (r.next()) {
+                    rr.setID(returbelirinciDao.getID(c));
+                    rr.setIDRETURBELI(IDretur);
+                    rr.setKODEBARANG(r.getString(1));
+                    rr.setJUMLAH(r.getInt(3));
+                    rr.setHARGA(r.getFloat(4));
+                    rr.setTOTAL(r.getFloat(5));
+                    returbelirinciDao.insertIntoRETURBELIRINCI(c, rr);
+                    st.setIDPENJUALAN(IDretur);
+                    st.setKODEBARANG(r.getString(1));
+                    st.setTANGGAL(java.sql.Date.valueOf(tglRetur.getText()));
+                    st.setIN(0);
+                    st.setKODETRANS("K");
+                    st.setOUT(r.getInt(3));
+                    stokDao.insertIntoSTOK(c, st);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Entri Retur Gagal");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.toString());
+        }
+    }
+   void setRetur() {
+        String tgl = com.erv.function.Util.toDateStringSql(new Date());
+        try {
+            IDretur = returbeliDao.getID(c);
+            txtkodeRetur.setText("K" + com.erv.function.Util.getbln(tgl) + com.erv.function.Util.getthn(tgl) + IDretur);
+
+        } catch (SQLException ex) {
+        }
+    }
+   void setFaktur() {
+//        String tgl = com.erv.function.Util.toDateStringSql(new Date());
+//        try {
+//            IDBELI = pembelianDao.getID(c);
+//            txtkodeFaktur.setText("B" + com.erv.function.Util.getbln(tgl) + com.erv.function.Util.getthn(tgl) + IDBELI);
+//        } catch (Exception ex) {
+//            System.out.println(ex.toString());
+//        }
+        txtkodeFaktur.setText(pembelianDao.setFaktur(c));
+    }
+   void prosesSimpanHutang(){
+        try {
+            ht.setKODEHUTANG(hutangDao.getKodeHutang(c));
+            ht.setIDPEMBELIAN(IDBELI);
+            ht.setTANGGAL(java.sql.Date.valueOf(tanggal.getText()));
+            ht.setJUMLAH(sisa);
+            ht.setIDSUPPLIER(kodeSupplier.getText());
+            ht.setJATUHTEMPO(java.sql.Date.valueOf(tglBayar.getText()));
+            ht.setKETERANGAN("Hutang Kepada "+namaSupplier.getText());
+            ht.setSTATUS("1");
+                ht.setID(hutangDao.getID(c)); 
+            if (hutangDao.insertIntoHUTANG(c, ht)) {
+                JOptionPane.showMessageDialog(this, "Update Hutang Ok");
+            } else {
+                JOptionPane.showMessageDialog(this, "Update Data Gagal");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogHutang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+   void cetakFaktur(){
+        HashMap parameter=new HashMap();
+        JasperPrint jasperPrint=null;
+        parameter.put("nofaktur", nofak);
+        try { 
+                jasperPrint = JasperFillManager.fillReport("report\\FakturBeli.jasper", parameter, koneksi.getKoneksiJ());
+            JasperViewer.viewReport(jasperPrint,false);
+        } catch (Exception ex) {
+            System.out.print(ex.toString());
+            //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+   void cetakRetur(){
+        HashMap parameter=new HashMap();
+        JasperPrint jasperPrint=null;
+        parameter.put("koderetur", noretur);
+        try { 
+                jasperPrint = JasperFillManager.fillReport("report\\ReturBeli.jasper", parameter, koneksi.getKoneksiJ());
+            JasperViewer.viewReport(jasperPrint,false);
+        } catch (Exception ex) {
+            System.out.print(ex.toString());
+            //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}

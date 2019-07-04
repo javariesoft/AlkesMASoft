@@ -1,0 +1,67 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+
+/**
+ *
+ * @author erwadi
+ */
+public class returbelirinci {
+    private int ID;
+    private int IDRETURBELI;
+    private String KODEBARANG;
+    private int JUMLAH;
+    private float HARGA;
+    private float TOTAL;
+
+    public float getHARGA() {
+        return HARGA;
+    }
+
+    public void setHARGA(float HARGA) {
+        this.HARGA = HARGA;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getIDRETURBELI() {
+        return IDRETURBELI;
+    }
+
+    public void setIDRETURBELI(int IDRETURBELI) {
+        this.IDRETURBELI = IDRETURBELI;
+    }
+
+    public int getJUMLAH() {
+        return JUMLAH;
+    }
+
+    public void setJUMLAH(int JUMLAH) {
+        this.JUMLAH = JUMLAH;
+    }
+
+    public String getKODEBARANG() {
+        return KODEBARANG;
+    }
+
+    public void setKODEBARANG(String KODEBARANG) {
+        this.KODEBARANG = KODEBARANG;
+    }
+
+    public float getTOTAL() {
+        return TOTAL;
+    }
+
+    public void setTOTAL(float TOTAL) {
+        this.TOTAL = TOTAL;
+    }
+    
+}

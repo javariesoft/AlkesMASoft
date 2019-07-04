@@ -1,0 +1,30 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+/**
+ *
+ * @author erwadi
+ */
+public class koneksi {
+    //private static String urlJ="jdbc:h2:file:F:/JAVA/dataH2/penjualan";
+    private static String urlJ="jdbc:h2:tcp://localhost/~/penjualan";
+    private static String urlM="jdbc:h2:mem:";
+    private static String username="sa";
+    private static String password="rahasia";
+    
+    public static Connection getKoneksiJ() throws ClassNotFoundException, SQLException{
+        Class.forName("org.h2.Driver");
+        return DriverManager.getConnection(urlJ, username, password);
+    }
+    public static Connection getKoneksiM() throws ClassNotFoundException, SQLException{
+        Class.forName("org.h2.Driver");
+        return DriverManager.getConnection(urlM, username, password);
+    }
+}

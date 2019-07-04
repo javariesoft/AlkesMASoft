@@ -1,0 +1,26 @@
+jLabel1.text=Jenis
+#NOI18N
+jLabel1.font=Tahoma-Bold-12
+#NOI18N
+jLabel1.foreground=255, 255, 255
+kodejenis.text=
+#NOI18N
+kodejenis.font=Tahoma-Bold-12
+#NOI18N
+jLabel2.font=Tahoma 12 Bold
+jLabel2.text=Kode Jenis
+#NOI18N
+jLabel2.foreground=255, 255, 255
+jenis.text=
+#NOI18N
+jenis.font=Tahoma-Bold-12
+cmdInsert.text=Insert
+#NOI18N
+cmdInsert.font=Tahoma-Bold-12
+cmdUpdate.text=Update
+cmdDelete.text=Delete
+#NOI18N
+cmdDelete.font=Tahoma-Bold-12
+Form.title=Data Jenis Barang
+#NOI18N
+cmdUpdate.font=Tahoma-Bold-12

@@ -1,0 +1,205 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.model.piutang;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.h2.api.Trigger;
+
+/**
+ *
+ * @author erwadi
+ */
+public class piutangDao {
+
+    public static boolean insertIntoPIUTANG(Connection con, piutang p) throws SQLException {
+        String sql = "INSERT INTO PIUTANG "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, p.getID());
+        statement.setString(2, p.getKODEPIUTANG());
+        statement.setInt(3, p.getIDPENJUALAN());
+        statement.setDate(4, p.getTANGGAL());
+        statement.setDouble(5, p.getJUMLAH());
+        statement.setString(6,p.getIDPELANGGAN());
+        statement.setDate(7,p.getJATUHTEMPO());
+        statement.setString(8,p.getKETERANGAN());
+        statement.setString(9,p.getSTATUS());
+        boolean h = statement.execute();
+        statement.close();
+        return !h;
+    }
+
+    public static boolean updatePIUTANG(Connection con, piutang p) throws SQLException {
+        String sql = "SELECT * FROM PIUTANG WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        statement.setInt(1, p.getID());
+        ResultSet entry = statement.executeQuery();
+
+        entry.last();
+        int rows = entry.getRow();
+        entry.beforeFirst();
+        if (rows == 0) {
+            entry.close();
+            statement.close();
+            return false;
+        }
+        entry.next();
+
+        entry.updateInt("IDPENJUALAN", p.getIDPENJUALAN());
+        if (p.getTANGGAL() != null) {
+            entry.updateDate("TANGGAL", p.getTANGGAL());
+        }
+        if (p.getKODEPIUTANG() != null) {
+            entry.updateString("KODEPIUTANG", p.getKODEPIUTANG());
+        }
+        entry.updateDouble("JUMLAH", p.getJUMLAH());
+        if (p.getIDPELANGGAN() != null) {
+            entry.updateString("IDPELANGGAN", p.getIDPELANGGAN());
+        }
+        if (p.getJATUHTEMPO() != null) {
+            entry.updateDate("JATUHTEMPO", p.getJATUHTEMPO());
+        }
+        if (p.getKETERANGAN() != null) {
+            entry.updateString("KETERANGAN", p.getKETERANGAN());
+        }
+        if (p.getSTATUS() != null) {
+            entry.updateString("STATUS", p.getSTATUS());
+        }
+        entry.updateRow();
+        entry.close();
+        statement.close();
+        return true;
+    }
+
+    public static void deleteFromPIUTANG(Connection con, int keyId) throws SQLException {
+        String sql = "DELETE FROM PIUTANG WHERE ID = ?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1, keyId);
+        statement.executeUpdate();
+        statement.close();
+    }
+    public static int getID(Connection c) throws SQLException{
+        int hasil=1;
+        PreparedStatement pstmt = c.prepareStatement("select max(id) from PIUTANG");
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString(1)!=null){
+                hasil=rs.getInt(1)+1;
+            }
+        }
+        return hasil;
+    }
+    public static String getKodePiutang(Connection con){
+        String hasil="";
+        String tgl = com.erv.function.Util.toDateStringSql(new Date());
+        
+        try {
+            hasil="P" + com.erv.function.Util.getbln(tgl) + com.erv.function.Util.getthn(tgl) + getID(con);
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+        return hasil;
+    }
+    public static piutang getDetails(Connection con, int id)throws SQLException, ClassNotFoundException
+    {
+       //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("select * from PIUTANG where ID=?");
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        piutang ubean = new piutang();
+        while(rs.next())
+        {
+            ubean.setID(rs.getInt(1));
+            ubean.setKODEPIUTANG(rs.getString(2));
+            ubean.setIDPENJUALAN(rs.getInt(3));
+            ubean.setTANGGAL(rs.getDate(4));
+            ubean.setJUMLAH(rs.getDouble(5));
+            ubean.setIDPELANGGAN(rs.getString(6));
+            ubean.setJATUHTEMPO(rs.getDate(7));
+            ubean.setKETERANGAN(rs.getString(8));
+            ubean.setSTATUS(rs.getString(9));
+        }
+        return ubean;
+    }
+    public static piutang getDetailPiutangperJual(Connection con, int id)throws SQLException, ClassNotFoundException
+    {
+       //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("select * from PIUTANG where IDPENJUALAN=?");
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        piutang ubean = new piutang();
+        while(rs.next())
+        {
+            ubean.setID(rs.getInt(1));
+            ubean.setKODEPIUTANG(rs.getString(2));
+            ubean.setIDPENJUALAN(rs.getInt(3));
+            ubean.setTANGGAL(rs.getDate(4));
+            ubean.setJUMLAH(rs.getDouble(5));
+            ubean.setIDPELANGGAN(rs.getString(6));
+            ubean.setJATUHTEMPO(rs.getDate(7));
+            ubean.setKETERANGAN(rs.getString(8));
+            ubean.setSTATUS(rs.getString(9));
+        }
+        return ubean;
+    }
+    public static double jumlahPiutang(Connection conn,String idpelanggan,int idpenjualan){
+        double hasil=0;
+        
+        String sql="SELECT sum(JUMLAH - RETUR - JUMLAHBAYAR) as JUMLAH from VIEW_PIUTANG where IDPELANGGAN="+ idpelanggan +" AND IDPENJUALAN='"+idpenjualan+"' STATUS='BELUM LUNAS'";
+        try {
+            Statement stat=conn.createStatement();
+            ResultSet rs=stat.executeQuery(sql);
+            if(rs.next()){
+                hasil=rs.getDouble(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(piutangDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return hasil;
+    }
+    public static class triggerPiutang implements Trigger {
+
+        public void init(Connection conn, String schemaName, String triggerName, String tableName, boolean before, int type) {
+            // initialize the trigger object is necessary
+        }
+
+        /**
+         * This method is called for each triggered action.
+         *
+         * @param conn a connection to the database
+         * @param oldRow the old row, or null if no old row is available (for INSERT)
+         * @param newRow the new row, or null if no new row is available (for DELETE)
+         * @throws SQLException if the operation must be undone
+         */
+        public void fire(Connection conn,
+                Object[] oldRow, Object[] newRow)
+                throws SQLException {
+            if (newRow != null && oldRow == null) {
+            }else if (newRow == null && oldRow != null) {
+                 Statement stat=conn.createStatement();
+                 stat.execute("delete from PIUTANGBAYAR where IDPIUTANG="+oldRow[0].toString()+"");
+                 System.out.println("Delete Piutang Bayar");
+            }
+        }
+
+        public void close() {
+            // ignore
+        }
+
+        public void remove() {
+            // ignore
+        }
+    }
+}

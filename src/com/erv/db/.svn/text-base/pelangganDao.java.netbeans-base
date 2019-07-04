@@ -1,0 +1,124 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.model.pelanggan;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ *
+ * @author erwadi
+ */
+public class pelangganDao {
+    Connection con;
+
+    public pelangganDao(Connection con) {
+        this.con = con;
+    }
+    public boolean insert(pelanggan bb) throws SQLException
+     {
+        String sql="insert into PELANGGAN values (?,?,?,?,?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        //set values to prepared statement object by getting values from bean object
+        pstmt.setString(1,bb.getKODEPELANGGAN());
+        pstmt.setString(2,bb.getNAMA());
+        pstmt.setString(3,bb.getALAMAT());
+        pstmt.setString(4,bb.getHP());
+        pstmt.setDate(5,bb.getTGLREG());
+        pstmt.setFloat(6,bb.getBATASKREDIT());
+        pstmt.setString(7,bb.getKODEAKUN());
+        boolean i = pstmt.execute();
+        return i;
+     }
+    public List getAlldetails()throws SQLException
+    {
+
+        PreparedStatement pstmt = con.prepareStatement("select * from PELANGGAN");
+        ResultSet rs = pstmt.executeQuery();
+        List list = new ArrayList();
+        while(rs.next())
+        {
+            pelanggan ubean = new pelanggan();
+            ubean.setKODEPELANGGAN(rs.getString(1));
+            ubean.setNAMA(rs.getString(2));
+            ubean.setALAMAT(rs.getString(3));
+            ubean.setHP(rs.getString(4));
+            ubean.setTGLREG(rs.getDate(5));
+            ubean.setBATASKREDIT(rs.getFloat(6));
+            ubean.setKODEAKUN(rs.getString(7));
+            list.add(ubean);
+        }
+        rs.close();
+        pstmt.close();
+
+        return list;
+    }
+    public pelanggan getDetails(String id)throws SQLException, ClassNotFoundException
+    {
+       //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("select * from PELANGGAN where KODEPELANGGAN=?");
+        pstmt.setString(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        pelanggan ubean = new pelanggan();
+        while(rs.next())
+        {
+            ubean.setKODEPELANGGAN(rs.getString(1));
+            ubean.setNAMA(rs.getString(2));
+            ubean.setALAMAT(rs.getString(3));
+            ubean.setHP(rs.getString(4));
+            ubean.setTGLREG(rs.getDate(5));
+            ubean.setBATASKREDIT(rs.getFloat(6));
+            ubean.setKODEAKUN(rs.getString(7));
+        }
+        
+        return ubean;
+    }
+    public boolean update(pelanggan bb) throws SQLException
+     {
+        String sql="update PELANGGAN set NAMA=?,ALAMAT=?,HP=?,TGLREG=?,BATASKREDIT=?,KODEAKUN=? where KODEPELANGGAN=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        //set values to prepared statement object by getting values from bean object
+        pstmt.setString(7,bb.getKODEPELANGGAN());
+        pstmt.setString(1,bb.getNAMA());
+        pstmt.setString(2,bb.getALAMAT());
+        pstmt.setString(3,bb.getHP());
+        pstmt.setDate(4,bb.getTGLREG());
+        pstmt.setFloat(5,bb.getBATASKREDIT());
+        pstmt.setString(6,bb.getKODEAKUN());
+        boolean i = pstmt.execute();
+        return i;
+     }
+    public void deleteDetails(String id)throws SQLException, ClassNotFoundException
+    {
+       //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("delete from PELANGGAN where KODEPELANGGAN=?");
+        pstmt.setString(1, id);
+        pstmt.executeUpdate();
+    }
+    public static int getID(Connection con) throws SQLException{
+        int hasil=1;
+        PreparedStatement pstmt = con.prepareStatement("select max(KODEPELANGGAN) from PELANGGAN");
+        ResultSet rs=pstmt.executeQuery();
+        if(rs.next()){
+            if(rs.getString(1)!=null){
+                hasil=rs.getInt(1)+1;
+            }
+        }
+        return hasil;
+    }
+//     public static String getKode(Connection c,String kode){
+//        String hasil="";
+//        String[]h;
+//           h=com.erv.function.Util.split(java.sql.Date.valueOf(com.erv.function.Util.toDateStringSql(new Date())).toString(), "-");
+//            hasil=kode+h[1]+h[2];
+//        return hasil;
+//    }
+}

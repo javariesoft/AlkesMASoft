@@ -1,0 +1,10 @@
+jLabel1.text=Tanggal
+#NOI18N
+jLabel1.font=Tahoma 12 12 Bold
+#NOI18N
+btnOk.font=Tahoma 12 12 Bold
+btnKeluar.text=Exit
+#NOI18N
+btnKeluar.font=Tahoma 12 12 Bold
+btnOk.text=Ok
+Form.title=Rekap Penjualan Harian

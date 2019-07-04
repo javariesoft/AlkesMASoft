@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapAnalisaPiutangDetailBaru" language="groovy" pageWidth="600" pageHeight="842" columnWidth="535" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="274343e6-d339-4339-bd0a-ab9d73a10d64">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Ppelanggan" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Ptgl1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Ptgl2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT PELANGGAN.KODEPELANGGAN AS PELANGGAN_KODEPELANGGAN,
+       PELANGGAN.NAMA AS PELANGGAN_NAMA,
+       PELANGGAN.ALAMAT AS PELANGGAN_ALAMAT,
+       PIUTANG."ID" AS PIUTANG_ID,
+       PIUTANG."KODEPIUTANG" AS PIUTANG_KODEPIUTANG,
+       PIUTANG."IDPENJUALAN" AS PIUTANG_IDPENJUALAN,
+       PIUTANG."TANGGAL" AS PIUTANG_TANGGAL,
+       PIUTANG."JUMLAH" AS PIUTANG_JUMLAH,
+       PIUTANG."IDPELANGGAN" AS PIUTANG_IDPELANGGAN,
+       PIUTANG."JATUHTEMPO" AS PIUTANG_JATUHTEMPO,
+       PIUTANG."KETERANGAN" AS PIUTANG_KETERANGAN,
+       case PIUTANG.STATUS when '0' then 'LUNAS' when '1' then 'BELUM LUNAS' end AS PIUTANG_STATUS,
+       IFNULL((SELECT PENJUALAN."FAKTUR" AS F FROM PENJUALAN PENJUALAN WHERE PIUTANG.IDPENJUALAN=PENJUALAN.ID),'0') AS PENJUALAN_NOFAKTUR,
+       IFNULL((SELECT SALES."NAMA" AS S FROM SALES SALES,PENJUALAN PENJUALAN WHERE PENJUALAN.IDSALES=SALES.IDSALES AND PIUTANG.IDPENJUALAN=PENJUALAN.ID),'0') AS SALES_NAMA,
+       CASE WHEN PIUTANG."JUMLAH"=  IFNULL((SELECT SUM(PIUTANGBAYAR."JUMLAH") FROM PIUTANGBAYAR PIUTANGBAYAR WHERE PIUTANG.ID=PIUTANGBAYAR.IDPIUTANG),0) THEN '0' ELSE DATEDIFF('DAY', PIUTANG.JATUHTEMPO, CURRENT_DATE()) END AS UMUR,
+    IFNULL((SELECT PB."KODEPIUTANGBAYAR" FROM PIUTANGBAYAR PB WHERE PIUTANGBAYAR.ID=PB.ID),0) AS PIUTANGBAYAR_KODEPIUTANGBAYAR,
+    IFNULL((SELECT PB."REF" FROM PIUTANGBAYAR PB WHERE PIUTANGBAYAR.ID=PB.ID),0) AS PIUTANGBAYAR_REF,
+    /*IFNULL((SELECT CONVERT(PB."TANGGAL",CHAR) FROM PIUTANGBAYAR PB WHERE PIUTANGBAYAR.ID=PB.ID),0) AS PIUTANGBAYAR_TANGGAL,*/
+    /*CASE (SELECT PB."TANGGAL" FROM PIUTANGBAYAR PB WHERE PIUTANGBAYAR.ID=PB.ID) WHEN null
+THEN '0000-00-00'
+ELSE (SELECT CONVERT(PB."TANGGAL",) FROM PIUTANGBAYAR PB WHERE PIUTANGBAYAR.ID=PB.ID) END AS PIUTANGBAYAR_TANGGAL,*/
+   IFNULL((SELECT CAST(PB."TANGGAL" AS VARCHAR) FROM PIUTANGBAYAR PB WHERE PIUTANGBAYAR.ID=PB.ID),0) AS PIUTANGBAYAR_TANGGAL,
+
+    IFNULL((SELECT PB."JUMLAH" FROM PIUTANGBAYAR PB WHERE PIUTANGBAYAR.ID=PB.ID),0) AS PIUTANGBAYAR_JUMLAH
+FROM PELANGGAN PELANGGAN INNER JOIN PIUTANG PIUTANG ON PELANGGAN."KODEPELANGGAN" = PIUTANG."IDPELANGGAN"
+     LEFT JOIN PIUTANGBAYAR PIUTANGBAYAR ON PIUTANG.ID=PIUTANGBAYAR.IDPIUTANG
+WHERE PELANGGAN.STATUSCABANG<>'1' AND PIUTANG."IDPELANGGAN"=$P{Ppelanggan} AND PIUTANG."TANGGAL" >= $P{Ptgl1} AND PIUTANG."TANGGAL" <= $P{Ptgl2} ORDER BY PELANGGAN.NAMA,13]]>
+	</queryString>
+	<field name="PELANGGAN_KODEPELANGGAN" class="java.lang.String"/>
+	<field name="PELANGGAN_NAMA" class="java.lang.String"/>
+	<field name="PELANGGAN_ALAMAT" class="java.lang.String"/>
+	<field name="PIUTANG_ID" class="java.lang.Integer"/>
+	<field name="PIUTANG_KODEPIUTANG" class="java.lang.String"/>
+	<field name="PIUTANG_IDPENJUALAN" class="java.lang.Integer"/>
+	<field name="PIUTANG_TANGGAL" class="java.sql.Date"/>
+	<field name="PIUTANG_JUMLAH" class="java.lang.Double"/>
+	<field name="PIUTANG_IDPELANGGAN" class="java.lang.String"/>
+	<field name="PIUTANG_JATUHTEMPO" class="java.sql.Date"/>
+	<field name="PIUTANG_KETERANGAN" class="java.lang.String"/>
+	<field name="PIUTANG_STATUS" class="java.lang.String"/>
+	<field name="PENJUALAN_NOFAKTUR" class="java.lang.String"/>
+	<field name="SALES_NAMA" class="java.lang.String"/>
+	<field name="UMUR" class="java.lang.Long"/>
+	<field name="PIUTANGBAYAR_KODEPIUTANGBAYAR" class="java.lang.Integer"/>
+	<field name="PIUTANGBAYAR_REF" class="java.lang.Integer"/>
+	<field name="PIUTANGBAYAR_TANGGAL" class="java.lang.Integer"/>
+	<field name="PIUTANGBAYAR_JUMLAH" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d9679a00-25db-482c-8c70-79ce0f754e25" x="151" y="0" width="269" height="17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT.MIRANTI ADILHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="29138a86-d9a8-42bf-840d-13e79e0d4fbb" x="1" y="16" width="535" height="17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN DETAIL ANALISA UMUR PIUTANG PELANGGAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="481af719-614f-429d-98c6-7198b1bf2549" x="156" y="32" width="74" height="17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f17ee0e4-50ae-49a3-824c-7b15cc0ce030" x="304" y="32" width="23" height="17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S/D]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="45" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="83" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f7442aff-e515-4d75-9422-3078dba22039" x="96" y="12" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PELANGGAN_NAMA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="51d2dd58-c43e-435f-a8ad-2b0e6223ad28" x="98" y="33" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PELANGGAN_ALAMAT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="68b8d8d3-c054-4ff2-9acd-59eb1008e5c7" x="20" y="63" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PIUTANGBAYAR_KODEPIUTANGBAYAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="823f3b99-57f8-4b7a-a701-fdffc7ff5615" x="141" y="63" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PIUTANGBAYAR_REF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="60872e2c-849c-4e21-8a17-05454d3dec82" x="389" y="63" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PIUTANGBAYAR_JUMLAH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a0df52ca-3a4c-43ea-80b7-1b540ef4f280" x="266" y="63" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PIUTANGBAYAR_TANGGAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement uuid="1e47bfb8-5755-4fc2-acf3-525b07e339bb" x="20" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PIUTANGBAYAR_KODEPIUTANGBAYAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="024110d9-0ca3-4532-825b-904df16b4ef9" x="141" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PIUTANGBAYAR_REF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="20c1a26e-2fc1-4559-9247-c615806c3f72" x="389" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PIUTANGBAYAR_JUMLAH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4380ec5c-c494-45fd-8d23-b5f1adcd7ec4" x="277" y="6" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PIUTANGBAYAR_TANGGAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

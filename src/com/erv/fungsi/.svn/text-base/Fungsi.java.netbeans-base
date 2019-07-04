@@ -1,0 +1,106 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.fungsi;
+import com.erv.db.koneksi;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author erwadi
+ */
+public class Fungsi {
+    public static double getTotalSaldo(Connection conn,int bulan,int tahun,int grup) {
+        double hasil=0;
+        try {
+            Statement stat=conn.createStatement();
+            String sql="SELECT "
+                    + "NERACABANTU.KODEPERKIRAAN AS NERACABANTU_KODEPERKIRAAN,"
+                    + "NERACABANTU.NAMAPERKIRAAN AS NERACABANTU_NAMAPERKIRAAN, "
+                    + "NERACABANTU.GRUP AS NERACABANTU_GRUP, "
+                    + "NERACABANTU.TIPE AS NERACABANTU_TIPE, "
+                    + "GRUP.grup AS NAMAGRUP, "
+                    + "IFNULL( SELECT sum(SALDOPERIODE.SALDO) FROM \"PUBLIC\".\"SALDOPERIODE\" "
+                    + "SALDOPERIODE WHERE LEFT(SALDOPERIODE.PERIODE,4) = (CASEWHEN("+bulan+" - 1=0,"+tahun+" -1,"+tahun+")) "
+                    + "AND SUBSTR(SALDOPERIODE.PERIODE,6,2) = (CASEWHEN("+bulan+" - 1=0,12,"+(bulan-1)+")) "
+                    + "AND SALDOPERIODE.KODEAKUN LIKE CONCAT(NERACABANTU.KODEPERKIRAAN,'%'),0 ) AS SALDOAWAL, "
+                    + "IFNULL( SELECT sum(RINCIJURNAL.\"DEBET\") FROM \"PUBLIC\".\"RINCIJURNAL\" RINCIJURNAL "
+                    + "INNER JOIN \"PUBLIC\".\"JURNAL\" JURNAL ON RINCIJURNAL.\"KODEJURNAL\" = JURNAL.\"ID\" "
+                    + "WHERE MONTH(JURNAL.TANGGAL) = "+bulan+" AND YEAR(JURNAL.TANGGAL) = "+tahun+" "
+                    + "AND RINCIJURNAL.KODEPERKIRAAN LIKE CONCAT(NERACABANTU.KODEPERKIRAAN,'%'),0 ) AS DEBET, "
+                    + "IFNULL( SELECT sum(RINCIJURNAL.KREDIT) FROM JURNAL INNER JOIN RINCIJURNAL ON JURNAL.ID = RINCIJURNAL.KODEJURNAL "
+                    + "WHERE MONTH(JURNAL.TANGGAL) = "+bulan+" AND YEAR(JURNAL.TANGGAL) = "+tahun+" "
+                    + "AND RINCIJURNAL.KODEPERKIRAAN LIKE CONCAT(NERACABANTU.KODEPERKIRAAN,'%'),0 ) AS KREDIT, "
+                    + "ifnull( "
+                    + "CASE NERACABANTU.GRUP ";
+            if(grup==1 || grup==6 || grup==5 ){
+                sql +=              
+                      "WHEN "+grup+" THEN "
+                    + "IFNULL( SELECT sum(SALDOPERIODE.SALDO) FROM SALDOPERIODE "
+                    + "WHERE LEFT(SALDOPERIODE.PERIODE,4) = (CASEWHEN("+bulan+" - 1=0,"+tahun+"-1,"+tahun+")) "
+                    + "AND SUBSTR(SALDOPERIODE.PERIODE,6,2) = (CASEWHEN("+bulan+" - 1=0,12,"+(bulan-1)+")) "
+                    + "AND SALDOPERIODE.KODEAKUN LIKE CONCAT(NERACABANTU.KODEPERKIRAAN,'%'),0 )+ "
+                    + "IFNULL( SELECT sum(RINCIJURNAL.DEBET) "
+                    + "FROM RINCIJURNAL INNER JOIN JURNAL ON RINCIJURNAL.KODEJURNAL = JURNAL.ID "
+                    + "WHERE MONTH(JURNAL.TANGGAL) = "+bulan+" "
+                    + "AND YEAR(JURNAL.TANGGAL) = "+tahun+" "
+                    + "AND RINCIJURNAL.KODEPERKIRAAN LIKE CONCAT(NERACABANTU.KODEPERKIRAAN,'%'),0 )- "
+                    + "IFNULL( SELECT sum(RINCIJURNAL.KREDIT) FROM JURNAL "
+                    + "INNER JOIN RINCIJURNAL ON JURNAL.ID = RINCIJURNAL.KODEJURNAL "
+                    + "WHERE MONTH(JURNAL.TANGGAL) = "+bulan+" "
+                    + "AND YEAR(JURNAL.TANGGAL) = "+tahun+" "
+                    + "AND RINCIJURNAL.KODEPERKIRAAN LIKE CONCAT(NERACABANTU.KODEPERKIRAAN,'%'),0 ) ";
+               } else {
+                    sql +=              
+                      "WHEN "+grup+" THEN "
+                    + "IFNULL( SELECT sum(SALDOPERIODE.SALDO) FROM SALDOPERIODE "
+                    + "WHERE LEFT(SALDOPERIODE.PERIODE,4) = (CASEWHEN("+bulan+" - 1=0,"+tahun+"-1,"+tahun+")) "
+                    + "AND SUBSTR(SALDOPERIODE.PERIODE,6,2) = (CASEWHEN("+bulan+" - 1=0,12,"+(bulan-1)+")) "
+                    + "AND SALDOPERIODE.KODEAKUN LIKE CONCAT(NERACABANTU.KODEPERKIRAAN,'%'),0 )- "
+                    + "IFNULL( SELECT sum(RINCIJURNAL.DEBET) "
+                    + "FROM RINCIJURNAL INNER JOIN JURNAL ON RINCIJURNAL.KODEJURNAL = JURNAL.ID "
+                    + "WHERE MONTH(JURNAL.TANGGAL) = "+bulan+" "
+                    + "AND YEAR(JURNAL.TANGGAL) = "+tahun+" "
+                    + "AND RINCIJURNAL.KODEPERKIRAAN LIKE CONCAT(NERACABANTU.KODEPERKIRAAN,'%'),0 )+ "
+                    + "IFNULL( SELECT sum(RINCIJURNAL.KREDIT) FROM JURNAL "
+                    + "INNER JOIN RINCIJURNAL ON JURNAL.ID = RINCIJURNAL.KODEJURNAL "
+                    + "WHERE MONTH(JURNAL.TANGGAL) = "+bulan+" "
+                    + "AND YEAR(JURNAL.TANGGAL) = "+tahun+" "
+                    + "AND RINCIJURNAL.KODEPERKIRAAN LIKE CONCAT(NERACABANTU.KODEPERKIRAAN,'%'),0 ) ";
+                }    
+                sql +=
+                      "END,0) as SALDO "
+                    + "FROM "
+                    + "NERACABANTU INNER JOIN GRUP ON (NERACABANTU.GRUP=GRUP.KODE) "
+                    + "WHERE NERACABANTU.GRUP="+grup+""
+                    + "ORDER BY NERACABANTU.KODEPERKIRAAN";
+            ResultSet rs=stat.executeQuery(sql);
+            while(rs.next()){
+                hasil+=rs.getDouble(9);
+            }        
+            rs.close();
+            stat.close();
+        } catch (Exception ex) {
+            Logger.getLogger(Fungsi.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
+        }
+        
+        return hasil;
+    }
+    public static void main(String [] args){
+        try {
+            System.out.print( Fungsi.getTotalSaldo(koneksi.getKoneksiJ(),1, 2012, 6));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Fungsi.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Fungsi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+}

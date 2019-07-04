@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="penjualanHarian" language="groovy" pageWidth="600" pageHeight="842" columnWidth="535" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<parameter name="tgl1" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2011-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tgl2" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2012-01-01"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     PENJUALAN."FAKTUR" AS PENJUALAN_FAKTUR,
+     PENJUALAN."TANGGAL" AS PENJUALAN_TANGGAL,
+     PELANGGAN."NAMA" AS PELANGGAN_NAMA,
+     RINCIPENJUALAN."KODEBARANG" AS RINCIPENJUALAN_KODEBARANG,
+     BARANG."NAMABARANG" AS BARANG_NAMABARANG,
+     RINCIPENJUALAN."JUMLAH" AS RINCIPENJUALAN_JUMLAH,
+     BARANG."SATUAN" AS BARANG_SATUAN,
+     RINCIPENJUALAN."HARGA" AS RINCIPENJUALAN_HARGA,
+     RINCIPENJUALAN."TOTAL" AS RINCIPENJUALAN_TOTAL,
+     RINCIPENJUALAN."DISKON" AS RINCIPENJUALAN_DISKON,
+     RINCIPENJUALAN."PPN" AS RINCIPENJUALAN_PPN,
+     (RINCIPENJUALAN.JUMLAH * RINCIPENJUALAN.HARGA) - (RINCIPENJUALAN.DISKON) AS TOTDIS,((RINCIPENJUALAN.JUMLAH * RINCIPENJUALAN.HARGA) - ((RINCIPENJUALAN.DISKON) * (RINCIPENJUALAN.JUMLAH * RINCIPENJUALAN.HARGA))) * (RINCIPENJUALAN.PPN / 100) as PPNTOT,JENISBARANG."JENIS" AS JENISBARANG_JENIS,
+ casewhen(PENJUALAN."CASH"=1,'Hutang','Tunai') AS PENJUALAN_CASH,SALES."NAMA" AS SALES_NAMA,PENJUALAN."DP" AS PENJUALAN_DP,
+PENJUALAN."DISKON" AS PENJUALAN_DISKON
+FROM
+     "PUBLIC"."PENJUALAN" PENJUALAN INNER JOIN "PUBLIC"."RINCIPENJUALAN" RINCIPENJUALAN ON PENJUALAN."ID" = RINCIPENJUALAN."IDPENJUALAN"
+     INNER JOIN "PUBLIC"."BARANG" BARANG ON RINCIPENJUALAN."KODEBARANG" = BARANG."KODEBARANG"
+     INNER JOIN "PUBLIC"."PELANGGAN" PELANGGAN ON PENJUALAN."KODEPELANGGAN" = PELANGGAN."KODEPELANGGAN"
+     INNER JOIN "PUBLIC"."JENISBARANG" JENISBARANG ON BARANG."IDJENIS" = JENISBARANG."ID"
+     INNER JOIN "PUBLIC"."SALES" SALES ON PENJUALAN."IDSALES" = SALES."IDSALES"
+WHERE PELANGGAN.STATUSCABANG='1' and PENJUALAN."TANGGAL" >= $P{tgl1} AND PENJUALAN."TANGGAL" <= $P{tgl2}]]>
+	</queryString>
+	<field name="PENJUALAN_FAKTUR" class="java.lang.String"/>
+	<field name="PENJUALAN_TANGGAL" class="java.sql.Date"/>
+	<field name="PELANGGAN_NAMA" class="java.lang.String"/>
+	<field name="RINCIPENJUALAN_KODEBARANG" class="java.lang.String"/>
+	<field name="BARANG_NAMABARANG" class="java.lang.String"/>
+	<field name="RINCIPENJUALAN_JUMLAH" class="java.lang.Integer"/>
+	<field name="BARANG_SATUAN" class="java.lang.String"/>
+	<field name="RINCIPENJUALAN_HARGA" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_TOTAL" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_DISKON" class="java.lang.Double"/>
+	<field name="RINCIPENJUALAN_PPN" class="java.lang.Double"/>
+	<field name="TOTDIS" class="java.lang.Double"/>
+	<field name="PPNTOT" class="java.lang.Double"/>
+	<field name="JENISBARANG_JENIS" class="java.lang.String"/>
+	<field name="PENJUALAN_CASH" class="java.lang.String"/>
+	<field name="SALES_NAMA" class="java.lang.String"/>
+	<field name="PENJUALAN_DP" class="java.lang.Double"/>
+	<field name="PENJUALAN_DISKON" class="java.lang.Double"/>
+	<variable name="VTOTDIS" class="java.lang.Double" resetType="Group" resetGroup="transaksi" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTDIS}]]></variableExpression>
+	</variable>
+	<variable name="vtotal" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{VTOTDIS}-$F{PENJUALAN_DISKON} - $F{PENJUALAN_DP}]]></variableExpression>
+	</variable>
+	<variable name="vtotalsemua" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{RINCIPENJUALAN_TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="VtotUangMuka" class="java.lang.Double" incrementType="Group" incrementGroup="transaksi" calculation="Sum">
+		<variableExpression><![CDATA[$F{PENJUALAN_DP}]]></variableExpression>
+	</variable>
+	<variable name="vtotdiskontambah" class="java.lang.Double" incrementType="Group" incrementGroup="transaksi" calculation="Sum">
+		<variableExpression><![CDATA[$F{PENJUALAN_DISKON}]]></variableExpression>
+	</variable>
+	<variable name="vtotalkurangdiskontambah" class="java.lang.Double" resetType="None">
+		<variableExpression><![CDATA[$V{vtotalsemua}-$V{vtotdiskontambah}]]></variableExpression>
+	</variable>
+	<group name="transaksi">
+		<groupExpression><![CDATA[$F{PENJUALAN_FAKTUR}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<staticText>
+					<reportElement x="0" y="0" width="49" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No. Trans ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="66" y="0" width="52" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PENJUALAN_FAKTUR}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="145" y="0" width="49" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tanggal :]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="194" y="0" width="55" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PENJUALAN_TANGGAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="345" y="0" width="188" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PELANGGAN_NAMA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="58" y="0" width="9" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="11" width="56" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pembayaran]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="58" y="11" width="9" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="336" y="11" width="9" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="283" y="11" width="43" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sales]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="283" y="0" width="53" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pelanggan ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="336" y="0" width="9" height="16"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="67" y="11" width="73" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PENJUALAN_CASH}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="345" y="11" width="188" height="12"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SALES_NAMA}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<staticText>
+					<reportElement x="346" y="35" width="84" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<line>
+					<reportElement x="331" y="0" width="204" height="1"/>
+				</line>
+				<line>
+					<reportElement x="0" y="49" width="535" height="1"/>
+				</line>
+				<staticText>
+					<reportElement x="346" y="24" width="84" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Bayar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="346" y="2" width="84" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Jumlah]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="442" y="2" width="91" height="12"/>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{VTOTDIS}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="442" y="35" width="91" height="12"/>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{vtotal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="442" y="24" width="91" height="12"/>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PENJUALAN_DP}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="346" y="13" width="85" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Diskon Tambahan ]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="442" y="13" width="91" height="12"/>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PENJUALAN_DISKON}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="430" y="35" width="11" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="430" y="24" width="11" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="430" y="13" width="11" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="430" y="2" width="11" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="17" width="298" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laporan Harian Pengiriman Ke Cabang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="33" width="57" height="14"/>
+				<textElement/>
+				<text><![CDATA[Periode :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="59" y="33" width="68" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{tgl1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="33" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{tgl2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="127" y="33" width="22" height="14"/>
+				<textElement/>
+				<text><![CDATA[s/d]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="1" width="261" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEAN BOUTIQUE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="49" height="25"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Kode Barang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="51" y="10" width="201" height="16"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Nama Barang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="10" width="33" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Volume]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="10" width="40" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Satuan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="10" width="62" height="16"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Harga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="10" width="70" height="16"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="4" width="535" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="30" width="535" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="396" y="10" width="64" height="16"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Disc (Rp)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="49" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RINCIPENJUALAN_KODEBARANG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="0" width="201" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BARANG_NAMABARANG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="253" y="0" width="33" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RINCIPENJUALAN_JUMLAH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="0" width="40" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BARANG_SATUAN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="331" y="0" width="62" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RINCIPENJUALAN_HARGA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="463" y="0" width="70" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTDIS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="396" y="0" width="65" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RINCIPENJUALAN_DISKON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="182" y="0" width="80" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="262" y="0" width="40" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="396" y="0" width="138" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="342" y="0" width="100" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total  Penjualan :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="12" width="100" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total  Uang Muka :]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="442" y="12" width="92" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{VtotUangMuka}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="442" y="0" width="91" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{vtotalkurangdiskontambah}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

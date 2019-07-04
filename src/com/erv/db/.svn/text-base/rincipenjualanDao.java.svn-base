@@ -1,0 +1,135 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.db;
+
+import com.erv.model.rincipenjualan;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import org.h2.api.Trigger;
+
+
+/**
+ *
+ * @author erwadi
+ */
+public class rincipenjualanDao {
+
+    Connection con;
+
+    public rincipenjualanDao(Connection con) {
+        this.con = con;
+    }
+
+    public int insert(rincipenjualan bb) throws SQLException {
+        String sql = "insert into RINCIPENJUALAN values (?,?,?,?,?,?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        //set values to prepared statement object by getting values from bean object
+        pstmt.setInt(1, bb.getID());
+        pstmt.setInt(2, bb.getIDPENJUALAN());
+        pstmt.setString(3, bb.getKODEBARANG());
+        pstmt.setInt(4, bb.getJUMLAH());
+        pstmt.setDouble(5, bb.getHARGA());
+        pstmt.setFloat(6, bb.getDISKON());
+        pstmt.setDouble(7, bb.getTOTAL());
+        pstmt.setFloat(8, bb.getPPN());
+        int i = pstmt.executeUpdate();
+        return i;
+    }
+
+    public rincipenjualan getDetails(int id) throws SQLException, ClassNotFoundException {
+        //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("select * from RINCIPENJUALAN where ID=?");
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        rincipenjualan ubean = new rincipenjualan();
+        while (rs.next()) {
+            ubean.setID(rs.getInt(1));
+            ubean.setIDPENJUALAN(rs.getInt(2));
+            ubean.setKODEBARANG(rs.getString(3));
+            ubean.setJUMLAH(rs.getInt(4));
+            ubean.setHARGA(rs.getDouble(5));
+            ubean.setDISKON(rs.getFloat(6));
+            ubean.setTOTAL(rs.getDouble(7));
+            ubean.setPPN(rs.getFloat(8)); 
+        }
+
+        return ubean;
+    }
+
+    public boolean update(rincipenjualan bb) throws SQLException {
+        String sql = "update RINCIPENJUALAN set IDPENJUALAN=?,KODEBARANG=?,JUMLAH=?,HARGA=?,"
+                + "DISKON=?,TOTAL=?,PPN=? where ID=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        //set values to prepared statement object by getting values from bean object
+        pstmt.setInt(8, bb.getID());
+        pstmt.setInt(1, bb.getIDPENJUALAN());
+        pstmt.setString(2, bb.getKODEBARANG());
+        pstmt.setInt(3, bb.getJUMLAH());
+        pstmt.setDouble(4, bb.getHARGA());
+        pstmt.setFloat(5, bb.getDISKON());
+        pstmt.setDouble(6, bb.getTOTAL());
+        pstmt.setFloat(7, bb.getPPN());
+        boolean i = pstmt.execute();
+        return i;
+    }
+
+    public void deleteDetails(int id) throws SQLException, ClassNotFoundException {
+        //here we will write code to get a single record from database
+        PreparedStatement pstmt = con.prepareStatement("delete from RINCIPENJUALAN where ID=?");
+        pstmt.setInt(1, id);
+        pstmt.executeUpdate();
+    }
+
+    public int getID() throws SQLException {
+        int hasil = 1;
+        PreparedStatement pstmt = con.prepareStatement("select max(id) from RINCIPENJUALAN");
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            if (rs.getString(1) != null) {
+                hasil = rs.getInt(1) + 1;
+            }
+        }
+        return hasil;
+    }
+    public static class triggerrincipenjualan implements Trigger {
+
+        public void init(Connection conn, String schemaName, String triggerName, String tableName, boolean before, int type) {
+            // initialize the trigger object is necessary
+        }
+
+        /**
+         * This method is called for each triggered action.
+         *
+         * @param conn a connection to the database
+         * @param oldRow the old row, or null if no old row is available (for INSERT)
+         * @param newRow the new row, or null if no new row is available (for DELETE)
+         * @throws SQLException if the operation must be undone
+         */
+        public void fire(Connection conn,
+                Object[] oldRow, Object[] newRow)
+                throws SQLException {
+            String kodeJurnal = "";
+            Statement stat=conn.createStatement();
+            if (newRow != null && oldRow == null) {
+            }else if (newRow == null && oldRow != null) {
+                 kodeJurnal=(String) oldRow[1];
+                 stat.execute("delete from RINCIPENJUALAN where IDPENJUALAN='"+oldRow[0].toString()+"'");
+                 stat.execute("delete from JURNAL where KODEJURNAL='"+kodeJurnal+"'");
+                 System.out.println("Delete");
+            }
+        }
+
+        public void close() {
+            // ignore
+        }
+
+        public void remove() {
+            // ignore
+        }
+    }
+}

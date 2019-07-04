@@ -1,0 +1,95 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.erv.model;
+
+/**
+ *
+ * @author erwadi
+ */
+public class rinciretur {
+    private int ID;
+    private int IDRETUR;
+    private String KODEBARANG;
+    private int JUMLAH;
+    private float HARGA;
+    private float TOTAL;
+    private float DISKON;
+    private float PPN;
+    public rinciretur() {
+        this.ID = 0;
+        this.IDRETUR = 0;
+        this.KODEBARANG = "";
+        this.JUMLAH = 0;
+        this.HARGA = 0;
+        this.TOTAL = 0;
+    }
+
+    
+    public float getHARGA() {
+        return HARGA;
+    }
+
+    public void setHARGA(float HARGA) {
+        this.HARGA = HARGA;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getJUMLAH() {
+        return JUMLAH;
+    }
+
+    public void setJUMLAH(int JUMLAH) {
+        this.JUMLAH = JUMLAH;
+    }
+
+    public String getKODEBARANG() {
+        return KODEBARANG;
+    }
+
+    public void setKODEBARANG(String KODEBARANG) {
+        this.KODEBARANG = KODEBARANG;
+    }
+
+    public int getIDRETUR() {
+        return IDRETUR;
+    }
+
+    public void setIDRETUR(int IDRETUR) {
+        this.IDRETUR = IDRETUR;
+    }
+
+    public float getTOTAL() {
+        return TOTAL;
+    }
+
+    public void setTOTAL(float TOTAL) {
+        this.TOTAL = TOTAL;
+    }
+
+    public float getDISKON() {
+        return DISKON;
+    }
+
+    public void setDISKON(float DISKON) {
+        this.DISKON = DISKON;
+    }
+
+    public float getPPN() {
+        return PPN;
+    }
+
+    public void setPPN(float PPN) {
+        this.PPN = PPN;
+    }
+    
+    
+}

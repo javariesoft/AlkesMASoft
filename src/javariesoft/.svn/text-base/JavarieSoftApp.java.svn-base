@@ -1,0 +1,73 @@
+/*
+ * JavarieSoftApp.java
+ */
+
+package javariesoft;
+import org.h2.tools.Server;
+import com.erv.db.koneksi;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import org.jdesktop.application.Application;
+import org.jdesktop.application.SingleFrameApplication;
+
+/**
+ * The main class of the application.
+ */
+public class JavarieSoftApp extends SingleFrameApplication {
+    static Connection c;
+    public static Server server;
+    /**
+     * At startup create and show the main frame of the application.
+     */
+    @Override protected void startup() {
+        show(new JavarieSoftView(this));
+    }
+
+    /**
+     * This method is to initialize the specified window by injecting resources.
+     * Windows shown in our application come fully initialized from the GUI
+     * builder, so this additional configuration is not needed.
+     */
+    @Override protected void configureWindow(java.awt.Window root) {
+    }
+
+    /**
+     * A convenient static getter for the application instance.
+     * @return the instance of JavarieSoftApp
+     */
+    public static JavarieSoftApp getApplication() {
+        return Application.getInstance(JavarieSoftApp.class);
+    }
+
+    /**
+     * Main method launching the application.
+     */
+    public static void main(String[] args) {
+        try {
+           // server = Server.createTcpServer("tcp://localhost/8082").start();
+            c=koneksi.getKoneksiJ();
+            Statement stat=c.createStatement();
+            ResultSet rs=stat.executeQuery("select * from KODEAKSES");
+            if(rs.next()){
+                String h="";
+               byte[] hasil=com.erv.function.Authentication.encryptPassword(com.erv.function.MiscUtils.getMotherboardSN());
+               for(int i=0;i<hasil.length;i++){
+                   h+=hasil[i];
+                }
+                if(h.equals(rs.getString(1))){
+                    launch(JavarieSoftApp.class, args);
+               }else{
+                   DialogRegister d=new DialogRegister(null, true);
+                   d.setVisible(true);
+               }
+            }else{
+                DialogRegister d=new DialogRegister(null, true);
+                    d.setVisible(true);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } 
+        
+    }
+}
