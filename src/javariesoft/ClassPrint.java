@@ -312,7 +312,7 @@ public class ClassPrint {
                     + "INNER JOIN JENISBARANG JENISBARANG ON BARANG.IDJENIS = JENISBARANG.ID "
                     + "INNER JOIN SALES SALES ON PENJUALAN.IDSALES = SALES.IDSALES "
                     + "WHERE PENJUALAN.FAKTUR = '" + nfak + "'";
-
+            System.out.println(sql);
             String spasi = " ";
             Statement stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stat.executeQuery(sql);
@@ -391,11 +391,18 @@ public class ClassPrint {
 //            p.put("diskontambahan", Math.round(rs1.getDouble(9)));
             p.put("diskontambahan", df1.format(rs1.getDouble(9)));
 //            p.put("ppn", Math.round(rs1.getDouble(44)));
-            p.put("ppn", df1.format(rs1.getDouble(44)));
-
-            bayar = (rs1.getString(37).equals("0") ? total +rs1.getDouble(44) +rs1.getDouble(45) - rs1.getDouble(9)  : (rs1.getDouble(8)!=0 ? rs1.getDouble(8):0));
+            //p.put("ppn", df1.format(rs1.getDouble(44)));
+            ppn = 0.1 * total;
+            p.put("ppn", df1.format(ppn));
+            bayar = (rs1.getString(37).equals("0") ? total + ppn + rs1.getDouble(45) - rs1.getDouble(9) : (rs1.getDouble(8) != 0 ? rs1.getDouble(8) : 0));
+            //bayar = (rs1.getString(37).equals("0") ? total +rs1.getDouble(44) +rs1.getDouble(45) - rs1.getDouble(9)  : (rs1.getDouble(8)!=0 ? rs1.getDouble(8):0));
 //            totalbersih = (total - rs1.getDouble(9) - rs1.getDouble(8)) + rs1.getDouble(44);
-            totalbersih = (rs1.getString(37).equals("0") ? 0 : (rs1.getDouble(8)!=0 ? ((total + rs1.getDouble(44) + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9)) : total + rs1.getDouble(44) + rs1.getDouble(45) - rs1.getDouble(9) ));
+            //totalbersih = (rs1.getString(37).equals("0") ? 0 : (rs1.getDouble(8)!=0 ? ((total + rs1.getDouble(44) + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9)) : total + rs1.getDouble(44) + rs1.getDouble(45) - rs1.getDouble(9) ));
+            totalbersih = (rs1.getString(37).equals("0")
+                    ? 0
+                    : (rs1.getDouble(8) != 0
+                    ? ((total + ppn + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9))
+                    : total + ppn + rs1.getDouble(45) - rs1.getDouble(9)));
             double terbilang = 0;
             if (totalbersih == 0) {
                 terbilang = bayar;
