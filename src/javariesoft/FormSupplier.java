@@ -29,6 +29,8 @@ import com.eigher.db.loghistoryDao;
 import com.eigher.model.loghistory;
 import java.awt.HeadlessException;
 import java.text.ParseException;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -40,6 +42,8 @@ public class FormSupplier extends javax.swing.JInternalFrame {
     perkiraanDao dbpr;
     supplier p;
     java.text.DateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+    MaskFormatter mf1;
+    DefaultFormatterFactory formatterFactory;
     Connection c;
     loghistory lh;
     loghistoryDao lhdao;
@@ -63,7 +67,15 @@ public class FormSupplier extends javax.swing.JInternalFrame {
             cektombol();
             reloadData(cboAktif.getSelectedIndex());
             cboKriteria.setSelectedIndex(1);
+            mf1 = new MaskFormatter("##.###.###.#-###.####");
+            mf1.setPlaceholderCharacter('_');
+            mf1.setValidCharacters("0123456789");
+            mf1.setValueClass(String.class);
+            formatterFactory = new DefaultFormatterFactory(mf1);
+            txtNPWP.setFormatterFactory(formatterFactory);
         } catch (SQLException ex) {
+            Logger.getLogger(FormSupplier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(FormSupplier.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -407,7 +419,7 @@ public class FormSupplier extends javax.swing.JInternalFrame {
 
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
-        setBounds(0, 0, 693, 638);
+        setBounds(0, 0, 802, 638);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed

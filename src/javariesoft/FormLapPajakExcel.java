@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -120,9 +121,9 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            
+
             List<List<Object>> data = getDataImportBarang(con);
-            Object [] judul = {"OB","KODE_OBJECT","NAMA","HARGA_SATUAN"};
+            Object[] judul = {"OB", "KODE_OBJECT", "NAMA", "HARGA_SATUAN"};
             ListToExcel(judul, data, "ImportBarang.xlsx");
             JOptionPane.showMessageDialog(this, "Export To Excel Ok");
         } catch (SQLException ex) {
@@ -130,7 +131,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         } catch (IOException ex) {
             Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
@@ -154,8 +155,13 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExportToCsvActionPerformed
 
     private void btnLawanCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLawanCsvActionPerformed
-        // TODO add your handling code here:
-        createLawanToCsv();
+        try {
+            // TODO add your handling code here:
+            createLawanToCsv();
+            JOptionPane.showMessageDialog(this, "Export Data Lawan ke CSV Ok");
+        } catch (SQLException ex) {
+            Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLawanCsvActionPerformed
 
 
@@ -184,7 +190,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
 
     public void ListToExcel(Object[] judul, List<List<Object>> data, String filename) throws FileNotFoundException, IOException {
         System.out.println("Start");
-        String path="import/";
+        String path = "import/";
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Datatypes in Java");
         int rowNum = 0;
@@ -224,11 +230,63 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         Statement stat = con.createStatement();
         ResultSet rs = stat.executeQuery(sql);
         new Csv().write("import/barang.csv", rs, null);
-        
+
     }
 
-    private void createLawanToCsv() {
-        SimpleResultSet rs = new SimpleResultSet();
-        //rs.addColumn(title, WIDTH, WIDTH, WIDTH);
+    private void createLawanToCsv() throws SQLException {
+        SimpleResultSet rsHasil = new SimpleResultSet();
+        rsHasil.addColumn("LT", Types.VARCHAR, 2, 0);
+        rsHasil.addColumn("NPWP", Types.VARCHAR, 20, 0);
+        rsHasil.addColumn("NAMA", Types.VARCHAR, 50, 0);
+        rsHasil.addColumn("JALAN", Types.VARCHAR, 200, 0);
+        rsHasil.addColumn("BLOK", Types.VARCHAR, 10, 0);
+        rsHasil.addColumn("NOMOR", Types.VARCHAR, 10, 0);
+        rsHasil.addColumn("RT", Types.VARCHAR, 10, 0);
+        rsHasil.addColumn("RW", Types.VARCHAR, 10, 0);
+        rsHasil.addColumn("KECAMATAN", Types.VARCHAR, 50, 0);
+        rsHasil.addColumn("KELURAHAN", Types.VARCHAR, 50, 0);
+        rsHasil.addColumn("KABUPATEN", Types.VARCHAR, 50, 0);
+        rsHasil.addColumn("PROPINSI", Types.VARCHAR, 50, 0);
+        rsHasil.addColumn("KODE_POS", Types.VARCHAR, 10, 0);
+        rsHasil.addColumn("NOMOR_TELEPON", Types.VARCHAR, 10, 0);
+
+        String sql = "(select 'LT' as LT, NPWP, NAMA, ALAMAT as JALAN, BLOK, "
+                + "NOMOR, RT, RW, KECAMATAN, KELURAHAN, KABUPATEN, "
+                + "PROPINSI, KODEPOS as KODE_POS, HP as NOMOR_TELEPON "
+                + "from PELANGGAN) "
+                + "";
+        sql += "UNION ";
+        sql += "(select 'LT' as LT, NPWP, NAMA, ALAMAT as JALAN, '-' as BLOK, "
+                + "'-' as NOMOR,'-' as RT, '-' as RW, KECAMATAN, KELURAHAN, "
+                + "KABUPATEN, PROPINSI, KODEPOS as KODE_POS, NOHP as NOMOR_TELEPON "
+                + "from SUPPLIER) "
+                + "";
+
+        Statement stat = con.createStatement();
+        ResultSet rs = stat.executeQuery(sql);
+        String npwpSebelum = "";
+        while (rs.next()) {
+            if (!rs.getString(2).trim().equals(npwpSebelum)) {
+                Object[] rowData1 = {
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getString(13),
+                    rs.getString(14)
+                };
+                rsHasil.addRow(rowData1);
+            }
+            npwpSebelum = rs.getString(2).trim();
+        }
+        new Csv().write("import/lawan.csv", rsHasil, null);
     }
 }
