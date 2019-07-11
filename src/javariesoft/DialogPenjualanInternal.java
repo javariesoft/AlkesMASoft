@@ -214,6 +214,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             p = dbpenjualan.getDetails(c, id);
             IDjual = p.getID();
             nofaktur.setText(p.getFAKTUR());
+            txtNofakturTemp.setText(p.getFAKTUR()); 
             Calendar cld = Calendar.getInstance();
             cld.setTime(d.parse(p.getTANGGAL()));
             tgl.setSelectedDate(cld);
@@ -447,6 +448,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         RadioPanjang = new javax.swing.JRadioButton();
         txtDiskonPersen = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
+        cbPPN1 = new javax.swing.JCheckBox();
 
         setClosable(true);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(DialogPenjualanInternal.class);
@@ -1505,6 +1507,11 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         jLabel36.setName("jLabel36"); // NOI18N
         jPanel3.add(jLabel36);
         jLabel36.setBounds(300, 10, 130, 20);
+
+        cbPPN1.setText(resourceMap.getString("cbPPN1.text")); // NOI18N
+        cbPPN1.setName("cbPPN1"); // NOI18N
+        jPanel3.add(cbPPN1);
+        cbPPN1.setBounds(910, 90, 130, 23);
 
         panelCool2.add(jPanel3);
         jPanel3.setBounds(10, 530, 1060, 120);
@@ -3491,6 +3498,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
     private javax.swing.JButton btninsert;
     private javax.swing.JCheckBox cbBonus;
     private javax.swing.JCheckBox cbPPN;
+    private javax.swing.JCheckBox cbPPN1;
     private javax.swing.JCheckBox cbStatusDO;
     private javax.swing.JComboBox cboSatuan;
     private javax.swing.JComboBox cboStatDiskon;
@@ -4567,7 +4575,16 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
     }
 
     void viewFakturPendek(String nofaktur) {
-        Map<String, Object> p = ClassPrint.cetakfakturMap(c, nofaktur);
+        Map<String, Object> p;
+        if(cbPPN.isSelected()){
+            p = ClassPrint.cetakfakturMap(c, nofaktur);
+        }else{
+            if(cbPPN1.isSelected()){
+                p = ClassPrint.cetakfakturMap1(c, nofaktur);
+            }else{
+                p = ClassPrint.cetakfakturMap(c, nofaktur);
+            }
+        }
         ViewFaktur f = new ViewFaktur(p);
         JavarieSoftView.panelCool1.add(f);
         f.setSize(800, 400);
@@ -4576,7 +4593,16 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
     }
 
     void viewFakturPanjang(String nofaktur) {
-        Map<String, Object> p = ClassPrintKertasPanjang.cetakfakturMap(c, nofaktur);
+        Map<String, Object> p;
+        if(cbPPN.isSelected()){
+            p = ClassPrintKertasPanjang.cetakfakturMap(c, nofaktur);
+        }else{
+            if(cbPPN1.isSelected()){
+                p = ClassPrintKertasPanjang.cetakfakturMap1(c, nofaktur);
+            }else{
+                p = ClassPrintKertasPanjang.cetakfakturMap(c, nofaktur);
+            }
+        }
         ViewFakturPanjang f = new ViewFakturPanjang(p);
         JavarieSoftView.panelCool1.add(f);
         f.setSize(800, 400);
