@@ -250,7 +250,7 @@ public class ClassPrint {
 
     public static Map<String, Object> cetakfakturMap(Connection con, String nfak) {
         java.text.DateFormat d = new SimpleDateFormat("dd-MMMM-yyyy");
-        java.util.Date tgl=new java.util.Date();
+        java.util.Date tgl = new java.util.Date();
         DecimalFormat df = new DecimalFormat("###,###,###,###");
         DecimalFormat df1 = new DecimalFormat("###,###,###,###.##");
         Map<String, Object> p = new HashMap<String, Object>();
@@ -312,7 +312,7 @@ public class ClassPrint {
                     + "INNER JOIN JENISBARANG JENISBARANG ON BARANG.IDJENIS = JENISBARANG.ID "
                     + "INNER JOIN SALES SALES ON PENJUALAN.IDSALES = SALES.IDSALES "
                     + "WHERE PENJUALAN.FAKTUR = '" + nfak + "'";
-            System.out.println(sql);
+
             String spasi = " ";
             Statement stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stat.executeQuery(sql);
@@ -338,7 +338,7 @@ public class ClassPrint {
             p.put("NPWP", rs1.getString(49));
 
             int no = 0, totqty = 0;
-            double total = 0, ppn = 0, totalbersih = 0, bayar =0;
+            double total = 0, ppn = 0, totalbersih = 0, bayar = 0;
             //int jml=0;
             String kdbrg = "", nmbrg = "";
             List<Map<String, Object>> tables = new ArrayList<Map<String, Object>>();
@@ -379,7 +379,7 @@ public class ClassPrint {
                     line.put("jumlah", "");
                     tables.add(line);
                     no++;
-                }else{
+                } else {
                     break;
                 }
             }
@@ -391,18 +391,11 @@ public class ClassPrint {
 //            p.put("diskontambahan", Math.round(rs1.getDouble(9)));
             p.put("diskontambahan", df1.format(rs1.getDouble(9)));
 //            p.put("ppn", Math.round(rs1.getDouble(44)));
-            //p.put("ppn", df1.format(rs1.getDouble(44)));
-            ppn = 0.1 * total;
-            p.put("ppn", df1.format(ppn));
-            bayar = (rs1.getString(37).equals("0") ? total + ppn + rs1.getDouble(45) - rs1.getDouble(9) : (rs1.getDouble(8) != 0 ? rs1.getDouble(8) : 0));
-            //bayar = (rs1.getString(37).equals("0") ? total +rs1.getDouble(44) +rs1.getDouble(45) - rs1.getDouble(9)  : (rs1.getDouble(8)!=0 ? rs1.getDouble(8):0));
+            p.put("ppn", df1.format(rs1.getDouble(44)));
+
+            bayar = (rs1.getString(37).equals("0") ? total + rs1.getDouble(44) + rs1.getDouble(45) - rs1.getDouble(9) : (rs1.getDouble(8) != 0 ? rs1.getDouble(8) : 0));
 //            totalbersih = (total - rs1.getDouble(9) - rs1.getDouble(8)) + rs1.getDouble(44);
-            //totalbersih = (rs1.getString(37).equals("0") ? 0 : (rs1.getDouble(8)!=0 ? ((total + rs1.getDouble(44) + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9)) : total + rs1.getDouble(44) + rs1.getDouble(45) - rs1.getDouble(9) ));
-            totalbersih = (rs1.getString(37).equals("0")
-                    ? 0
-                    : (rs1.getDouble(8) != 0
-                    ? ((total + ppn + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9))
-                    : total + ppn + rs1.getDouble(45) - rs1.getDouble(9)));
+            totalbersih = (rs1.getString(37).equals("0") ? 0 : (rs1.getDouble(8) != 0 ? ((total + rs1.getDouble(44) + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9)) : total + rs1.getDouble(44) + rs1.getDouble(45) - rs1.getDouble(9)));
             double terbilang = 0;
             if (totalbersih == 0) {
                 terbilang = bayar;
@@ -429,8 +422,193 @@ public class ClassPrint {
             p.put("bayar", df1.format(bayar));
             //p.put("totalbersih", Math.round(totalbersih));
             p.put("totalbersih", df1.format(totalbersih));
-            p.put("tglcetak",d.format(tgl));
-            p.put("namauser",JavarieSoftApp.jenisuser);
+            p.put("tglcetak", d.format(tgl));
+            p.put("namauser", JavarieSoftApp.jenisuser);
+            p.put("salesinisial", rs1.getString(39));
+            p.put("ongkir", df1.format(rs1.getDouble(45)));
+            p.put("apotek", rs1.getString(46));
+            p.put("ketapotek", rs1.getString(47));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return p;
+    }
+
+    public static Map<String, Object> cetakfakturMap1(Connection con, String nfak) {
+        java.text.DateFormat d = new SimpleDateFormat("dd-MMMM-yyyy");
+        java.util.Date tgl = new java.util.Date();
+        DecimalFormat df = new DecimalFormat("###,###,###,###");
+        DecimalFormat df1 = new DecimalFormat("###,###,###,###.##");
+        Map<String, Object> p = new HashMap<String, Object>();
+        try {
+            String sql = "SELECT PENJUALAN.ID AS PENJUALAN_ID," //1
+                    + "PENJUALAN.FAKTUR AS PENJUALAN_FAKTUR," //2
+                    + "FORMATDATETIME(PENJUALAN.TANGGAL,'d-MM-yyyy') AS PENJUALAN_TANGGAL," //3
+                    + "PENJUALAN.KODEPELANGGAN AS PENJUALAN_KODEPELANGGAN," //4
+                    + "PENJUALAN.CASH AS PENJUALAN_CASH," //5
+                    + "FORMATDATETIME(PENJUALAN.TGLLUNAS,'d-MM-yyyy') AS PENJUALAN_TGLLUNAS," //6
+                    + "PENJUALAN.PPN AS PENJUALAN_PPN," //7
+                    + "PENJUALAN.DP AS PENJUALAN_DP," //8
+                    + "PENJUALAN.DISKON AS PENJUALAN_DISKON," //9
+                    + "RINCIPENJUALAN.IDPENJUALAN AS RINCIPENJUALAN_IDPENJUALAN," //10
+                    + "RINCIPENJUALAN.KODEBARANG AS RINCIPENJUALAN_KODEBARANG," //11  
+                    + "RINCIPENJUALAN.JUMLAH AS RINCIPENJUALAN_JUMLAH," //12
+                    + "RINCIPENJUALAN.HARGA AS RINCIPENJUALAN_HARGA," //13   
+                    + "RINCIPENJUALAN.DISKON AS RINCIPENJUALAN_DISKON," //14
+                    + "RINCIPENJUALAN.TOTAL AS RINCIPENJUALAN_TOTAL," //15
+                    + "PELANGGAN.KODEPELANGGAN AS PELANGGAN_KODEPELANGGAN," //16
+                    + "PELANGGAN.NAMA AS PELANGGAN_NAMA," //17
+                    + "PELANGGAN.ALAMAT AS PELANGGAN_ALAMAT," //18  
+                    + "PELANGGAN.HP AS PELANGGAN_HP," //19
+                    + "PELANGGAN.TGLREG AS PELANGGAN_TGLREG," //20
+                    + "PELANGGAN.BATASKREDIT AS PELANGGAN_BATASKREDIT," //21
+                    + "BARANG.KODEBARANG AS BARANG_KODEBARANG," //22
+                    + "BARANG.NAMABARANG AS BARANG_NAMABARANG," //23
+                    + "BARANG.SATUAN AS BARANG_SATUAN," //24  
+                    + "BARANG.HARGA AS BARANG_HARGA," //25  
+                    + "BARANG.KODEAKUN AS BARANG_KODEAKUN," //26  
+                    + "BARANG.PENDAPATAN_ACC AS BARANG_PENDAPATAN_ACC," //27  
+                    + "BARANG.COGS_ACC AS BARANG_COGS_ACC," //28
+                    + "BARANG.COGS AS BARANG_COGS," //29
+                    + "BARANG.STOK AS BARANG_STOK," //30  
+                    + "BARANG.IDJENIS AS BARANG_IDJENIS," //31  
+                    + "RINCIPENJUALAN.PPN AS RINCIPENJUALAN_PPN," //32  
+                    + "(RINCIPENJUALAN.JUMLAH * RINCIPENJUALAN.HARGA) - (RINCIPENJUALAN.DISKON) AS TOTDIS," //33
+                    + "((RINCIPENJUALAN.JUMLAH * RINCIPENJUALAN.HARGA) - ((RINCIPENJUALAN.DISKON / 100) * (RINCIPENJUALAN.JUMLAH * RINCIPENJUALAN.HARGA))) * (RINCIPENJUALAN.PPN / 100) as PPNTOT," //34
+                    + "JENISBARANG.JENIS AS JENISBARANG_JENIS," //35
+                    + "PENJUALAN.IDSALES AS PENJUALAN_IDSALES," //36  
+                    + "case PENJUALAN.CASH when 0 then 'Tunai' when 1 then 'Kredit' when 2 then 'Bank' end as pembayaran," //37
+                    + "SALES.NAMA AS SALES_NAMA, " //38
+                    + "SALES.INISIAL AS SALES_INISIAL, " //39
+                    + "RINCIPENJUALAN.SATUAN AS RINCIPENJUALAN_SATUAN, " //40
+                    + "RINCIPENJUALAN.KODEBATCH AS RINCIPENJUALAN_KODEBATCH," //41
+                    + "IFNULL(RINCIPENJUALAN.EXPIRE,'-') AS RINCIPENJUALAN_EXPIRE," //42
+                    + "RINCIPENJUALAN.DISKONP AS RINCIPENJUALAN_DISKONP, " //43
+                    + "PENJUALAN.PPN AS PENJUALAN_PPN, " //44
+                    + "PENJUALAN.ONGKOSKIRIM AS PENJUALAN_ONGKOSKIRIM, " //45
+                    + "(select namalengkap from usertable where groupuser='Apoteker' and statusaktif='0') as apoteker, " //46
+                    + "(select keterangan from usertable where groupuser='Apoteker' and statusaktif='0') as ketapoteker, " //47
+                    + "PENJUALAN.DISKONPERSEN AS PENJUALAN_DISKONPERSEN, " //48
+                    + "PELANGGAN.NPWP AS PELANGGAN_NPWP " //49
+                    + "FROM RINCIPENJUALAN RINCIPENJUALAN INNER JOIN PENJUALAN PENJUALAN ON RINCIPENJUALAN.IDPENJUALAN = PENJUALAN.ID "
+                    + "INNER JOIN PELANGGAN PELANGGAN ON PENJUALAN.KODEPELANGGAN = PELANGGAN.KODEPELANGGAN "
+                    + "INNER JOIN BARANG BARANG ON RINCIPENJUALAN.KODEBARANG = BARANG.KODEBARANG "
+                    + "INNER JOIN JENISBARANG JENISBARANG ON BARANG.IDJENIS = JENISBARANG.ID "
+                    + "INNER JOIN SALES SALES ON PENJUALAN.IDSALES = SALES.IDSALES "
+                    + "WHERE PENJUALAN.FAKTUR = '" + nfak + "'";
+            String spasi = " ";
+            Statement stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stat.executeQuery(sql);
+            Statement stat1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs1 = stat1.executeQuery(sql);
+            rs1.next();
+            String pel = "", Altpel = "", Altpel1 = "", Altpel2 = "";
+            if (rs1.getString(17).length() >= 45) {
+                pel = rs1.getString(17).substring(0, 45);
+            } else {
+                pel = rs1.getString(17);
+            }
+            Altpel = rs1.getString(18);
+            p.put("FAKTUR", rs1.getString(2));
+            p.put("TANGGAL", rs1.getString(3));
+            p.put("TGLLUNAS", rs1.getString(6));
+            p.put("CASH", rs1.getString(37));
+            p.put("PELANGGAN", pel);
+            p.put("ALAMATPELANGGAN", Altpel);
+            p.put("INISIAL", rs1.getString(39));
+            p.put("NPWP", rs1.getString(49));
+            int no = 0, totqty = 0;
+            double total = 0, ppn = 0, totalbersih = 0, bayar = 0;
+            
+            //int jml=0;
+            String kdbrg = "", nmbrg = "";
+            List<Map<String, Object>> tables = new ArrayList<Map<String, Object>>();
+            Map<String, Object> line;
+            while (rs.next()) {
+                no++;
+                line = new HashMap<String, Object>();
+                //
+                double totalperitem = rs.getDouble(33);
+                double totalsebelumppn = (double)10/11*totalperitem;
+                double ppnitem = 0.01 *  totalsebelumppn;
+                double diskonpersen = rs.getDouble(43);
+                double totalsebelumdiskon= (double)100/(100-diskonpersen)*totalsebelumppn;
+                double diskonitem = (double)(diskonpersen/100)*totalsebelumdiskon;
+                double hargajual = totalsebelumdiskon / rs.getInt(12);
+                ppn+=ppnitem;
+                //
+                totqty = totqty + Integer.parseInt(rs.getString(12));
+                total = total + totalsebelumppn;
+                kdbrg = rs.getString(11);
+                nmbrg = rs.getString(23);
+                line.put("no", no);
+                line.put("banyak", rs.getString(12));
+                line.put("satuan", rs.getString(40));
+                line.put("nmbrg", nmbrg);
+                line.put("batch", rs.getString(41));
+                line.put("expire", rs.getString(42));
+                line.put("harga", df1.format(hargajual));
+                line.put("diskon", rs.getDouble(43));
+                line.put("jumlah", df1.format(totalsebelumppn));
+                line.put("kode", rs.getString(11));
+                tables.add(line);
+            }
+            while (true) {
+                if (no % 6 != 0) {
+                    line = new HashMap<String, Object>();
+                    line.put("no", "");
+                    line.put("banyak", "");
+                    line.put("satuan", "");
+                    line.put("nmbrg", "");
+                    line.put("batch", "");
+                    line.put("expire", "");
+                    line.put("harga", "");
+                    line.put("diskon", "");
+                    line.put("jumlah", "");
+                    tables.add(line);
+                    no++;
+                } else {
+                    break;
+                }
+            }
+            p.put("table_source", tables);
+            p.put("TOTQTY", totqty);
+            p.put("total", df1.format(total));
+            p.put("diskonpersentambahan", df1.format(rs1.getDouble(48)));
+            p.put("diskontambahan", df1.format(rs1.getDouble(9)));
+            
+            p.put("ppn", df1.format(ppn));
+
+            bayar = (rs1.getString(37).equals("0") ? total + ppn + rs1.getDouble(45) - rs1.getDouble(9) : (rs1.getDouble(8) != 0 ? rs1.getDouble(8) : 0));
+            totalbersih = (rs1.getString(37).equals("0") ? 0 : (rs1.getDouble(8) != 0 ? ((total + ppn + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9)) : total + ppn + rs1.getDouble(45) - rs1.getDouble(9)));
+            double terbilang = 0;
+            if (totalbersih == 0) {
+                terbilang = bayar;
+            } else {
+                terbilang = totalbersih;
+            }
+            String terbilangkata = com.erv.fungsi.Fungsi.bilangDouble((double) terbilang) + " Rupiah";
+            String t[] = Util.split(terbilangkata, " ");
+            String t1 = "";
+            String t2 = "";
+            if (t.length > 9) {
+                for (int i = 0; i < 9; i++) {
+                    t1 += " " + t[i];
+                }
+                for (int i = 9; i < t.length; i++) {
+                    t2 += " " + t[i];
+                }
+            } else {
+                t1 = terbilangkata;
+            }
+            p.put("terbilang", t1);
+            p.put("terbilanglanjut", t2);
+//            p.put("bayar", Math.round(rs1.getDouble(8)));
+            p.put("bayar", df1.format(bayar));
+            //p.put("totalbersih", Math.round(totalbersih));
+            p.put("totalbersih", df1.format(totalbersih));
+            p.put("tglcetak", d.format(tgl));
+            p.put("namauser", JavarieSoftApp.jenisuser);
             p.put("salesinisial", rs1.getString(39));
             p.put("ongkir", df1.format(rs1.getDouble(45)));
             p.put("apotek", rs1.getString(46));
