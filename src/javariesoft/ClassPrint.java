@@ -530,7 +530,7 @@ public class ClassPrint {
                 //
                 double totalperitem = rs.getDouble(33);
                 double totalsebelumppn = (double)10/11*totalperitem;
-                double ppnitem = 0.01 *  totalsebelumppn;
+                double ppnitem = 0.1 *  totalsebelumppn;
                 double diskonpersen = rs.getDouble(43);
                 double totalsebelumdiskon= (double)100/(100-diskonpersen)*totalsebelumppn;
                 double diskonitem = (double)(diskonpersen/100)*totalsebelumdiskon;
