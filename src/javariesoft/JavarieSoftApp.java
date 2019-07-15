@@ -4,6 +4,7 @@
 package javariesoft;
 
 import com.erv.db.koneksi;
+import static com.erv.db.koneksi.IP;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -69,7 +70,7 @@ public class JavarieSoftApp extends SingleFrameApplication {
         //String connection = "jdbc:h2:~/satuan";
         Connection c = null;
         try {
-            if (args != null) {
+            if (args.length>0) {
                 global.IPADDRESS = args[0];
                 global.REPORT = args[1];
             } else {
@@ -79,14 +80,15 @@ public class JavarieSoftApp extends SingleFrameApplication {
                 global.REPORT = p.getProperty("REPORT");
             }
             koneksi.IP = global.IPADDRESS;
+            koneksi.setUrlJ("jdbc:h2:tcp://"+IP+"/~/dbalkesmrta"); 
             koneksi.createPoolKoneksi();
             if (!com.erv.fungsi.Fungsi.cekVersi(VERSI)) {
                 System.exit(0);
             }
 
-            if (!com.erv.fungsi.Fungsi.cekVersiServer(VERSISERVER)) {
+            /*if (!com.erv.fungsi.Fungsi.cekVersiServer(VERSISERVER)) {
                 System.exit(0);
-            }
+            }*/
 //            String path = new File(".").getCanonicalPath();
 //            System.out.println(path);
 //            Properties p = new Properties();
