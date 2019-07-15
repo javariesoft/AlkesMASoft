@@ -6,6 +6,7 @@ package javariesoft;
 import com.erv.db.koneksi;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -68,28 +69,36 @@ public class JavarieSoftApp extends SingleFrameApplication {
         //String connection = "jdbc:h2:~/satuan";
         Connection c = null;
         try {
+            if (args != null) {
+                global.IPADDRESS = args[0];
+                global.REPORT = args[1];
+            } else {
+                Properties p = new Properties();
+                p.load(new FileInputStream("javarie.properties"));
+                global.IPADDRESS = p.getProperty("IPADDRESS");
+                global.REPORT = p.getProperty("REPORT");
+            }
+            koneksi.IP = global.IPADDRESS;
             koneksi.createPoolKoneksi();
             if (!com.erv.fungsi.Fungsi.cekVersi(VERSI)) {
                 System.exit(0);
-            }    
-            
-//            if (!com.erv.fungsi.Fungsi.cekVersiServer(VERSISERVER)) {
-//                System.exit(0);
-//            } 
-            
-            String path = new File(".").getCanonicalPath();
-            System.out.println(path);
-            Properties p = new Properties();
-            p.load(new FileInputStream("javarie.properties"));
-            global.IPADDRESS = p.getProperty("IPADDRESS");
-            koneksi.IP = p.getProperty("IPADDRESS");
-            global.REPORT = p.getProperty("REPORT");
+            }
+
+            if (!com.erv.fungsi.Fungsi.cekVersiServer(VERSISERVER)) {
+                System.exit(0);
+            }
+//            String path = new File(".").getCanonicalPath();
+//            System.out.println(path);
+//            Properties p = new Properties();
+//            p.load(new FileInputStream("javarie.properties"));
+//            global.IPADDRESS = p.getProperty("IPADDRESS");
+//            koneksi.IP = p.getProperty("IPADDRESS");
+//            global.REPORT = p.getProperty("REPORT");
             //server = Server.createTcpServer(connection).start();
-            
             System.out.println("Server Database Aktif");
             //launch(JavarieSoftApp.class, args);
 //MulaiCdCPU
-            c=koneksi.getKoneksiJ();
+            c = koneksi.getKoneksiJ();
 //            Statement stat=c.createStatement();
 //            String h="";
 //               byte[] hasil;
@@ -106,7 +115,7 @@ public class JavarieSoftApp extends SingleFrameApplication {
 //            }
 //            ResultSet rs=stat.executeQuery("select * from KODEAKSES where KODE='"+h+"'");
 //            if(rs.next()){
-                    launch(JavarieSoftApp.class, args);   
+            launch(JavarieSoftApp.class, args);
 //            }else{
 //                DialogRegister d=new DialogRegister(null, true);
 //                    d.setVisible(true);
@@ -114,12 +123,17 @@ public class JavarieSoftApp extends SingleFrameApplication {
 //            rs.close();
 //            stat.close();
             c.close();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(null, ex.getMessage());
+//        
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Database Belum Aktif");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
         }
-   
+
     }
-    
+
 }
