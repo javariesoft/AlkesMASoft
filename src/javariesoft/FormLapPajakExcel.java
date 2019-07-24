@@ -6,9 +6,9 @@
 package javariesoft;
 
 import com.erv.db.koneksi;
-import com.erv.function.PrintfFormat;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import com.erv.model.pelanggan;
+import java.awt.Cursor;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,11 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import org.h2.tools.Csv;
 import org.h2.tools.SimpleResultSet;
 
@@ -39,13 +38,20 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
      */
     Connection con;
     java.text.DateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+    JFileChooser jfc;
+    String filename;
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("*.csv", "csv");
 
     public FormLapPajakExcel() {
         initComponents();
         try {
             con = koneksi.getKoneksiJ();
             tglAwal.setDateFormat(d);
-            tglAkhir.setDateFormat(d); 
+            tglAkhir.setDateFormat(d);
+            tglAwal1.setDateFormat(d);
+            tglAkhir1.setDateFormat(d);
+            jfc = new JFileChooser(FileSystemView.getFileSystemView().getFileSystemView().getHomeDirectory());
+            jfc.setFileFilter(filter);
         } catch (SQLException ex) {
             Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -60,9 +66,6 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        btnExportToCsv = new javax.swing.JButton();
-        btnLawanCsv = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         tglAkhir = new datechooser.beans.DateChooserCombo();
         jLabel1 = new javax.swing.JLabel();
@@ -73,6 +76,21 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txtNoFakturAkhir = new javax.swing.JTextField();
         btnExportPM = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        btnExportPK = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        tglAwal1 = new datechooser.beans.DateChooserCombo();
+        jLabel6 = new javax.swing.JLabel();
+        tglAkhir1 = new datechooser.beans.DateChooserCombo();
+        jLabel7 = new javax.swing.JLabel();
+        txtNofakturAwal1 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtNoFakturAkhir1 = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        btnExportToCsv = new javax.swing.JButton();
+        btnLawanCsv = new javax.swing.JButton();
+        btnPath = new javax.swing.JButton();
+        txtPath = new javax.swing.JTextField();
 
         setClosable(true);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormLapPajakExcel.class);
@@ -97,42 +115,11 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         });
         getContentPane().setLayout(null);
 
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(10, 180, 120, 23);
-
-        btnExportToCsv.setText(resourceMap.getString("btnExportToCsv.text")); // NOI18N
-        btnExportToCsv.setName("btnExportToCsv"); // NOI18N
-        btnExportToCsv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportToCsvActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnExportToCsv);
-        btnExportToCsv.setBounds(140, 180, 130, 23);
-
-        btnLawanCsv.setText(resourceMap.getString("btnLawanCsv.text")); // NOI18N
-        btnLawanCsv.setName("btnLawanCsv"); // NOI18N
-        btnLawanCsv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLawanCsvActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnLawanCsv);
-        btnLawanCsv.setBounds(10, 210, 120, 23);
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel1.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel1.border.titleFont"))); // NOI18N
         jPanel1.setFont(resourceMap.getFont("jPanel1.font")); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setLayout(null);
 
-        tglAkhir.setFieldFont(resourceMap.getFont("tglAkhir.dch_combo_fieldFont")); // NOI18N
         tglAkhir.setLocale(new java.util.Locale("in", "ID", ""));
         tglAkhir.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
             public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
@@ -157,7 +144,6 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel2);
         jLabel2.setBounds(250, 20, 15, 14);
 
-        tglAwal.setFieldFont(resourceMap.getFont("tglAwal.dch_combo_fieldFont")); // NOI18N
         tglAwal.setLocale(new java.util.Locale("in", "ID", ""));
         tglAwal.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
             public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
@@ -203,26 +189,126 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         btnExportPM.setBounds(120, 80, 160, 23);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 10, 540, 130);
+        jPanel1.setBounds(10, 110, 540, 130);
 
-        setBounds(0, 0, 834, 334);
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel2.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel2.border.titleFont"))); // NOI18N
+        jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setLayout(null);
+
+        btnExportPK.setText(resourceMap.getString("btnExportPK.text")); // NOI18N
+        btnExportPK.setName("btnExportPK"); // NOI18N
+        btnExportPK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportPKActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnExportPK);
+        btnExportPK.setBounds(120, 80, 160, 23);
+
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+        jPanel2.add(jLabel5);
+        jLabel5.setBounds(20, 20, 90, 14);
+
+        tglAwal1.setLocale(new java.util.Locale("in", "ID", ""));
+        tglAwal1.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
+            public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
+                tglAwal1OnSelectionChange(evt);
+            }
+        });
+        tglAwal1.addCommitListener(new datechooser.events.CommitListener() {
+            public void onCommit(datechooser.events.CommitEvent evt) {
+                tglAwal1OnCommit(evt);
+            }
+        });
+        jPanel2.add(tglAwal1);
+        tglAwal1.setBounds(120, 20, 120, 20);
+
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
+        jPanel2.add(jLabel6);
+        jLabel6.setBounds(250, 20, 15, 14);
+
+        tglAkhir1.setLocale(new java.util.Locale("in", "ID", ""));
+        tglAkhir1.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
+            public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
+                tglAkhir1OnSelectionChange(evt);
+            }
+        });
+        tglAkhir1.addCommitListener(new datechooser.events.CommitListener() {
+            public void onCommit(datechooser.events.CommitEvent evt) {
+                tglAkhir1OnCommit(evt);
+            }
+        });
+        jPanel2.add(tglAkhir1);
+        tglAkhir1.setBounds(280, 20, 120, 20);
+
+        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
+        jLabel7.setName("jLabel7"); // NOI18N
+        jPanel2.add(jLabel7);
+        jLabel7.setBounds(20, 50, 90, 14);
+
+        txtNofakturAwal1.setName("txtNofakturAwal1"); // NOI18N
+        jPanel2.add(txtNofakturAwal1);
+        txtNofakturAwal1.setBounds(120, 50, 160, 20);
+
+        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
+        jLabel8.setName("jLabel8"); // NOI18N
+        jPanel2.add(jLabel8);
+        jLabel8.setBounds(300, 50, 15, 14);
+
+        txtNoFakturAkhir1.setName("txtNoFakturAkhir1"); // NOI18N
+        jPanel2.add(txtNoFakturAkhir1);
+        txtNoFakturAkhir1.setBounds(340, 50, 180, 20);
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(10, 250, 540, 140);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel3.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel3.border.titleFont"))); // NOI18N
+        jPanel3.setName("jPanel3"); // NOI18N
+        jPanel3.setLayout(null);
+
+        btnExportToCsv.setText(resourceMap.getString("btnExportToCsv.text")); // NOI18N
+        btnExportToCsv.setName("btnExportToCsv"); // NOI18N
+        btnExportToCsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportToCsvActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnExportToCsv);
+        btnExportToCsv.setBounds(30, 50, 130, 23);
+
+        btnLawanCsv.setText(resourceMap.getString("btnLawanCsv.text")); // NOI18N
+        btnLawanCsv.setName("btnLawanCsv"); // NOI18N
+        btnLawanCsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLawanCsvActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnLawanCsv);
+        btnLawanCsv.setBounds(180, 50, 120, 23);
+
+        btnPath.setText(resourceMap.getString("btnPath.text")); // NOI18N
+        btnPath.setName("btnPath"); // NOI18N
+        btnPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPathActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnPath);
+        btnPath.setBounds(413, 20, 100, 23);
+
+        txtPath.setEditable(false);
+        txtPath.setText(resourceMap.getString("txtPath.text")); // NOI18N
+        txtPath.setName("txtPath"); // NOI18N
+        jPanel3.add(txtPath);
+        txtPath.setBounds(30, 20, 370, 20);
+
+        getContentPane().add(jPanel3);
+        jPanel3.setBounds(10, 10, 540, 90);
+
+        setBounds(0, 0, 576, 434);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            // TODO add your handling code here:
-
-            List<List<Object>> data = getDataImportBarang(con);
-            Object[] judul = {"OB", "KODE_OBJECT", "NAMA", "HARGA_SATUAN"};
-            ListToExcel(judul, data, "ImportBarang.xlsx");
-            JOptionPane.showMessageDialog(this, "Export To Excel Ok");
-        } catch (SQLException ex) {
-            Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
         try {
@@ -236,8 +322,12 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     private void btnExportToCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportToCsvActionPerformed
         try {
             // TODO add your handling code here:
-            QueryToCSV();
-            JOptionPane.showMessageDialog(this, "Export Data Barang ke CSV Ok");
+            if (!txtPath.getText().equals("")) {
+                QueryToCSV();
+                JOptionPane.showMessageDialog(this, "Export Data Barang ke CSV Ok");
+            } else {
+                JOptionPane.showMessageDialog(this, "Nama File Belum Di Input");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -247,8 +337,12 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     private void btnLawanCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLawanCsvActionPerformed
         try {
             // TODO add your handling code here:
-            createLawanToCsv();
-            JOptionPane.showMessageDialog(this, "Export Data Lawan ke CSV Ok");
+            if (!txtPath.getText().equals("")) {
+                createLawanToCsv();
+                JOptionPane.showMessageDialog(this, "Export Data Lawan ke CSV Ok");
+            } else {
+                JOptionPane.showMessageDialog(this, "Nama File Belum Di Input");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -274,28 +368,88 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     private void btnExportPMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportPMActionPerformed
         try {
             // TODO add your handling code here:
-            exportPajakMasukanToCsv(tglAwal.getText(), tglAkhir.getText(), txtNofakturAwal.getText(), txtNoFakturAkhir.getText());
-            JOptionPane.showMessageDialog(this, "Export Pajak Masukan Ok");
+            if (!txtPath.getText().equals("")) {
+                exportPajakMasukanToCsv(tglAwal.getText(), tglAkhir.getText(), txtNofakturAwal.getText(), txtNoFakturAkhir.getText());
+                JOptionPane.showMessageDialog(this, "Export Pajak Masukan Ok");
+            } else {
+                JOptionPane.showMessageDialog(this, "Nama File Belum Di Input");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnExportPMActionPerformed
 
+    private void btnExportPKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportPKActionPerformed
+        try {
+            // TODO add your handling code here:
+            if (!txtPath.getText().equals("")) {
+                this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                exportPajakKeluaranToCsv(tglAwal1.getText(), tglAkhir1.getText(), txtNofakturAwal1.getText(), txtNoFakturAkhir1.getText());
+                JOptionPane.showMessageDialog(this, "Export Pajak Keluar Ok");
+            } else {
+                JOptionPane.showMessageDialog(this, "Nama File Belum di Input");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
+    }//GEN-LAST:event_btnExportPKActionPerformed
+
+    private void tglAwal1OnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_tglAwal1OnSelectionChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tglAwal1OnSelectionChange
+
+    private void tglAwal1OnCommit(datechooser.events.CommitEvent evt) {//GEN-FIRST:event_tglAwal1OnCommit
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tglAwal1OnCommit
+
+    private void tglAkhir1OnSelectionChange(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_tglAkhir1OnSelectionChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tglAkhir1OnSelectionChange
+
+    private void tglAkhir1OnCommit(datechooser.events.CommitEvent evt) {//GEN-FIRST:event_tglAkhir1OnCommit
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tglAkhir1OnCommit
+
+    private void btnPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathActionPerformed
+        // TODO add your handling code here:
+        int returnValue = jfc.showOpenDialog(null);
+        // int returnValue = jfc.showSaveDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            txtPath.setText(selectedFile.getAbsolutePath());
+        }
+    }//GEN-LAST:event_btnPathActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExportPK;
     private javax.swing.JButton btnExportPM;
     private javax.swing.JButton btnExportToCsv;
     private javax.swing.JButton btnLawanCsv;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnPath;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private datechooser.beans.DateChooserCombo tglAkhir;
+    private datechooser.beans.DateChooserCombo tglAkhir1;
     private datechooser.beans.DateChooserCombo tglAwal;
+    private datechooser.beans.DateChooserCombo tglAwal1;
     private javax.swing.JTextField txtNoFakturAkhir;
+    private javax.swing.JTextField txtNoFakturAkhir1;
     private javax.swing.JTextField txtNofakturAwal;
+    private javax.swing.JTextField txtNofakturAwal1;
+    private javax.swing.JTextField txtPath;
     // End of variables declaration//GEN-END:variables
     List<List<Object>> getDataImportBarang(Connection c) throws SQLException {
         String sql = "select 'OB' as OB, b.KODEBARANG as KODE_OBJECT, b.namabarang as NAMA, bs.cogs as HARGA_SATUAN "
@@ -315,48 +469,47 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         return list;
     }
 
-    public void ListToExcel(Object[] judul, List<List<Object>> data, String filename) throws FileNotFoundException, IOException {
-        System.out.println("Start");
-        String path = "import/";
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("Datatypes in Java");
-        int rowNum = 0;
-        Row row = sheet.createRow(rowNum++);
-        int colNum = 0;
-        for (Object jd : judul) {
-            Cell cell = row.createCell(colNum++);
-            if (jd instanceof String) {
-                cell.setCellValue((String) jd);
-            }
-        }
-        for (List<Object> dataRow : data) {
-            row = sheet.createRow(rowNum++);
-            colNum = 0;
-            for (Object field : dataRow) {
-                Cell cell = row.createCell(colNum++);
-                if (field instanceof String) {
-                    cell.setCellValue((String) field);
-                } else if (field instanceof Integer) {
-                    cell.setCellValue((Integer) field);
-                } else if (field instanceof Double) {
-                    cell.setCellValue((Double) field);
-                }
-            }
-
-        }
-        FileOutputStream outputStream = new FileOutputStream(path + filename);
-        workbook.write(outputStream);
-        workbook.close();
-        System.out.println("Done");
-    }
-
+//    public void ListToExcel(Object[] judul, List<List<Object>> data, String filename) throws FileNotFoundException, IOException {
+//        System.out.println("Start");
+//        String path = "import/";
+//        XSSFWorkbook workbook = new XSSFWorkbook();
+//        XSSFSheet sheet = workbook.createSheet("Datatypes in Java");
+//        int rowNum = 0;
+//        Row row = sheet.createRow(rowNum++);
+//        int colNum = 0;
+//        for (Object jd : judul) {
+//            Cell cell = row.createCell(colNum++);
+//            if (jd instanceof String) {
+//                cell.setCellValue((String) jd);
+//            }
+//        }
+//        for (List<Object> dataRow : data) {
+//            row = sheet.createRow(rowNum++);
+//            colNum = 0;
+//            for (Object field : dataRow) {
+//                Cell cell = row.createCell(colNum++);
+//                if (field instanceof String) {
+//                    cell.setCellValue((String) field);
+//                } else if (field instanceof Integer) {
+//                    cell.setCellValue((Integer) field);
+//                } else if (field instanceof Double) {
+//                    cell.setCellValue((Double) field);
+//                }
+//            }
+//
+//        }
+//        FileOutputStream outputStream = new FileOutputStream(path + filename);
+//        workbook.write(outputStream);
+//        workbook.close();
+//        System.out.println("Done");
+//    }
     private void QueryToCSV() throws SQLException {
         String sql = "select 'OB' as OB, b.KODEBARANG as KODE_OBJECT, b.namabarang as NAMA, bs.cogs as HARGA_SATUAN "
                 + "FROM BARANG b inner join BARANGSTOK bs on b.kodebarang=bs.kodebarang "
                 + "";
         Statement stat = con.createStatement();
         ResultSet rs = stat.executeQuery(sql);
-        new Csv().write("import/barang.csv", rs, null);
+        new Csv().write(txtPath.getText(), rs, null);
 
     }
 
@@ -414,11 +567,11 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             }
             npwpSebelum = rs.getString(2).trim();
         }
-        new Csv().write("import/lawan.csv", rsHasil, null);
+        new Csv().write(txtPath.getText(), rsHasil, null);
     }
 
     private void exportPajakMasukanToCsv(String tglAwal, String tglAkhir, String noAwal, String noAkhir) throws SQLException {
-        String sql="select 'FM' as FM, 1 as KD_JENIS_TRANSAKSI, "
+        String sql = "select 'FM' as FM, 1 as KD_JENIS_TRANSAKSI, "
                 + "0 as FG_PENGGANTI, NOFAKTUR as NOMOR_FAKTUR, "
                 + "month(TANGGAL) as MASA_PAJAK, year(TANGGAL) as TAHUN_PAJAK,  "
                 + "TANGGAL as TANGGAL_FAKTUR, s.NPWP, s.NAMA, s.ALAMAT as ALAMAT_LENGKAP,  "
@@ -426,7 +579,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 + "0 as JUMLAH_PPNBM , 1 as IS_CREDITABLE from PEMBELIAN p "
                 + "inner join RINCIPEMBELIAN rp on p.id=IDPEMBELIAN "
                 + "inner join SUPPLIER s on p.IDSUPPLIER = s.IDSUPPLIER "
-                + "where TANGGAL>='"+tglAwal+"' and TANGGAL<='"+tglAkhir+"' "
+                + "where TANGGAL>='" + tglAwal + "' and TANGGAL<='" + tglAkhir + "' "
                 + "group by NOFAKTUR "
                 + "order by p.tanggal, p.id ";
         Statement stat = con.createStatement();
@@ -436,7 +589,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         rsHasil.addColumn("KD_JENIS_TRANSAKSI", Types.VARCHAR, 2, 0);
         rsHasil.addColumn("FG_PENGGANTI", Types.VARCHAR, 1, 0);
         rsHasil.addColumn("NOMOR_FAKTUR", Types.VARCHAR, 13, 0);
-        rsHasil.addColumn("MASA_PAJAK", Types.VARCHAR, 5, 0);
+        rsHasil.addColumn("MASA_PAJAK", Types.VARCHAR, 2, 0);
         rsHasil.addColumn("TAHUN_PAJAK", Types.VARCHAR, 4, 0);
         rsHasil.addColumn("TANGGAL_FAKTUR", Types.VARCHAR, 10, 0);
         rsHasil.addColumn("NPWP", Types.VARCHAR, 20, 0);
@@ -448,12 +601,12 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         rsHasil.addColumn("IS_CREDITABLE", Types.VARCHAR, 2, 0);
         long noFakAwal = Long.parseLong(noAwal);
         long noFakAkhir = Long.parseLong(noAkhir);
-        while(rs.next()){
+        while (rs.next()) {
             Object[] rowData1 = {
                 rs.getString("FM"),
                 rs.getString("KD_JENIS_TRANSAKSI"),
                 rs.getString("FG_PENGGANTI"),
-                formatFaktur(13,noFakAwal+""),
+                formatFaktur(13, noFakAwal + ""),
                 rs.getString("MASA_PAJAK"),
                 rs.getString("TAHUN_PAJAK"),
                 rs.getString("TANGGAL_FAKTUR"),
@@ -467,23 +620,227 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             };
             rsHasil.addRow(rowData1);
             noFakAwal++;
-            if(noFakAwal==noFakAkhir){
+            if (noFakAwal == noFakAkhir) {
                 break;
             }
         }
-        new Csv().write("import/pajakmasukan.csv", rsHasil, null);
+        new Csv().write(txtPath.getText(), rsHasil, null);
         rs.close();
         rsHasil.close();
         stat.close();
     }
 
     private Object formatFaktur(int formatLength, String angka) {
-        int s = formatLength-angka.length();
-        String temp="";
-        for(int i=0;i<s;i++){
-            temp +="0";
+        int s = formatLength - angka.length();
+        String temp = "";
+        for (int i = 0; i < s; i++) {
+            temp += "0";
         }
         temp += angka;
         return temp;
+    }
+
+    void exportPajakKeluaranToCsv(String tglAwal, String tglAkhir, String noAwal, String noAkhir) throws SQLException, IOException {
+        SimpleResultSet rsHasil = new SimpleResultSet();
+        rsHasil.addColumn("FK", Types.VARCHAR, 2, 0);  //1
+        rsHasil.addColumn("KD_JENIS_TRANSAKSI", Types.VARCHAR, 2, 0);//2
+        rsHasil.addColumn("FG_PENGGANTI", Types.VARCHAR, 2, 0);//3
+        rsHasil.addColumn("NOMOR_FAKTUR", Types.VARCHAR, 13, 0); //4
+        rsHasil.addColumn("MASA_PAJAK", Types.VARCHAR, 2, 0);//5
+        rsHasil.addColumn("TAHUN_PAJAK", Types.VARCHAR, 4, 0);//6
+        rsHasil.addColumn("TANGGAL_FAKTUR", Types.VARCHAR, 10, 0);//7
+        rsHasil.addColumn("NPWP", Types.VARCHAR, 15, 0);//8
+        rsHasil.addColumn("NAMA", Types.VARCHAR, 30, 0);//9
+        rsHasil.addColumn("ALAMAT_LENGKAP", Types.VARCHAR, 200, 0);//10
+        rsHasil.addColumn("JUMLAH_DPP", Types.VARCHAR, 12, 0);//11
+        rsHasil.addColumn("JUMLAH_PPN", Types.VARCHAR, 12, 0);//12
+        rsHasil.addColumn("JUMLAH_PPNBM", Types.VARCHAR, 12, 0);//13
+        rsHasil.addColumn("ID_KETERANGAN_TAMBAHAN", Types.VARCHAR, 10, 2);//14
+        rsHasil.addColumn("FG_UANG_MUKA", Types.VARCHAR, 12, 0);//15
+        rsHasil.addColumn("UANG_MUKA_DPP", Types.VARCHAR, 12, 0);//16
+        rsHasil.addColumn("UANG_MUKA_PPN", Types.VARCHAR, 12, 0);//17
+        rsHasil.addColumn("UANG_MUKA_PPNBM", Types.VARCHAR, 12, 0);//18
+        rsHasil.addColumn("REFERENSI", Types.VARCHAR, 5, 0);//19
+        Object[] data = {
+            "LT",
+            "NPWP",
+            "NAMA",
+            "JALAN",
+            "BLOK",
+            "NOMOR",
+            "RT",
+            "RW",
+            "KECAMATAN",
+            "KELURAHAN",
+            "KABUPATEN",
+            "PROPINSI",
+            "KODE_POS",
+            "NOMOR_TELEPON",
+            "", "", "", "", ""
+        };
+        rsHasil.addRow(data);
+        Object data1[] = {
+            "OF",
+            "KODE_OBJEK",
+            "NAMA",
+            "HARGA_SATUAN",
+            "JUMLAH_BARANG",
+            "HARGA_TOTAL",
+            "DISKON",
+            "DPP",
+            "PPN",
+            "TARIF_PPNBM",
+            "PPNBM",
+            "", "", "", "", "", "", "", ""
+        };
+        rsHasil.addRow(data1);
+        String sql = "select 'FK' as FK, " //1
+                + "'2' as KD_JENIS_TRANSAKSI, " //2
+                + "'0' as FG_PENGGANTI, " // 3
+                + "'' as NOMOR_FAKTUR, " //4
+                + "month(p.TANGGAL) as MASA_PAJAK, " //5
+                + "year(p.TANGGAL) AS TAHUN_PAJAK, " //6
+                + "p.TANGGAL AS TANGGAL_FAKTUR, " //7
+                + "plg.NPWP as NPWP, " //8
+                + "plg.NAMA, " //9
+                + "plg.ALAMAT,  " //10
+                + "sum(total - rp.ppn) as JUMLAH_DPP, " //11
+                + "sum(rp.ppn) as JUMLAH_PPN,  " //12
+                + "0 as JUMLAH_PPNBM," //13
+                + "'' as ID_KETERANGAN_TAMBAHAN, " //14
+                + "0 as FG_UANG_MUKA, " //15
+                + "0 as UANG_MUKA_DPP, " //16
+                + "0 as UANG_MUKA_PPN, " //17
+                + "0 as UANG_MUKA_PPNBM, " //18
+                + "p.FAKTUR as REFERENSI, " //19
+                + "p.id ," //20
+                + "plg.nik, " //21
+                + "plg.NAMAPEMILIK " //22
+                + "from PENJUALAN p  "
+                + "inner join RINCIPENJUALAN rp on p.id = rp.IDPENJUALAN "
+                + "INNER JOIN PELANGGAN plg on p.KODEPELANGGAN = plg.KODEPELANGGAN "
+                + "where p.TANGGAL >= '" + tglAwal + "' "
+                + "and p.TANGGAL <= '" + tglAkhir + "' "
+                + "and p.PPN <> 0 "
+                + "group by p.id "
+                + "order by p.id "
+                + "";
+        String sql1 = "select 'FAPR' as FAPR, " //1
+                + "'PT MIRANTI ADILHA' as NPWP, "//2
+                + "'GAJAH MADA NO 3 RT. 000 RW. 000 , PADANG' as NAMA, "//3
+                + "'' as JALAN, "//4
+                + "'7' as BLOK, "//5
+                + "'' as NOMOR, "//6
+                + "'' as RT, "//7
+                + "'' as RW, "//8
+                + "'' as KECAMATAN, "//9
+                + "'' as KELURAHAN, "//10
+                + "'' as KABUPATEN, "//11
+                + "'' as PROPINSI, "//12
+                + "'' as KODE_POS, "//13
+                + "'' as NOMOR_TELEPON  "//14
+                + "";
+
+        Statement stat = con.createStatement();
+        Statement stat1 = con.createStatement();
+        Statement stat3 = con.createStatement();
+        ResultSet rs = stat.executeQuery(sql);
+        ResultSet rs1 = stat1.executeQuery(sql1);
+        rs1.next();
+        long noFakAwal = Long.parseLong(noAwal);
+        long noFakAkhir = Long.parseLong(noAkhir);
+        while (rs.next()) {
+            pelanggan p = new pelanggan();
+            p.setNPWP(rs.getString(8));
+            Object[] datatemp = {
+                rs.getString(1),
+                rs.getString(2),
+                rs.getString(3),
+                formatFaktur(13, noFakAwal + ""),
+                rs.getString(5),
+                rs.getString(6),
+                rs.getString(7),
+                (rs.getBoolean(21) == true) ? "0" : p.getNPWP(),
+                (rs.getBoolean(21) == true) ? (p.getNPWP() + "#NIK#NAMA#" + rs.getString(9) + "/" + rs.getString(22)) : rs.getString(9) + "/" + rs.getString(22),
+                rs.getString(10),
+                rs.getString(11),
+                rs.getString(12),
+                rs.getString(13),
+                rs.getString(14),
+                rs.getString(15),
+                rs.getString(16),
+                rs.getString(17),
+                rs.getString(18),
+                rs.getString(19)
+            };
+            rsHasil.addRow(datatemp);
+            Object[] datatemp1 = {
+                rs1.getString(1),
+                rs1.getString(2),
+                rs1.getString(3),
+                rs1.getString(4),
+                rs1.getString(5),
+                rs1.getString(6),
+                rs1.getString(7),
+                rs1.getString(8),
+                rs1.getString(9),
+                rs1.getString(10),
+                rs1.getString(11),
+                rs1.getString(12),
+                rs1.getString(13),
+                rs1.getString(14),
+                "",
+                "",
+                "",
+                "",
+                ""
+            };
+            rsHasil.addRow(datatemp1);
+            String sql2 = "select 'OF' as OF, " //1
+                    + "rp.KODEBARANG ,"//2
+                    + "NAMABARANG, "//3
+                    + "rp.HARGA as HARGA_SATUAN, "//4
+                    + "JUMLAH as JUMLAH_BARANG, "//5
+                    + "(rp.HARGA * JUMLAH) as HARGA_TOTAL, "//6
+                    + "DISKON, "//7
+                    + "(rp.HARGA * JUMLAH - DISKON) as DPP, "//8
+                    + "PPN,"//9
+                    + "0 as TARIF_PPNBM, "//10
+                    + "0 as PPNBM "//11
+                    + "FROM RINCIPENJUALAN rp inner join BARANG b on rp.KODEBARANG = b.KODEBARANG "
+                    + "where rp.idpenjualan = " + rs.getInt(20) + " "
+                    + "order by 2";
+
+            ResultSet rs2 = stat3.executeQuery(sql2);
+            while (rs2.next()) {
+                Object datatemp2[] = {
+                    rs2.getString(1),
+                    rs2.getString(2),
+                    rs2.getString(3),
+                    rs2.getString(4),
+                    rs2.getString(5),
+                    rs2.getString(6),
+                    rs2.getString(7),
+                    rs2.getString(8),
+                    rs2.getString(9),
+                    rs2.getString(10),
+                    rs2.getString(11),
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                };
+                rsHasil.addRow(datatemp2);
+            }
+            noFakAwal++;
+            if (noFakAwal == noFakAkhir) {
+                break;
+            }
+        }
+        new Csv().write(txtPath.getText(), rsHasil, null);
     }
 }
