@@ -240,6 +240,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             hasilBayar.setText("" + p.getDP());
             ongkoskirim.setText("" + p.getONGKOSKIRIM());
             txtDiskonPersen.setText("" + p.getDISKONPERSEN());
+            cboJenisPajak.setSelectedIndex(getIndexCboJenisPajak(p.getJENISPAJAK()));
             if (p.getPPN() > 0) {
                 cbPPN.setSelected(true);
                 cbPPN.setEnabled(false);
@@ -388,6 +389,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         Radio30Hari = new javax.swing.JRadioButton();
         Radio7Hari = new javax.swing.JRadioButton();
         Radio21Hari = new javax.swing.JRadioButton();
+        cboJenisPajak = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         txtkodeRetur = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
@@ -524,7 +526,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(tgl);
-        tgl.setBounds(570, 10, 150, 20);
+        tgl.setBounds(540, 10, 120, 20);
 
         jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
@@ -559,7 +561,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         tgllunas.setFieldFont(resourceMap.getFont("tgllunas.dch_combo_fieldFont")); // NOI18N
         tgllunas.setLocale(new java.util.Locale("in", "ID", ""));
         jPanel1.add(tgllunas);
-        tgllunas.setBounds(570, 60, 150, 20);
+        tgllunas.setBounds(540, 60, 120, 20);
 
         jLabel6.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
@@ -693,14 +695,14 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(txtSales);
-        txtSales.setBounds(570, 84, 100, 22);
+        txtSales.setBounds(540, 80, 100, 22);
 
         txtNamaSales.setEditable(false);
         txtNamaSales.setFont(resourceMap.getFont("txtNamaSales.font")); // NOI18N
         txtNamaSales.setText(resourceMap.getString("txtNamaSales.text")); // NOI18N
         txtNamaSales.setName("txtNamaSales"); // NOI18N
         jPanel1.add(txtNamaSales);
-        txtNamaSales.setBounds(680, 84, 310, 22);
+        txtNamaSales.setBounds(650, 80, 310, 22);
 
         jLabel27.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         jLabel27.setText(resourceMap.getString("jLabel27.text")); // NOI18N
@@ -903,6 +905,11 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         });
         jPanel1.add(Radio21Hari);
         Radio21Hari.setBounds(600, 34, 75, 23);
+
+        cboJenisPajak.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "000-PILIHAN", "010-Bukan Pemungut PPN", "020-Pemungut Bendaharawan" }));
+        cboJenisPajak.setName("cboJenisPajak"); // NOI18N
+        jPanel1.add(cboJenisPajak);
+        cboJenisPajak.setBounds(670, 10, 220, 20);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
 
@@ -3500,6 +3507,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox cbPPN;
     private javax.swing.JCheckBox cbPPN1;
     private javax.swing.JCheckBox cbStatusDO;
+    private javax.swing.JComboBox<String> cboJenisPajak;
     private javax.swing.JComboBox cboSatuan;
     private javax.swing.JComboBox cboStatDiskon;
     private javax.swing.JComboBox cboStatDiskonItem;
@@ -3935,6 +3943,8 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         p.setSTATUSDO((cbStatusDO.isSelected()) ? "1" : "0");
         p.setONGKOSKIRIM((ongkoskirim.getText().length() > 0 ? Double.parseDouble(ongkoskirim.getText()) : 0));
         p.setDISKONPERSEN((txtDiskonPersen.getText().length() > 0 ? Double.parseDouble(txtDiskonPersen.getText()) : 0));
+        String tjenis[] = cboJenisPajak.getSelectedItem().toString().split("-");
+        p.setJENISPAJAK(tjenis[0]); 
         List<penjualan> penList = new ArrayList<penjualan>();
         penList.add(p);
         List<rincipenjualan> rpList = new ArrayList<rincipenjualan>();
@@ -4888,4 +4898,14 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 //        cboBatch.setBounds(430, 20, 100, 20);
 //
 //    }
+
+    private int getIndexCboJenisPajak(String jenispajak) {
+        for(int i=0;i<cboJenisPajak.getItemCount();i++){
+            String data[] = cboJenisPajak.getItemAt(i).split("-");
+            if(jenispajak.equals(data[0])){
+                return i;
+            }
+        }
+        return 0;
+    }
 }

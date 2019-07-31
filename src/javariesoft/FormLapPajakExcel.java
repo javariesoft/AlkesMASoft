@@ -5,7 +5,9 @@
  */
 package javariesoft;
 
+import com.erv.db.NomorpajakDao;
 import com.erv.db.koneksi;
+import com.erv.model.NomorPajak;
 import com.erv.model.pelanggan;
 import java.awt.Cursor;
 import java.io.File;
@@ -14,9 +16,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +45,9 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     JFileChooser jfc;
     String filename;
     FileNameExtensionFilter filter = new FileNameExtensionFilter("*.csv", "csv");
-
+    String awalCount;
+    String akhirCount;
+    NomorPajak nomorPajak;
     public FormLapPajakExcel() {
         initComponents();
         try {
@@ -83,9 +89,14 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         tglAkhir1 = new datechooser.beans.DateChooserCombo();
         jLabel7 = new javax.swing.JLabel();
-        txtNofakturAwal1 = new javax.swing.JTextField();
+        txtFakturAkhirPakai2 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtNoFakturAkhir1 = new javax.swing.JTextField();
+        txtFakturAkhirPakai3 = new javax.swing.JTextField();
+        txtFakturAkhirPakai1 = new javax.swing.JTextField();
+        txtFakturAwal = new javax.swing.JTextField();
+        txtFakturAkhir = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        btnTambah = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnExportToCsv = new javax.swing.JButton();
         btnLawanCsv = new javax.swing.JButton();
@@ -189,7 +200,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         btnExportPM.setBounds(120, 80, 160, 23);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 110, 540, 130);
+        jPanel1.setBounds(10, 110, 570, 130);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel2.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel2.border.titleFont"))); // NOI18N
         jPanel2.setName("jPanel2"); // NOI18N
@@ -203,7 +214,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(btnExportPK);
-        btnExportPK.setBounds(120, 80, 160, 23);
+        btnExportPK.setBounds(150, 110, 160, 23);
 
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
@@ -222,12 +233,12 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(tglAwal1);
-        tglAwal1.setBounds(120, 20, 120, 20);
+        tglAwal1.setBounds(150, 20, 120, 20);
 
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
         jPanel2.add(jLabel6);
-        jLabel6.setBounds(250, 20, 15, 14);
+        jLabel6.setBounds(280, 20, 15, 14);
 
         tglAkhir1.setLocale(new java.util.Locale("in", "ID", ""));
         tglAkhir1.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
@@ -241,28 +252,58 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(tglAkhir1);
-        tglAkhir1.setBounds(280, 20, 120, 20);
+        tglAkhir1.setBounds(310, 20, 120, 20);
 
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
         jPanel2.add(jLabel7);
         jLabel7.setBounds(20, 50, 90, 14);
 
-        txtNofakturAwal1.setName("txtNofakturAwal1"); // NOI18N
-        jPanel2.add(txtNofakturAwal1);
-        txtNofakturAwal1.setBounds(120, 50, 160, 20);
+        txtFakturAkhirPakai2.setName("txtFakturAkhirPakai2"); // NOI18N
+        jPanel2.add(txtFakturAkhirPakai2);
+        txtFakturAkhirPakai2.setBounds(220, 80, 70, 20);
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(300, 50, 15, 14);
+        jLabel8.setBounds(340, 50, 15, 14);
 
-        txtNoFakturAkhir1.setName("txtNoFakturAkhir1"); // NOI18N
-        jPanel2.add(txtNoFakturAkhir1);
-        txtNoFakturAkhir1.setBounds(340, 50, 180, 20);
+        txtFakturAkhirPakai3.setName("txtFakturAkhirPakai3"); // NOI18N
+        jPanel2.add(txtFakturAkhirPakai3);
+        txtFakturAkhirPakai3.setBounds(300, 80, 130, 20);
+
+        txtFakturAkhirPakai1.setText(resourceMap.getString("txtFakturAkhirPakai1.text")); // NOI18N
+        txtFakturAkhirPakai1.setName("txtFakturAkhirPakai1"); // NOI18N
+        jPanel2.add(txtFakturAkhirPakai1);
+        txtFakturAkhirPakai1.setBounds(150, 80, 60, 20);
+
+        txtFakturAwal.setText(resourceMap.getString("txtFakturAwal.text")); // NOI18N
+        txtFakturAwal.setName("txtFakturAwal"); // NOI18N
+        jPanel2.add(txtFakturAwal);
+        txtFakturAwal.setBounds(150, 50, 180, 20);
+
+        txtFakturAkhir.setText(resourceMap.getString("txtFakturAkhir.text")); // NOI18N
+        txtFakturAkhir.setName("txtFakturAkhir"); // NOI18N
+        jPanel2.add(txtFakturAkhir);
+        txtFakturAkhir.setBounds(370, 50, 180, 20);
+
+        jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
+        jLabel10.setName("jLabel10"); // NOI18N
+        jPanel2.add(jLabel10);
+        jLabel10.setBounds(20, 80, 120, 14);
+
+        btnTambah.setText(resourceMap.getString("btnTambah.text")); // NOI18N
+        btnTambah.setName("btnTambah"); // NOI18N
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnTambah);
+        btnTambah.setBounds(440, 20, 110, 23);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(10, 250, 540, 140);
+        jPanel2.setBounds(10, 250, 570, 150);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel3.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel3.border.titleFont"))); // NOI18N
         jPanel3.setName("jPanel3"); // NOI18N
@@ -305,9 +346,9 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         txtPath.setBounds(30, 20, 370, 20);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(10, 10, 540, 90);
+        jPanel3.setBounds(10, 10, 570, 90);
 
-        setBounds(0, 0, 576, 434);
+        setBounds(0, 0, 610, 443);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
@@ -384,7 +425,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             // TODO add your handling code here:
             if (!txtPath.getText().equals("")) {
                 this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-                exportPajakKeluaranToCsv(tglAwal1.getText(), tglAkhir1.getText(), txtNofakturAwal1.getText(), txtNoFakturAkhir1.getText());
+                exportPajakKeluaranToCsv(tglAwal1.getText(), tglAkhir1.getText(), awalCount, akhirCount);
                 JOptionPane.showMessageDialog(this, "Export Pajak Keluar Ok");
             } else {
                 JOptionPane.showMessageDialog(this, "Nama File Belum di Input");
@@ -423,6 +464,25 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnPathActionPerformed
 
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        try {
+            // TODO add your handling code here:
+            nomorPajak = NomorpajakDao.getNomorpajakAkhir(con);
+            txtFakturAwal.setText(nomorPajak.getNoawal());
+            txtFakturAkhir.setText(nomorPajak.getNoakhir());
+            String temp[] = nomorPajak.getNoakhirpakai().split("-");
+            String temp1[] = nomorPajak.getNoakhir().split("-");
+            txtFakturAkhirPakai1.setText(temp[0]);
+            txtFakturAkhirPakai2.setText(temp[1]);
+            txtFakturAkhirPakai3.setText(temp[2]);
+            awalCount = temp[2];
+            akhirCount = temp1[2];
+        } catch (SQLException ex) {
+            Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnTambahActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportPK;
@@ -430,7 +490,9 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnExportToCsv;
     private javax.swing.JButton btnLawanCsv;
     private javax.swing.JButton btnPath;
+    private javax.swing.JButton btnTambah;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -445,10 +507,13 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     private datechooser.beans.DateChooserCombo tglAkhir1;
     private datechooser.beans.DateChooserCombo tglAwal;
     private datechooser.beans.DateChooserCombo tglAwal1;
+    private javax.swing.JTextField txtFakturAkhir;
+    private javax.swing.JTextField txtFakturAkhirPakai1;
+    private javax.swing.JTextField txtFakturAkhirPakai2;
+    private javax.swing.JTextField txtFakturAkhirPakai3;
+    private javax.swing.JTextField txtFakturAwal;
     private javax.swing.JTextField txtNoFakturAkhir;
-    private javax.swing.JTextField txtNoFakturAkhir1;
     private javax.swing.JTextField txtNofakturAwal;
-    private javax.swing.JTextField txtNofakturAwal1;
     private javax.swing.JTextField txtPath;
     // End of variables declaration//GEN-END:variables
     List<List<Object>> getDataImportBarang(Connection c) throws SQLException {
@@ -606,7 +671,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 rs.getString("FM"),
                 rs.getString("KD_JENIS_TRANSAKSI"),
                 rs.getString("FG_PENGGANTI"),
-                formatFaktur(13, noFakAwal + ""),
+                formatFaktur(txtFakturAkhirPakai1.getText(),txtFakturAkhirPakai2.getText(), noFakAwal+""),
                 rs.getString("MASA_PAJAK"),
                 rs.getString("TAHUN_PAJAK"),
                 rs.getString("TANGGAL_FAKTUR"),
@@ -619,10 +684,10 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 rs.getString("IS_CREDITABLE")
             };
             rsHasil.addRow(rowData1);
-            noFakAwal++;
             if (noFakAwal == noFakAkhir) {
                 break;
             }
+            noFakAwal++;
         }
         new Csv().write(txtPath.getText(), rsHasil, null);
         rs.close();
@@ -630,14 +695,8 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         stat.close();
     }
 
-    private Object formatFaktur(int formatLength, String angka) {
-        int s = formatLength - angka.length();
-        String temp = "";
-        for (int i = 0; i < s; i++) {
-            temp += "0";
-        }
-        temp += angka;
-        return temp;
+    private Object formatFaktur(String kode1, String kode2, String angka) {
+        return kode1+kode2+angka;
     }
 
     void exportPajakKeluaranToCsv(String tglAwal, String tglAkhir, String noAwal, String noAkhir) throws SQLException, IOException {
@@ -676,7 +735,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             "PROPINSI",
             "KODE_POS",
             "NOMOR_TELEPON",
-            "", "", "", "", ""
+            //"", "", "", "", ""
         };
         rsHasil.addRow(data);
         Object data1[] = {
@@ -691,12 +750,12 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             "PPN",
             "TARIF_PPNBM",
             "PPNBM",
-            "", "", "", "", "", "", "", ""
+            //"", "", "", "", "", "", "", ""
         };
         rsHasil.addRow(data1);
         String sql = "select 'FK' as FK, " //1
-                + "'2' as KD_JENIS_TRANSAKSI, " //2
-                + "'0' as FG_PENGGANTI, " // 3
+                + "left(p.jenispajak,2) as KD_JENIS_TRANSAKSI, " //2
+                + "right(p.jenispajak,1) as FG_PENGGANTI, " // 3
                 + "'' as NOMOR_FAKTUR, " //4
                 + "month(p.TANGGAL) as MASA_PAJAK, " //5
                 + "year(p.TANGGAL) AS TAHUN_PAJAK, " //6
@@ -756,15 +815,15 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 rs.getString(1),
                 rs.getString(2),
                 rs.getString(3),
-                formatFaktur(13, noFakAwal + ""),
+                formatFaktur(txtFakturAkhirPakai1.getText(),txtFakturAkhirPakai2.getText(), noFakAwal + ""),
                 rs.getString(5),
                 rs.getString(6),
-                rs.getString(7),
+                formatTanggal(rs.getString(7)),
                 (rs.getBoolean(21) == true) ? "0" : p.getNPWP(),
                 (rs.getBoolean(21) == true) ? (p.getNPWP() + "#NIK#NAMA#" + rs.getString(9) + "/" + rs.getString(22)) : rs.getString(9) + "/" + rs.getString(22),
                 rs.getString(10),
-                rs.getString(11),
-                rs.getString(12),
+                Math.round(rs.getDouble(11)),
+                Math.round(rs.getDouble(12)),
                 rs.getString(13),
                 rs.getString(14),
                 rs.getString(15),
@@ -789,11 +848,11 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 rs1.getString(12),
                 rs1.getString(13),
                 rs1.getString(14),
-                "",
-                "",
-                "",
-                "",
-                ""
+                //"",
+                //"",
+                //"",
+                //"",
+                //""
             };
             rsHasil.addRow(datatemp1);
             String sql2 = "select 'OF' as OF, " //1
@@ -825,22 +884,38 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                     rs2.getString(9),
                     rs2.getString(10),
                     rs2.getString(11),
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
+                    //"",
+                    //"",
+                    //"",
+                    //"",
+                    //"",
+                    //"",
+                    //"",
+                    //""
                 };
                 rsHasil.addRow(datatemp2);
             }
-            noFakAwal++;
             if (noFakAwal == noFakAkhir) {
                 break;
             }
+            noFakAwal++;
         }
         new Csv().write(txtPath.getText(), rsHasil, null);
+        nomorPajak.setNoakhirpakai(txtFakturAkhirPakai1.getText()+txtFakturAkhirPakai2.getText()+ String.valueOf(noFakAwal));
+        Timestamp tgl = new Timestamp(new Date().getTime());
+        nomorPajak.setTglupdate(tgl.toString()); 
+        NomorpajakDao.updateNomorpajak(con, 
+                nomorPajak.getId(), 
+                nomorPajak.getNoawal(), 
+                nomorPajak.getNoakhir(), 
+                nomorPajak.getNoakhirpakai(), 
+                nomorPajak.getTglrekam(), 
+                nomorPajak.getTglupdate());
+        txtFakturAkhirPakai3.setText(String.valueOf(noFakAwal)); 
+    }
+    
+    String formatTanggal(String tanggal){
+        String[]temp = tanggal.split("-");
+        return temp[2]+"/"+temp[1]+"/"+temp[0];
     }
 }

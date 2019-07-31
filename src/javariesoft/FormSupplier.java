@@ -67,7 +67,7 @@ public class FormSupplier extends javax.swing.JInternalFrame {
             cektombol();
             reloadData(cboAktif.getSelectedIndex());
             cboKriteria.setSelectedIndex(1);
-            mf1 = new MaskFormatter("##.###.###.#-###.####");
+            mf1 = new MaskFormatter("##.###.###.#-###.###");
             mf1.setPlaceholderCharacter('_');
             mf1.setValidCharacters("0123456789");
             mf1.setValueClass(String.class);
@@ -419,7 +419,7 @@ public class FormSupplier extends javax.swing.JInternalFrame {
 
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
-        setBounds(0, 0, 802, 638);
+        setBounds(0, 0, 695, 638);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
@@ -577,6 +577,11 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
         dateTglReg.setSelectedDate(cal);
         txtbatasKredit.setValue(p.getBATASKREDIT());
         lblKodeAkun.setText(p.getKODEAKUN());
+        if(p.getNPWP().equals("-") || p.getNPWP().equals("")){
+            txtNPWP.setValue("00.000.000.0-000.000");
+        } else{
+            txtNPWP.setValue(getFormatNPWP(p.getNPWP()));
+        }
         txtNPWP.setText(p.getNPWP());
         cboStatus.setSelectedIndex(p.getSTATUSAKTIF());
         txtAlamat.requestFocus();
@@ -743,7 +748,7 @@ private void txtNamaSupplierKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST
         p.setTGLREG(dateTglReg.getText());
         p.setBATASKREDIT(Float.parseFloat(txtbatasKredit.getValue().toString()));
         p.setKODEAKUN(lblKodeAkun.getText());
-        p.setNPWP(txtNPWP.getText());
+        p.setNPWP(txtNPWP.getValue().toString());
         p.setSTATUSAKTIF(cboStatus.getSelectedIndex());
 //        try {
         boolean stat;
@@ -839,5 +844,24 @@ private void txtNamaSupplierKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST
         } else if (JavarieSoftApp.groupuser.equals("Master Data")) {
             settingtombol(true, false, false);
         }
+    }
+    String getFormatNPWP(String npwp) {
+        //12.212.122.2-233.3333
+        String hasil = "";
+        if (npwp.contains(".")) {
+            return npwp;
+        } else {
+            for (int i = 0; i < npwp.length(); i++) {
+
+                if (i == 2 || i == 5 || i == 8 || i == 12) {
+                    hasil += ".";
+                }
+                if (i == 9) {
+                    hasil += "-";
+                }
+                hasil += npwp.charAt(i);
+            }
+        }
+        return hasil;
     }
 }

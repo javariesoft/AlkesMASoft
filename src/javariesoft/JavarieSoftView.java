@@ -206,6 +206,7 @@ public class JavarieSoftView extends FrameView {
         Manalisa = new javax.swing.JMenu();
         Manalisastokbrg = new javax.swing.JMenuItem();
         MSearchingBarang = new javax.swing.JMenuItem();
+        MNomorPajak = new javax.swing.JMenuItem();
         Mtransaksi = new javax.swing.JMenu();
         Mjurnal = new javax.swing.JMenuItem();
         Mpenjualan = new javax.swing.JMenuItem();
@@ -305,6 +306,7 @@ public class JavarieSoftView extends FrameView {
         jMenuItem1 = new javax.swing.JMenuItem();
         Mkeluar = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -625,6 +627,15 @@ public class JavarieSoftView extends FrameView {
             }
         });
         fileMenu.add(MSearchingBarang);
+
+        MNomorPajak.setText(resourceMap.getString("MNomorPajak.text")); // NOI18N
+        MNomorPajak.setName("MNomorPajak"); // NOI18N
+        MNomorPajak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MNomorPajakActionPerformed(evt);
+            }
+        });
+        fileMenu.add(MNomorPajak);
 
         menuBar.add(fileMenu);
 
@@ -1467,6 +1478,10 @@ public class JavarieSoftView extends FrameView {
         Mkeluar.add(exitMenuItem);
 
         menuBar.add(Mkeluar);
+
+        jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
+        jMenu1.setName("jMenu1"); // NOI18N
+        menuBar.add(jMenu1);
 
         statusPanel.setName("statusPanel"); // NOI18N
 
@@ -2377,6 +2392,14 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MPajakActionPerformed
 
+    private void MNomorPajakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNomorPajakActionPerformed
+        // TODO add your handling code here:
+        FormNomorpajak p = new FormNomorpajak();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_MNomorPajakActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
     private javax.swing.JLabel LblJenis1;
@@ -2444,6 +2467,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private javax.swing.JMenuItem MLapRekapPengiriman;
     public static javax.swing.JMenu MLapReturDeliveryOrder;
     private javax.swing.JMenuItem MLapSisaDO;
+    private javax.swing.JMenuItem MNomorPajak;
     private javax.swing.JMenuItem MPajak;
     private javax.swing.JMenuItem MRekapReturCabang;
     public static javax.swing.JMenuItem MRetur;
@@ -2505,6 +2529,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MuserAccount;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel mainPanel;

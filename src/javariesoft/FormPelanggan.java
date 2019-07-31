@@ -71,15 +71,15 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             cboKriteria.setSelectedIndex(1);
             cektombol();
             isiCombo();
-            mf1 = new MaskFormatter("##.###.###.#-###.####");
+            mf1 = createFormatter("##.###.###.#-###.###");
             mf1.setPlaceholderCharacter('_');
             mf1.setValidCharacters("0123456789");
             mf1.setValueClass(String.class);
             formatterFactory = new DefaultFormatterFactory(mf1);
             txtNPWP.setFormatterFactory(formatterFactory);
+            txtNIK.setEditable(false); 
         } catch (SQLException ex) {
-        } catch (ParseException ex) {
-            Logger.getLogger(FormPelanggan.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 
@@ -116,6 +116,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel17 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtAlamatPemilik = new javax.swing.JTextArea();
+        txtNIK = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -252,7 +253,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(txtbatasKredit);
-        txtbatasKredit.setBounds(180, 100, 160, 21);
+        txtbatasKredit.setBounds(180, 100, 210, 21);
 
         jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
         jLabel5.setForeground(resourceMap.getColor("jLabel5.foreground")); // NOI18N
@@ -270,7 +271,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(txtNohp);
-        txtNohp.setBounds(180, 130, 160, 21);
+        txtNohp.setBounds(180, 130, 210, 21);
 
         jLabel10.setFont(resourceMap.getFont("jLabel10.font")); // NOI18N
         jLabel10.setForeground(resourceMap.getColor("jLabel10.foreground")); // NOI18N
@@ -290,7 +291,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         namaPemilik.setText(resourceMap.getString("namaPemilik.text")); // NOI18N
         namaPemilik.setName("namaPemilik"); // NOI18N
         jPanel1.add(namaPemilik);
-        namaPemilik.setBounds(180, 190, 330, 21);
+        namaPemilik.setBounds(180, 190, 460, 21);
 
         jLabel8.setFont(resourceMap.getFont("jLabel8.font")); // NOI18N
         jLabel8.setForeground(resourceMap.getColor("jLabel8.foreground")); // NOI18N
@@ -322,12 +323,17 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         txtNPWP.setFont(resourceMap.getFont("txtNPWP.font")); // NOI18N
         txtNPWP.setName("txtNPWP"); // NOI18N
         jPanel1.add(txtNPWP);
-        txtNPWP.setBounds(180, 160, 330, 21);
+        txtNPWP.setBounds(180, 160, 210, 21);
 
         cbNik.setText(resourceMap.getString("cbNik.text")); // NOI18N
         cbNik.setName("cbNik"); // NOI18N
+        cbNik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNikActionPerformed(evt);
+            }
+        });
         jPanel1.add(cbNik);
-        cbNik.setBounds(520, 160, 43, 23);
+        cbNik.setBounds(400, 130, 43, 23);
 
         jLabel17.setFont(resourceMap.getFont("jLabel17.font")); // NOI18N
         jLabel17.setForeground(resourceMap.getColor("jLabel17.foreground")); // NOI18N
@@ -344,7 +350,12 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jScrollPane3.setViewportView(txtAlamatPemilik);
 
         jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(180, 220, 330, 40);
+        jScrollPane3.setBounds(180, 220, 460, 40);
+
+        txtNIK.setText(resourceMap.getString("txtNIK.text")); // NOI18N
+        txtNIK.setName("txtNIK"); // NOI18N
+        jPanel1.add(txtNIK);
+        txtNIK.setBounds(400, 160, 240, 20);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
 
@@ -616,6 +627,11 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
 
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         panelCool1.add(jButton1);
         jButton1.setBounds(690, 20, 100, 23);
 
@@ -667,6 +683,7 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
     try {
         // TODO add your handling code here:
         Calendar c1 = Calendar.getInstance();
+
         p = dbpelanggan.getDetails(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
         try {
             c1.setTime(d.parse(p.getTGLREG()));
@@ -680,9 +697,19 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
         dateTglReg.setSelectedDate(c1);
         txtbatasKredit.setValue(p.getBATASKREDIT());
         lblKodeAkun.setText(p.getKODEAKUN());
-        txtNPWP.setText(p.getNPWP());
-        txtNPWP.setText(p.getNPWP());
-        cbNik.setSelected(p.isNIK()); 
+        if (p.isNIK()) {
+            txtNPWP.setValue("00.000.000.0-000.000");
+            p.setNPWPNoFormat(p.getNPWP());
+            txtNIK.setText(p.getNPWP());
+        } else {
+            if (p.getNPWP().equals("-")) {
+                txtNPWP.setValue("00.000.000.0-000.000");
+            } else {
+                txtNPWP.setValue(getFormatNPWP(p.getNPWP()));
+            }
+            txtNIK.setText("");
+        }
+        cbNik.setSelected(p.isNIK());
         namaPemilik.setText(p.getNAMAPEMILIK());
         cboStatus.setSelectedIndex(p.getSTATUSAKTIF());
         cboPropinsi.setSelectedItem(p.getPROPINSI());
@@ -691,12 +718,12 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
         cboKelurahan.setSelectedItem(p.getKELURAHAN());
         txtKodePos.setText(p.getKODEPOS());
         txtRT.setText(p.getRT());
-        txtRW.setText(p.getRW()); 
-        txtNomor.setText(p.getNOMOR()); 
-        txtBlok.setText(p.getBLOK()); 
+        txtRW.setText(p.getRW());
+        txtNomor.setText(p.getNOMOR());
+        txtBlok.setText(p.getBLOK());
         txtkodePelanggan.requestFocus();
         cektombol();
-    } catch (SQLException ex) {
+    } catch (Exception ex) {
         Logger.getLogger(FormPelanggan.class.getName()).log(Level.SEVERE, null, ex);
     }
 
@@ -893,6 +920,25 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         }
     }//GEN-LAST:event_cboKelurahanActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        //txtNPWP.setText("12.212.122.2-233.3333");
+        System.out.println(getFormatNPWP("123456789012345"));
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cbNikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNikActionPerformed
+        // TODO add your handling code here:
+        if (cbNik.isSelected()) {
+            txtNPWP.setValue("00.000.000.0-000.000");
+            txtNIK.setEditable(true);
+            txtNIK.requestFocus();
+        }else{
+            txtNIK.setEditable(false);
+            txtNPWP.requestFocus();
+            txtNPWP.selectAll();
+        }
+    }//GEN-LAST:event_cbNikActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CheckCabang;
     private javax.swing.JButton btnCancel;
@@ -944,6 +990,7 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     private javax.swing.JTextField txtBlok;
     private javax.swing.JTextField txtKodePos;
     private javax.swing.JTextField txtKriteria;
+    private javax.swing.JFormattedTextField txtNIK;
     private javax.swing.JFormattedTextField txtNPWP;
     private javax.swing.JTextField txtNamaPelanggan;
     private javax.swing.JTextField txtNohp;
@@ -1017,8 +1064,13 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         p.setTGLREG(dateTglReg.getText());
         p.setBATASKREDIT(Float.parseFloat(txtbatasKredit.getValue().toString()));
         p.setKODEAKUN(lblKodeAkun.getText());
-        p.setNPWP(txtNPWP.getText());
+        if (cbNik.isSelected()) {
+            p.setNPWP(txtNIK.getText());
+        } else {
+            p.setNPWP(txtNPWP.getValue().toString());
+        }
         p.setNIK(cbNik.isSelected());
+
 //        if (CheckCabang.isSelected()) {
 //            p.setSTATUSCABANG("1");
 //        }else{
@@ -1037,7 +1089,7 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         p.setRT(txtRT.getText());
         p.setRW(txtRW.getText());
         p.setNOMOR(txtNomor.getText());
-        p.setBLOK(txtBlok.getText()); 
+        p.setBLOK(txtBlok.getText());
         p.setALAMATPEMILIK(txtAlamatPemilik.getText());
         boolean stat;
         if (pil == 0) {
@@ -1109,7 +1161,6 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         }
 
     }
-
 
     void cektombol() {
         if (JavarieSoftApp.groupuser.equals("Pembelian")) {
@@ -1231,5 +1282,36 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         }
         rs.close();
         stat.close();
+    }
+
+    MaskFormatter createFormatter(String s) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(s);
+        } catch (java.text.ParseException exc) {
+            System.err.println("formatter is bad: " + exc.getMessage());
+            System.exit(-1);
+        }
+        return formatter;
+    }
+
+    String getFormatNPWP(String npwp) {
+        //12.212.122.2-233.3333
+        String hasil = "";
+        if (npwp.contains(".")) {
+            return npwp;
+        } else {
+            for (int i = 0; i < npwp.length(); i++) {
+
+                if (i == 2 || i == 5 || i == 8 || i == 12) {
+                    hasil += ".";
+                }
+                if (i == 9) {
+                    hasil += "-";
+                }
+                hasil += npwp.charAt(i);
+            }
+        }
+        return hasil;
     }
 }

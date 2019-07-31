@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notareturbeli" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     RETURBELI."ID" AS RETURBELI_ID,
+     RETURBELI."KODERETURBELI" AS RETURBELI_KODERETURBELI,
+     RETURBELI."TANGGAL" AS RETURBELI_TANGGAL,
+     RETURBELI."IDSUPPLIER" AS RETURBELI_IDSUPPLIER,
+     RETURBELI."KETERANGAN" AS RETURBELI_KETERANGAN,
+     RETURBELI."IDPEMBELIAN" AS RETURBELI_IDPEMBELIAN,
+     RETURBELI."TOTALRETUR" AS RETURBELI_TOTALRETUR,
+     RETURBELI."TOTALDISKON" AS RETURBELI_TOTALDISKON,
+     RETURBELI."TOTALPPN" AS RETURBELI_TOTALPPN,
+     RETURBELI."STATUS" AS RETURBELI_STATUS,
+     RETURBELIRINCI."ID" AS RETURBELIRINCI_ID,
+     RETURBELIRINCI."IDRETURBELI" AS RETURBELIRINCI_IDRETURBELI,
+     RETURBELIRINCI."KODEBARANG" AS RETURBELIRINCI_KODEBARANG,
+     RETURBELIRINCI."JUMLAH" AS RETURBELIRINCI_JUMLAH,
+     RETURBELIRINCI."HARGA" AS RETURBELIRINCI_HARGA,
+     RETURBELIRINCI."TOTAL" AS RETURBELIRINCI_TOTAL,
+     RETURBELIRINCI."SATUAN" AS RETURBELIRINCI_SATUAN,
+     RETURBELIRINCI."JUMLAHKECIL" AS RETURBELIRINCI_JUMLAHKECIL,
+     RETURBELIRINCI."KODEBATCH" AS RETURBELIRINCI_KODEBATCH,
+     RETURBELIRINCI."EXPIRE" AS RETURBELIRINCI_EXPIRE,
+     RETURBELIRINCI."DISKON" AS RETURBELIRINCI_DISKON,
+     RETURBELIRINCI."PPN" AS RETURBELIRINCI_PPN,
+     SUPPLIER."IDSUPPLIER" AS SUPPLIER_IDSUPPLIER,
+     SUPPLIER."NAMA" AS SUPPLIER_NAMA,
+     SUPPLIER."ALAMAT" AS SUPPLIER_ALAMAT,
+     SUPPLIER."NOHP" AS SUPPLIER_NOHP,
+     SUPPLIER."BATASKREDIT" AS SUPPLIER_BATASKREDIT,
+     SUPPLIER."TGLREG" AS SUPPLIER_TGLREG,
+     SUPPLIER."KODEAKUN" AS SUPPLIER_KODEAKUN,
+     SUPPLIER."NPWP" AS SUPPLIER_NPWP,
+     SUPPLIER."STATUSAKTIF" AS SUPPLIER_STATUSAKTIF,
+     PEMBELIAN."ID" AS PEMBELIAN_ID,
+     PEMBELIAN."NOFAKTUR" AS PEMBELIAN_NOFAKTUR,
+     PEMBELIAN."IDSUPPLIER" AS PEMBELIAN_IDSUPPLIER,
+     PEMBELIAN."CASH" AS PEMBELIAN_CASH,
+     PEMBELIAN."TGLBAYAR" AS PEMBELIAN_TGLBAYAR,
+     PEMBELIAN."DP" AS PEMBELIAN_DP,
+     PEMBELIAN."PAJAK" AS PEMBELIAN_PAJAK,
+     PEMBELIAN."DISKON" AS PEMBELIAN_DISKON,
+     PEMBELIAN."TANGGAL" AS PEMBELIAN_TANGGAL,
+     PEMBELIAN."STATUS" AS PEMBELIAN_STATUS,
+     PEMBELIAN."NOFAKTURSUPPLIER" AS PEMBELIAN_NOFAKTURSUPPLIER,
+     PEMBELIAN."TGLMASUK" AS PEMBELIAN_TGLMASUK
+FROM
+     "PUBLIC"."RETURBELIRINCI" RETURBELIRINCI INNER JOIN "PUBLIC"."RETURBELI" RETURBELI ON RETURBELIRINCI."IDRETURBELI" = RETURBELI."ID"
+     INNER JOIN "PUBLIC"."SUPPLIER" SUPPLIER ON RETURBELI."IDSUPPLIER" = SUPPLIER."IDSUPPLIER"
+     INNER JOIN "PUBLIC"."PEMBELIAN" PEMBELIAN ON RETURBELI."IDPEMBELIAN" = PEMBELIAN."ID"]]>
+	</queryString>
+	<field name="RETURBELI_ID" class="java.lang.Integer"/>
+	<field name="RETURBELI_KODERETURBELI" class="java.lang.String"/>
+	<field name="RETURBELI_TANGGAL" class="java.sql.Date"/>
+	<field name="RETURBELI_IDSUPPLIER" class="java.lang.String"/>
+	<field name="RETURBELI_KETERANGAN" class="java.lang.String"/>
+	<field name="RETURBELI_IDPEMBELIAN" class="java.lang.Integer"/>
+	<field name="RETURBELI_TOTALRETUR" class="java.lang.Double"/>
+	<field name="RETURBELI_TOTALDISKON" class="java.lang.Double"/>
+	<field name="RETURBELI_TOTALPPN" class="java.lang.Double"/>
+	<field name="RETURBELI_STATUS" class="java.lang.Integer"/>
+	<field name="RETURBELIRINCI_ID" class="java.lang.Integer"/>
+	<field name="RETURBELIRINCI_IDRETURBELI" class="java.lang.Integer"/>
+	<field name="RETURBELIRINCI_KODEBARANG" class="java.lang.String"/>
+	<field name="RETURBELIRINCI_JUMLAH" class="java.lang.Integer"/>
+	<field name="RETURBELIRINCI_HARGA" class="java.lang.Double"/>
+	<field name="RETURBELIRINCI_TOTAL" class="java.lang.Double"/>
+	<field name="RETURBELIRINCI_SATUAN" class="java.lang.String"/>
+	<field name="RETURBELIRINCI_JUMLAHKECIL" class="java.lang.Integer"/>
+	<field name="RETURBELIRINCI_KODEBATCH" class="java.lang.String"/>
+	<field name="RETURBELIRINCI_EXPIRE" class="java.sql.Date"/>
+	<field name="RETURBELIRINCI_DISKON" class="java.lang.Double"/>
+	<field name="RETURBELIRINCI_PPN" class="java.lang.Double"/>
+	<field name="SUPPLIER_IDSUPPLIER" class="java.lang.String"/>
+	<field name="SUPPLIER_NAMA" class="java.lang.String"/>
+	<field name="SUPPLIER_ALAMAT" class="java.lang.String"/>
+	<field name="SUPPLIER_NOHP" class="java.lang.String"/>
+	<field name="SUPPLIER_BATASKREDIT" class="java.lang.Double"/>
+	<field name="SUPPLIER_TGLREG" class="java.sql.Date"/>
+	<field name="SUPPLIER_KODEAKUN" class="java.lang.String"/>
+	<field name="SUPPLIER_NPWP" class="java.lang.String"/>
+	<field name="SUPPLIER_STATUSAKTIF" class="java.lang.Integer"/>
+	<field name="PEMBELIAN_ID" class="java.lang.Integer"/>
+	<field name="PEMBELIAN_NOFAKTUR" class="java.lang.String"/>
+	<field name="PEMBELIAN_IDSUPPLIER" class="java.lang.String"/>
+	<field name="PEMBELIAN_CASH" class="java.lang.String"/>
+	<field name="PEMBELIAN_TGLBAYAR" class="java.sql.Date"/>
+	<field name="PEMBELIAN_DP" class="java.lang.Double"/>
+	<field name="PEMBELIAN_PAJAK" class="java.lang.Double"/>
+	<field name="PEMBELIAN_DISKON" class="java.lang.Double"/>
+	<field name="PEMBELIAN_TANGGAL" class="java.sql.Date"/>
+	<field name="PEMBELIAN_STATUS" class="java.lang.String"/>
+	<field name="PEMBELIAN_NOFAKTURSUPPLIER" class="java.lang.String"/>
+	<field name="PEMBELIAN_TGLMASUK" class="java.sql.Date"/>
+	<variable name="namapembeli" class="java.lang.String">
+		<initialValueExpression><![CDATA["CV. MIRANTI ADILHA"]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="210" y="0" width="138" height="33"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA RETUR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="13" width="58" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nomor	:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PEMBELI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="20" width="183" height="20"/>
+				<textElement/>
+				<text><![CDATA[CV. MIRANTI ADILHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Alamat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="40" width="417" height="20"/>
+				<textElement/>
+				<text><![CDATA[JL. GAJAH MADA NO.3 RT 004 RW 007 KEL GUNUNG PANGILUN, PADANG, SUMATERA BARAT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[NPWP	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="60" width="183" height="20"/>
+				<textElement/>
+				<text><![CDATA[02.045,601.8-201.000]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="321" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{namapembeli}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="125" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KEPADA PENJUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nama	]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="138" y="20" width="417" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{SUPPLIER_NAMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Alamat	]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="138" y="40" width="417" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{SUPPLIER_ALAMAT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="60" width="417" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{SUPPLIER_NPWP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
