@@ -56,13 +56,13 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -214,7 +214,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             p = dbpenjualan.getDetails(c, id);
             IDjual = p.getID();
             nofaktur.setText(p.getFAKTUR());
-            txtNofakturTemp.setText(p.getFAKTUR()); 
+            txtNofakturTemp.setText(p.getFAKTUR());
             Calendar cld = Calendar.getInstance();
             cld.setTime(d.parse(p.getTANGGAL()));
             tgl.setSelectedDate(cld);
@@ -240,7 +240,6 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             hasilBayar.setText("" + p.getDP());
             ongkoskirim.setText("" + p.getONGKOSKIRIM());
             txtDiskonPersen.setText("" + p.getDISKONPERSEN());
-            cboJenisPajak.setSelectedIndex(getIndexCboJenisPajak(p.getJENISPAJAK()));
             if (p.getPPN() > 0) {
                 cbPPN.setSelected(true);
                 cbPPN.setEnabled(false);
@@ -251,7 +250,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             cogs = 0;
             int x = JOptionPane.showConfirmDialog(this, "Tampilkan Data Barang ?", "", JOptionPane.YES_NO_OPTION);
             if (x == 0) {
-                boolean sdo=false;
+                boolean sdo = false;
                 model = (DefaultTableModel) jTable1.getModel();
                 ResultSet re = c.createStatement().executeQuery("select *, barang.namabarang from RINCIPENJUALAN, BARANG where RINCIPENJUALAN.KODEBARANG=BARANG.KODEBARANG and IDPENJUALAN=" + p.getID() + "");
 //                hapusTabel();
@@ -277,29 +276,27 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                     data.add(13, re.getString("JUMLAHKECIL"));
                     data.add(14, re.getString("DISKONP"));
                     data.add(15, re.getString("BONUS"));
-
                     model.addRow(data);
-                    if(re.getString("IDDO").equals("0")){
-                        sdo=true;
+                    if (re.getString("IDDO").equals("0")) {
+                        sdo = true;
                     }
                 }
-                
-                if(sdo==false){
+
+                if (sdo == false) {
                     cbStatusDO.setSelected(true);
                     cbStatusDO.setEnabled(false);
                     txtNamaDo.setEditable(true);
                     txtNamaDo.setText("");
-                }else{
+                } else {
                     cbStatusDO.setSelected(false);
                     cbStatusDO.setEnabled(false);
                     txtNamaDo.setText("0");
                     txtNamaDo.setEditable(false);
                 }
-                
+
                 total = 0;
                 hpp = 0;
                 bonus = 0;
-                //hasilAkhir();
                 reloadData(c);
                 hasilBayar.setText("" + p.getDP());
 
@@ -321,15 +318,6 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-//        finally {
-//            if (c != null) {
-//                try {
-//                    c.close();
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(DialogPenjualan.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
     }
 
     /**
@@ -389,7 +377,6 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         Radio30Hari = new javax.swing.JRadioButton();
         Radio7Hari = new javax.swing.JRadioButton();
         Radio21Hari = new javax.swing.JRadioButton();
-        cboJenisPajak = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         txtkodeRetur = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
@@ -905,11 +892,6 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         });
         jPanel1.add(Radio21Hari);
         Radio21Hari.setBounds(600, 34, 75, 23);
-
-        cboJenisPajak.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "000-PILIHAN", "010-Bukan Pemungut PPN", "020-Pemungut Bendaharawan" }));
-        cboJenisPajak.setName("cboJenisPajak"); // NOI18N
-        jPanel1.add(cboJenisPajak);
-        cboJenisPajak.setBounds(670, 10, 220, 20);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
 
@@ -1889,7 +1871,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 
     private void cbStatusDOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbStatusDOActionPerformed
         // TODO add your handling code here:
-        if (cbStatusDO.isSelected()) {           
+        if (cbStatusDO.isSelected()) {
             cbStatusDO.setEnabled(false);
 ////            txtKodeDO.setEditable(true);
 ////            txtKodeDO.setText("");
@@ -2192,7 +2174,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             } else {
                 cbPPN.setEnabled(false);
             }
-            
+
             if (cbStatusDO.isSelected()) {
                 cbStatusDO.setEnabled(false);
             } else {
@@ -2299,24 +2281,24 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 //                        }
 //                    }
 //                    if(!cbBonus.isSelected()){
-                        int rowSelect = 0;
-                        if (model.getRowCount() != 0) {
-                            for (int i = 0; i < jTable1.getRowCount(); i++) {
-                                String kdbrgtabel = jTable1.getValueAt(i, 1).toString();
-                                String kdbatchtabel = jTable1.getValueAt(i, 3).toString();
-                                String bonustabel = jTable1.getValueAt(i, 15).toString();
-                                String kddotabel = jTable1.getValueAt(i, 11).toString();
-                                String kdbrginput = kodebarang.getText();
-                                String kdbatchinput = txtBatch.getText();
-                                String bonusinput = (cbBonus.isSelected() ? "Bonus" : "");
-                                String kddoinput = txtKodeDO.getText();
-                                if (kdbrginput.equals(kdbrgtabel) && kdbatchinput.equals(kdbatchtabel) && bonusinput.equals(bonustabel) && kddoinput.equals(kddotabel)) {
-                                    cekbarang = true;
-                                    rowSelect = i;
-                                    break;
-                                }
+                    int rowSelect = 0;
+                    if (model.getRowCount() != 0) {
+                        for (int i = 0; i < jTable1.getRowCount(); i++) {
+                            String kdbrgtabel = jTable1.getValueAt(i, 1).toString();
+                            String kdbatchtabel = jTable1.getValueAt(i, 3).toString();
+                            String bonustabel = jTable1.getValueAt(i, 15).toString();
+                            String kddotabel = jTable1.getValueAt(i, 11).toString();
+                            String kdbrginput = kodebarang.getText();
+                            String kdbatchinput = txtBatch.getText();
+                            String bonusinput = (cbBonus.isSelected() ? "Bonus" : "");
+                            String kddoinput = txtKodeDO.getText();
+                            if (kdbrginput.equals(kdbrgtabel) && kdbatchinput.equals(kdbatchtabel) && bonusinput.equals(bonustabel) && kddoinput.equals(kddotabel)) {
+                                cekbarang = true;
+                                rowSelect = i;
+                                break;
                             }
                         }
+                    }
 //                    }
 
 //                 nomor = jTable1.getRowCount() + 1;
@@ -2474,7 +2456,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         } catch (Exception ex) {
 //            JOptionPane.showMessageDialog(this, ex.toString());
-              JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         //    finally {
         //        if (c != null) {
@@ -2570,20 +2552,20 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(DialogPenjualanInternal.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if(k.getIDKATEGORI().equals("4")){
+                if (k.getIDKATEGORI().equals("4")) {
                     if (cbPPN.isSelected()) {
                         harga.setText("" + b.getHarga(cboSatuan.getSelectedItem().toString()));
                         harga.setEnabled(false);
                         jumlah.requestFocus();
-                    }else{
+                    } else {
 //                        harga.setText("" + b.getHarga(cboSatuan.getSelectedItem().toString()));
                         double hrgj = b.getHarga(cboSatuan.getSelectedItem().toString());
-                        double hrgppn=(0.1 * hrgj) + hrgj;
+                        double hrgppn = (0.1 * hrgj) + hrgj;
                         harga.setText("" + String.format("%.0f", hrgppn));
                         harga.setEnabled(false);
                         jumlah.requestFocus();
                     }
-                }else{
+                } else {
                     double hk = Fungsi.getHargaKini(c, kodepelanggan.getText(), b.getKODEBARANG(), cboSatuan.getSelectedItem().toString());
                     harga.setText("" + hk);
                     harga.requestFocus();
@@ -2628,64 +2610,64 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 
                 kodebarang.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
                 namabarang.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString());
-                
+
                 kategori k = null;
                 try {
                     k = kategoriDao.getDetails(c, bc.getIDKATEGORI());
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(DialogPenjualanInternal.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if(k.getIDKATEGORI().equals("4")){ 
+                if (k.getIDKATEGORI().equals("4")) {
                     if (cbPPN.isSelected()) {
                         harga.setEnabled(false);
-                    }else{
+                    } else {
                         harga.setEnabled(false);
                     }
-                }else{
+                } else {
                     harga.setEnabled(true);
                 }
-                    harga.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 7).toString());                          
-                    jumlah.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 5).toString());
-                    cboStatDiskonItem.setSelectedIndex(0);
-                    Object a = Double.parseDouble(jTable1.getValueAt(jTable1.getSelectedRow(), 14).toString());
-                    diskonitem.setValue(a);
-                    cboSatuan.setSelectedItem(jTable1.getValueAt(jTable1.getSelectedRow(), 6));
-                    cogs = Double.parseDouble(jTable1.getValueAt(jTable1.getSelectedRow(), 12).toString());
-                    if (jTable1.getValueAt(jTable1.getSelectedRow(), 3) != "") {
-                        txtBatch.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString());
-                        Calendar cld = Calendar.getInstance();
-                        cld.setTime(d.parse(jTable1.getValueAt(jTable1.getSelectedRow(), 4).toString()));
-                        tglExpire.setSelectedDate(cld);
-                        tglExpire.setLocked(true);
-                    }
-                    txtKodeDO.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 11).toString());
-                    DO d = null;
-                    if (jTable1.getValueAt(jTable1.getSelectedRow(), 11).toString().equals("0")) {
-                        cbStatusDO.setSelected(false);
-                        cbStatusDO.setEnabled(false);                     
-                        txtNamaDo.setText("0");
-                        txtNamaDo.setEditable(false);
-                    } else {
-                        cbStatusDO.setSelected(true);
-                        cbStatusDO.setEnabled(false);
-                        
-                        d = DODao.getDetails(c,Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 11).toString()));
-                        txtNamaDo.setText(d.getKODEDO());
-                        txtNamaDo.setEditable(true);
-                    }
-    ////                if (Double.parseDouble(jTable1.getValueAt(jTable1.getSelectedRow(), 9).toString()) != 0) {
-    ////                    cbPPN.setSelected(true);
-    ////                } else {
-    ////                    cbPPN.setSelected(false);
-    ////                }
+                harga.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 7).toString());
+                jumlah.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 5).toString());
+                cboStatDiskonItem.setSelectedIndex(0);
+                Object a = Double.parseDouble(jTable1.getValueAt(jTable1.getSelectedRow(), 14).toString());
+                diskonitem.setValue(a);
+                cboSatuan.setSelectedItem(jTable1.getValueAt(jTable1.getSelectedRow(), 6));
+                cogs = Double.parseDouble(jTable1.getValueAt(jTable1.getSelectedRow(), 12).toString());
+                if (jTable1.getValueAt(jTable1.getSelectedRow(), 3) != "") {
+                    txtBatch.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString());
+                    Calendar cld = Calendar.getInstance();
+                    cld.setTime(d.parse(jTable1.getValueAt(jTable1.getSelectedRow(), 4).toString()));
+                    tglExpire.setSelectedDate(cld);
+                    tglExpire.setLocked(true);
+                }
+                txtKodeDO.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 11).toString());
+                DO d = null;
+                if (jTable1.getValueAt(jTable1.getSelectedRow(), 11).toString().equals("0")) {
+                    cbStatusDO.setSelected(false);
+                    cbStatusDO.setEnabled(false);
+                    txtNamaDo.setText("0");
+                    txtNamaDo.setEditable(false);
+                } else {
+                    cbStatusDO.setSelected(true);
+                    cbStatusDO.setEnabled(false);
 
-                    posisi = jTable1.getSelectedRow();
-                    //        notemp = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 8).toString());
-                    //        tkod = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
-                    model.removeRow(jTable1.getSelectedRow());
-                    reloadData(c);
-                    //c.close();
-                
+                    d = DODao.getDetails(c, Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 11).toString()));
+                    txtNamaDo.setText(d.getKODEDO());
+                    txtNamaDo.setEditable(true);
+                }
+                ////                if (Double.parseDouble(jTable1.getValueAt(jTable1.getSelectedRow(), 9).toString()) != 0) {
+                ////                    cbPPN.setSelected(true);
+                ////                } else {
+                ////                    cbPPN.setSelected(false);
+                ////                }
+
+                posisi = jTable1.getSelectedRow();
+                //        notemp = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 8).toString());
+                //        tkod = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
+                model.removeRow(jTable1.getSelectedRow());
+                reloadData(c);
+                //c.close();
+
             } catch (SQLException ex) {
                 Logger.getLogger(DialogPenjualan.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
@@ -3061,7 +3043,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                             cld.setTime(d.parse(jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString()));
                             tglExpire.setSelectedDate(cld);
                             tglExpire.setLocked(true);
-                        }                      
+                        }
 
                         if (CboJenisTrans.getSelectedIndex() == 0) {
                             //harga.setText("" + b.getHarga(cboSatuan.getSelectedItem().toString()));
@@ -3071,24 +3053,24 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                             } catch (ClassNotFoundException ex) {
                                 Logger.getLogger(DialogPenjualanInternal.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            if(k.getIDKATEGORI().equals("4")){
+                            if (k.getIDKATEGORI().equals("4")) {
                                 if (cbPPN.isSelected()) {
                                     harga.setText("" + b.getHarga(cboSatuan.getSelectedItem().toString()));
                                     harga.setEnabled(false);
                                     double disItem = Fungsi.getDiskonItemJualKini(c, kodepelanggan.getText(), b.getKODEBARANG(), cboSatuan.getSelectedItem().toString());
                                     diskonitem.setValue(disItem);
                                     cboSatuan.requestFocus();
-                                }else{                                    
+                                } else {
 //                                    harga.setText("" + b.getHarga(cboSatuan.getSelectedItem().toString()));
                                     double hrgj = b.getHarga(cboSatuan.getSelectedItem().toString());
-                                    double hrgppn=(0.1 * hrgj) + hrgj;
+                                    double hrgppn = (0.1 * hrgj) + hrgj;
                                     harga.setText("" + String.format("%.0f", hrgppn));
                                     harga.setEnabled(false);
                                     double disItem = Fungsi.getDiskonItemJualKini(c, kodepelanggan.getText(), b.getKODEBARANG(), cboSatuan.getSelectedItem().toString());
                                     diskonitem.setValue(disItem);
                                     cboSatuan.requestFocus();
                                 }
-                            }else{
+                            } else {
                                 double hk = Fungsi.getHargaKini(c, kodepelanggan.getText(), b.getKODEBARANG(), cboSatuan.getSelectedItem().toString());
                                 harga.setText("" + hk);
                                 harga.setEnabled(true);
@@ -3143,7 +3125,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                             cboSatuan.requestFocus();
                         }
                         //harga.setText("");
-                        
+
                         sisaBarang = Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 5).toString());
                         jScrollPane2.setVisible(false);
                     }
@@ -3182,7 +3164,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                     } else {
                         vexpire = jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString();
                     }
-                    
+
                     cboSatuan.removeAllItems();
                     for (Iterator<Object> it = b.getItemSatuan().iterator(); it.hasNext();) {
                         Object a = it.next();
@@ -3391,7 +3373,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         Radio14Hari.setSelected(true);
         Radio21Hari.setSelected(false);
         Radio30Hari.setSelected(false);
-        if(statusbayar.getSelectedIndex() == 1){
+        if (statusbayar.getSelectedIndex() == 1) {
             settingTgl(c);
         }
     }//GEN-LAST:event_Radio14HariActionPerformed
@@ -3402,7 +3384,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         Radio14Hari.setSelected(false);
         Radio21Hari.setSelected(false);
         Radio30Hari.setSelected(true);
-        if(statusbayar.getSelectedIndex() == 1){
+        if (statusbayar.getSelectedIndex() == 1) {
             settingTgl(c);
         }
     }//GEN-LAST:event_Radio30HariActionPerformed
@@ -3413,7 +3395,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         Radio14Hari.setSelected(false);
         Radio21Hari.setSelected(false);
         Radio30Hari.setSelected(false);
-        if(statusbayar.getSelectedIndex() == 1){
+        if (statusbayar.getSelectedIndex() == 1) {
             settingTgl(c);
         }
     }//GEN-LAST:event_Radio7HariActionPerformed
@@ -3424,7 +3406,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         Radio14Hari.setSelected(false);
         Radio21Hari.setSelected(true);
         Radio30Hari.setSelected(false);
-        if(statusbayar.getSelectedIndex() == 1){
+        if (statusbayar.getSelectedIndex() == 1) {
             settingTgl(c);
         }
     }//GEN-LAST:event_Radio21HariActionPerformed
@@ -3507,7 +3489,6 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox cbPPN;
     private javax.swing.JCheckBox cbPPN1;
     private javax.swing.JCheckBox cbStatusDO;
-    private javax.swing.JComboBox<String> cboJenisPajak;
     private javax.swing.JComboBox cboSatuan;
     private javax.swing.JComboBox cboStatDiskon;
     private javax.swing.JComboBox cboStatDiskonItem;
@@ -3830,13 +3811,13 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         //statusbayar.requestFocus();
 
     }
-    
-    void pilihJatuhTempo(){
+
+    void pilihJatuhTempo() {
 //        Radio30Hari.setSelected(true);
-        if(Radio30Hari.isSelected()){
+        if (Radio30Hari.isSelected()) {
             Radio14Hari.setSelected(false);
             Radio30Hari.setSelected(true);
-        }else if(Radio14Hari.isSelected()){
+        } else if (Radio14Hari.isSelected()) {
             Radio14Hari.setSelected(true);
             Radio30Hari.setSelected(false);
         }
@@ -3943,8 +3924,6 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         p.setSTATUSDO((cbStatusDO.isSelected()) ? "1" : "0");
         p.setONGKOSKIRIM((ongkoskirim.getText().length() > 0 ? Double.parseDouble(ongkoskirim.getText()) : 0));
         p.setDISKONPERSEN((txtDiskonPersen.getText().length() > 0 ? Double.parseDouble(txtDiskonPersen.getText()) : 0));
-        String tjenis[] = cboJenisPajak.getSelectedItem().toString().split("-");
-        p.setJENISPAJAK(tjenis[0]); 
         List<penjualan> penList = new ArrayList<penjualan>();
         penList.add(p);
         List<rincipenjualan> rpList = new ArrayList<rincipenjualan>();
@@ -4586,12 +4565,12 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 
     void viewFakturPendek(String nofaktur) {
         Map<String, Object> p;
-        if(cbPPN.isSelected()){
+        if (cbPPN.isSelected()) {
             p = ClassPrint.cetakfakturMap(c, nofaktur);
-        }else{
-            if(cbPPN1.isSelected()){
+        } else {
+            if (cbPPN1.isSelected()) {
                 p = ClassPrint.cetakfakturMap1(c, nofaktur);
-            }else{
+            } else {
                 p = ClassPrint.cetakfakturMap(c, nofaktur);
             }
         }
@@ -4604,12 +4583,12 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 
     void viewFakturPanjang(String nofaktur) {
         Map<String, Object> p;
-        if(cbPPN.isSelected()){
+        if (cbPPN.isSelected()) {
             p = ClassPrintKertasPanjang.cetakfakturMap(c, nofaktur);
-        }else{
-            if(cbPPN1.isSelected()){
+        } else {
+            if (cbPPN1.isSelected()) {
                 p = ClassPrintKertasPanjang.cetakfakturMap1(c, nofaktur);
-            }else{
+            } else {
                 p = ClassPrintKertasPanjang.cetakfakturMap(c, nofaktur);
             }
         }
@@ -4704,16 +4683,16 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 
     public void settingTgl(Connection c) {
         Calendar cal = Calendar.getInstance();
-        if(Radio30Hari.isSelected()){
+        if (Radio30Hari.isSelected()) {
             cal.setTime(com.erv.fungsi.Fungsi.dateAdd(c, "DAY", 30, java.sql.Date.valueOf(tgl.getText())));
             tgllunas.setSelectedDate(cal);
-        }else if(Radio21Hari.isSelected()){
+        } else if (Radio21Hari.isSelected()) {
             cal.setTime(com.erv.fungsi.Fungsi.dateAdd(c, "DAY", 21, java.sql.Date.valueOf(tgl.getText())));
             tgllunas.setSelectedDate(cal);
-        }else if(Radio14Hari.isSelected()){
+        } else if (Radio14Hari.isSelected()) {
             cal.setTime(com.erv.fungsi.Fungsi.dateAdd(c, "DAY", 14, java.sql.Date.valueOf(tgl.getText())));
             tgllunas.setSelectedDate(cal);
-        }else if(Radio7Hari.isSelected()){
+        } else if (Radio7Hari.isSelected()) {
             cal.setTime(com.erv.fungsi.Fungsi.dateAdd(c, "DAY", 7, java.sql.Date.valueOf(tgl.getText())));
             tgllunas.setSelectedDate(cal);
         }
@@ -4899,13 +4878,22 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 //
 //    }
 
-    private int getIndexCboJenisPajak(String jenispajak) {
-        for(int i=0;i<cboJenisPajak.getItemCount();i++){
-            String data[] = cboJenisPajak.getItemAt(i).split("-");
-            if(jenispajak.equals(data[0])){
-                return i;
+    private List<List<Object>> getDataRetur(int id) throws SQLException {
+        List<List<Object>> dataRow = new ArrayList<>();
+        String sql="select kodebarang, kodebatch, sum(jumlah)  from RETUR r  "
+                + "inner join RETURRINCI rr on r.id = rr.IDRETUR "
+                + "where r.idpenjualan=? "
+                + "group by kodebarang, kodebatch "
+                + "";
+        PreparedStatement ps = c.prepareStatement(sql);
+        ResultSet rs =ps.executeQuery();
+        while(rs.next()){
+            List<Object> newRow = new ArrayList<>();
+            for(int i=1;i<=3;i++){
+                newRow.add(rs.getObject(i));
             }
+            dataRow.add(newRow);
         }
-        return 0;
+        return dataRow;
     }
 }

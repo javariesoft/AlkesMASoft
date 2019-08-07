@@ -48,6 +48,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     String awalCount;
     String akhirCount;
     NomorPajak nomorPajak;
+
     public FormLapPajakExcel() {
         initComponents();
         try {
@@ -57,6 +58,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             tglAwal1.setDateFormat(d);
             tglAkhir1.setDateFormat(d);
             jfc = new JFileChooser(FileSystemView.getFileSystemView().getFileSystemView().getHomeDirectory());
+            jfc.setAcceptAllFileFilterUsed(false);
             jfc.setFileFilter(filter);
         } catch (SQLException ex) {
             Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
@@ -206,6 +208,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         jPanel2.setName("jPanel2"); // NOI18N
         jPanel2.setLayout(null);
 
+        btnExportPK.setFont(resourceMap.getFont("btnExportPK.font")); // NOI18N
         btnExportPK.setText(resourceMap.getString("btnExportPK.text")); // NOI18N
         btnExportPK.setName("btnExportPK"); // NOI18N
         btnExportPK.addActionListener(new java.awt.event.ActionListener() {
@@ -221,6 +224,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         jPanel2.add(jLabel5);
         jLabel5.setBounds(20, 20, 90, 14);
 
+        tglAwal1.setFieldFont(resourceMap.getFont("tglAwal1.dch_combo_fieldFont")); // NOI18N
         tglAwal1.setLocale(new java.util.Locale("in", "ID", ""));
         tglAwal1.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
             public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
@@ -240,6 +244,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         jPanel2.add(jLabel6);
         jLabel6.setBounds(280, 20, 15, 14);
 
+        tglAkhir1.setFieldFont(resourceMap.getFont("tglAkhir1.dch_combo_fieldFont")); // NOI18N
         tglAkhir1.setLocale(new java.util.Locale("in", "ID", ""));
         tglAkhir1.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
             public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
@@ -259,39 +264,45 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         jPanel2.add(jLabel7);
         jLabel7.setBounds(20, 50, 90, 14);
 
+        txtFakturAkhirPakai2.setFont(resourceMap.getFont("txtFakturAkhirPakai2.font")); // NOI18N
         txtFakturAkhirPakai2.setName("txtFakturAkhirPakai2"); // NOI18N
         jPanel2.add(txtFakturAkhirPakai2);
-        txtFakturAkhirPakai2.setBounds(220, 80, 70, 20);
+        txtFakturAkhirPakai2.setBounds(220, 80, 70, 21);
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
         jPanel2.add(jLabel8);
         jLabel8.setBounds(340, 50, 15, 14);
 
+        txtFakturAkhirPakai3.setFont(resourceMap.getFont("txtFakturAkhirPakai2.font")); // NOI18N
         txtFakturAkhirPakai3.setName("txtFakturAkhirPakai3"); // NOI18N
         jPanel2.add(txtFakturAkhirPakai3);
-        txtFakturAkhirPakai3.setBounds(300, 80, 130, 20);
+        txtFakturAkhirPakai3.setBounds(300, 80, 130, 21);
 
+        txtFakturAkhirPakai1.setFont(resourceMap.getFont("txtFakturAkhirPakai2.font")); // NOI18N
         txtFakturAkhirPakai1.setText(resourceMap.getString("txtFakturAkhirPakai1.text")); // NOI18N
         txtFakturAkhirPakai1.setName("txtFakturAkhirPakai1"); // NOI18N
         jPanel2.add(txtFakturAkhirPakai1);
-        txtFakturAkhirPakai1.setBounds(150, 80, 60, 20);
+        txtFakturAkhirPakai1.setBounds(150, 80, 60, 21);
 
+        txtFakturAwal.setFont(resourceMap.getFont("txtFakturAkhirPakai2.font")); // NOI18N
         txtFakturAwal.setText(resourceMap.getString("txtFakturAwal.text")); // NOI18N
         txtFakturAwal.setName("txtFakturAwal"); // NOI18N
         jPanel2.add(txtFakturAwal);
-        txtFakturAwal.setBounds(150, 50, 180, 20);
+        txtFakturAwal.setBounds(150, 50, 180, 21);
 
+        txtFakturAkhir.setFont(resourceMap.getFont("txtFakturAkhirPakai2.font")); // NOI18N
         txtFakturAkhir.setText(resourceMap.getString("txtFakturAkhir.text")); // NOI18N
         txtFakturAkhir.setName("txtFakturAkhir"); // NOI18N
         jPanel2.add(txtFakturAkhir);
-        txtFakturAkhir.setBounds(370, 50, 180, 20);
+        txtFakturAkhir.setBounds(370, 50, 180, 21);
 
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
         jPanel2.add(jLabel10);
         jLabel10.setBounds(20, 80, 120, 14);
 
+        btnTambah.setFont(resourceMap.getFont("btnTambah.font")); // NOI18N
         btnTambah.setText(resourceMap.getString("btnTambah.text")); // NOI18N
         btnTambah.setName("btnTambah"); // NOI18N
         btnTambah.addActionListener(new java.awt.event.ActionListener() {
@@ -430,8 +441,10 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Nama File Belum di Input");
             }
-        } catch (Exception ex) {
-            Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error Pada File (File Tidak Boleh Dalam Keadaan Terbuka)");
         } finally {
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
@@ -460,7 +473,13 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
-            txtPath.setText(selectedFile.getAbsolutePath());
+            String filename = selectedFile.toString();
+            Timestamp tgl = new Timestamp(new Date().getDate());
+            filename += tgl.toString().substring(0,10);
+            if (!filename.endsWith(".csv")) {
+                filename += ".csv";
+            }
+            txtPath.setText(filename);
         }
     }//GEN-LAST:event_btnPathActionPerformed
 
@@ -480,7 +499,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btnTambahActionPerformed
 
 
@@ -671,7 +690,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 rs.getString("FM"),
                 rs.getString("KD_JENIS_TRANSAKSI"),
                 rs.getString("FG_PENGGANTI"),
-                formatFaktur(txtFakturAkhirPakai1.getText(),txtFakturAkhirPakai2.getText(), noFakAwal+""),
+                formatFaktur(txtFakturAkhirPakai1.getText(), txtFakturAkhirPakai2.getText(), noFakAwal + ""),
                 rs.getString("MASA_PAJAK"),
                 rs.getString("TAHUN_PAJAK"),
                 rs.getString("TANGGAL_FAKTUR"),
@@ -696,7 +715,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     }
 
     private Object formatFaktur(String kode1, String kode2, String angka) {
-        return kode1+kode2+angka;
+        return kode1 + kode2 + angka;
     }
 
     void exportPajakKeluaranToCsv(String tglAwal, String tglAkhir, String noAwal, String noAkhir) throws SQLException, IOException {
@@ -734,8 +753,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             "KABUPATEN",
             "PROPINSI",
             "KODE_POS",
-            "NOMOR_TELEPON",
-            //"", "", "", "", ""
+            "NOMOR_TELEPON", //"", "", "", "", ""
         };
         rsHasil.addRow(data);
         Object data1[] = {
@@ -749,13 +767,12 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             "DPP",
             "PPN",
             "TARIF_PPNBM",
-            "PPNBM",
-            //"", "", "", "", "", "", "", ""
+            "PPNBM", //"", "", "", "", "", "", "", ""
         };
         rsHasil.addRow(data1);
         String sql = "select 'FK' as FK, " //1
-                + "left(p.jenispajak,2) as KD_JENIS_TRANSAKSI, " //2
-                + "right(p.jenispajak,1) as FG_PENGGANTI, " // 3
+                + "left(plg.jenispajak,2) as KD_JENIS_TRANSAKSI, " //2
+                + "right(plg.jenispajak,1) as FG_PENGGANTI, " // 3
                 + "'' as NOMOR_FAKTUR, " //4
                 + "month(p.TANGGAL) as MASA_PAJAK, " //5
                 + "year(p.TANGGAL) AS TAHUN_PAJAK, " //6
@@ -815,12 +832,12 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 rs.getString(1),
                 rs.getString(2),
                 rs.getString(3),
-                formatFaktur(txtFakturAkhirPakai1.getText(),txtFakturAkhirPakai2.getText(), noFakAwal + ""),
+                formatFaktur(txtFakturAkhirPakai1.getText(), txtFakturAkhirPakai2.getText(), noFakAwal + ""),
                 rs.getString(5),
                 rs.getString(6),
                 formatTanggal(rs.getString(7)),
-                (rs.getBoolean(21) == true) ? "0" : p.getNPWP(),
-                (rs.getBoolean(21) == true) ? (p.getNPWP() + "#NIK#NAMA#" + rs.getString(9) + "/" + rs.getString(22)) : rs.getString(9) + "/" + rs.getString(22),
+                (rs.getBoolean(21) == true) ? "0" : p.getNPWPNoFormat(),
+                (rs.getBoolean(21) == true) ? (p.getNPWPNoFormat() + "#NIK#NAMA#" + rs.getString(9) + "/" + rs.getString(22)) : rs.getString(9) + "/" + rs.getString(22),
                 rs.getString(10),
                 Math.round(rs.getDouble(11)),
                 Math.round(rs.getDouble(12)),
@@ -847,12 +864,11 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 rs1.getString(11),
                 rs1.getString(12),
                 rs1.getString(13),
-                rs1.getString(14),
-                //"",
-                //"",
-                //"",
-                //"",
-                //""
+                rs1.getString(14), //"",
+            //"",
+            //"",
+            //"",
+            //""
             };
             rsHasil.addRow(datatemp1);
             String sql2 = "select 'OF' as OF, " //1
@@ -883,15 +899,14 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                     rs2.getString(8),
                     rs2.getString(9),
                     rs2.getString(10),
-                    rs2.getString(11),
-                    //"",
-                    //"",
-                    //"",
-                    //"",
-                    //"",
-                    //"",
-                    //"",
-                    //""
+                    rs2.getString(11), //"",
+                //"",
+                //"",
+                //"",
+                //"",
+                //"",
+                //"",
+                //""
                 };
                 rsHasil.addRow(datatemp2);
             }
@@ -901,21 +916,21 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             noFakAwal++;
         }
         new Csv().write(txtPath.getText(), rsHasil, null);
-        nomorPajak.setNoakhirpakai(txtFakturAkhirPakai1.getText()+txtFakturAkhirPakai2.getText()+ String.valueOf(noFakAwal));
+        nomorPajak.setNoakhirpakai(txtFakturAkhirPakai1.getText() + "-" + txtFakturAkhirPakai2.getText() + "-" + String.valueOf(noFakAwal));
         Timestamp tgl = new Timestamp(new Date().getTime());
-        nomorPajak.setTglupdate(tgl.toString()); 
-        NomorpajakDao.updateNomorpajak(con, 
-                nomorPajak.getId(), 
-                nomorPajak.getNoawal(), 
-                nomorPajak.getNoakhir(), 
-                nomorPajak.getNoakhirpakai(), 
-                nomorPajak.getTglrekam(), 
+        nomorPajak.setTglupdate(tgl.toString());
+        NomorpajakDao.updateNomorpajak(con,
+                nomorPajak.getId(),
+                nomorPajak.getNoawal(),
+                nomorPajak.getNoakhir(),
+                nomorPajak.getNoakhirpakai(),
+                nomorPajak.getTglrekam(),
                 nomorPajak.getTglupdate());
-        txtFakturAkhirPakai3.setText(String.valueOf(noFakAwal)); 
+        txtFakturAkhirPakai3.setText(String.valueOf(noFakAwal));
     }
-    
-    String formatTanggal(String tanggal){
-        String[]temp = tanggal.split("-");
-        return temp[2]+"/"+temp[1]+"/"+temp[0];
+
+    String formatTanggal(String tanggal) {
+        String[] temp = tanggal.split("-");
+        return temp[2] + "/" + temp[1] + "/" + temp[0];
     }
 }

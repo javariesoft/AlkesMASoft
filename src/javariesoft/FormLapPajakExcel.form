@@ -193,6 +193,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btnExportPK">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="btnExportPK.font"/>
             <Property name="text" type="java.lang.String" resourceKey="btnExportPK.text"/>
             <Property name="name" type="java.lang.String" value="btnExportPK" noResource="true"/>
           </Properties>
@@ -218,6 +219,7 @@
         </Component>
         <Component class="datechooser.beans.DateChooserCombo" name="tglAwal1">
           <Properties>
+            <Property name="dch_combo_fieldFont" type="java.awt.Font" resourceKey="tglAwal1.dch_combo_fieldFont"/>
             <Property name="dch_locale" type="java.util.Locale" editor="datechooser.beans.editor.locale.LocaleEditor">
               <SerializedValue value="-84,-19,0,5,115,114,0,16,106,97,118,97,46,117,116,105,108,46,76,111,99,97,108,101,126,-8,17,96,-100,48,-7,-20,3,0,6,73,0,8,104,97,115,104,99,111,100,101,76,0,7,99,111,117,110,116,114,121,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,76,0,10,101,120,116,101,110,115,105,111,110,115,113,0,126,0,1,76,0,8,108,97,110,103,117,97,103,101,113,0,126,0,1,76,0,6,115,99,114,105,112,116,113,0,126,0,1,76,0,7,118,97,114,105,97,110,116,113,0,126,0,1,120,112,-1,-1,-1,-1,116,0,2,73,68,116,0,0,116,0,2,105,110,113,0,126,0,4,113,0,126,0,4,120"/>
             </Property>
@@ -245,6 +247,7 @@
         </Component>
         <Component class="datechooser.beans.DateChooserCombo" name="tglAkhir1">
           <Properties>
+            <Property name="dch_combo_fieldFont" type="java.awt.Font" resourceKey="tglAkhir1.dch_combo_fieldFont"/>
             <Property name="dch_locale" type="java.util.Locale" editor="datechooser.beans.editor.locale.LocaleEditor">
               <SerializedValue value="-84,-19,0,5,115,114,0,16,106,97,118,97,46,117,116,105,108,46,76,111,99,97,108,101,126,-8,17,96,-100,48,-7,-20,3,0,6,73,0,8,104,97,115,104,99,111,100,101,76,0,7,99,111,117,110,116,114,121,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,76,0,10,101,120,116,101,110,115,105,111,110,115,113,0,126,0,1,76,0,8,108,97,110,103,117,97,103,101,113,0,126,0,1,76,0,6,115,99,114,105,112,116,113,0,126,0,1,76,0,7,118,97,114,105,97,110,116,113,0,126,0,1,120,112,-1,-1,-1,-1,116,0,2,73,68,116,0,0,116,0,2,105,110,113,0,126,0,4,113,0,126,0,4,120"/>
             </Property>
@@ -272,6 +275,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtFakturAkhirPakai2">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="txtFakturAkhirPakai2.font"/>
             <Property name="name" type="java.lang.String" value="txtFakturAkhirPakai2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -293,6 +297,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtFakturAkhirPakai3">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="txtFakturAkhirPakai2.font"/>
             <Property name="name" type="java.lang.String" value="txtFakturAkhirPakai3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -303,6 +308,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtFakturAkhirPakai1">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="txtFakturAkhirPakai2.font"/>
             <Property name="text" type="java.lang.String" resourceKey="txtFakturAkhirPakai1.text"/>
             <Property name="name" type="java.lang.String" value="txtFakturAkhirPakai1" noResource="true"/>
           </Properties>
@@ -314,6 +320,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtFakturAwal">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="txtFakturAkhirPakai2.font"/>
             <Property name="text" type="java.lang.String" resourceKey="txtFakturAwal.text"/>
             <Property name="name" type="java.lang.String" value="txtFakturAwal" noResource="true"/>
           </Properties>
@@ -325,6 +332,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtFakturAkhir">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="txtFakturAkhirPakai2.font"/>
             <Property name="text" type="java.lang.String" resourceKey="txtFakturAkhir.text"/>
             <Property name="name" type="java.lang.String" value="txtFakturAkhir" noResource="true"/>
           </Properties>
@@ -347,6 +355,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnTambah">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="btnTambah.font"/>
             <Property name="text" type="java.lang.String" resourceKey="btnTambah.text"/>
             <Property name="name" type="java.lang.String" value="btnTambah" noResource="true"/>
           </Properties>
