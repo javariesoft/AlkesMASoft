@@ -71,7 +71,7 @@ public class JavarieSoftView extends FrameView {
         jLabel2.setSize(dim.width - 40, 60);
         jLabel2.setLocation(dim.width / 2 - jLabel2.getWidth() / 2, jLabel2.getY() + jLabel2.getHeight() + 10);
         nonaktif();
-        aktif();
+        //aktif();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -2467,8 +2467,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private javax.swing.JMenuItem MLapRekapPengiriman;
     public static javax.swing.JMenu MLapReturDeliveryOrder;
     private javax.swing.JMenuItem MLapSisaDO;
-    private javax.swing.JMenuItem MNomorPajak;
-    private javax.swing.JMenuItem MPajak;
+    private static javax.swing.JMenuItem MNomorPajak;
+    private static javax.swing.JMenuItem MPajak;
     private javax.swing.JMenuItem MRekapReturCabang;
     public static javax.swing.JMenuItem MRetur;
     public static javax.swing.JMenu MReturCabang;
@@ -2615,6 +2615,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(true);
         MLapPajak.setVisible(true);
         MLapAnalisis.setVisible(true);
+        MNomorPajak.setVisible(true);
+        MPajak.setVisible(true);
     }
 
     public static void nonaktif() {
@@ -2684,7 +2686,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        
+        MNomorPajak.setVisible(false);
+        MPajak.setVisible(false);
     }
 
 //    public static void pembelianakses() {
@@ -2861,6 +2864,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
+        MNomorPajak.setVisible(false);
+        MPajak.setVisible(false);
     }
 
     public static void pajakakses() {
@@ -2929,6 +2934,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
+        MNomorPajak.setVisible(true);
+        MPajak.setVisible(true);
     }
 
     public static void operatorakses() {
@@ -2998,6 +3005,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
+        MNomorPajak.setVisible(false);
+        MPajak.setVisible(false);
     }
 
 //    public static void gudangakses() {
@@ -3135,6 +3144,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
+        MNomorPajak.setVisible(false);
+        MPajak.setVisible(false);
     }
     
     public static void generalakses() {
@@ -3203,6 +3214,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
+        MNomorPajak.setVisible(false);
+        MPajak.setVisible(false);
     }
     
     public static void asistenadminakses() {
