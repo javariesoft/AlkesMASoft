@@ -474,7 +474,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
             String filename = selectedFile.toString();
-            Timestamp tgl = new Timestamp(new Date().getDate());
+            Timestamp tgl = new Timestamp(new Date().getTime());
             filename += tgl.toString().substring(0,10);
             if (!filename.endsWith(".csv")) {
                 filename += ".csv";
@@ -836,11 +836,11 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 rs.getString(5),
                 rs.getString(6),
                 formatTanggal(rs.getString(7)),
-                (rs.getBoolean(21) == true) ? "0" : p.getNPWPNoFormat(),
+                (rs.getBoolean(21) == true) ? "000000000000000" : p.getNPWPNoFormat(),
                 (rs.getBoolean(21) == true) ? (p.getNPWPNoFormat() + "#NIK#NAMA#" + rs.getString(9) + "/" + rs.getString(22)) : rs.getString(9) + "/" + rs.getString(22),
                 rs.getString(10),
-                Math.round(rs.getDouble(11)),
-                Math.round(rs.getDouble(12)),
+                (int)Math.floor(rs.getDouble(11)),
+                (int)Math.floor(rs.getDouble(12)),
                 rs.getString(13),
                 rs.getString(14),
                 rs.getString(15),
