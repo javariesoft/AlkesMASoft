@@ -3005,8 +3005,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(false);
-        MPajak.setVisible(false);
+        MNomorPajak.setVisible(true);
+        MPajak.setVisible(true);
     }
 
 //    public static void gudangakses() {
@@ -3285,6 +3285,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(true);
         MLapAnalisis.setVisible(false);
+        MNomorPajak.setVisible(true);
+        MPajak.setVisible(true);
     }
     
     public static void masterdataakses() {
