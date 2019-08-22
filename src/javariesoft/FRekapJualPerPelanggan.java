@@ -104,7 +104,7 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(140, 80, 300, 100);
+        jScrollPane1.setBounds(140, 80, 410, 100);
 
         jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
@@ -134,7 +134,7 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
             }
         });
         getContentPane().add(txtnamapelanggan);
-        txtnamapelanggan.setBounds(140, 60, 260, 21);
+        txtnamapelanggan.setBounds(140, 60, 340, 21);
 
         jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
@@ -157,7 +157,7 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
             }
         });
         getContentPane().add(txtkodepelanggan);
-        txtkodepelanggan.setBounds(140, 90, 260, 21);
+        txtkodepelanggan.setBounds(140, 90, 340, 21);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -185,20 +185,20 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
 
         tgl1.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl1);
-        tgl1.setBounds(140, 30, 120, 26);
+        tgl1.setBounds(140, 30, 150, 20);
 
         tgl2.setFieldFont(resourceMap.getFont("tgl2.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl2);
-        tgl2.setBounds(290, 30, 130, 26);
+        tgl2.setBounds(326, 30, 150, 20);
 
         jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(260, 30, 30, 16);
+        jLabel5.setBounds(290, 30, 30, 16);
 
-        setBounds(0, 0, 454, 218);
+        setBounds(0, 0, 577, 218);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
