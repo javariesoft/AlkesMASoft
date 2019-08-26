@@ -69,7 +69,7 @@ public class FRekapPenjualanHarian extends javax.swing.JInternalFrame {
         cbPembayaran = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         OptTanggal = new javax.swing.JCheckBox();
-        OptOpsiFaktur = new javax.swing.JCheckBox();
+        OptFaktur = new javax.swing.JCheckBox();
         OptPembayaran = new javax.swing.JCheckBox();
         cbOpsiFaktur = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
@@ -166,11 +166,11 @@ public class FRekapPenjualanHarian extends javax.swing.JInternalFrame {
         getContentPane().add(OptTanggal);
         OptTanggal.setBounds(150, 7, 81, 25);
 
-        OptOpsiFaktur.setFont(resourceMap.getFont("OptOpsiFaktur.font")); // NOI18N
-        OptOpsiFaktur.setText(resourceMap.getString("OptOpsiFaktur.text")); // NOI18N
-        OptOpsiFaktur.setName("OptOpsiFaktur"); // NOI18N
-        getContentPane().add(OptOpsiFaktur);
-        OptOpsiFaktur.setBounds(240, 7, 100, 25);
+        OptFaktur.setFont(resourceMap.getFont("OptFaktur.font")); // NOI18N
+        OptFaktur.setText(resourceMap.getString("OptFaktur.text")); // NOI18N
+        OptFaktur.setName("OptFaktur"); // NOI18N
+        getContentPane().add(OptFaktur);
+        OptFaktur.setBounds(240, 7, 100, 25);
 
         OptPembayaran.setFont(resourceMap.getFont("OptPembayaran.font")); // NOI18N
         OptPembayaran.setText(resourceMap.getString("OptPembayaran.text")); // NOI18N
@@ -200,7 +200,7 @@ public class FRekapPenjualanHarian extends javax.swing.JInternalFrame {
         JasperPrint jasperPrint = null;
         String kode = "";
         try {
-            if (OptTanggal.isSelected() && OptOpsiFaktur.isSelected() && OptPembayaran.isSelected()) {
+            if (OptTanggal.isSelected() && OptFaktur.isSelected() && OptPembayaran.isSelected()) {
                 if (cbPembayaran.getSelectedIndex() == 0) {
                     kode = "0";
                 } else if (cbPembayaran.getSelectedIndex() == 1) {
@@ -225,7 +225,7 @@ public class FRekapPenjualanHarian extends javax.swing.JInternalFrame {
                     jasperPrint = JasperFillManager.fillReport(in, parameter, c);
                     JasperViewer.viewReport(jasperPrint, false);
                 }
-            } else if (OptTanggal.isSelected() && OptOpsiFaktur.isSelected()) {
+            } else if (OptTanggal.isSelected() && OptFaktur.isSelected()) {
                 if (cbOpsiFaktur.getSelectedIndex() == 0) {
                     parameter.put("Ptgl1", tgl1.getText());
                     parameter.put("Ptgl2", tgl2.getText());
@@ -315,7 +315,7 @@ public class FRekapPenjualanHarian extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox OptOpsiFaktur;
+    private javax.swing.JCheckBox OptFaktur;
     private javax.swing.JCheckBox OptPembayaran;
     private javax.swing.JCheckBox OptTanggal;
     private javax.swing.JButton btnKeluar;
@@ -330,7 +330,7 @@ public class FRekapPenjualanHarian extends javax.swing.JInternalFrame {
     private datechooser.beans.DateChooserCombo tgl1;
     private datechooser.beans.DateChooserCombo tgl2;
     // End of variables declaration//GEN-END:variables
-void kosongForm() {
+    void kosongForm() {
         OptTanggal.setSelected(true);
     }
 }

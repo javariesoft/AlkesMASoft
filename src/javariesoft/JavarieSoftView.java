@@ -236,11 +236,12 @@ public class JavarieSoftView extends FrameView {
         MLJPerFaktur = new javax.swing.JMenuItem();
         MLJDetailHarian = new javax.swing.JMenuItem();
         MLJDetailPerPelanggan = new javax.swing.JMenuItem();
+        MLJPerMerkSparindo = new javax.swing.JMenuItem();
+        MLJPerMerkKemenkes = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         MLJRekapHarian = new javax.swing.JMenuItem();
         MLJRekapPerSales = new javax.swing.JMenuItem();
         MLJRekapPerPelanggan = new javax.swing.JMenuItem();
-        MLJPerMerkSparindo = new javax.swing.JMenuItem();
-        MLJPerMerkKemenkes = new javax.swing.JMenuItem();
         MLJRekapPerMerk = new javax.swing.JMenuItem();
         Mreturpenjualan = new javax.swing.JMenu();
         MLRJualfaktur = new javax.swing.JMenuItem();
@@ -306,7 +307,6 @@ public class JavarieSoftView extends FrameView {
         jMenuItem1 = new javax.swing.JMenuItem();
         Mkeluar = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -897,6 +897,27 @@ public class JavarieSoftView extends FrameView {
         });
         MlapPenjualan.add(MLJDetailPerPelanggan);
 
+        MLJPerMerkSparindo.setText(resourceMap.getString("MLJPerMerkSparindo.text")); // NOI18N
+        MLJPerMerkSparindo.setName("MLJPerMerkSparindo"); // NOI18N
+        MLJPerMerkSparindo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MLJPerMerkSparindoActionPerformed(evt);
+            }
+        });
+        MlapPenjualan.add(MLJPerMerkSparindo);
+
+        MLJPerMerkKemenkes.setText(resourceMap.getString("MLJPerMerkKemenkes.text")); // NOI18N
+        MLJPerMerkKemenkes.setName("MLJPerMerkKemenkes"); // NOI18N
+        MLJPerMerkKemenkes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MLJPerMerkKemenkesActionPerformed(evt);
+            }
+        });
+        MlapPenjualan.add(MLJPerMerkKemenkes);
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
+        MlapPenjualan.add(jSeparator1);
+
         MLJRekapHarian.setText(resourceMap.getString("MLJRekapHarian.text")); // NOI18N
         MLJRekapHarian.setName("MLJRekapHarian"); // NOI18N
         MLJRekapHarian.addActionListener(new java.awt.event.ActionListener() {
@@ -923,24 +944,6 @@ public class JavarieSoftView extends FrameView {
             }
         });
         MlapPenjualan.add(MLJRekapPerPelanggan);
-
-        MLJPerMerkSparindo.setText(resourceMap.getString("MLJPerMerkSparindo.text")); // NOI18N
-        MLJPerMerkSparindo.setName("MLJPerMerkSparindo"); // NOI18N
-        MLJPerMerkSparindo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MLJPerMerkSparindoActionPerformed(evt);
-            }
-        });
-        MlapPenjualan.add(MLJPerMerkSparindo);
-
-        MLJPerMerkKemenkes.setText(resourceMap.getString("MLJPerMerkKemenkes.text")); // NOI18N
-        MLJPerMerkKemenkes.setName("MLJPerMerkKemenkes"); // NOI18N
-        MLJPerMerkKemenkes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MLJPerMerkKemenkesActionPerformed(evt);
-            }
-        });
-        MlapPenjualan.add(MLJPerMerkKemenkes);
 
         MLJRekapPerMerk.setText(resourceMap.getString("MLJRekapPerMerk.text")); // NOI18N
         MLJRekapPerMerk.setName("MLJRekapPerMerk"); // NOI18N
@@ -1478,10 +1481,6 @@ public class JavarieSoftView extends FrameView {
         Mkeluar.add(exitMenuItem);
 
         menuBar.add(Mkeluar);
-
-        jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
-        jMenu1.setName("jMenu1"); // NOI18N
-        menuBar.add(jMenu1);
 
         statusPanel.setName("statusPanel"); // NOI18N
 
@@ -2529,9 +2528,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MuserAccount;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     public static com.erv.model.DesktopCool panelCool1;

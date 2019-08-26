@@ -12,9 +12,11 @@ package com.eigher.form;
 
 import javariesoft.*;
 import com.erv.db.jenisbarangDao;
+import com.erv.db.pelangganDao;
 import com.erv.db.koneksi;
 import com.erv.function.JDBCAdapter;
 import com.erv.model.jenisbarang;
+import com.erv.model.pelanggan;
 import java.awt.Cursor;
 import java.io.InputStream;
 import java.net.URL;
@@ -40,6 +42,8 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
     java.text.DateFormat d = new SimpleDateFormat("yyyy-MM-dd");
     jenisbarang j = null;
     jenisbarangDao dbjenis = null;
+    pelanggan p = null;
+    pelangganDao dbpelanggan = null;
     /**
      * Creates new form LaporanPenjualanHarianForm
      */
@@ -51,11 +55,14 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
             c = koneksi.getKoneksiJ();
             j = new jenisbarang();
             dbjenis = new jenisbarangDao();
-
+            p = new pelanggan();
+            dbpelanggan = new pelangganDao(c);
+            kosongForm();
         } catch (SQLException ex) {
             Logger.getLogger(FLapRekapPenjualanPerMerk.class.getName()).log(Level.SEVERE, null, ex);
         }
-            jScrollPane1.setVisible(false);
+            JPMerk.setVisible(false);
+            JPPelanggan.setVisible(false);
     }
 
     /**
@@ -73,12 +80,21 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        JPMerk = new javax.swing.JScrollPane();
+        JTableMerk = new javax.swing.JTable();
+        JPPelanggan = new javax.swing.JScrollPane();
+        JTablePelanggan = new javax.swing.JTable();
         btnPreview = new javax.swing.JButton();
         btnKeluar = new javax.swing.JButton();
         txtnamamerk = new javax.swing.JTextField();
         txtkodemerk = new javax.swing.JTextField();
+        OptTanggal = new javax.swing.JCheckBox();
+        OptMerk = new javax.swing.JCheckBox();
+        OptPelanggan = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        txtnamapelanggan = new javax.swing.JTextField();
+        txtkodepelanggan = new javax.swing.JTextField();
+        btnClear = new javax.swing.JButton();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FLapRekapPenjualanPerMerk.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
@@ -89,47 +105,79 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 10, 70, 16);
+        jLabel1.setBounds(20, 40, 70, 15);
 
         tgl1.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl1);
-        tgl1.setBounds(140, 10, 150, 20);
+        tgl1.setBounds(150, 40, 150, 20);
 
         tgl2.setFieldFont(resourceMap.getFont("tgl2.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl2);
-        tgl2.setBounds(320, 10, 155, 20);
+        tgl2.setBounds(330, 40, 155, 20);
 
         jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(290, 10, 30, 16);
+        jLabel5.setBounds(300, 40, 30, 16);
 
         jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 70, 110, 16);
+        jLabel4.setBounds(20, 100, 110, 15);
 
         jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 40, 110, 16);
+        jLabel2.setBounds(20, 70, 110, 15);
 
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
+        JPMerk.setName("JPMerk"); // NOI18N
 
-        jTable1.setName("jTable1"); // NOI18N
-        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+        JTableMerk.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        JTableMerk.setName("JTableMerk"); // NOI18N
+        JTableMerk.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTable1KeyPressed(evt);
+                JTableMerkKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        JPMerk.setViewportView(JTableMerk);
 
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(80, 60, 410, 100);
+        getContentPane().add(JPMerk);
+        JPMerk.setBounds(124, 90, 410, 130);
+
+        JPPelanggan.setName("JPPelanggan"); // NOI18N
+
+        JTablePelanggan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        JTablePelanggan.setName("JTablePelanggan"); // NOI18N
+        JTablePelanggan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTablePelangganKeyPressed(evt);
+            }
+        });
+        JPPelanggan.setViewportView(JTablePelanggan);
+
+        getContentPane().add(JPPelanggan);
+        JPPelanggan.setBounds(94, 120, 440, 110);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
@@ -141,7 +189,7 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnPreview);
-        btnPreview.setBounds(20, 110, 190, 40);
+        btnPreview.setBounds(30, 160, 150, 40);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -153,7 +201,7 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnKeluar);
-        btnKeluar.setBounds(240, 110, 200, 40);
+        btnKeluar.setBounds(350, 160, 150, 40);
 
         txtnamamerk.setFont(resourceMap.getFont("txtnamamerk.font")); // NOI18N
         txtnamamerk.setDisabledTextColor(resourceMap.getColor("txtnamamerk.disabledTextColor")); // NOI18N
@@ -169,25 +217,74 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txtnamamerk);
-        txtnamamerk.setBounds(140, 40, 330, 22);
+        txtnamamerk.setBounds(150, 70, 330, 22);
 
         txtkodemerk.setEditable(false);
         txtkodemerk.setFont(resourceMap.getFont("txtkodemerk.font")); // NOI18N
         txtkodemerk.setName("txtkodemerk"); // NOI18N
-        txtkodemerk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtkodemerkActionPerformed(evt);
-            }
-        });
-        txtkodemerk.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtkodemerkKeyPressed(evt);
-            }
-        });
         getContentPane().add(txtkodemerk);
-        txtkodemerk.setBounds(140, 70, 330, 22);
+        txtkodemerk.setBounds(484, 70, 50, 22);
 
-        setBounds(0, 0, 517, 197);
+        OptTanggal.setFont(resourceMap.getFont("OptTanggal.font")); // NOI18N
+        OptTanggal.setText(resourceMap.getString("OptTanggal.text")); // NOI18N
+        OptTanggal.setEnabled(false);
+        OptTanggal.setName("OptTanggal"); // NOI18N
+        getContentPane().add(OptTanggal);
+        OptTanggal.setBounds(150, 7, 81, 25);
+
+        OptMerk.setFont(resourceMap.getFont("OptMerk.font")); // NOI18N
+        OptMerk.setText(resourceMap.getString("OptMerk.text")); // NOI18N
+        OptMerk.setName("OptMerk"); // NOI18N
+        getContentPane().add(OptMerk);
+        OptMerk.setBounds(240, 7, 70, 25);
+
+        OptPelanggan.setFont(resourceMap.getFont("OptPelanggan.font")); // NOI18N
+        OptPelanggan.setText(resourceMap.getString("OptPelanggan.text")); // NOI18N
+        OptPelanggan.setName("OptPelanggan"); // NOI18N
+        getContentPane().add(OptPelanggan);
+        OptPelanggan.setBounds(320, 7, 110, 25);
+
+        jLabel6.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(20, 10, 140, 15);
+
+        txtnamapelanggan.setFont(resourceMap.getFont("txtnamapelanggan.font")); // NOI18N
+        txtnamapelanggan.setDisabledTextColor(resourceMap.getColor("txtnamapelanggan.disabledTextColor")); // NOI18N
+        txtnamapelanggan.setName("txtnamapelanggan"); // NOI18N
+        txtnamapelanggan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnamapelangganActionPerformed(evt);
+            }
+        });
+        txtnamapelanggan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtnamapelangganKeyPressed(evt);
+            }
+        });
+        getContentPane().add(txtnamapelanggan);
+        txtnamapelanggan.setBounds(150, 100, 330, 21);
+
+        txtkodepelanggan.setEditable(false);
+        txtkodepelanggan.setFont(resourceMap.getFont("txtkodepelanggan.font")); // NOI18N
+        txtkodepelanggan.setName("txtkodepelanggan"); // NOI18N
+        getContentPane().add(txtkodepelanggan);
+        txtkodepelanggan.setBounds(484, 100, 50, 21);
+
+        btnClear.setFont(resourceMap.getFont("btnClear.font")); // NOI18N
+        btnClear.setIcon(resourceMap.getIcon("btnClear.icon")); // NOI18N
+        btnClear.setText(resourceMap.getString("btnClear.text")); // NOI18N
+        btnClear.setName("btnClear"); // NOI18N
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnClear);
+        btnClear.setBounds(190, 160, 150, 40);
+
+        setBounds(0, 0, 560, 270);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
@@ -195,24 +292,62 @@ private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
     HashMap parameter = new HashMap();
     JasperPrint jasperPrint = null;
-    String nmmerk="";
+    String nmmerk=""; String nmpelanggan="";
     try {
         Connection c = koneksi.getKoneksiJ();
-        if(txtkodemerk.getText().trim().equals("")){
-            JOptionPane.showMessageDialog(null, "Isi Data Merk .. !");
-            txtnamamerk.requestFocus();
-        }else{
-           j=jenisbarangDao.getDetails(c, txtkodemerk.getText());
-           nmmerk = j.getJENIS();
+        if (OptTanggal.isSelected() && OptMerk.isSelected() && OptPelanggan.isSelected()) {
+            if(txtkodemerk.getText().trim().equals("") && txtkodepelanggan.getText().trim().equals("")){
+                JOptionPane.showMessageDialog(null, "Lengkapi Isian Data Merk dan Pelanggan.. !");
+                btnPreview.requestFocus();
+            }else{
+               j=jenisbarangDao.getDetails(c, txtkodemerk.getText());
+               nmmerk = j.getJENIS();
+            }
+            parameter.put("Ptgl1", tgl1.getText());
+            parameter.put("Ptgl2", tgl2.getText());
+            parameter.put("PIdMerk", txtkodemerk.getText());
+            parameter.put("PMerk", nmmerk);
+            parameter.put("PKdPelanggan", txtkodepelanggan.getText());
+            URL url = new URL(global.REPORT + "/RekapJualPTGLMerkPelanggan.jasper");
+            InputStream in = url.openStream();
+            jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+            JasperViewer.viewReport(jasperPrint, false);
+        } else if (OptTanggal.isSelected() && OptMerk.isSelected()) {
+            if(txtkodemerk.getText().trim().equals("")){
+                JOptionPane.showMessageDialog(null, "Isi Data Merk .. !");
+                txtnamamerk.requestFocus();
+            }else{
+               j=jenisbarangDao.getDetails(c, txtkodemerk.getText());
+               nmmerk = j.getJENIS();
+            }
+            parameter.put("Ptgl1", tgl1.getText());
+            parameter.put("Ptgl2", tgl2.getText());
+            parameter.put("PIdMerk", txtkodemerk.getText());
+            parameter.put("PMerk", nmmerk);
+            URL url = new URL(global.REPORT + "/RekapJualPTGLMerk.jasper");
+            InputStream in = url.openStream();
+            jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+            JasperViewer.viewReport(jasperPrint, false);
+        
+        } else if (OptTanggal.isSelected() && OptPelanggan.isSelected()) {
+            if(txtkodepelanggan.getText().trim().equals("")){
+                JOptionPane.showMessageDialog(null, "Isi Data Pelanggan .. !");
+                txtnamapelanggan.requestFocus();
+            }else{
+               p=dbpelanggan.getDetails(txtkodepelanggan.getText());
+               nmpelanggan = p.getNAMA();
+            }
+            parameter.put("Ptgl1", tgl1.getText());
+            parameter.put("Ptgl2", tgl2.getText());
+            parameter.put("PKdPelanggan", txtkodepelanggan.getText());
+            parameter.put("PPelanggan", nmpelanggan);
+            URL url = new URL(global.REPORT + "/RekapJualPTGLPelanggan.jasper");
+            InputStream in = url.openStream();
+            jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+            JasperViewer.viewReport(jasperPrint, false);
         }
-        parameter.put("Ptgl1", tgl1.getText());
-        parameter.put("Ptgl2", tgl2.getText());
-        parameter.put("PIdMerk", txtkodemerk.getText());
-        parameter.put("PMerk", nmmerk);
-        URL url = new URL(global.REPORT + "/RekapPenjualanPerMerk.jasper");
-        InputStream in = url.openStream();
-        jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-        JasperViewer.viewReport(jasperPrint, false);
+        
+        
         c.close();
     } catch (Exception ex) {
         System.out.print(ex.toString());
@@ -228,73 +363,130 @@ private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
     private void txtnamamerkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnamamerkActionPerformed
         // TODO add your handling code here:
-        jScrollPane1.setVisible(true);
-        reloadData();
+        JPMerk.setVisible(true);
+        reloadDataMerk();
     }//GEN-LAST:event_txtnamamerkActionPerformed
 
     private void txtnamamerkKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnamamerkKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == 40) {
-            jScrollPane1.setVisible(true);
-            jTable1.requestFocus();
-            jTable1.getSelectionModel().setSelectionInterval(0, 0);
+            JPMerk.setVisible(true);
+            JTableMerk.requestFocus();
+            JTableMerk.getSelectionModel().setSelectionInterval(0, 0);
         }
         if (evt.getKeyCode() == 27) {
-            jScrollPane1.setVisible(false);
+            JPMerk.setVisible(false);
         }
     }//GEN-LAST:event_txtnamamerkKeyPressed
 
-    private void txtkodemerkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkodemerkActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtkodemerkActionPerformed
-
-    private void txtkodemerkKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtkodemerkKeyPressed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtkodemerkKeyPressed
-
-    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+    private void JTableMerkKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTableMerkKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == 10) {
-            txtnamamerk.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-            txtkodemerk.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
-            jScrollPane1.setVisible(false);
+            txtnamamerk.setText(JTableMerk.getValueAt(JTableMerk.getSelectedRow(), 0).toString());
+            txtkodemerk.setText(JTableMerk.getValueAt(JTableMerk.getSelectedRow(), 1).toString());
+            JPMerk.setVisible(false);
+            txtnamapelanggan.requestFocus();
+        }
+    }//GEN-LAST:event_JTableMerkKeyPressed
+
+    private void txtnamapelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnamapelangganActionPerformed
+        // TODO add your handling code here:
+        JPPelanggan.setVisible(true);
+        reloadDataPelanggan();
+    }//GEN-LAST:event_txtnamapelangganActionPerformed
+
+    private void txtnamapelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnamapelangganKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 40) {
+            JPPelanggan.setVisible(true);
+            JTablePelanggan.requestFocus();
+            JTablePelanggan.getSelectionModel().setSelectionInterval(0, 0);
+        }
+        if (evt.getKeyCode() == 27) {
+            JTablePelanggan.setVisible(false);
+        }
+    }//GEN-LAST:event_txtnamapelangganKeyPressed
+
+    private void JTablePelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTablePelangganKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 10) {
+            txtnamapelanggan.setText(JTablePelanggan.getValueAt(JTablePelanggan.getSelectedRow(), 1).toString());
+            txtkodepelanggan.setText(JTablePelanggan.getValueAt(JTablePelanggan.getSelectedRow(), 0).toString());
+            JPPelanggan.setVisible(false);
             btnPreview.requestFocus();
         }
-    }//GEN-LAST:event_jTable1KeyPressed
+    }//GEN-LAST:event_JTablePelangganKeyPressed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        kosongForm();
+    }//GEN-LAST:event_btnClearActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane JPMerk;
+    private javax.swing.JScrollPane JPPelanggan;
+    private javax.swing.JTable JTableMerk;
+    private javax.swing.JTable JTablePelanggan;
+    private javax.swing.JCheckBox OptMerk;
+    private javax.swing.JCheckBox OptPelanggan;
+    private javax.swing.JCheckBox OptTanggal;
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnPreview;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel jLabel6;
     private datechooser.beans.DateChooserCombo tgl1;
     private datechooser.beans.DateChooserCombo tgl2;
     private javax.swing.JTextField txtkodemerk;
+    private javax.swing.JTextField txtkodepelanggan;
     private javax.swing.JTextField txtnamamerk;
+    private javax.swing.JTextField txtnamapelanggan;
     // End of variables declaration//GEN-END:variables
-
-    void reloadData() {
+    
+    void kosongForm() {
+        OptTanggal.setSelected(true);
+        txtkodemerk.setText("");
+        txtnamamerk.setText("");
+        txtkodepelanggan.setText("");
+        txtnamapelanggan.setText("");
+    }
+    
+    void reloadDataMerk() {
         try {
             JDBCAdapter j = new JDBCAdapter(c);
             j.executeQuery("Select JENIS , ID from JENISBARANG where ID like '" + txtnamamerk.getText() + "%' or lower(JENIS) like '%" + txtnamamerk.getText().toLowerCase() + "%'");
-            jScrollPane1.getViewport().remove(jTable1);
-            jTable1 = new JTable(j);
-            jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            JPMerk.getViewport().remove(JTableMerk);
+            JTableMerk = new JTable(j);
+            JTableMerk.addKeyListener(new java.awt.event.KeyAdapter() {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
-                    jTable1KeyPressed(evt);
+                    JTableMerkKeyPressed(evt);
                 }
             });
-            jScrollPane1.getViewport().add(jTable1);
+            JPMerk.getViewport().add(JTableMerk);
             j.close();
         } catch (Exception ex) {
             Logger.getLogger(FRekapJualPerPelanggan.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+    }
+    
+    void reloadDataPelanggan() {
+        try {
+            JDBCAdapter j = new JDBCAdapter(c);
+            j.executeQuery("Select KODEPELANGGAN , NAMA, ALAMAT  from PELANGGAN where STATUSAKTIF='0' AND (KODEPELANGGAN like '"+ txtnamapelanggan.getText() +"%' or lower(NAMA) like '%" + txtnamapelanggan.getText().toLowerCase() + "%')");
+            JPPelanggan.getViewport().remove(JTablePelanggan);
+            JTablePelanggan = new JTable(j);
+            JTablePelanggan.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyPressed(java.awt.event.KeyEvent evt) {
+                    JTablePelangganKeyPressed(evt);
+                }
+            });
+            JPPelanggan.getViewport().add(JTablePelanggan);
+            j.close();
+        } catch (Exception ex) {
+            Logger.getLogger(FLapRekapPenjualanPerMerk.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

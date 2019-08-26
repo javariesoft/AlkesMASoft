@@ -163,11 +163,11 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="OptOpsiFaktur">
+    <Component class="javax.swing.JCheckBox" name="OptFaktur">
       <Properties>
-        <Property name="font" type="java.awt.Font" resourceKey="OptOpsiFaktur.font"/>
-        <Property name="text" type="java.lang.String" resourceKey="OptOpsiFaktur.text"/>
-        <Property name="name" type="java.lang.String" value="OptOpsiFaktur" noResource="true"/>
+        <Property name="font" type="java.awt.Font" resourceKey="OptFaktur.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="OptFaktur.text"/>
+        <Property name="name" type="java.lang.String" value="OptFaktur" noResource="true"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

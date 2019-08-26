@@ -114,7 +114,7 @@ public class FlapBarangPeriodeAkhir extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(120, 70, 310, 110);
+        jScrollPane1.setBounds(120, 70, 310, 170);
 
         txtkode.setEditable(false);
         txtkode.setFont(resourceMap.getFont("txtkode.font")); // NOI18N
