@@ -21,7 +21,9 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -871,10 +873,11 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         rs1.next();
         long noFakAwal = Long.parseLong(noAwal);
         long noFakAkhir = Long.parseLong(noAkhir);
-
+        
         while (rs.next()) {
             pelanggan p = new pelanggan();
             p.setNPWP(rs.getString(8));
+            Map<String,Integer> dppppn = getDppPpn(rs.getInt(20));
             Object[] datatemp = {
                 rs.getString(1),
                 rs.getString(2),
@@ -886,8 +889,8 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 (rs.getBoolean(21) == true) ? "000000000000000" : p.getNPWPNoFormat(),
                 (rs.getBoolean(21) == true) ? (p.getNPWPNoFormat() + "#NIK#NAMA#" + rs.getString(9) + "/" + rs.getString(22)) : rs.getString(9) + "/" + rs.getString(22),
                 rs.getString(10),
-                rs.getDouble(11),
-                rs.getDouble(12),
+                dppppn.get("dpp").intValue(), 
+                dppppn.get("ppn").intValue(), 
                 rs.getString(13),
                 rs.getString(14),
                 rs.getString(15),
@@ -918,10 +921,10 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                     + "NAMABARANG, "//3
                     + "rp.HARGA as HARGA_SATUAN, "//4
                     + "JUMLAH as JUMLAH_BARANG, "//5
-                    + "CAST((rp.HARGA * JUMLAH) as INT) as HARGA_TOTAL, "//6
-                    + "CAST(DISKON as INT), "//7
-                    + "CAST((rp.HARGA * JUMLAH - DISKON) as INT) as DPP, "//8
-                    + "CAST(PPN as INT),"//9
+                    + "floor(rp.HARGA * JUMLAH) as HARGA_TOTAL, "//6
+                    + "floor(DISKON), "//7
+                    + "floor(rp.HARGA * JUMLAH - DISKON) as DPP, "//8
+                    + "floor(PPN),"//9
                     + "0 as TARIF_PPNBM, "//10
                     + "0 as PPNBM "//11
                     + "FROM RINCIPENJUALAN rp inner join BARANG b on rp.KODEBARANG = b.KODEBARANG "
@@ -1015,6 +1018,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
             "PPNBM", //"", "", "", "", "", "", "", ""
         };
         rsHasil.addRow(data1);
+        
         String sql = "select 'FK' as FK, " //1
                 + "left(plg.jenispajak,2) as KD_JENIS_TRANSAKSI, " //2
                 + "right(plg.jenispajak,1) as FG_PENGGANTI, " // 3
@@ -1072,6 +1076,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         while (rs.next()) {
             pelanggan p = new pelanggan();
             p.setNPWP(rs.getString(8));
+            Map<String,Integer> dppppn = getDppPpn(rs.getInt(20));
             Object[] datatemp = {
                 rs.getString(1),
                 rs.getString(2),
@@ -1083,8 +1088,8 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 (rs.getBoolean(21) == true) ? "000000000000000" : p.getNPWPNoFormat(),
                 (rs.getBoolean(21) == true) ? (p.getNPWPNoFormat() + "#NIK#NAMA#" + rs.getString(9) + "/" + rs.getString(22)) : rs.getString(9) + "/" + rs.getString(22),
                 rs.getString(10),
-                rs.getDouble(11),
-                rs.getDouble(12),
+                dppppn.get("dpp").intValue(), 
+                dppppn.get("ppn").intValue(), 
                 rs.getString(13),
                 rs.getString(14),
                 rs.getString(15),
@@ -1115,10 +1120,10 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                     + "NAMABARANG, "//3
                     + "rp.HARGA as HARGA_SATUAN, "//4
                     + "JUMLAH as JUMLAH_BARANG, "//5
-                    + "CAST((rp.HARGA * JUMLAH) as INT) as HARGA_TOTAL, "//6
-                    + "CAST(DISKON as INT), "//7
-                    + "CAST((rp.HARGA * JUMLAH - DISKON) as INT) as DPP, "//8
-                    + "CAST(PPN as INT),"//9
+                    + "floor(rp.HARGA * JUMLAH) as HARGA_TOTAL, "//6
+                    + "floor(DISKON), "//7
+                    + "floor(rp.HARGA * JUMLAH - DISKON) as DPP, "//8
+                    + "floor(PPN),"//9
                     + "0 as TARIF_PPNBM, "//10
                     + "0 as PPNBM "//11
                     + "FROM RINCIPENJUALAN rp inner join BARANG b on rp.KODEBARANG = b.KODEBARANG "
@@ -1160,4 +1165,29 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
         String[] temp = tanggal.split("-");
         return temp[2] + "/" + temp[1] + "/" + temp[0];
     }
+    
+    Map<String, Integer> getDppPpn(int idjual){
+        try {
+            String sql2 = "select  "
+                    + "sum(floor(rp.HARGA * JUMLAH - DISKON)) as DPP,  "
+                    + "sum(PPN), "
+                    + "0 as TARIF_PPNBM,  "
+                    + "0 as PPNBM   "
+                    + "FROM RINCIPENJUALAN rp inner join BARANG b on rp.KODEBARANG = b.KODEBARANG  "
+                    + "where rp.idpenjualan ="+ idjual
+                    + "order by 2 "
+                    + "";
+            Statement stat = con.createStatement();
+            ResultSet rs =stat.executeQuery(sql2);
+            Map map = new HashMap<String, Integer>();
+            if(rs.next()){
+                map.put("dpp", (int) Math.floor(rs.getDouble(1)));
+                map.put("ppn", (int) Math.floor(rs.getDouble(2)));
+                return map;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormLapPajakExcel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    } 
 }
