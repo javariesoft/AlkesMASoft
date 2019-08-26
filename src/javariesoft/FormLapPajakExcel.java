@@ -921,10 +921,10 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                     + "NAMABARANG, "//3
                     + "rp.HARGA as HARGA_SATUAN, "//4
                     + "JUMLAH as JUMLAH_BARANG, "//5
-                    + "round((rp.HARGA * JUMLAH),2) as HARGA_TOTAL, "//6
-                    + "round(DISKON,2), "//7
-                    + "round((rp.HARGA * JUMLAH - DISKON),2) as DPP, "//8
-                    + "round(PPN,2),"//9
+                    + "floor(rp.HARGA * JUMLAH) as HARGA_TOTAL, "//6
+                    + "floor(DISKON), "//7
+                    + "floor(rp.HARGA * JUMLAH - DISKON) as DPP, "//8
+                    + "floor(PPN),"//9
                     + "0 as TARIF_PPNBM, "//10
                     + "0 as PPNBM "//11
                     + "FROM RINCIPENJUALAN rp inner join BARANG b on rp.KODEBARANG = b.KODEBARANG "
@@ -1169,8 +1169,8 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
     Map<String, Integer> getDppPpn(int idjual){
         try {
             String sql2 = "select  "
-                    + "sum(round((rp.HARGA * JUMLAH - DISKON),2)) as DPP,  "
-                    + "sum(round(PPN,2)), "
+                    + "sum(floor(rp.HARGA * JUMLAH - DISKON)) as DPP,  "
+                    + "sum(PPN), "
                     + "0 as TARIF_PPNBM,  "
                     + "0 as PPNBM   "
                     + "FROM RINCIPENJUALAN rp inner join BARANG b on rp.KODEBARANG = b.KODEBARANG  "
