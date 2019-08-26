@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapPerFaktur" language="groovy" pageWidth="612" pageHeight="842" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ae18a893-5580-4955-ad87-0739410a6034">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="14"/>
+	<property name="ireport.x" value="499"/>
 	<property name="ireport.y" value="298"/>
 	<scriptlet name="scriptlet1" class="com.erv.fungsi.Scriptlet"/>
 	<parameter name="nofaktur" class="java.lang.String">
