@@ -151,7 +151,7 @@ public class FlapBarangPerMerk extends javax.swing.JInternalFrame {
         pilihan.setText(resourceMap.getString("pilihan.text")); // NOI18N
         pilihan.setName("pilihan"); // NOI18N
         getContentPane().add(pilihan);
-        pilihan.setBounds(120, 90, 130, 29);
+        pilihan.setBounds(120, 90, 130, 23);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
@@ -177,7 +177,7 @@ public class FlapBarangPerMerk extends javax.swing.JInternalFrame {
         getContentPane().add(btnKeluar);
         btnKeluar.setBounds(210, 125, 150, 40);
 
-        setBounds(0, 0, 412, 211);
+        setBounds(0, 0, 429, 211);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
