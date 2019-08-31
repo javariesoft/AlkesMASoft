@@ -1158,7 +1158,7 @@ public class FormLapPajakExcel extends javax.swing.JInternalFrame {
                 nomorPajak.getNoakhirpakai(),
                 nomorPajak.getTglrekam(),
                 nomorPajak.getTglupdate());
-        txtFakturAkhirPakai3.setText(String.valueOf(noFakAwal));
+        txtFakturAkhirPakai3.setText(String.valueOf(noFakAwal+1));
     }
 
     String formatTanggal(String tanggal) {
