@@ -14,6 +14,7 @@ import com.eigher.form.FLapDetailHutang;
 import com.eigher.form.FLapDetailPiutang;
 import com.eigher.form.FLapRekapPenjualanPerMerk;
 import com.eigher.form.FLapSisaDO;
+import com.eigher.form.FlapBarangMerkKategori;
 import com.eigher.form.FlapReturDOPerNomorDO;
 import com.eigher.form.LaporanKartuStokTanggal;
 import com.erv.db.DatabaseBackup;
@@ -2411,7 +2412,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     private void MLB_MerkKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLB_MerkKategoriActionPerformed
         // TODO add your handling code here:
-        FormNomorpajak p = new FormNomorpajak();
+        FlapBarangMerkKategori p= new FlapBarangMerkKategori();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
