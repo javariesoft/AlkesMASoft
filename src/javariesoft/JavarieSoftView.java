@@ -268,7 +268,7 @@ public class JavarieSoftView extends FrameView {
         MlapBarang = new javax.swing.JMenu();
         MLBarangPerMerk = new javax.swing.JMenuItem();
         MLBarangPerKategori = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        MLB_MerkKategori = new javax.swing.JMenuItem();
         MLB_AkhirPeriode = new javax.swing.JMenuItem();
         MLB_KartuStokBulan = new javax.swing.JMenuItem();
         MLB_KartuStokTanggal = new javax.swing.JMenuItem();
@@ -1156,9 +1156,14 @@ public class JavarieSoftView extends FrameView {
         });
         MlapBarang.add(MLBarangPerKategori);
 
-        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
-        jMenuItem2.setName("jMenuItem2"); // NOI18N
-        MlapBarang.add(jMenuItem2);
+        MLB_MerkKategori.setText(resourceMap.getString("MLB_MerkKategori.text")); // NOI18N
+        MLB_MerkKategori.setName("MLB_MerkKategori"); // NOI18N
+        MLB_MerkKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MLB_MerkKategoriActionPerformed(evt);
+            }
+        });
+        MlapBarang.add(MLB_MerkKategori);
 
         MLB_AkhirPeriode.setText(resourceMap.getString("MLB_AkhirPeriode.text")); // NOI18N
         MLB_AkhirPeriode.setName("MLB_AkhirPeriode"); // NOI18N
@@ -2404,6 +2409,14 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MNomorPajakActionPerformed
 
+    private void MLB_MerkKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLB_MerkKategoriActionPerformed
+        // TODO add your handling code here:
+        FormNomorpajak p = new FormNomorpajak();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_MLB_MerkKategoriActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
     private javax.swing.JLabel LblJenis1;
@@ -2426,6 +2439,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MLB_KartuStokBulan;
     public static javax.swing.JMenuItem MLB_KartuStokTanggal;
     public static javax.swing.JMenuItem MLB_KatalogBarang;
+    private javax.swing.JMenuItem MLB_MerkKategori;
     public static javax.swing.JMenuItem MLB_PersediaanBrgDagang;
     private javax.swing.JMenuItem MLB_RekapBarangPerMerk;
     public static javax.swing.JMenuItem MLB_StokBarang;
@@ -2534,7 +2548,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel mainPanel;

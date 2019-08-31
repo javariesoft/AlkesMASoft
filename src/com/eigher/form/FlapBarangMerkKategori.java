@@ -280,11 +280,11 @@ public class FlapBarangMerkKategori extends javax.swing.JInternalFrame {
                 }
             } else if (RadioKategori.isSelected()) {
                 if (cboIsiQuantity.getSelectedIndex() == 0) {
-                    url = new URL(global.REPORT + "/BarangPeriodeKategoriStokBesar.jasper");
+                    url = new URL(global.REPORT + "/BarangKategoriStokBesar.jasper");
                 } else if (cboIsiQuantity.getSelectedIndex() == 1) {
-                    url = new URL(global.REPORT + "/BarangPeriodeKategoriStokSama.jasper");
+                    url = new URL(global.REPORT + "/BarangKategoriStokSama.jasper");
                 } else if (cboIsiQuantity.getSelectedIndex() == 2) {
-                    url = new URL(global.REPORT + "/BarangPeriodeKategoriStokKecil.jasper");
+                    url = new URL(global.REPORT + "/BarangKategoriStokKecil.jasper");
                 }
             }
             InputStream in = url.openStream();
