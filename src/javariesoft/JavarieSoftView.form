@@ -1142,25 +1142,25 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="MLBarangPerMerk">
+                <MenuItem class="javax.swing.JMenuItem" name="MLB_PerMerk">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="MLBarangPerMerk.text"/>
-                    <Property name="name" type="java.lang.String" value="MLBarangPerMerk" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="MLB_PerMerk.text"/>
+                    <Property name="name" type="java.lang.String" value="MLB_PerMerk" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLBarangPerMerkActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLB_PerMerkActionPerformed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="MLBarangPerKategori">
+                <MenuItem class="javax.swing.JMenuItem" name="MLB_PerKategori">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="MLBarangPerKategori.text"/>
-                    <Property name="name" type="java.lang.String" value="MLBarangPerKategori" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="MLB_PerKategori.text"/>
+                    <Property name="name" type="java.lang.String" value="MLB_PerKategori" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLBarangPerKategoriActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLB_PerKategoriActionPerformed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
