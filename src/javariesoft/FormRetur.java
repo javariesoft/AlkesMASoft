@@ -348,7 +348,21 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
                         JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
                     }
                 }
-
+            } else if (cboRetur.getSelectedIndex() == 2) {
+                int x = JOptionPane.showConfirmDialog(this, "Apakah Data Akan Dihapus?", "", JOptionPane.YES_NO_OPTION);
+                if (x == 0) {
+                    if (cekperiodeAda(per)) {
+                        if (cekperiode(per)) {
+                            String aksilog = "Delete";
+//                            returbeliDao.deleteFromRETURBELI(c, id);
+//                            prosesUpdateLog(aksilog, "beli");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
+                    }
+                }
             }
             c.commit();
             reloaddata(c, cboRetur.getSelectedIndex());

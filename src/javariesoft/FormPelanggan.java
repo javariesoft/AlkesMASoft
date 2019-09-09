@@ -26,9 +26,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import com.eigher.db.loghistoryDao;
 import com.eigher.model.loghistory;
+import java.awt.Font;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.ParseException;
+import javax.swing.table.TableColumn;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
@@ -517,7 +519,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jTabbedPane1.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(0, 0, 850, 300);
+        jTabbedPane1.setBounds(0, 0, 1110, 300);
 
         panelCool1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         panelCool1.setName("panelCool1"); // NOI18N
@@ -528,7 +530,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
         panelCool1.add(jLabel7);
-        jLabel7.setBounds(20, 60, 90, 16);
+        jLabel7.setBounds(20, 52, 90, 16);
 
         btnInsert.setFont(resourceMap.getFont("btnInsert.font")); // NOI18N
         btnInsert.setIcon(resourceMap.getIcon("btnInsert.icon")); // NOI18N
@@ -540,7 +542,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnInsert);
-        btnInsert.setBounds(20, 20, 120, 25);
+        btnInsert.setBounds(20, 12, 120, 25);
 
         btnUpdate.setFont(resourceMap.getFont("btnUpdate.font")); // NOI18N
         btnUpdate.setIcon(resourceMap.getIcon("btnUpdate.icon")); // NOI18N
@@ -552,7 +554,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnUpdate);
-        btnUpdate.setBounds(150, 20, 110, 25);
+        btnUpdate.setBounds(150, 12, 110, 25);
 
         btnDelete.setFont(resourceMap.getFont("btnDelete.font")); // NOI18N
         btnDelete.setIcon(resourceMap.getIcon("btnDelete.icon")); // NOI18N
@@ -564,14 +566,15 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnDelete);
-        btnDelete.setBounds(270, 20, 130, 25);
+        btnDelete.setBounds(270, 12, 130, 25);
 
         jSeparator2.setName("jSeparator2"); // NOI18N
         panelCool1.add(jSeparator2);
-        jSeparator2.setBounds(20, 50, 660, 10);
+        jSeparator2.setBounds(20, 44, 1070, 10);
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
+        jTable1.setAutoCreateRowSorter(true);
         jTable1.setName("jTable1"); // NOI18N
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -581,7 +584,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable1);
 
         panelCool1.add(jScrollPane2);
-        jScrollPane2.setBounds(20, 90, 810, 220);
+        jScrollPane2.setBounds(10, 80, 1090, 240);
 
         txtKriteria.setFont(resourceMap.getFont("txtKriteria.font")); // NOI18N
         txtKriteria.setText(resourceMap.getString("txtKriteria.text")); // NOI18N
@@ -592,7 +595,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(txtKriteria);
-        txtKriteria.setBounds(340, 60, 220, 21);
+        txtKriteria.setBounds(340, 52, 220, 21);
 
         btnFilter.setFont(resourceMap.getFont("btnFilter.font")); // NOI18N
         btnFilter.setIcon(resourceMap.getIcon("btnFilter.icon")); // NOI18N
@@ -604,7 +607,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnFilter);
-        btnFilter.setBounds(570, 60, 110, 25);
+        btnFilter.setBounds(570, 52, 110, 25);
 
         btnCancel.setFont(resourceMap.getFont("btnCancel.font")); // NOI18N
         btnCancel.setIcon(resourceMap.getIcon("btnCancel.icon")); // NOI18N
@@ -616,7 +619,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnCancel);
-        btnCancel.setBounds(410, 20, 120, 25);
+        btnCancel.setBounds(410, 12, 120, 25);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -628,24 +631,24 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnKeluar);
-        btnKeluar.setBounds(540, 20, 140, 25);
+        btnKeluar.setBounds(540, 12, 140, 25);
 
         cboAktif.setFont(resourceMap.getFont("cboAktif.font")); // NOI18N
         cboAktif.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aktif", "Non Aktif", "New Record" }));
         cboAktif.setName("cboAktif"); // NOI18N
         panelCool1.add(cboAktif);
-        cboAktif.setBounds(120, 60, 100, 22);
+        cboAktif.setBounds(120, 52, 100, 22);
 
         cboKriteria.setFont(resourceMap.getFont("cboKriteria.font")); // NOI18N
         cboKriteria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Kode", "Nama" }));
         cboKriteria.setName("cboKriteria"); // NOI18N
         panelCool1.add(cboKriteria);
-        cboKriteria.setBounds(230, 60, 100, 22);
+        cboKriteria.setBounds(230, 52, 100, 22);
 
         getContentPane().add(panelCool1);
-        panelCool1.setBounds(0, 300, 850, 330);
+        panelCool1.setBounds(0, 300, 1110, 330);
 
-        setBounds(0, 0, 866, 665);
+        setBounds(0, 0, 1132, 665);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
@@ -1026,11 +1029,11 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             JDBCAdapter j = new JDBCAdapter(c);
             String sql = "";
             if (index == 0) {
-                sql = "SELECT KODEPELANGGAN,NAMA ,ALAMAT ,HP ,TGLREG ,BATASKREDIT ,NPWP,KODEAKUN,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='0' ";
+                sql = "SELECT KODEPELANGGAN AS KODE,NAMA ,ALAMAT ,NAMAPEMILIK ,HP ,TGLREG ,NPWP,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='0' ";
             } else if (index == 1) {
-                sql = "SELECT KODEPELANGGAN,NAMA ,ALAMAT ,HP ,TGLREG ,BATASKREDIT ,NPWP,KODEAKUN,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='1' ";
+                sql = "SELECT KODEPELANGGAN AS KODE,NAMA ,ALAMAT ,NAMAPEMILIK ,HP ,TGLREG ,NPWP,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='1' ";
             } else if (index == 2) {
-                sql = "SELECT KODEPELANGGAN,NAMA ,ALAMAT ,HP ,TGLREG ,BATASKREDIT ,NPWP,KODEAKUN,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='2' ";
+                sql = "SELECT KODEPELANGGAN AS KODE,NAMA ,ALAMAT ,NAMAPEMILIK ,HP ,TGLREG ,NPWP,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='2' ";
             }
             if (cboKriteria.getSelectedIndex() == 0) {
                 sql += " AND lower(KODEPELANGGAN) like '" + txtKriteria.getText().toLowerCase() + "%' ORDER BY NAMA";
@@ -1040,8 +1043,38 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             }
             //System.out.println(sql);
             j.executeQuery(sql);
+            
+            jScrollPane2.getViewport().remove(jTable1);
+            jTable1 = new JTable(j);
+            jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jTable1MouseClicked(evt);
+                }
+            });
+            TableColumn col = jTable1.getColumnModel().getColumn(0);
+            col.setPreferredWidth(35);
+            col = jTable1.getColumnModel().getColumn(1);
+            col.setPreferredWidth(250);
+            col = jTable1.getColumnModel().getColumn(2);
+            col.setPreferredWidth(250);
+            col = jTable1.getColumnModel().getColumn(3);
+            col.setPreferredWidth(180);
+            col = jTable1.getColumnModel().getColumn(4);
+            col.setPreferredWidth(75);
+            col = jTable1.getColumnModel().getColumn(5);
+            col.setPreferredWidth(60);
+            col = jTable1.getColumnModel().getColumn(6);
+            col.setPreferredWidth(120);
+            col = jTable1.getColumnModel().getColumn(7);
+            col.setPreferredWidth(50);
+            //jTable1.setRowHeight(20);
+            //jTable1.setFont(new Font("Tahoma", Font.BOLD, 12));
+            jScrollPane2.getViewport().add(jTable1);
+            jScrollPane2.repaint();
+            
             jTable1.setModel(j);
-            jTable1.setAutoCreateRowSorter(true);
+            //jTable1.setAutoCreateRowSorter(true);
             j.close();
         } catch (Exception ex) {
             Logger.getLogger(FormPelanggan.class.getName()).log(Level.SEVERE, null, ex);

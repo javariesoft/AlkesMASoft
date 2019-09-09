@@ -485,6 +485,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="MNomorPajak">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="MNomorPajak.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="MNomorPajak.text"/>
                 <Property name="name" type="java.lang.String" value="MNomorPajak" noResource="true"/>
               </Properties>
@@ -694,6 +695,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="MPajak">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="MPajak.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="MPajak.text"/>
                 <Property name="name" type="java.lang.String" value="MPajak" noResource="true"/>
               </Properties>

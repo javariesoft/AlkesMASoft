@@ -72,7 +72,7 @@ public class JavarieSoftView extends FrameView {
         jLabel2.setSize(dim.width - 40, 60);
         jLabel2.setLocation(dim.width / 2 - jLabel2.getWidth() / 2, jLabel2.getY() + jLabel2.getHeight() + 10);
         nonaktif();
-//        aktif();
+        aktif();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -630,6 +630,7 @@ public class JavarieSoftView extends FrameView {
         });
         fileMenu.add(MSearchingBarang);
 
+        MNomorPajak.setIcon(resourceMap.getIcon("MNomorPajak.icon")); // NOI18N
         MNomorPajak.setText(resourceMap.getString("MNomorPajak.text")); // NOI18N
         MNomorPajak.setName("MNomorPajak"); // NOI18N
         MNomorPajak.addActionListener(new java.awt.event.ActionListener() {
@@ -790,6 +791,7 @@ public class JavarieSoftView extends FrameView {
         });
         Mtransaksi.add(MTutupHarian);
 
+        MPajak.setIcon(resourceMap.getIcon("MPajak.icon")); // NOI18N
         MPajak.setText(resourceMap.getString("MPajak.text")); // NOI18N
         MPajak.setName("MPajak"); // NOI18N
         MPajak.addActionListener(new java.awt.event.ActionListener() {
