@@ -255,6 +255,7 @@ public class FlapBarangMerkKategori extends javax.swing.JInternalFrame {
         HashMap parameter = new HashMap();
         JasperPrint jasperPrint = null;
         parameter.put("Pnilaistok", txtNilaiStok.getText());
+        parameter.put("Plabelqty", cboIsiQuantity.getSelectedItem());
         if (RadioMerk.isSelected()) {
             if (pilihan.isSelected()) {
                 parameter.put("Pmerk", "%");
@@ -277,6 +278,8 @@ public class FlapBarangMerkKategori extends javax.swing.JInternalFrame {
                     url = new URL(global.REPORT + "/BarangMerkStokSama.jasper");
                 } else if (cboIsiQuantity.getSelectedIndex() == 2) {
                     url = new URL(global.REPORT + "/BarangMerkStokKecil.jasper");
+                } else if (cboIsiQuantity.getSelectedIndex() == 3) {
+                    url = new URL(global.REPORT + "/BarangMerkStokSemua.jasper");
                 }
             } else if (RadioKategori.isSelected()) {
                 if (cboIsiQuantity.getSelectedIndex() == 0) {
@@ -285,6 +288,8 @@ public class FlapBarangMerkKategori extends javax.swing.JInternalFrame {
                     url = new URL(global.REPORT + "/BarangKategoriStokSama.jasper");
                 } else if (cboIsiQuantity.getSelectedIndex() == 2) {
                     url = new URL(global.REPORT + "/BarangKategoriStokKecil.jasper");
+                } else if (cboIsiQuantity.getSelectedIndex() == 3) {
+                    url = new URL(global.REPORT + "/BarangKategoriStokSemua.jasper");
                 }
             }
             InputStream in = url.openStream();

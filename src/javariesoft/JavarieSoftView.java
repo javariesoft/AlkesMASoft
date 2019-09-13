@@ -267,8 +267,8 @@ public class JavarieSoftView extends FrameView {
         MLRDO_PerNomorDO = new javax.swing.JMenuItem();
         MLRDO_DetailReturDO = new javax.swing.JMenuItem();
         MlapBarang = new javax.swing.JMenu();
-        MLBarangPerMerk = new javax.swing.JMenuItem();
-        MLBarangPerKategori = new javax.swing.JMenuItem();
+        MLB_PerMerk = new javax.swing.JMenuItem();
+        MLB_PerKategori = new javax.swing.JMenuItem();
         MLB_MerkKategori = new javax.swing.JMenuItem();
         MLB_AkhirPeriode = new javax.swing.JMenuItem();
         MLB_KartuStokBulan = new javax.swing.JMenuItem();
@@ -630,6 +630,7 @@ public class JavarieSoftView extends FrameView {
         });
         fileMenu.add(MSearchingBarang);
 
+        MNomorPajak.setIcon(resourceMap.getIcon("MNomorPajak.icon")); // NOI18N
         MNomorPajak.setText(resourceMap.getString("MNomorPajak.text")); // NOI18N
         MNomorPajak.setName("MNomorPajak"); // NOI18N
         MNomorPajak.addActionListener(new java.awt.event.ActionListener() {
@@ -790,6 +791,7 @@ public class JavarieSoftView extends FrameView {
         });
         Mtransaksi.add(MTutupHarian);
 
+        MPajak.setIcon(resourceMap.getIcon("MPajak.icon")); // NOI18N
         MPajak.setText(resourceMap.getString("MPajak.text")); // NOI18N
         MPajak.setName("MPajak"); // NOI18N
         MPajak.addActionListener(new java.awt.event.ActionListener() {
@@ -1139,23 +1141,23 @@ public class JavarieSoftView extends FrameView {
         MlapBarang.setText(resourceMap.getString("MlapBarang.text")); // NOI18N
         MlapBarang.setName("MlapBarang"); // NOI18N
 
-        MLBarangPerMerk.setText(resourceMap.getString("MLBarangPerMerk.text")); // NOI18N
-        MLBarangPerMerk.setName("MLBarangPerMerk"); // NOI18N
-        MLBarangPerMerk.addActionListener(new java.awt.event.ActionListener() {
+        MLB_PerMerk.setText(resourceMap.getString("MLB_PerMerk.text")); // NOI18N
+        MLB_PerMerk.setName("MLB_PerMerk"); // NOI18N
+        MLB_PerMerk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MLBarangPerMerkActionPerformed(evt);
+                MLB_PerMerkActionPerformed(evt);
             }
         });
-        MlapBarang.add(MLBarangPerMerk);
+        MlapBarang.add(MLB_PerMerk);
 
-        MLBarangPerKategori.setText(resourceMap.getString("MLBarangPerKategori.text")); // NOI18N
-        MLBarangPerKategori.setName("MLBarangPerKategori"); // NOI18N
-        MLBarangPerKategori.addActionListener(new java.awt.event.ActionListener() {
+        MLB_PerKategori.setText(resourceMap.getString("MLB_PerKategori.text")); // NOI18N
+        MLB_PerKategori.setName("MLB_PerKategori"); // NOI18N
+        MLB_PerKategori.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MLBarangPerKategoriActionPerformed(evt);
+                MLB_PerKategoriActionPerformed(evt);
             }
         });
-        MlapBarang.add(MLBarangPerKategori);
+        MlapBarang.add(MLB_PerKategori);
 
         MLB_MerkKategori.setText(resourceMap.getString("MLB_MerkKategori.text")); // NOI18N
         MLB_MerkKategori.setName("MLB_MerkKategori"); // NOI18N
@@ -1686,7 +1688,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MLB_KartuStokBulanActionPerformed
 
-    private void MLBarangPerKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLBarangPerKategoriActionPerformed
+    private void MLB_PerKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLB_PerKategoriActionPerformed
         // TODO add your handling code here:
         //    HashMap parameter=new HashMap();
         //        JasperPrint jasperPrint=null;
@@ -1701,14 +1703,14 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
-    }//GEN-LAST:event_MLBarangPerKategoriActionPerformed
+    }//GEN-LAST:event_MLB_PerKategoriActionPerformed
 
-    private void MLBarangPerMerkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLBarangPerMerkActionPerformed
+    private void MLB_PerMerkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLB_PerMerkActionPerformed
         FlapBarangPerMerk p = new FlapBarangPerMerk();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
-    }//GEN-LAST:event_MLBarangPerMerkActionPerformed
+    }//GEN-LAST:event_MLB_PerMerkActionPerformed
 
     private void MLDORekapDOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLDORekapDOActionPerformed
         // TODO add your handling code here:
@@ -2441,11 +2443,11 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MLB_KartuStokTanggal;
     public static javax.swing.JMenuItem MLB_KatalogBarang;
     private javax.swing.JMenuItem MLB_MerkKategori;
+    public static javax.swing.JMenuItem MLB_PerKategori;
+    public static javax.swing.JMenuItem MLB_PerMerk;
     public static javax.swing.JMenuItem MLB_PersediaanBrgDagang;
     private javax.swing.JMenuItem MLB_RekapBarangPerMerk;
     public static javax.swing.JMenuItem MLB_StokBarang;
-    public static javax.swing.JMenuItem MLBarangPerKategori;
-    public static javax.swing.JMenuItem MLBarangPerMerk;
     private javax.swing.JMenuItem MLDODetailDO;
     private javax.swing.JMenuItem MLDOFakturDO;
     private javax.swing.JMenuItem MLDOHistoryDO;
@@ -3143,8 +3145,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         Mlapdeliveryorder.setVisible(true);
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
-        MLBarangPerMerk.setVisible(true);
-        MLBarangPerKategori.setVisible(true);
+        MLB_PerMerk.setVisible(true);
+        MLB_PerKategori.setVisible(true);
         MLB_AkhirPeriode.setVisible(true);
         MLB_KartuStokBulan.setVisible(true);
         MLB_KartuStokTanggal.setVisible(true);
@@ -3431,8 +3433,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         Mlapdeliveryorder.setVisible(true);
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
-        MLBarangPerMerk.setVisible(true);
-        MLBarangPerKategori.setVisible(true);
+        MLB_PerMerk.setVisible(true);
+        MLB_PerKategori.setVisible(true);
         MLB_AkhirPeriode.setVisible(true);
         MLB_KartuStokBulan.setVisible(true);
         MLB_KartuStokTanggal.setVisible(true);
