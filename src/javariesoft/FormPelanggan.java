@@ -572,9 +572,19 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         panelCool1.add(jSeparator2);
         jSeparator2.setBounds(20, 44, 1070, 10);
 
+        jScrollPane2.setAutoscrolls(true);
+        jScrollPane2.setHorizontalScrollBar(null);
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jTable1.setAutoCreateRowSorter(true);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTable1.setAutoscrolls(false);
         jTable1.setName("jTable1"); // NOI18N
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1074,7 +1084,7 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             jScrollPane2.repaint();
             
             jTable1.setModel(j);
-            //jTable1.setAutoCreateRowSorter(true);
+            jTable1.setAutoCreateRowSorter(true);
             j.close();
         } catch (Exception ex) {
             Logger.getLogger(FormPelanggan.class.getName()).log(Level.SEVERE, null, ex);
