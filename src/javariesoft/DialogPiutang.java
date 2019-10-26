@@ -51,6 +51,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFormattedTextField;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -146,7 +147,7 @@ public class DialogPiutang extends javax.swing.JDialog {
         tglPenerimaanKhusus.setDateFormat(d);
         tglJatuhTempo.setDateFormat(d);
         jScrollPane4.setVisible(false);
-        jScrollPane4.setSize(500, 150);
+        jScrollPane4.setSize(700, 150);
         cektombol();
         jTabbedPane1.setTitleAt(1, "");
         jTabbedPane1.setEnabledAt(1, false);
@@ -302,6 +303,8 @@ public class DialogPiutang extends javax.swing.JDialog {
         btnKeluar3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(DialogPiutang.class);
+        setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -332,11 +335,16 @@ public class DialogPiutang extends javax.swing.JDialog {
             }
         });
         jScrollPane4.setViewportView(jTable4);
+        if (jTable4.getColumnModel().getColumnCount() > 0) {
+            jTable4.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable4.columnModel.title0")); // NOI18N
+            jTable4.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable4.columnModel.title1")); // NOI18N
+            jTable4.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable4.columnModel.title2")); // NOI18N
+            jTable4.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable4.columnModel.title3")); // NOI18N
+        }
 
         panelCool1.add(jScrollPane4);
         jScrollPane4.setBounds(150, 150, 50, 20);
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(DialogPiutang.class);
         jTabbedPane1.setFont(resourceMap.getFont("jTabbedPane1.font")); // NOI18N
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
 
@@ -3143,7 +3151,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
         }
         jScrollPane4.setVisible(true);
         JDBCAdapter ja = new JDBCAdapter(c);
-        ja.executeQuery("select KODEPELANGGAN,NAMA,ALAMAT from PELANGGAN where STATUSAKTIF='0' AND (KODEPELANGGAN like '" + kodepelanggan + "%' or lower(NAMA) like '%" + kodepelanggan.toLowerCase() + "%')");
+        ja.executeQuery("select KODEPELANGGAN AS KODE,NAMA,ALAMAT from PELANGGAN where STATUSAKTIF='0' AND (KODEPELANGGAN like '" + kodepelanggan + "%' or lower(NAMA) like '%" + kodepelanggan.toLowerCase() + "%')");
         jScrollPane4.getViewport().remove(jTable4);
         jTable4 = new JTable(ja);
         jTable4.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -3153,7 +3161,13 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                 jTable4KeyPressed(evt);
             }
         });
-        jTable4.setFont(new Font("Tahoma", Font.BOLD, 12));
+        TableColumn col = jTable4.getColumnModel().getColumn(0);
+        col.setPreferredWidth(4);
+        col = jTable4.getColumnModel().getColumn(1);
+        col.setPreferredWidth(250);
+        col = jTable4.getColumnModel().getColumn(2);
+        col.setPreferredWidth(300);
+        jTable4.setFont(new Font("Tahoma", Font.BOLD, 11));
         jScrollPane4.getViewport().add(jTable4);
         jScrollPane4.repaint();
     }

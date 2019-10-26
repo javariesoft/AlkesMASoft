@@ -1209,7 +1209,8 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
         //j.setTANGGAL(java.sql.Date.valueOf(tglRetur.getText()));
         j.setTANGGAL(rj.getTANGGAL());
         j.setKODEJURNAL(rj.getKODERETUR());
-        j.setDESKRIPSI("Pengembalian Barang Dari " + new pelangganDao(c).getDetails(rj.getKODEPELANGGAN()).getNAMA());
+        //j.setDESKRIPSI("Pengembalian Barang Dari " + new pelangganDao(c).getDetails(rj.getKODEPELANGGAN()).getNAMA());
+        j.setDESKRIPSI(rj.getKETERANGAN());
         jurnalDao.insertIntoJURNAL(c, j);
     }
 

@@ -1,21 +1,13 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package javariesoft;
 
-/*
- * LaporanPenjualanHarianForm.java
- *
- * Created on Dec 31, 2011, 3:45:06 PM
- */
-package com.eigher.form;
-
-import javariesoft.*;
+import com.eigher.form.FLapHistoryBarangDO;
 import com.erv.db.koneksi;
 import com.erv.function.JDBCAdapter;
-import java.awt.Cursor;
-import java.io.InputStream;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -26,31 +18,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
- * @author erwadi
+ * @author USER
  */
-public class FLapHistoryBarangDO extends javax.swing.JInternalFrame {
+public class LaporanKartuStokDO extends javax.swing.JInternalFrame {
 
+    /**
+     * Creates new form LaporanKartuStokDO
+     */
     Connection c;
     java.text.DateFormat d = new SimpleDateFormat("yyyy-MM-dd");
 
-    /**
-     * Creates new form LaporanPenjualanHarianForm
-     */
-    public FLapHistoryBarangDO() {
-        initComponents();
+    public LaporanKartuStokDO() {
         try {
+            initComponents();
             tgl1.setDateFormat(d);
             tgl2.setDateFormat(d);
             c = koneksi.getKoneksiJ();
-            kosongForm();
-        } catch (Exception ex) {
-            Logger.getLogger(FLapHistoryBarangDO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(LaporanKartuStokDO.class.getName()).log(Level.SEVERE, null, ex);
         }
         jScrollPane1.setVisible(false);
     }
@@ -65,20 +57,21 @@ public class FLapHistoryBarangDO extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        txtkodebarang = new javax.swing.JTextField();
         tgl1 = new datechooser.beans.DateChooserCombo();
         jLabel2 = new javax.swing.JLabel();
         tgl2 = new datechooser.beans.DateChooserCombo();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        txtnamabarang = new javax.swing.JTextField();
-        txtkodebarang = new javax.swing.JTextField();
         btnPreview = new javax.swing.JButton();
         btnKeluar = new javax.swing.JButton();
-        BtnClear = new javax.swing.JButton();
         OptAwal = new javax.swing.JCheckBox();
+        txtnamabarang = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FLapHistoryBarangDO.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(LaporanKartuStokDO.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         getContentPane().setLayout(null);
@@ -87,27 +80,7 @@ public class FLapHistoryBarangDO extends javax.swing.JInternalFrame {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 20, 60, 15);
-
-        tgl1.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
-        getContentPane().add(tgl1);
-        tgl1.setBounds(210, 20, 140, 20);
-
-        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(360, 20, 30, 16);
-
-        tgl2.setFieldFont(resourceMap.getFont("tgl2.dch_combo_fieldFont")); // NOI18N
-        getContentPane().add(tgl2);
-        tgl2.setBounds(390, 20, 140, 20);
-
-        jLabel4.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 50, 80, 15);
+        jLabel1.setBounds(20, 50, 90, 14);
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -120,7 +93,63 @@ public class FLapHistoryBarangDO extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(40, 70, 510, 150);
+        jScrollPane1.setBounds(70, 70, 540, 120);
+
+        txtkodebarang.setEditable(false);
+        txtkodebarang.setFont(resourceMap.getFont("txtkodebarang.font")); // NOI18N
+        txtkodebarang.setText(resourceMap.getString("txtkodebarang.text")); // NOI18N
+        txtkodebarang.setName("txtkodebarang"); // NOI18N
+        getContentPane().add(txtkodebarang);
+        txtkodebarang.setBounds(530, 50, 70, 21);
+
+        tgl1.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
+        getContentPane().add(tgl1);
+        tgl1.setBounds(260, 20, 155, 20);
+
+        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(120, 50, 10, 14);
+
+        tgl2.setFieldFont(resourceMap.getFont("tgl2.dch_combo_fieldFont")); // NOI18N
+        getContentPane().add(tgl2);
+        tgl2.setBounds(450, 20, 155, 20);
+
+        btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
+        btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
+        btnPreview.setText(resourceMap.getString("btnPreview.text")); // NOI18N
+        btnPreview.setName("btnPreview"); // NOI18N
+        btnPreview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviewActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnPreview);
+        btnPreview.setBounds(280, 120, 160, 40);
+
+        btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
+        btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
+        btnKeluar.setText(resourceMap.getString("btnKeluar.text")); // NOI18N
+        btnKeluar.setName("btnKeluar"); // NOI18N
+        btnKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKeluarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnKeluar);
+        btnKeluar.setBounds(450, 120, 160, 40);
+
+        OptAwal.setFont(resourceMap.getFont("OptAwal.font")); // NOI18N
+        OptAwal.setText(resourceMap.getString("OptAwal.text")); // NOI18N
+        OptAwal.setName("OptAwal"); // NOI18N
+        OptAwal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OptAwalActionPerformed(evt);
+            }
+        });
+        getContentPane().add(OptAwal);
+        OptAwal.setBounds(140, 23, 120, 14);
 
         txtnamabarang.setFont(resourceMap.getFont("txtnamabarang.font")); // NOI18N
         txtnamabarang.setDisabledTextColor(resourceMap.getColor("txtnamabarang.disabledTextColor")); // NOI18N
@@ -136,100 +165,73 @@ public class FLapHistoryBarangDO extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txtnamabarang);
-        txtnamabarang.setBounds(110, 50, 330, 22);
+        txtnamabarang.setBounds(140, 50, 386, 22);
 
-        txtkodebarang.setEditable(false);
-        txtkodebarang.setFont(resourceMap.getFont("txtkodebarang.font")); // NOI18N
-        txtkodebarang.setName("txtkodebarang"); // NOI18N
-        txtkodebarang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtkodebarangActionPerformed(evt);
-            }
-        });
-        txtkodebarang.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtkodebarangKeyPressed(evt);
-            }
-        });
-        getContentPane().add(txtkodebarang);
-        txtkodebarang.setBounds(440, 50, 70, 22);
+        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(420, 23, 30, 15);
 
-        btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
-        btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
-        btnPreview.setText(resourceMap.getString("btnPreview.text")); // NOI18N
-        btnPreview.setName("btnPreview"); // NOI18N
-        btnPreview.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPreviewActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnPreview);
-        btnPreview.setBounds(20, 160, 160, 40);
+        jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(20, 23, 90, 14);
 
-        btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
-        btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
-        btnKeluar.setText(resourceMap.getString("btnKeluar.text")); // NOI18N
-        btnKeluar.setName("btnKeluar"); // NOI18N
-        btnKeluar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKeluarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnKeluar);
-        btnKeluar.setBounds(360, 160, 160, 40);
+        jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(120, 23, 10, 14);
 
-        BtnClear.setFont(resourceMap.getFont("BtnClear.font")); // NOI18N
-        BtnClear.setIcon(resourceMap.getIcon("BtnClear.icon")); // NOI18N
-        BtnClear.setText(resourceMap.getString("BtnClear.text")); // NOI18N
-        BtnClear.setName("BtnClear"); // NOI18N
-        BtnClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnClearActionPerformed(evt);
-            }
-        });
-        getContentPane().add(BtnClear);
-        BtnClear.setBounds(190, 160, 160, 40);
-
-        OptAwal.setText(resourceMap.getString("OptAwal.text")); // NOI18N
-        OptAwal.setName("OptAwal"); // NOI18N
-        OptAwal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OptAwalActionPerformed(evt);
-            }
-        });
-        getContentPane().add(OptAwal);
-        OptAwal.setBounds(110, 20, 90, 23);
-
-        setBounds(0, 0, 576, 252);
+        setBounds(0, 0, 654, 229);
     }// </editor-fold>//GEN-END:initComponents
 
-private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
-// TODO add your handling code here:
-    this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-    HashMap parameter = new HashMap();
-    JasperPrint jasperPrint = null;
-    String kode;
-    try {
-        Connection c = koneksi.getKoneksiJ();
-        parameter.put("tgl1", tgl1.getText());
-        parameter.put("tgl2", tgl2.getText());
-        parameter.put("PKodeBarang", txtkodebarang.getText());
-        URL url = new URL(global.REPORT + "/LapHistoryBarangDO.jasper");
-        InputStream in = url.openStream();
-        jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-        JasperViewer.viewReport(jasperPrint, false);
-        c.close();
-    } catch (Exception ex) {
-        System.out.print(ex.toString());
-        //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-}//GEN-LAST:event_btnPreviewActionPerformed
+    private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
+        try {
+            // TODO add your handling code here:
+            HashMap parameter = new HashMap();
+            Connection con = koneksi.getKoneksiJ();
+            JasperPrint jasperPrint = null;
+            parameter.put("kodebarang", txtkodebarang.getText());
+            parameter.put("tanggalawal", tgl1.getText());
+            parameter.put("tanggalakhir", tgl2.getText());
+            jasperPrint = JasperFillManager.fillReport("report/LapStoryStokDO.jasper", parameter, con);
+            JasperViewer.viewReport(jasperPrint, false);
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LaporanKartuStokDO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(LaporanKartuStokDO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnPreviewActionPerformed
 
-private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
-// TODO add your handling code here:
-    dispose();
-}//GEN-LAST:event_btnKeluarActionPerformed
+    private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnKeluarActionPerformed
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 10) {
+            txtkodebarang.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+            txtnamabarang.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
+            jScrollPane1.setVisible(false);
+            btnPreview.requestFocus();
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
+
+    private void OptAwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptAwalActionPerformed
+        // TODO add your handling code here:
+        Calendar cld = Calendar.getInstance();
+        try {
+            cld.setTime(d.parse("2015-04-01"));
+            tgl1.setSelectedDate(cld);
+        } catch (ParseException ex) {
+            Logger.getLogger(LaporanKartuStokDO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_OptAwalActionPerformed
 
     private void txtnamabarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnamabarangActionPerformed
         // TODO add your handling code here:
@@ -249,49 +251,16 @@ private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         }
     }//GEN-LAST:event_txtnamabarangKeyPressed
 
-    private void txtkodebarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkodebarangActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtkodebarangActionPerformed
-
-    private void txtkodebarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtkodebarangKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtkodebarangKeyPressed
-
-    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == 10) {
-            txtkodebarang.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-            txtnamabarang.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
-            jScrollPane1.setVisible(false);
-            btnPreview.requestFocus();
-        }
-    }//GEN-LAST:event_jTable1KeyPressed
-
-    private void BtnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClearActionPerformed
-        // TODO add your handling code here:
-        kosongForm();
-
-    }//GEN-LAST:event_BtnClearActionPerformed
-
-    private void OptAwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptAwalActionPerformed
-        // TODO add your handling code here:
-        Calendar cld = Calendar.getInstance();
-        try {
-            cld.setTime(d.parse("2015-04-01"));
-            tgl1.setSelectedDate(cld);
-        } catch (ParseException ex) {
-            Logger.getLogger(FLapRekapBarangDO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_OptAwalActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnClear;
     private javax.swing.JCheckBox OptAwal;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnPreview;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private datechooser.beans.DateChooserCombo tgl1;
@@ -334,9 +303,5 @@ private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         }
 
     }
-
-    void kosongForm() {
-        txtnamabarang.setText("");
-        txtkodebarang.setText("");
-    }
+    
 }

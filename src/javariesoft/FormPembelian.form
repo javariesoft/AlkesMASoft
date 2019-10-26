@@ -150,6 +150,9 @@
               </Constraints>
             </Component>
             <Component class="datechooser.beans.DateChooserCombo" name="tglTransaksi">
+              <Properties>
+                <Property name="dch_combo_fieldFont" type="java.awt.Font" resourceKey="tglTransaksi.dch_combo_fieldFont"/>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="780" y="10" width="180" height="-1"/>
@@ -168,7 +171,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="970" y="10" width="90" height="-1"/>
+                  <AbsoluteConstraints x="780" y="10" width="90" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>

@@ -190,6 +190,8 @@ public class FormPembelian extends javax.swing.JInternalFrame {
         });
         jPanel1.add(cbokriteria);
         cbokriteria.setBounds(620, 10, 130, 22);
+
+        tglTransaksi.setFieldFont(resourceMap.getFont("tglTransaksi.dch_combo_fieldFont")); // NOI18N
         jPanel1.add(tglTransaksi);
         tglTransaksi.setBounds(780, 10, 180, 20);
 
@@ -203,7 +205,7 @@ public class FormPembelian extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnFilter);
-        btnFilter.setBounds(970, 10, 90, 25);
+        btnFilter.setBounds(780, 10, 90, 25);
 
         cboStatus.setFont(resourceMap.getFont("cboStatus.font")); // NOI18N
         cboStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -514,7 +516,7 @@ private void btnBayarPenerimaanHutangActionPerformed(java.awt.event.ActionEvent 
             col = jTable1.getColumnModel().getColumn(4);
             col.setPreferredWidth(200);
             jTable1.setRowHeight(20);
-            jTable1.setFont(new Font("Tahoma", Font.BOLD, 14));
+            jTable1.setFont(new Font("Tahoma", Font.BOLD, 12));
             jScrollPane1.getViewport().add(jTable1);
             jScrollPane1.repaint();
             j.close();

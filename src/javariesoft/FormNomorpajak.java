@@ -32,6 +32,7 @@ public class FormNomorpajak extends javax.swing.JInternalFrame {
             controller = new NomorPajakController(this);
             controller.clearForm();
             controller.reloadData(con);
+            cektombol();
         } catch (SQLException ex) {
             Logger.getLogger(FormNomorpajak.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -178,6 +179,8 @@ public class FormNomorpajak extends javax.swing.JInternalFrame {
         panelCool1.add(jScrollPane1);
         jScrollPane1.setBounds(20, 160, 540, 210);
 
+        btnInsert.setFont(resourceMap.getFont("btnInsert.font")); // NOI18N
+        btnInsert.setIcon(resourceMap.getIcon("btnInsert.icon")); // NOI18N
         btnInsert.setText(resourceMap.getString("btnInsert.text")); // NOI18N
         btnInsert.setName("btnInsert"); // NOI18N
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
@@ -186,8 +189,10 @@ public class FormNomorpajak extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnInsert);
-        btnInsert.setBounds(20, 120, 80, 23);
+        btnInsert.setBounds(20, 120, 100, 25);
 
+        btnUpdate.setFont(resourceMap.getFont("btnInsert.font")); // NOI18N
+        btnUpdate.setIcon(resourceMap.getIcon("btnUpdate.icon")); // NOI18N
         btnUpdate.setText(resourceMap.getString("btnUpdate.text")); // NOI18N
         btnUpdate.setName("btnUpdate"); // NOI18N
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -196,8 +201,10 @@ public class FormNomorpajak extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnUpdate);
-        btnUpdate.setBounds(110, 120, 80, 23);
+        btnUpdate.setBounds(130, 120, 100, 25);
 
+        btnDelete.setFont(resourceMap.getFont("btnInsert.font")); // NOI18N
+        btnDelete.setIcon(resourceMap.getIcon("btnDelete.icon")); // NOI18N
         btnDelete.setText(resourceMap.getString("btnDelete.text")); // NOI18N
         btnDelete.setName("btnDelete"); // NOI18N
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -206,8 +213,10 @@ public class FormNomorpajak extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnDelete);
-        btnDelete.setBounds(200, 120, 90, 23);
+        btnDelete.setBounds(240, 120, 100, 25);
 
+        btnCancel.setFont(resourceMap.getFont("btnInsert.font")); // NOI18N
+        btnCancel.setIcon(resourceMap.getIcon("btnCancel.icon")); // NOI18N
         btnCancel.setText(resourceMap.getString("btnCancel.text")); // NOI18N
         btnCancel.setName("btnCancel"); // NOI18N
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -216,8 +225,10 @@ public class FormNomorpajak extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnCancel);
-        btnCancel.setBounds(300, 120, 100, 23);
+        btnCancel.setBounds(350, 120, 100, 25);
 
+        btnExit.setFont(resourceMap.getFont("btnInsert.font")); // NOI18N
+        btnExit.setIcon(resourceMap.getIcon("btnExit.icon")); // NOI18N
         btnExit.setText(resourceMap.getString("btnExit.text")); // NOI18N
         btnExit.setName("btnExit"); // NOI18N
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -226,7 +237,7 @@ public class FormNomorpajak extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnExit);
-        btnExit.setBounds(410, 120, 100, 23);
+        btnExit.setBounds(460, 120, 100, 25);
 
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
@@ -275,7 +286,32 @@ public class FormNomorpajak extends javax.swing.JInternalFrame {
         controller.getNomorPajak(con, Integer.parseInt(tabelNomorPajak.getValueAt(tabelNomorPajak.getSelectedRow(), 0).toString()));
     }//GEN-LAST:event_tabelNomorPajakMouseClicked
 
+private void settingtombol(boolean simp, boolean edit, boolean hapus) {
+        btnInsert.setEnabled(simp);
+        btnUpdate.setEnabled(edit);
+        btnDelete.setEnabled(hapus);
+    }
 
+void cektombol() {
+        if (JavarieSoftApp.groupuser.equals("Pembelian")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Penjualan")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Administrator")) {
+            settingtombol(true, true, false);
+        } else if (JavarieSoftApp.groupuser.equals("KaGudang")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Operator")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Accounting")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Asisten Administrator")) {
+            settingtombol(true, true, false);
+        } else if (JavarieSoftApp.groupuser.equals("Master Data")) {
+            settingtombol(false, false, false);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;

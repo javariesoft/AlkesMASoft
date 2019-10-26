@@ -1095,13 +1095,13 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLapSisaDOActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
+                <MenuItem class="javax.swing.JMenuItem" name="MKartuStokDO">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="jMenuItem7.text"/>
-                    <Property name="name" type="java.lang.String" value="jMenuItem7" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="MKartuStokDO.text"/>
+                    <Property name="name" type="java.lang.String" value="MKartuStokDO" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem7ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MKartuStokDOActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>

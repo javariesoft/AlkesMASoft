@@ -262,7 +262,7 @@ public class JavarieSoftView extends FrameView {
         MLDORekapBarangDO = new javax.swing.JMenuItem();
         MLDOHistoryDO = new javax.swing.JMenuItem();
         MLapSisaDO = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        MKartuStokDO = new javax.swing.JMenuItem();
         MLapReturDeliveryOrder = new javax.swing.JMenu();
         MLRDO_PerNomorDO = new javax.swing.JMenuItem();
         MLRDO_DetailReturDO = new javax.swing.JMenuItem();
@@ -1104,14 +1104,14 @@ public class JavarieSoftView extends FrameView {
         });
         Mlapdeliveryorder.add(MLapSisaDO);
 
-        jMenuItem7.setText(resourceMap.getString("jMenuItem7.text")); // NOI18N
-        jMenuItem7.setName("jMenuItem7"); // NOI18N
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        MKartuStokDO.setText(resourceMap.getString("MKartuStokDO.text")); // NOI18N
+        MKartuStokDO.setName("MKartuStokDO"); // NOI18N
+        MKartuStokDO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                MKartuStokDOActionPerformed(evt);
             }
         });
-        Mlapdeliveryorder.add(jMenuItem7);
+        Mlapdeliveryorder.add(MKartuStokDO);
 
         Mlaporan.add(Mlapdeliveryorder);
 
@@ -2388,13 +2388,13 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MLAnalisisPenjualanMerkActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void MKartuStokDOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MKartuStokDOActionPerformed
         // TODO add your handling code here:
-        LaporanStokDO p = new LaporanStokDO();
+        LaporanKartuStokDO p = new LaporanKartuStokDO();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_MKartuStokDOActionPerformed
 
     private void MPajakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MPajakActionPerformed
         // TODO add your handling code here:
@@ -2429,6 +2429,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JLabel Lblgroup;
     public static javax.swing.JMenuItem MBackupdatabase;
     public static javax.swing.JMenuItem MDeliveryOrder;
+    private javax.swing.JMenuItem MKartuStokDO;
     public static javax.swing.JMenuItem MKontrolTanggal;
     private javax.swing.JMenuItem MLAKT_BukuBesarBiayaTahunan;
     public static javax.swing.JMenuItem MLAKT_BukuBesarBulanan;
@@ -2551,7 +2552,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
@@ -3378,6 +3378,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
+        MNomorPajak.setVisible(false);
+        MPajak.setVisible(false);
     }
     
     public static void gudangakses() {
@@ -3453,6 +3455,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
+        MNomorPajak.setVisible(false);
+        MPajak.setVisible(false);
     }
 
     void konek() {

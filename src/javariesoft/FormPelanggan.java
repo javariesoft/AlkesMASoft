@@ -219,7 +219,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(10, 40, 120, 16);
+        jLabel2.setBounds(10, 40, 120, 15);
 
         txtkodePelanggan.setEditable(false);
         txtkodePelanggan.setFont(resourceMap.getFont("txtkodePelanggan.font")); // NOI18N
@@ -233,7 +233,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(10, 70, 120, 16);
+        jLabel4.setBounds(10, 70, 120, 15);
 
         dateTglReg.setFieldFont(resourceMap.getFont("dateTglReg.dch_combo_fieldFont")); // NOI18N
         jPanel1.add(dateTglReg);
@@ -244,7 +244,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(10, 100, 120, 16);
+        jLabel6.setBounds(10, 100, 120, 15);
 
         txtbatasKredit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0"))));
         txtbatasKredit.setText(resourceMap.getString("txtbatasKredit.text")); // NOI18N
@@ -263,7 +263,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(10, 130, 120, 16);
+        jLabel5.setBounds(10, 130, 120, 15);
 
         txtNohp.setFont(resourceMap.getFont("txtNohp.font")); // NOI18N
         txtNohp.setText(resourceMap.getString("txtNohp.text")); // NOI18N
@@ -281,14 +281,14 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(10, 160, 120, 16);
+        jLabel10.setBounds(10, 160, 120, 15);
 
         jLabel11.setFont(resourceMap.getFont("jLabel11.font")); // NOI18N
         jLabel11.setForeground(resourceMap.getColor("jLabel11.foreground")); // NOI18N
         jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
         jLabel11.setName("jLabel11"); // NOI18N
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(10, 190, 120, 16);
+        jLabel11.setBounds(10, 190, 170, 15);
 
         namaPemilik.setFont(resourceMap.getFont("namaPemilik.font")); // NOI18N
         namaPemilik.setText(resourceMap.getString("namaPemilik.text")); // NOI18N
@@ -301,7 +301,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(400, 50, 120, 16);
+        jLabel8.setBounds(400, 50, 120, 15);
 
         cboStatus.setFont(resourceMap.getFont("cboStatus.font")); // NOI18N
         cboStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aktif", "Tidak Aktif", "New Record" }));
@@ -344,7 +344,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
         jLabel17.setName("jLabel17"); // NOI18N
         jPanel1.add(jLabel17);
-        jLabel17.setBounds(10, 220, 140, 15);
+        jLabel17.setBounds(10, 220, 170, 15);
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -386,7 +386,7 @@ public class FormPelanggan extends javax.swing.JInternalFrame {
         jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
         jLabel9.setName("jLabel9"); // NOI18N
         jPanel2.add(jLabel9);
-        jLabel9.setBounds(10, 20, 120, 16);
+        jLabel9.setBounds(10, 20, 120, 15);
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -1039,11 +1039,11 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             JDBCAdapter j = new JDBCAdapter(c);
             String sql = "";
             if (index == 0) {
-                sql = "SELECT KODEPELANGGAN AS KODE,NAMA ,ALAMAT ,NAMAPEMILIK ,HP ,TGLREG ,NPWP,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='0' ";
+                sql = "SELECT KODEPELANGGAN AS KODE,NAMA ,ALAMAT AS `ALAMAT TOKO`,NAMAPEMILIK ,HP ,TGLREG ,NPWP,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='0' ";
             } else if (index == 1) {
-                sql = "SELECT KODEPELANGGAN AS KODE,NAMA ,ALAMAT ,NAMAPEMILIK ,HP ,TGLREG ,NPWP,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='1' ";
+                sql = "SELECT KODEPELANGGAN AS KODE,NAMA ,ALAMAT AS `ALAMAT TOKO`,NAMAPEMILIK ,HP ,TGLREG ,NPWP,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='1' ";
             } else if (index == 2) {
-                sql = "SELECT KODEPELANGGAN AS KODE,NAMA ,ALAMAT ,NAMAPEMILIK ,HP ,TGLREG ,NPWP,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='2' ";
+                sql = "SELECT KODEPELANGGAN AS KODE,NAMA ,ALAMAT AS `ALAMAT TOKO` ,NAMAPEMILIK ,HP ,TGLREG ,NPWP,case STATUSAKTIF when 0 then 'Aktif' when 1 then 'Tidak Aktif' when 2 then 'New Record' end as StatAktif FROM PELANGGAN where STATUSAKTIF='2' ";
             }
             if (cboKriteria.getSelectedIndex() == 0) {
                 sql += " AND lower(KODEPELANGGAN) like '" + txtKriteria.getText().toLowerCase() + "%' ORDER BY NAMA";

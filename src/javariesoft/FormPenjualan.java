@@ -550,7 +550,7 @@ private void btnBayarPenerimaanPiutangActionPerformed(java.awt.event.ActionEvent
             col = jTable1.getColumnModel().getColumn(4);
             col.setPreferredWidth(100);
             jTable1.setRowHeight(20);
-            jTable1.setFont(new Font("Tahoma", Font.BOLD, 14));
+            jTable1.setFont(new Font("Tahoma", Font.BOLD, 12));
             jScrollPane1.getViewport().add(jTable1);
             jScrollPane1.repaint();
         } catch (Exception ex) {

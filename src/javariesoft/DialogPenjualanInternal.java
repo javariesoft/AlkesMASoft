@@ -387,6 +387,9 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         jLabel24 = new javax.swing.JLabel();
         namapelanggan1 = new javax.swing.JTextField();
         btnKeluar1 = new javax.swing.JButton();
+        jLabel29 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtKeteranganRetur = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         kodebarang = new javax.swing.JTextField();
         namabarang = new javax.swing.JTextField();
@@ -950,13 +953,13 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         jLabel24.setText(resourceMap.getString("jLabel24.text")); // NOI18N
         jLabel24.setName("jLabel24"); // NOI18N
         jPanel4.add(jLabel24);
-        jLabel24.setBounds(20, 100, 120, 20);
+        jLabel24.setBounds(500, 10, 120, 20);
 
         namapelanggan1.setFont(resourceMap.getFont("namapelanggan1.font")); // NOI18N
         namapelanggan1.setEnabled(false);
         namapelanggan1.setName("namapelanggan1"); // NOI18N
         jPanel4.add(namapelanggan1);
-        namapelanggan1.setBounds(160, 100, 270, 22);
+        namapelanggan1.setBounds(160, 100, 320, 22);
 
         btnKeluar1.setFont(resourceMap.getFont("btnKeluar1.font")); // NOI18N
         btnKeluar1.setIcon(resourceMap.getIcon("btnKeluar1.icon")); // NOI18N
@@ -968,7 +971,23 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel4.add(btnKeluar1);
-        btnKeluar1.setBounds(770, 103, 120, 30);
+        btnKeluar1.setBounds(920, 100, 120, 30);
+
+        jLabel29.setFont(resourceMap.getFont("jLabel29.font")); // NOI18N
+        jLabel29.setText(resourceMap.getString("jLabel29.text")); // NOI18N
+        jLabel29.setName("jLabel29"); // NOI18N
+        jPanel4.add(jLabel29);
+        jLabel29.setBounds(20, 100, 120, 20);
+
+        jScrollPane4.setName("jScrollPane4"); // NOI18N
+
+        txtKeteranganRetur.setColumns(20);
+        txtKeteranganRetur.setRows(5);
+        txtKeteranganRetur.setName("txtKeteranganRetur"); // NOI18N
+        jScrollPane4.setViewportView(txtKeteranganRetur);
+
+        jPanel4.add(jScrollPane4);
+        jScrollPane4.setBounds(590, 10, 450, 80);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
 
@@ -2804,7 +2823,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(null, "No Faktur Sudah Ada,Klik Tombol Generate Ulang No Faktur Lalu Simpan !");
                     }
                 } else {
-                    if ((kodepelanggan1.getText().equals(""))) {
+                    if ((kodepelanggan1.getText().equals("")) || (txtKeteranganRetur.getText().equals(""))) {
                         JOptionPane.showMessageDialog(null, "Data Belum Lengkap.. !");
                         kodepelanggan1.requestFocus();
                     } else if (!KontrolTanggalDao.cekHarian(c, tglRetur.getText())) {
@@ -3522,6 +3541,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -3543,6 +3563,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
@@ -3569,6 +3590,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
     private datechooser.beans.DateChooserCombo tgllunas;
     private javax.swing.JTextField txtBatch;
     private javax.swing.JTextField txtDiskonPersen;
+    private javax.swing.JTextArea txtKeteranganRetur;
     private javax.swing.JTextField txtKodeDO;
     private javax.swing.JTextField txtNamaDo;
     private javax.swing.JTextField txtNamaSales;
@@ -3981,7 +4003,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         r.setKODERETUR(txtkodeRetur.getText());
         r.setKODEPELANGGAN(kodepelanggan1.getText());
         r.setTANGGAL(tglRetur.getText());
-        r.setKETERANGAN("Pengembalian Brg Dari " + namapelanggan1.getText());
+        r.setKETERANGAN("Retur Barang Dari " + namapelanggan1.getText() + " : " + txtKeteranganRetur.getText());
         r.setIDPENJUALAN(IDjual);
         r.setTAMBAHANTOTALRETUR(0);
         r.setTOTALRETUR(total);
@@ -3990,7 +4012,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         r.setTOTALHPP(hpp);
 
         if (returDao.insertIntoRETUR(c, r)) {
-            JOptionPane.showMessageDialog(this, "Entri Retur Ok");
+            JOptionPane.showMessageDialog(this, "Entri Retur Penjualan Ok");
             Statement s = cm.createStatement();
 //            ResultSet r4 = s.executeQuery("select * from rinci");
             rinciretur rr = new rinciretur();
