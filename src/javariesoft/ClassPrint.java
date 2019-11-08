@@ -366,6 +366,7 @@ public class ClassPrint {
                 tables.add(line);
             }
             while (true) {
+                //if (no % 6 != 0) {
                 if (no % 6 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");
@@ -377,6 +378,7 @@ public class ClassPrint {
                     line.put("harga", "");
                     line.put("diskon", "");
                     line.put("jumlah", "");
+                    line.put("kode", "");
                     tables.add(line);
                     no++;
                 } else {
@@ -416,7 +418,8 @@ public class ClassPrint {
             } else {
                 t1 = terbilangkata;
             }
-            p.put("terbilang", t1);
+            ////p.put("terbilang", t1);
+            p.put("terbilang", terbilangkata);
             p.put("terbilanglanjut", t2);
 //            p.put("bayar", Math.round(rs1.getDouble(8)));
             p.put("bayar", df1.format(bayar));
@@ -565,6 +568,7 @@ public class ClassPrint {
                     line.put("harga", "");
                     line.put("diskon", "");
                     line.put("jumlah", "");
+                    line.put("kode", "");
                     tables.add(line);
                     no++;
                 } else {
@@ -601,7 +605,8 @@ public class ClassPrint {
             } else {
                 t1 = terbilangkata;
             }
-            p.put("terbilang", t1);
+            ////p.put("terbilang", t1);
+            p.put("terbilang", terbilangkata);
             p.put("terbilanglanjut", t2);
 //            p.put("bayar", Math.round(rs1.getDouble(8)));
             p.put("bayar", df1.format(bayar));

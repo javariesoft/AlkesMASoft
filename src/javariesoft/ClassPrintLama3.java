@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  *
  * @author UserXP
  */
-public class ClassPrintKertasPanjang {
+public class ClassPrintLama3 {
 
     public static final char[] EXTENDED = {0x00C7, 0x00FC, 0x00E9, 0x00E2,
         0x00E4, 0x00E0, 0x00E5, 0x00E7, 0x00EA, 0x00EB, 0x00E8, 0x00EF,
@@ -49,7 +49,7 @@ public class ClassPrintKertasPanjang {
 
     public static void main(String[] args) {
         //Connection c;       
-        ClassPrintKertasPanjang cs = new ClassPrintKertasPanjang();
+        ClassPrintLama3 cs = new ClassPrintLama3();
         try {
             koneksi.createPoolKoneksi();
             cs.cetakfaktur("15.000001");
@@ -72,7 +72,7 @@ public class ClassPrintKertasPanjang {
 
     public void cetakfaktur(String nfak) {
 
-        ClassPrintKertasPanjang cp = new ClassPrintKertasPanjang();
+        ClassPrintLama3 cp = new ClassPrintLama3();
         java.text.DateFormat d = new SimpleDateFormat("dd-MMMM-yyyy");
         java.util.Date tgl = new java.util.Date();
         DecimalFormat df = new DecimalFormat("###,###,###,###");
@@ -179,7 +179,7 @@ public class ClassPrintKertasPanjang {
                 p.append("------------------------------------------------------------------------------------------------------------------------------------------ \r\n");
 
             } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(ClassPrintKertasPanjang.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClassPrintLama3.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             int no = 0, totqty = 0;
@@ -197,7 +197,7 @@ public class ClassPrintKertasPanjang {
                 try {
                     p.append(cp.cetak("|", 1, 1) + "" + cp.cetak("" + no, 3, 1) + " | " + cp.cetak(df.format(Integer.parseInt(rs.getString(12)))/* jmlh */, 6, 1) + " | " + cp.cetak(rs.getString(40) /*satuan*/, 15, 0) + " | " + cp.cetak(nmbrg, 34, 0) + " | " + cp.cetak(rs.getString(41) /*Batch*/, 10, 0) + " |" + cp.cetak(rs.getString(42) /*Expire*/, 10, 0) + " | " + cp.cetak(df.format(rs.getDouble(13))/* harga */, 13, 1) + " | " + cp.cetak(df.format(rs.getDouble(43))/* Disc */, 5, 1) + " | " + cp.cetak(df.format(rs.getDouble(15))/* total */, 16, 1) + " |\r\n");
                 } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(ClassPrintKertasPanjang.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClassPrintLama3.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             totalbersih = (total - rs1.getDouble(9) - rs1.getDouble(8)) + rs1.getDouble(44);
@@ -227,7 +227,7 @@ public class ClassPrintKertasPanjang {
 //                p.append(" Catatan : Barang yang dibeli tidak dapat dikembalikan kecuali dengan perjanjian.      \r\n");
 //                p.append(" Rek Bank Atas Nama RAHMAT SUKRI : BNI 005-918-6688 , MANDIRI 111-00-0573906-1, BRI 0617-01-001552-50-0       \r\n");
             } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(ClassPrintKertasPanjang.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClassPrintLama3.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             p.setOutputPath("c:\\temp\\coba.txt");
@@ -240,7 +240,7 @@ public class ClassPrintKertasPanjang {
                 }
                 p.printToFile();
             } catch (Exception ex) {
-                Logger.getLogger(ClassPrintKertasPanjang.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClassPrintLama3.class.getName()).log(Level.SEVERE, null, ex);
             }
             c.close();
         } catch (Exception e) {
@@ -250,7 +250,7 @@ public class ClassPrintKertasPanjang {
 
     public static Map<String, Object> cetakfakturMap(Connection con, String nfak) {
         java.text.DateFormat d = new SimpleDateFormat("dd-MMMM-yyyy");
-        java.util.Date tgl=new java.util.Date();
+        java.util.Date tgl = new java.util.Date();
         DecimalFormat df = new DecimalFormat("###,###,###,###");
         DecimalFormat df1 = new DecimalFormat("###,###,###,###.##");
         Map<String, Object> p = new HashMap<String, Object>();
@@ -338,7 +338,7 @@ public class ClassPrintKertasPanjang {
             p.put("NPWP", rs1.getString(49));
 
             int no = 0, totqty = 0;
-            double total = 0, ppn = 0, totalbersih = 0, bayar =0;
+            double total = 0, ppn = 0, totalbersih = 0, bayar = 0;
             //int jml=0;
             String kdbrg = "", nmbrg = "";
             List<Map<String, Object>> tables = new ArrayList<Map<String, Object>>();
@@ -348,6 +348,7 @@ public class ClassPrintKertasPanjang {
                 line = new HashMap<String, Object>();
                 totqty = totqty + Integer.parseInt(rs.getString(12));
                 total = total + rs.getDouble(33);
+                //System.out.print(rs.getDouble(33));
                 kdbrg = rs.getString(11);
                 nmbrg = rs.getString(23);
                 line.put("no", no);
@@ -356,6 +357,7 @@ public class ClassPrintKertasPanjang {
                 line.put("nmbrg", nmbrg);
                 line.put("batch", rs.getString(41));
                 line.put("expire", rs.getString(42));
+                //line.put("harga", df.format(Math.round(rs.getDouble(13))));
                 line.put("harga", df1.format(rs.getDouble(13)));
                 //line.put("diskon", df.format(rs.getDouble(43)));
                 line.put("diskon", rs.getDouble(43));
@@ -364,7 +366,7 @@ public class ClassPrintKertasPanjang {
                 tables.add(line);
             }
             while (true) {
-                if (no % 41 != 0) {
+                if (no % 6 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");
                     line.put("banyak", "");
@@ -378,20 +380,23 @@ public class ClassPrintKertasPanjang {
                     line.put("kode", "");
                     tables.add(line);
                     no++;
-                }else{
+                } else {
                     break;
                 }
             }
             p.put("table_source", tables);
             p.put("TOTQTY", totqty);
             p.put("total", df1.format(total));
+            //System.out.print(df1.format(total));
             p.put("diskonpersentambahan", df1.format(rs1.getDouble(48)));
+//            p.put("diskontambahan", Math.round(rs1.getDouble(9)));
             p.put("diskontambahan", df1.format(rs1.getDouble(9)));
+//            p.put("ppn", Math.round(rs1.getDouble(44)));
             p.put("ppn", df1.format(rs1.getDouble(44)));
 
-            bayar = (rs1.getString(37).equals("0") ? total +rs1.getDouble(44) +rs1.getDouble(45) - rs1.getDouble(9)  : (rs1.getDouble(8)!=0 ? rs1.getDouble(8):0));
+            bayar = (rs1.getString(37).equals("0") ? total + rs1.getDouble(44) + rs1.getDouble(45) - rs1.getDouble(9) : (rs1.getDouble(8) != 0 ? rs1.getDouble(8) : 0));
 //            totalbersih = (total - rs1.getDouble(9) - rs1.getDouble(8)) + rs1.getDouble(44);
-            totalbersih = (rs1.getString(37).equals("0") ? 0 : (rs1.getDouble(8)!=0 ? ((total + rs1.getDouble(44) + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9)) : total + rs1.getDouble(44) + rs1.getDouble(45) - rs1.getDouble(9) ));
+            totalbersih = (rs1.getString(37).equals("0") ? 0 : (rs1.getDouble(8) != 0 ? ((total + rs1.getDouble(44) + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9)) : total + rs1.getDouble(44) + rs1.getDouble(45) - rs1.getDouble(9)));
             double terbilang = 0;
             if (totalbersih == 0) {
                 terbilang = bayar;
@@ -412,13 +417,15 @@ public class ClassPrintKertasPanjang {
             } else {
                 t1 = terbilangkata;
             }
-            p.put("terbilang", t1);
+            ////p.put("terbilang", t1);
+            p.put("terbilang", terbilangkata);
             p.put("terbilanglanjut", t2);
 //            p.put("bayar", Math.round(rs1.getDouble(8)));
             p.put("bayar", df1.format(bayar));
+            //p.put("totalbersih", Math.round(totalbersih));
             p.put("totalbersih", df1.format(totalbersih));
-            p.put("tglcetak",d.format(tgl));
-            p.put("namauser",JavarieSoftApp.jenisuser);
+            p.put("tglcetak", d.format(tgl));
+            p.put("namauser", JavarieSoftApp.jenisuser);
             p.put("salesinisial", rs1.getString(39));
             p.put("ongkir", df1.format(rs1.getDouble(45)));
             p.put("apotek", rs1.getString(46));
@@ -431,13 +438,11 @@ public class ClassPrintKertasPanjang {
 
     public static Map<String, Object> cetakfakturMap1(Connection con, String nfak) {
         java.text.DateFormat d = new SimpleDateFormat("dd-MMMM-yyyy");
-        java.util.Date tgl=new java.util.Date();
+        java.util.Date tgl = new java.util.Date();
         DecimalFormat df = new DecimalFormat("###,###,###,###");
         DecimalFormat df1 = new DecimalFormat("###,###,###,###.##");
         Map<String, Object> p = new HashMap<String, Object>();
-
         try {
-
             String sql = "SELECT PENJUALAN.ID AS PENJUALAN_ID," //1
                     + "PENJUALAN.FAKTUR AS PENJUALAN_FAKTUR," //2
                     + "FORMATDATETIME(PENJUALAN.TANGGAL,'d-MM-yyyy') AS PENJUALAN_TANGGAL," //3
@@ -493,13 +498,11 @@ public class ClassPrintKertasPanjang {
                     + "INNER JOIN JENISBARANG JENISBARANG ON BARANG.IDJENIS = JENISBARANG.ID "
                     + "INNER JOIN SALES SALES ON PENJUALAN.IDSALES = SALES.IDSALES "
                     + "WHERE PENJUALAN.FAKTUR = '" + nfak + "'";
-
             String spasi = " ";
             Statement stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stat.executeQuery(sql);
             Statement stat1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs1 = stat1.executeQuery(sql);
-            //ResultSet rs1 = stat.executeQuery(sql);
             rs1.next();
             String pel = "", Altpel = "", Altpel1 = "", Altpel2 = "";
             if (rs1.getString(17).length() >= 45) {
@@ -507,7 +510,6 @@ public class ClassPrintKertasPanjang {
             } else {
                 pel = rs1.getString(17);
             }
-
             Altpel = rs1.getString(18);
             p.put("FAKTUR", rs1.getString(2));
             p.put("TANGGAL", rs1.getString(3));
@@ -517,9 +519,9 @@ public class ClassPrintKertasPanjang {
             p.put("ALAMATPELANGGAN", Altpel);
             p.put("INISIAL", rs1.getString(39));
             p.put("NPWP", rs1.getString(49));
-
             int no = 0, totqty = 0;
-            double total = 0, ppn = 0, totalbersih = 0, bayar =0;
+            double total = 0, ppn = 0, totalbersih = 0, bayar = 0;
+            
             //int jml=0;
             String kdbrg = "", nmbrg = "";
             List<Map<String, Object>> tables = new ArrayList<Map<String, Object>>();
@@ -548,14 +550,13 @@ public class ClassPrintKertasPanjang {
                 line.put("batch", rs.getString(41));
                 line.put("expire", rs.getString(42));
                 line.put("harga", df1.format(hargajual));
-                //line.put("diskon", df.format(rs.getDouble(43)));
                 line.put("diskon", rs.getDouble(43));
                 line.put("jumlah", df1.format(totalsebelumppn));
                 line.put("kode", rs.getString(11));
                 tables.add(line);
             }
             while (true) {
-                if (no % 41 != 0) {
+                if (no % 6 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");
                     line.put("banyak", "");
@@ -569,7 +570,7 @@ public class ClassPrintKertasPanjang {
                     line.put("kode", "");
                     tables.add(line);
                     no++;
-                }else{
+                } else {
                     break;
                 }
             }
@@ -578,11 +579,11 @@ public class ClassPrintKertasPanjang {
             p.put("total", df1.format(total));
             p.put("diskonpersentambahan", df1.format(rs1.getDouble(48)));
             p.put("diskontambahan", df1.format(rs1.getDouble(9)));
+            
             p.put("ppn", df1.format(ppn));
 
-            bayar = (rs1.getString(37).equals("0") ? total +ppn +rs1.getDouble(45) - rs1.getDouble(9)  : (rs1.getDouble(8)!=0 ? rs1.getDouble(8):0));
-//            totalbersih = (total - rs1.getDouble(9) - rs1.getDouble(8)) + rs1.getDouble(44);
-            totalbersih = (rs1.getString(37).equals("0") ? 0 : (rs1.getDouble(8)!=0 ? ((total + ppn + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9)) : total + ppn + rs1.getDouble(45) - rs1.getDouble(9) ));
+            bayar = (rs1.getString(37).equals("0") ? total + ppn + rs1.getDouble(45) - rs1.getDouble(9) : (rs1.getDouble(8) != 0 ? rs1.getDouble(8) : 0));
+            totalbersih = (rs1.getString(37).equals("0") ? 0 : (rs1.getDouble(8) != 0 ? ((total + ppn + rs1.getDouble(45)) - rs1.getDouble(8) - rs1.getDouble(9)) : total + ppn + rs1.getDouble(45) - rs1.getDouble(9)));
             double terbilang = 0;
             if (totalbersih == 0) {
                 terbilang = bayar;
@@ -603,13 +604,15 @@ public class ClassPrintKertasPanjang {
             } else {
                 t1 = terbilangkata;
             }
-            p.put("terbilang", t1);
+            ////p.put("terbilang", t1);
+            p.put("terbilang", terbilangkata);
             p.put("terbilanglanjut", t2);
 //            p.put("bayar", Math.round(rs1.getDouble(8)));
             p.put("bayar", df1.format(bayar));
+            //p.put("totalbersih", Math.round(totalbersih));
             p.put("totalbersih", df1.format(totalbersih));
-            p.put("tglcetak",d.format(tgl));
-            p.put("namauser",JavarieSoftApp.jenisuser);
+            p.put("tglcetak", d.format(tgl));
+            p.put("namauser", JavarieSoftApp.jenisuser);
             p.put("salesinisial", rs1.getString(39));
             p.put("ongkir", df1.format(rs1.getDouble(45)));
             p.put("apotek", rs1.getString(46));
@@ -620,7 +623,6 @@ public class ClassPrintKertasPanjang {
         return p;
     }
 
-    
     public String cetak(String data, int panjang, int align) {
         String hasil = data;
         if (align == 0) {

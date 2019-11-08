@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="penjualanHarian" language="groovy" pageWidth="600" pageHeight="842" columnWidth="535" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26d95568-6466-4fed-abb0-17535fbbddd1">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="316"/>
-	<property name="ireport.y" value="322"/>
+	<property name="ireport.x" value="72"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="tgl1" class="java.lang.String">
 		<defaultValueExpression><![CDATA["2015-01-01"]]></defaultValueExpression>
 	</parameter>
@@ -93,7 +93,7 @@ WHERE PELANGGAN.STATUSCABANG='0' and PENJUALAN."TANGGAL" >= $P{tgl1} AND PENJUAL
 					<text><![CDATA[No. Trans ]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="5ea9e0a3-1f8e-4efe-9669-7f448b621d4c" x="74" y="2" width="52" height="12"/>
+					<reportElement uuid="5ea9e0a3-1f8e-4efe-9669-7f448b621d4c" x="74" y="2" width="74" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -107,7 +107,7 @@ WHERE PELANGGAN.STATUSCABANG='0' and PENJUALAN."TANGGAL" >= $P{tgl1} AND PENJUAL
 					<text><![CDATA[Tanggal ]]></text>
 				</staticText>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement uuid="e5053563-d54c-4956-b05f-e34c450d6851" x="235" y="2" width="62" height="12"/>
+					<reportElement uuid="e5053563-d54c-4956-b05f-e34c450d6851" x="235" y="2" width="94" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -156,7 +156,7 @@ WHERE PELANGGAN.STATUSCABANG='0' and PENJUALAN."TANGGAL" >= $P{tgl1} AND PENJUAL
 					<textFieldExpression><![CDATA[$F{PENJUALAN_CASH}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="7f0ea73b-8e73-43ec-9d04-e26e4313a786" x="234" y="13" width="160" height="12"/>
+					<reportElement uuid="7f0ea73b-8e73-43ec-9d04-e26e4313a786" x="234" y="13" width="287" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -328,11 +328,11 @@ WHERE PELANGGAN.STATUSCABANG='0' and PENJUALAN."TANGGAL" >= $P{tgl1} AND PENJUAL
 	<title>
 		<band height="52" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="69af9e57-4276-4d6e-8703-bb89484dc6c8" x="2" y="18" width="329" height="17"/>
+				<reportElement uuid="69af9e57-4276-4d6e-8703-bb89484dc6c8" x="2" y="18" width="412" height="17"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Laporan Harian Transaksi Penjualan Per Pelanggan]]></text>
+				<text><![CDATA[Laporan Detail Transaksi Penjualan Per Pelanggan]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="a332657e-13e1-4fa8-8aaf-2958695eb8bc" x="2" y="34" width="57" height="16"/>
@@ -438,7 +438,7 @@ WHERE PELANGGAN.STATUSCABANG='0' and PENJUALAN."TANGGAL" >= $P{tgl1} AND PENJUAL
 				<text><![CDATA[Disc (%)]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="05775dfc-b259-4adf-9d14-4cf29961a929" x="64" y="7" width="160" height="12"/>
+				<reportElement uuid="05775dfc-b259-4adf-9d14-4cf29961a929" x="64" y="7" width="469" height="12"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>

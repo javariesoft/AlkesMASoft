@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * DialogPiutang.java
  *
  * Created on Dec 29, 2011, 9:34:00 AM
@@ -1439,7 +1439,7 @@ private void jTable4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_j
                 txtKetTerimaPiutangKhusus.setText("Terima Piutang Dari " + txtNamaPelangganKhusus.getText());
                 jScrollPane4.setVisible(false);
                 piutangidKhusus = piutangbayarDao.getID(c);
-                piutangidKhususcounter = Integer.parseInt(KodeTransaksiKhusus.getText().substring(6,9));
+                piutangidKhususcounter = Integer.parseInt(KodeTransaksiKhusus.getText().substring(6, 9));
                 if (pilihKhusus.isSelected()) {
                     reloadDataPiutangBayarLunasKhusus(c);
                 } else {
@@ -1523,38 +1523,38 @@ private void btnHapusBayarPiutangActionPerformed(java.awt.event.ActionEvent evt)
         }
     } catch (HeadlessException ex) {
         try {
-                c.rollback();
-                JOptionPane.showMessageDialog(this, "Rollback " + ex.getMessage());
-            } catch (SQLException ex1) {
-                Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            c.rollback();
+            JOptionPane.showMessageDialog(this, "Rollback " + ex.getMessage());
+        } catch (SQLException ex1) {
+            Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex1);
+        }
 
-            Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
-    }   catch (SQLException ex) {
+        Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
         try {
             c.rollback();
             JOptionPane.showMessageDialog(this, "Rollback " + ex.getMessage());
         } catch (SQLException ex1) {
             Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex1);
         }
-        
+
         Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NumberFormatException ex) {
-            try {
-                c.rollback();
-                JOptionPane.showMessageDialog(this, "Rollback " + ex.getMessage());
-            } catch (SQLException ex1) {
-                Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-            
-            Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
-            try {
-                c.createStatement().execute("set autocommit true");
-            } catch (SQLException ex) {
-                Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    } catch (NumberFormatException ex) {
+        try {
+            c.rollback();
+            JOptionPane.showMessageDialog(this, "Rollback " + ex.getMessage());
+        } catch (SQLException ex1) {
+            Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex1);
         }
+
+        Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        try {
+            c.createStatement().execute("set autocommit true");
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }//GEN-LAST:event_btnHapusBayarPiutangActionPerformed
 
 private void pilihanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilihanActionPerformed
@@ -1649,61 +1649,61 @@ private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             Logger.getLogger(DialogPiutang.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-    }   catch (HeadlessException throwable) {
+    } catch (HeadlessException throwable) {
         try {
             c.rollback();
             JOptionPane.showMessageDialog(this, new Object[]{
                 "Rollback Terjadi error dengan pesan :",
                 throwable.getMessage()
             });
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DialogPiutang.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        } catch (NumberFormatException throwable) {
-            try {
-                c.rollback();
-                JOptionPane.showMessageDialog(this, new Object[]{
-                    "Rollback Terjadi error dengan pesan :",
-                    throwable.getMessage()
-                });
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(DialogPiutang.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (ClassNotFoundException throwable) {
-            try {
-                c.rollback();
-                JOptionPane.showMessageDialog(this, new Object[]{
-                    "Rollback Terjadi error dengan pesan :",
-                    throwable.getMessage()
-                });
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(DialogPiutang.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (JavarieException throwable) {
-            try {
-                c.rollback();
-                JOptionPane.showMessageDialog(this, new Object[]{
-                    "Rollback Terjadi error dengan pesan :",
-                    throwable.getMessage()
-                });
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(DialogPiutang.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-        } finally {
-            try {
-                c.createStatement().execute("set autocommit true");
-            } catch (SQLException ex) {
-                Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    } catch (NumberFormatException throwable) {
+        try {
+            c.rollback();
+            JOptionPane.showMessageDialog(this, new Object[]{
+                "Rollback Terjadi error dengan pesan :",
+                throwable.getMessage()
+            });
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogPiutang.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
+    } catch (ClassNotFoundException throwable) {
+        try {
+            c.rollback();
+            JOptionPane.showMessageDialog(this, new Object[]{
+                "Rollback Terjadi error dengan pesan :",
+                throwable.getMessage()
+            });
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogPiutang.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    } catch (JavarieException throwable) {
+        try {
+            c.rollback();
+            JOptionPane.showMessageDialog(this, new Object[]{
+                "Rollback Terjadi error dengan pesan :",
+                throwable.getMessage()
+            });
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogPiutang.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    } finally {
+        try {
+            c.createStatement().execute("set autocommit true");
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }//GEN-LAST:event_btnSimpanActionPerformed
 
@@ -1863,23 +1863,23 @@ private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         } catch (SQLException ex) {
             Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }   catch (HeadlessException e) {
+    } catch (HeadlessException e) {
         try {
             c.rollback();
             JOptionPane.showMessageDialog(this, "Roolback " + e.getMessage());
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
         }
-        } catch (NumberFormatException e) {
-            try {
-                c.rollback();
-                JOptionPane.showMessageDialog(this, "Roolback " + e.getMessage());
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } finally {
+    } catch (NumberFormatException e) {
+        try {
+            c.rollback();
+            JOptionPane.showMessageDialog(this, "Roolback " + e.getMessage());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } finally {
         try {
             c.createStatement().execute("set autocommit true");
 
@@ -1939,23 +1939,23 @@ private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         } catch (SQLException ex) {
             Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }   catch (NumberFormatException e) {
+    } catch (NumberFormatException e) {
         try {
             c.rollback();
             JOptionPane.showMessageDialog(this, "Roolback " + e.getMessage());
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
         }
-        } catch (SQLException e) {
-            try {
-                c.rollback();
-                JOptionPane.showMessageDialog(this, "Roolback " + e.getMessage());
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } finally {
+    } catch (SQLException e) {
+        try {
+            c.rollback();
+            JOptionPane.showMessageDialog(this, "Roolback " + e.getMessage());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } finally {
         try {
             c.createStatement().execute("set autocommit true");
 
@@ -2097,13 +2097,13 @@ private void btnTambahPiutangKhususActionPerformed(java.awt.event.ActionEvent ev
     } catch (HeadlessException ex) {
         Logger.getLogger(DialogHutang.class
                 .getName()).log(Level.SEVERE, null, ex);
-    }   catch (IllegalArgumentException ex) {
+    } catch (IllegalArgumentException ex) {
         Logger.getLogger(DialogHutang.class
                 .getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogHutang.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+    } catch (SQLException ex) {
+        Logger.getLogger(DialogHutang.class
+                .getName()).log(Level.SEVERE, null, ex);
+    }
 }//GEN-LAST:event_btnTambahPiutangKhususActionPerformed
 
 private void txtJumlahBayarKhususActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJumlahBayarKhususActionPerformed
@@ -2125,8 +2125,8 @@ private void btnHapusKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             txtSisa.setValue((Double.parseDouble(txtJumlahBayarKhusus.getValue().toString()) - getTotal()));
             txtTotalKhusus.setValue(getTotal());
             reloadDataPelunasanKhusus();
-            piutangidKhusus=piutangidKhusus-1;
-            piutangidKhususcounter=piutangidKhususcounter-1;
+            piutangidKhusus = piutangidKhusus - 1;
+            piutangidKhususcounter = piutangidKhususcounter - 1;
         } else {
             txtKodePelangganKhusus.requestFocus();
 
@@ -2237,13 +2237,13 @@ private void btnSimpanSemuaActionPerformed(java.awt.event.ActionEvent evt) {//GE
             Logger.getLogger(DialogPiutang.class
                     .getName()).log(Level.SEVERE, null, ex1);
         }
-    }  finally {
-            try {
-                c.createStatement().execute("set autocommit true");
-            } catch (SQLException ex) {
-                Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    } finally {
+        try {
+            c.createStatement().execute("set autocommit true");
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogPiutang.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
 
 }//GEN-LAST:event_btnSimpanSemuaActionPerformed
@@ -2328,7 +2328,7 @@ private void TxtFilterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                 txtNamaPelangganKhusus.setText(b.getNAMA());
                 jScrollPane4.setVisible(false);
                 piutangidKhusus = piutangbayarDao.getID(c);
-                piutangidKhususcounter = Integer.parseInt(KodeTransaksiKhusus.getText().substring(6,9));
+                piutangidKhususcounter = Integer.parseInt(KodeTransaksiKhusus.getText().substring(6, 9));
 
                 if (pilihKhusus.isSelected()) {
                     reloadDataPiutangBayarLunasKhusus(c);
@@ -2361,23 +2361,23 @@ private void txtcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         if (JavarieSoftApp.groupuser.equals("Administrator")) {
             sql = "select * from PERKIRAAN where (TIPE='D' or TIPE='SD') and (kodeperkiraan like '%" + txtcari.getText() + "%' OR lower(NAMAPERKIRAAN) like '%" + txtcari.getText().toLowerCase() + "%') order by 2";
         } else {
-            sql = "select * from PERKIRAAN where (kodeperkiraan ='11110' /*KAS(D)*/\n" +
-"or kodeperkiraan like '11120.%' /*Bank(SD)*/\n" +
-"or kodeperkiraan= '11202.2'   /*PPH Pasal 22*/\n" +
-"or kodeperkiraan= '61101.21'   /*Ongkos Transfer*/\n" +
-"or kodeperkiraan= '61101.30'   /*Biaya Promosi*/\n" +
-"or kodeperkiraan= '21111.1'   /*PPN Keluaran*/\n" +
-"or kodeperkiraan= '61101.27'   /*Biaya Rupa-rupa*/\n" +
-"or kodeperkiraan= '61101.35'   /*Biaya Kerugian Brg Expired*/\n" +
-"or kodeperkiraan= '61101.36'   /*Biaya Kerugian Brg Rusak*/\n" +
-"or kodeperkiraan= '61101.40'   /*Biaya Potongan Tagihan Pelanggan*/\n" +
-"or kodeperkiraan= '61101.34')   /*Biaya Piutang Tak Tertagih*/\n " +                   
-"and (kodeperkiraan like '%" + txtcari.getText() + "%' OR lower(NAMAPERKIRAAN) like '%" + txtcari.getText().toLowerCase() + "%') order by 2";
+            sql = "select * from PERKIRAAN where (kodeperkiraan ='11110' /*KAS(D)*/\n"
+                    + "or kodeperkiraan like '11120.%' /*Bank(SD)*/\n"
+                    + "or kodeperkiraan= '11202.2'   /*PPH Pasal 22*/\n"
+                    + "or kodeperkiraan= '61101.21'   /*Ongkos Transfer*/\n"
+                    + "or kodeperkiraan= '61101.30'   /*Biaya Promosi*/\n"
+                    + "or kodeperkiraan= '21111.1'   /*PPN Keluaran*/\n"
+                    + "or kodeperkiraan= '61101.27'   /*Biaya Rupa-rupa*/\n"
+                    + "or kodeperkiraan= '61101.35'   /*Biaya Kerugian Brg Expired*/\n"
+                    + "or kodeperkiraan= '61101.36'   /*Biaya Kerugian Brg Rusak*/\n"
+                    + "or kodeperkiraan= '61101.40'   /*Biaya Potongan Tagihan Pelanggan*/\n"
+                    + "or kodeperkiraan= '61101.34')   /*Biaya Piutang Tak Tertagih*/\n "
+                    + "and (kodeperkiraan like '%" + txtcari.getText() + "%' OR lower(NAMAPERKIRAAN) like '%" + txtcari.getText().toLowerCase() + "%') order by 2";
         }
         Statement st1 = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
         //ResultSet rs1 = st1.executeQuery("select * from perkiraan where (tipe='D' or tipe='SD') and ( kodeperkiraan like '" + txtcari.getText() + "%' or lower(namaperkiraan) like '%" + txtcari.getText().toLowerCase() + "%')");
 //        ResultSet rs1 = st1.executeQuery("select * from perkiraan where (tipe='SD' or kodeperkiraan ='11110' or kodeperkiraan ='31101' or kodeperkiraan ='41102') and ( kodeperkiraan like '%" + txtcari.getText() + "%' or lower(namaperkiraan) like '%" + txtcari.getText().toLowerCase() + "%')");
-        ResultSet rs1 = st1.executeQuery(sql);     
+        ResultSet rs1 = st1.executeQuery(sql);
         rs1.last();
         if (rs1.getRow() > 0) {
             IDAKUN = new String[rs1.getRow()];
@@ -2396,7 +2396,7 @@ private void txtcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         Logger.getLogger(DialogPiutang.class
                 .getName()).log(Level.SEVERE, null, ex);
     }
-   // }
+    // }
 }//GEN-LAST:event_txtcariActionPerformed
 
 private void TxtFilter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtFilter1ActionPerformed
@@ -2430,7 +2430,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                 //txtNamaPelangganKhusus.setText(b.getNAMA());
                 jScrollPane4.setVisible(false);
                 piutangidKhusus = piutangbayarDao.getID(c);
-                piutangidKhususcounter = Integer.parseInt(KodeTransaksiKhusus.getText().substring(6,9));
+                piutangidKhususcounter = Integer.parseInt(KodeTransaksiKhusus.getText().substring(6, 9));
                 if (pilihKhusus.isSelected()) {
                     reloadDataPiutangBayarLunasKhusus(c);
                 } else {
@@ -2584,7 +2584,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
             try {
                 c.rollback();
                 JOptionPane.showMessageDialog(this, "RollBack " + ex.getMessage());
-                
+
             } catch (SQLException ex1) {
                 Logger.getLogger(DialogPiutang.class
                         .getName()).log(Level.SEVERE, null, ex1);
@@ -2596,7 +2596,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
             try {
                 c.rollback();
                 JOptionPane.showMessageDialog(this, "RollBack " + ex.getMessage());
-                
+
             } catch (SQLException ex1) {
                 Logger.getLogger(DialogPiutang.class
                         .getName()).log(Level.SEVERE, null, ex1);
@@ -2608,7 +2608,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
             try {
                 c.rollback();
                 JOptionPane.showMessageDialog(this, "RollBack " + ex.getMessage());
-                
+
             } catch (SQLException ex1) {
                 Logger.getLogger(DialogPiutang.class
                         .getName()).log(Level.SEVERE, null, ex1);
@@ -2763,7 +2763,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                     txtNamaPelangganKhusus.setText(b.getNAMA());
                     jScrollPane4.setVisible(false);
                     piutangidKhusus = piutangbayarDao.getID(c);
-                    piutangidKhususcounter = Integer.parseInt(KodeTransaksiKhusus.getText().substring(6,9));
+                    piutangidKhususcounter = Integer.parseInt(KodeTransaksiKhusus.getText().substring(6, 9));
                     if (pilihKhusus.isSelected()) {
                         reloadDataPiutangBayarLunasKhusus(c);
                     } else {
@@ -3186,6 +3186,20 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                 jTable2MouseClicked(evt);
             }
         });
+        TableColumn col = jTable2.getColumnModel().getColumn(0);
+        col.setPreferredWidth(30);
+        col = jTable2.getColumnModel().getColumn(1);
+        col.setPreferredWidth(300);
+        col = jTable2.getColumnModel().getColumn(2);
+        col.setPreferredWidth(50);
+        col = jTable2.getColumnModel().getColumn(3);
+        col.setPreferredWidth(90);
+        col = jTable2.getColumnModel().getColumn(4);
+        col.setPreferredWidth(90);
+        col = jTable2.getColumnModel().getColumn(5);
+        col.setPreferredWidth(60);
+        col = jTable2.getColumnModel().getColumn(6);
+        col.setPreferredWidth(60);
         jTable2.getColumnModel().getColumn(3).setCellRenderer(new DecimalFormatRenderer());
         jTable2.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
         jTable2.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -3237,6 +3251,20 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                     jTable7MouseClicked(evt);
                 }
             });
+            TableColumn col = jTable7.getColumnModel().getColumn(0);
+            col.setPreferredWidth(30);
+            col = jTable7.getColumnModel().getColumn(1);
+            col.setPreferredWidth(300);
+            col = jTable7.getColumnModel().getColumn(2);
+            col.setPreferredWidth(50);
+            col = jTable7.getColumnModel().getColumn(3);
+            col.setPreferredWidth(90);
+            col = jTable7.getColumnModel().getColumn(4);
+            col.setPreferredWidth(90);
+            col = jTable7.getColumnModel().getColumn(5);
+            col.setPreferredWidth(60);
+            col = jTable7.getColumnModel().getColumn(6);
+            col.setPreferredWidth(60);
             jTable7.getColumnModel().getColumn(3).setCellRenderer(new DecimalFormatRenderer());
             jTable7.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
             jTable7.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -3301,6 +3329,20 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                     jTable7MouseClicked(evt);
                 }
             });
+            TableColumn col = jTable7.getColumnModel().getColumn(0);
+            col.setPreferredWidth(30);
+            col = jTable7.getColumnModel().getColumn(1);
+            col.setPreferredWidth(300);
+            col = jTable7.getColumnModel().getColumn(2);
+            col.setPreferredWidth(50);
+            col = jTable7.getColumnModel().getColumn(3);
+            col.setPreferredWidth(90);
+            col = jTable7.getColumnModel().getColumn(4);
+            col.setPreferredWidth(90);
+            col = jTable7.getColumnModel().getColumn(5);
+            col.setPreferredWidth(60);
+            col = jTable7.getColumnModel().getColumn(6);
+            col.setPreferredWidth(60);
             jTable7.getColumnModel().getColumn(3).setCellRenderer(new DecimalFormatRenderer());
             jTable7.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
             jTable7.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -3333,6 +3375,20 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                     jTable5MouseClicked(evt);
                 }
             });
+            TableColumn col = jTable5.getColumnModel().getColumn(0);
+            col.setPreferredWidth(30);
+            col = jTable5.getColumnModel().getColumn(1);
+            col.setPreferredWidth(300);
+            col = jTable5.getColumnModel().getColumn(2);
+            col.setPreferredWidth(50);
+            col = jTable5.getColumnModel().getColumn(3);
+            col.setPreferredWidth(90);
+            col = jTable5.getColumnModel().getColumn(4);
+            col.setPreferredWidth(90);
+            col = jTable5.getColumnModel().getColumn(5);
+            col.setPreferredWidth(60);
+            col = jTable5.getColumnModel().getColumn(6);
+            col.setPreferredWidth(60);
             jTable5.getColumnModel().getColumn(3).setCellRenderer(new DecimalFormatRenderer());
             jTable5.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
             jTable5.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -3365,6 +3421,20 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
                     jTable1MouseClicked(evt);
                 }
             });
+            TableColumn col = jTable5.getColumnModel().getColumn(0);
+            col.setPreferredWidth(30);
+            col = jTable5.getColumnModel().getColumn(1);
+            col.setPreferredWidth(300);
+            col = jTable5.getColumnModel().getColumn(2);
+            col.setPreferredWidth(50);
+            col = jTable5.getColumnModel().getColumn(3);
+            col.setPreferredWidth(90);
+            col = jTable5.getColumnModel().getColumn(4);
+            col.setPreferredWidth(90);
+            col = jTable5.getColumnModel().getColumn(5);
+            col.setPreferredWidth(60);
+            col = jTable5.getColumnModel().getColumn(6);
+            col.setPreferredWidth(60);
             jTable5.getColumnModel().getColumn(3).setCellRenderer(new DecimalFormatRenderer());
             jTable5.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
             jTable5.setFont(new Font("Tahoma", Font.BOLD, 11));
