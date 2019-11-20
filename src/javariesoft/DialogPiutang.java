@@ -55,7 +55,7 @@ import javax.swing.table.TableColumn;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIESOFT
  */
 public class DialogPiutang extends javax.swing.JDialog {
 

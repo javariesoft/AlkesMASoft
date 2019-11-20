@@ -52,7 +52,7 @@ import javax.swing.table.TableColumn;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIESOFT
  */
 public class DialogHutang extends javax.swing.JDialog {
 

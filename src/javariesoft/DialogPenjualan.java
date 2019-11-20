@@ -83,7 +83,7 @@ import org.jdesktop.application.ResourceMap;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIESOFT
  */
 public class DialogPenjualan extends javax.swing.JDialog {
 

@@ -6,16 +6,13 @@
     },
     "template": {
         "header": ["                                                                                                                       HAL : %{PAGE_NO}",
-            "%{32 R25}No Faktur   : ${FAKTUR:15}",
-            "                                                                                                   Tanggal     : ${TANGGAL:10}",
-            "                                                                                                   Jatuh Tempo : ${TGLLUNAS:10}",
-            "                                                                                                   Cara Bayar  : ${CASH:10}",
-            "                                                                                                   Sales       : ${salesinisial:4}",
-            "",
-            "",
-            "%{45 R130}",
-            "  Kepada : ${PELANGGAN:80} NPWP / NIK : ${NPWP:25}",
-            "           ${ALAMATPELANGGAN:100}"
+            "%{32 R105}No Faktur   : ${FAKTUR:15}",
+            "%{32 R40}Kepada : ${PELANGGAN:53}%{32 R3}Tanggal     : ${TANGGAL:10}",
+            "%{32 R49}${ALAMATPELANGGAN:53}%{32 R3}Jatuh Tempo : ${TGLLUNAS:10}",
+            "%{32 R49}${ALAMATPELANGGAN1:53}%{32 R3}Cara Bayar  : ${CASH:10}",
+            "%{32 R40}${NPWP:62}%{32 R3}Sales       : ${salesinisial:10}",
+            "%{32 R49}${ALAMATPEMILIK1:53}",
+            "%{32 R49}${ALAMATPEMILIK2:53}"
         ],
         "detail": [
             {
@@ -56,7 +53,6 @@
             "%{192}%{196 R129}%{217}",
             "     Ttd,                                                                                            Padang,${tglcetak}",
             "  Penerima                                        Apoteker,                                             Pimpinan",
-            "%{32 R92}",
             "%{32 R92}",
             "%{32 R92}",
             "(                )%{32 R29}(${apotek:25})%{32 R23}( Jasmarizal.SKp,MARS )",

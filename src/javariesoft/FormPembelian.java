@@ -205,7 +205,7 @@ public class FormPembelian extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnFilter);
-        btnFilter.setBounds(780, 10, 90, 25);
+        btnFilter.setBounds(970, 10, 90, 25);
 
         cboStatus.setFont(resourceMap.getFont("cboStatus.font")); // NOI18N
         cboStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));

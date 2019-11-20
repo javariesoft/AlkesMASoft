@@ -685,20 +685,20 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(txtSales);
-        txtSales.setBounds(540, 80, 100, 22);
+        txtSales.setBounds(540, 85, 100, 22);
 
         txtNamaSales.setEditable(false);
         txtNamaSales.setFont(resourceMap.getFont("txtNamaSales.font")); // NOI18N
         txtNamaSales.setText(resourceMap.getString("txtNamaSales.text")); // NOI18N
         txtNamaSales.setName("txtNamaSales"); // NOI18N
         jPanel1.add(txtNamaSales);
-        txtNamaSales.setBounds(650, 80, 310, 22);
+        txtNamaSales.setBounds(650, 85, 310, 22);
 
         jLabel27.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         jLabel27.setText(resourceMap.getString("jLabel27.text")); // NOI18N
         jLabel27.setName("jLabel27"); // NOI18N
         jPanel1.add(jLabel27);
-        jLabel27.setBounds(450, 84, 100, 20);
+        jLabel27.setBounds(450, 85, 100, 20);
 
         LabelKodeDO.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         LabelKodeDO.setText(resourceMap.getString("LabelKodeDO.text")); // NOI18N

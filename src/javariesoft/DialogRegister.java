@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIESOFT
  */
 public class DialogRegister extends javax.swing.JDialog {
 
