@@ -8,8 +8,12 @@ import static com.erv.db.koneksi.IP;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +29,8 @@ public class JavarieSoftApp extends SingleFrameApplication {
 
     static Server server;
 
-    public static String VERSI = "VERSI7.0MRTAALKES";
-    public static String VERSISERVER = "V-1.9.7.0";
+    public static String VERSI = "VERSI7.2MRTAALKES";
+    public static String VERSISERVER = "V-1.9.7.2";
     public static String IPADDRESS = "localhost";
     public static String jenisuser = "";
     public static String groupuser = "";
@@ -61,7 +65,7 @@ public class JavarieSoftApp extends SingleFrameApplication {
     /**
      * Main method launching the application.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         //String connection = "jdbc:h2:~/satuan";
         Connection c = null;
         try {
@@ -96,33 +100,33 @@ public class JavarieSoftApp extends SingleFrameApplication {
             //launch(JavarieSoftApp.class, args);
 //MulaiCdCPU
             c = koneksi.getKoneksiJ();
-//            Statement stat=c.createStatement();
-//            String h="";
-//               byte[] hasil;
-//            try {
-//                hasil = com.erv.function.Authentication.encryptPassword(com.erv.function.MiscUtils.getCpuID());
-//            
-//               for(int i=0;i<hasil.length;i++){
-//                   h+=hasil[i];
-//                }
-//            } catch (UnsupportedEncodingException ex) {
-//                Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (NoSuchAlgorithmException ex) {
-//                Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            ResultSet rs=stat.executeQuery("select * from KODEAKSES where KODE='"+h+"'");
-//            if(rs.next()){
+            Statement stat=c.createStatement();
+            String h="";
+               byte[] hasil;
+            try {
+                hasil = com.erv.function.Authentication.encryptPassword(com.erv.function.MiscUtils.getCpuID());
+            
+               for(int i=0;i<hasil.length;i++){
+                   h+=hasil[i];
+                }
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ResultSet rs=stat.executeQuery("select * from KODEAKSES where KODE='"+h+"'");
+            if(rs.next()){
             launch(JavarieSoftApp.class, args);
-//            }else{
-//                DialogRegister d=new DialogRegister(null, true);
-//                    d.setVisible(true);
-//            }
-//            rs.close();
-//            stat.close();
+            }else{
+                DialogRegister d=new DialogRegister(null, true);
+                    d.setVisible(true);
+            }
+            rs.close();
+            stat.close();
             c.close();
 //        } catch (IOException ex) {
 //            JOptionPane.showMessageDialog(null, ex.getMessage());
-//        
+        
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Database Belum Aktif");
         } catch (FileNotFoundException ex) {

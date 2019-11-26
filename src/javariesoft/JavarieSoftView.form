@@ -1258,6 +1258,15 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLB_RekapBarangPerMerkActionPerformed"/>
                   </Events>
                 </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MLB_BarangPembelian">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="MLB_BarangPembelian.text"/>
+                    <Property name="name" type="java.lang.String" value="MLB_BarangPembelian" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLB_BarangPembelianActionPerformed"/>
+                  </Events>
+                </MenuItem>
               </SubComponents>
             </Menu>
             <Menu class="javax.swing.JMenu" name="MlapHutang">
@@ -1341,6 +1350,15 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLP_RekapPiutangPelangganActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MLP_RekapPiutangJatuhTempo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="MLP_RekapPiutangJatuhTempo.text"/>
+                    <Property name="name" type="java.lang.String" value="MLP_RekapPiutangJatuhTempo" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLP_RekapPiutangJatuhTempoActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>

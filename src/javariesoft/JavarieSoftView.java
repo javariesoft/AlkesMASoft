@@ -12,6 +12,7 @@ import com.eigher.form.FLapRekapBarangDO;
 import com.eigher.form.FLapRekapHutangSupplier;
 import com.eigher.form.FLapDetailHutang;
 import com.eigher.form.FLapDetailPiutang;
+import com.eigher.form.FLapPiutangJatuhTempo;
 import com.eigher.form.FLapRekapPenjualanPerMerk;
 import com.eigher.form.FLapSisaDO;
 import com.eigher.form.FlapBarangMerkKategori;
@@ -72,7 +73,7 @@ public class JavarieSoftView extends FrameView {
         jLabel2.setSize(dim.width - 40, 60);
         jLabel2.setLocation(dim.width / 2 - jLabel2.getWidth() / 2, jLabel2.getY() + jLabel2.getHeight() + 10);
         nonaktif();
-        aktif();
+//        aktif();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -277,6 +278,7 @@ public class JavarieSoftView extends FrameView {
         MLB_KatalogBarang = new javax.swing.JMenuItem();
         MLB_StokBarang = new javax.swing.JMenuItem();
         MLB_RekapBarangPerMerk = new javax.swing.JMenuItem();
+        MLB_BarangPembelian = new javax.swing.JMenuItem();
         MlapHutang = new javax.swing.JMenu();
         MLH_DetailHutangPerSupplier = new javax.swing.JMenuItem();
         MLH_RekapHutangPerSupplier = new javax.swing.JMenuItem();
@@ -286,6 +288,7 @@ public class JavarieSoftView extends FrameView {
         MLP_DetailPiutangPerPelanggan = new javax.swing.JMenuItem();
         MLP_RekapPiutangPerPelanggan = new javax.swing.JMenuItem();
         MLP_RekapPiutangPelanggan = new javax.swing.JMenuItem();
+        MLP_RekapPiutangJatuhTempo = new javax.swing.JMenuItem();
         MLapPerkiraan = new javax.swing.JMenuItem();
         MlapFakturPajak = new javax.swing.JMenuItem();
         MlapTutupBuku = new javax.swing.JMenuItem();
@@ -1231,6 +1234,15 @@ public class JavarieSoftView extends FrameView {
         });
         MlapBarang.add(MLB_RekapBarangPerMerk);
 
+        MLB_BarangPembelian.setText(resourceMap.getString("MLB_BarangPembelian.text")); // NOI18N
+        MLB_BarangPembelian.setName("MLB_BarangPembelian"); // NOI18N
+        MLB_BarangPembelian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MLB_BarangPembelianActionPerformed(evt);
+            }
+        });
+        MlapBarang.add(MLB_BarangPembelian);
+
         Mlaporan.add(MlapBarang);
 
         MlapHutang.setText(resourceMap.getString("MlapHutang.text")); // NOI18N
@@ -1303,6 +1315,15 @@ public class JavarieSoftView extends FrameView {
             }
         });
         MlapPiutang.add(MLP_RekapPiutangPelanggan);
+
+        MLP_RekapPiutangJatuhTempo.setText(resourceMap.getString("MLP_RekapPiutangJatuhTempo.text")); // NOI18N
+        MLP_RekapPiutangJatuhTempo.setName("MLP_RekapPiutangJatuhTempo"); // NOI18N
+        MLP_RekapPiutangJatuhTempo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MLP_RekapPiutangJatuhTempoActionPerformed(evt);
+            }
+        });
+        MlapPiutang.add(MLP_RekapPiutangJatuhTempo);
 
         Mlaporan.add(MlapPiutang);
 
@@ -2420,6 +2441,22 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MLB_MerkKategoriActionPerformed
 
+    private void MLP_RekapPiutangJatuhTempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLP_RekapPiutangJatuhTempoActionPerformed
+        // TODO add your handling code here:
+        FLapPiutangJatuhTempo p= new FLapPiutangJatuhTempo();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_MLP_RekapPiutangJatuhTempoActionPerformed
+
+    private void MLB_BarangPembelianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLB_BarangPembelianActionPerformed
+        // TODO add your handling code here:
+        FLapBarangPembelian p= new FLapBarangPembelian();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_MLB_BarangPembelianActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
     private javax.swing.JLabel LblJenis1;
@@ -2440,6 +2477,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MLBPerSupplier;
     public static javax.swing.JMenuItem MLBRekapHarian;
     public static javax.swing.JMenuItem MLB_AkhirPeriode;
+    private javax.swing.JMenuItem MLB_BarangPembelian;
     public static javax.swing.JMenuItem MLB_KartuStokBulan;
     public static javax.swing.JMenuItem MLB_KartuStokTanggal;
     public static javax.swing.JMenuItem MLB_KatalogBarang;
@@ -2469,6 +2507,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MLJRekapPerSales;
     private javax.swing.JMenuItem MLP_DetailPiutangPerPelanggan;
     private javax.swing.JMenuItem MLP_DetailPiutangPersales;
+    private javax.swing.JMenuItem MLP_RekapPiutangJatuhTempo;
     private javax.swing.JMenuItem MLP_RekapPiutangPelanggan;
     private javax.swing.JMenuItem MLP_RekapPiutangPerPelanggan;
     private javax.swing.JMenuItem MLPajakPembelian;

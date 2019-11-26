@@ -633,6 +633,7 @@ public class ClassPrint {
                 tables.add(line);
             }
             while (true) {
+                //if (no % 6 != 0) {
                 if (no % 6 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");

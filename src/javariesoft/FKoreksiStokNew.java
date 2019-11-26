@@ -842,7 +842,7 @@ private void txtKodeBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN
             + "from BARANG,JENISBARANG,KATEGORI "
             + "inner join BARANGSTOK bs on bs.KODEBARANG=BARANG.KODEBARANG "
             + "left join BARANGSTOKBATCH bsb on bs.ID=bsb.IDBARANGSTOK "
-            + "where BARANG.IDJENIS=JENISBARANG.ID "
+            + "where BARANG.STATUS='0' AND BARANG.IDJENIS=JENISBARANG.ID "
             + "AND BARANG.IDKATEGORI=KATEGORI.IDKATEGORI "
             + "AND (BARANG.KODEBARANG like '%" + txtKodeBarang.getText() + "%' "
             + "OR lower(BARANG.NAMABARANG) like '%" + txtKodeBarang.getText().toLowerCase() + "%' "

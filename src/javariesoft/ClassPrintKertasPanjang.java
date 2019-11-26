@@ -305,7 +305,9 @@ public class ClassPrintKertasPanjang {
                     + "(select namalengkap from usertable where groupuser='Apoteker' and statusaktif='0') as apoteker, " //46
                     + "(select keterangan from usertable where groupuser='Apoteker' and statusaktif='0') as ketapoteker, " //47
                     + "PENJUALAN.DISKONPERSEN AS PENJUALAN_DISKONPERSEN, " //48
-                    + "PELANGGAN.NPWP AS PELANGGAN_NPWP " //49
+                    + "PELANGGAN.NPWP AS PELANGGAN_NPWP, " //49
+                    + "PELANGGAN.ALAMATPEMILIK AS PELANGGAN_ALAMATPEMILIK, " //50
+                    + "PELANGGAN.NIK AS PELANGGAN_NIK " //51
                     + "FROM RINCIPENJUALAN RINCIPENJUALAN INNER JOIN PENJUALAN PENJUALAN ON RINCIPENJUALAN.IDPENJUALAN = PENJUALAN.ID "
                     + "INNER JOIN PELANGGAN PELANGGAN ON PENJUALAN.KODEPELANGGAN = PELANGGAN.KODEPELANGGAN "
                     + "INNER JOIN BARANG BARANG ON RINCIPENJUALAN.KODEBARANG = BARANG.KODEBARANG "
@@ -320,22 +322,63 @@ public class ClassPrintKertasPanjang {
             ResultSet rs1 = stat1.executeQuery(sql);
             //ResultSet rs1 = stat.executeQuery(sql);
             rs1.next();
-            String pel = "", Altpel = "", Altpel1 = "", Altpel2 = "";
-            if (rs1.getString(17).length() >= 45) {
-                pel = rs1.getString(17).substring(0, 45);
+////            String pel = "", Altpel = "", Altpel1 = "", Altpel2 = "";
+////            if (rs1.getString(17).length() >= 45) {
+////                pel = rs1.getString(17).substring(0, 45);
+////            } else {
+////                pel = rs1.getString(17);
+////            }
+////
+////            Altpel = rs1.getString(18);
+            String pel = "",npwp="", Altpel = "", Altpel1 = "", Altpel2 = "",AltPemilik1 = "",AltPemilik2 = "";
+            if (rs1.getString(17).length() >= 53) {
+                pel = rs1.getString(17).substring(0, 53);
             } else {
                 pel = rs1.getString(17);
             }
 
-            Altpel = rs1.getString(18);
+            //Altpel = rs1.getString(18);
+            if (rs1.getString(18).length() >= 53) {
+                Altpel = rs1.getString(18).substring(0, 53);
+                Altpel1 = rs1.getString(18).substring(53, rs1.getString(18).length());
+            } else {
+                Altpel = rs1.getString(18);
+                Altpel1 = "";
+            }
+            
+            if (rs1.getString(51).equals("TRUE")){
+                npwp = "NIK    : [XXXXXXXXXXXXXXXX]";
+            }else{
+                npwp = "NPWP   : "+rs1.getString(49);
+            }
+            
+            if(rs1.getString(50).equals("")){
+                AltPemilik1 = "";
+                AltPemilik2 = "";
+            }else if(rs1.getString(18).equals(rs1.getString(50))){
+                AltPemilik1 = "";
+                AltPemilik2 = "";
+            }else if(!rs1.getString(18).equals(rs1.getString(50))){
+                if (rs1.getString(50).length() >= 53) {
+                    AltPemilik1 = rs1.getString(50).substring(0, 53);
+                    AltPemilik2 = rs1.getString(50).substring(53, rs1.getString(50).length());
+                } else {
+                    AltPemilik1 = rs1.getString(50);
+                    AltPemilik2 = "";
+                }
+            }
+            
             p.put("FAKTUR", rs1.getString(2));
             p.put("TANGGAL", rs1.getString(3));
             p.put("TGLLUNAS", rs1.getString(6));
             p.put("CASH", rs1.getString(37));
             p.put("PELANGGAN", pel);
             p.put("ALAMATPELANGGAN", Altpel);
+            p.put("ALAMATPELANGGAN1", Altpel1);
+            p.put("ALAMATPEMILIK1", AltPemilik1);
+            p.put("ALAMATPEMILIK2", AltPemilik2);
             p.put("INISIAL", rs1.getString(39));
-            p.put("NPWP", rs1.getString(49));
+            p.put("NPWP", npwp);
 
             int no = 0, totqty = 0;
             double total = 0, ppn = 0, totalbersih = 0, bayar =0;
@@ -364,7 +407,8 @@ public class ClassPrintKertasPanjang {
                 tables.add(line);
             }
             while (true) {
-                if (no % 41 != 0) {
+                //if (no % 41 != 0) {
+                if (no % 44 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");
                     line.put("banyak", "");
@@ -412,7 +456,8 @@ public class ClassPrintKertasPanjang {
             } else {
                 t1 = terbilangkata;
             }
-            p.put("terbilang", t1);
+////            p.put("terbilang", t1);
+            p.put("terbilang", terbilangkata);
             p.put("terbilanglanjut", t2);
 //            p.put("bayar", Math.round(rs1.getDouble(8)));
             p.put("bayar", df1.format(bayar));
@@ -486,7 +531,9 @@ public class ClassPrintKertasPanjang {
                     + "(select namalengkap from usertable where groupuser='Apoteker' and statusaktif='0') as apoteker, " //46
                     + "(select keterangan from usertable where groupuser='Apoteker' and statusaktif='0') as ketapoteker, " //47
                     + "PENJUALAN.DISKONPERSEN AS PENJUALAN_DISKONPERSEN, " //48
-                    + "PELANGGAN.NPWP AS PELANGGAN_NPWP " //49
+                    + "PELANGGAN.NPWP AS PELANGGAN_NPWP, " //49
+                    + "PELANGGAN.ALAMATPEMILIK AS PELANGGAN_ALAMATPEMILIK, " //50
+                    + "PELANGGAN.NIK AS PELANGGAN_NIK " //51
                     + "FROM RINCIPENJUALAN RINCIPENJUALAN INNER JOIN PENJUALAN PENJUALAN ON RINCIPENJUALAN.IDPENJUALAN = PENJUALAN.ID "
                     + "INNER JOIN PELANGGAN PELANGGAN ON PENJUALAN.KODEPELANGGAN = PELANGGAN.KODEPELANGGAN "
                     + "INNER JOIN BARANG BARANG ON RINCIPENJUALAN.KODEBARANG = BARANG.KODEBARANG "
@@ -501,22 +548,64 @@ public class ClassPrintKertasPanjang {
             ResultSet rs1 = stat1.executeQuery(sql);
             //ResultSet rs1 = stat.executeQuery(sql);
             rs1.next();
-            String pel = "", Altpel = "", Altpel1 = "", Altpel2 = "";
-            if (rs1.getString(17).length() >= 45) {
-                pel = rs1.getString(17).substring(0, 45);
+////            String pel = "", Altpel = "", Altpel1 = "", Altpel2 = "";
+////            if (rs1.getString(17).length() >= 45) {
+////                pel = rs1.getString(17).substring(0, 45);
+////            } else {
+////                pel = rs1.getString(17);
+////            }
+////
+////            Altpel = rs1.getString(18);
+                
+            String pel = "",npwp="", Altpel = "", Altpel1 = "", Altpel2 = "",AltPemilik1 = "",AltPemilik2 = "";
+            if (rs1.getString(17).length() >= 53) {
+                pel = rs1.getString(17).substring(0, 53);
             } else {
                 pel = rs1.getString(17);
             }
 
-            Altpel = rs1.getString(18);
+            //Altpel = rs1.getString(18);
+            if (rs1.getString(18).length() >= 53) {
+                Altpel = rs1.getString(18).substring(0, 53);
+                Altpel1 = rs1.getString(18).substring(53, rs1.getString(18).length());
+            } else {
+                Altpel = rs1.getString(18);
+                Altpel1 = "";
+            }
+            
+            if (rs1.getString(51).equals("TRUE")){
+                npwp = "NIK    : [XXXXXXXXXXXXXXXX]";
+            }else{
+                npwp = "NPWP   : "+rs1.getString(49);
+            }
+            
+            if(rs1.getString(50).equals("")){
+                AltPemilik1 = "";
+                AltPemilik2 = "";
+            }else if(rs1.getString(18).equals(rs1.getString(50))){
+                AltPemilik1 = "";
+                AltPemilik2 = "";
+            }else if(!rs1.getString(18).equals(rs1.getString(50))){
+                if (rs1.getString(50).length() >= 53) {
+                    AltPemilik1 = rs1.getString(50).substring(0, 53);
+                    AltPemilik2 = rs1.getString(50).substring(53, rs1.getString(50).length());
+                } else {
+                    AltPemilik1 = rs1.getString(50);
+                    AltPemilik2 = "";
+                }
+            }
+
             p.put("FAKTUR", rs1.getString(2));
             p.put("TANGGAL", rs1.getString(3));
             p.put("TGLLUNAS", rs1.getString(6));
             p.put("CASH", rs1.getString(37));
             p.put("PELANGGAN", pel);
             p.put("ALAMATPELANGGAN", Altpel);
+            p.put("ALAMATPELANGGAN1", Altpel1);
+            p.put("ALAMATPEMILIK1", AltPemilik1);
+            p.put("ALAMATPEMILIK2", AltPemilik2);
             p.put("INISIAL", rs1.getString(39));
-            p.put("NPWP", rs1.getString(49));
+            p.put("NPWP", npwp);
 
             int no = 0, totqty = 0;
             double total = 0, ppn = 0, totalbersih = 0, bayar =0;
@@ -555,7 +644,8 @@ public class ClassPrintKertasPanjang {
                 tables.add(line);
             }
             while (true) {
-                if (no % 41 != 0) {
+                //if (no % 41 != 0) {
+                if (no % 44 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");
                     line.put("banyak", "");
@@ -603,7 +693,8 @@ public class ClassPrintKertasPanjang {
             } else {
                 t1 = terbilangkata;
             }
-            p.put("terbilang", t1);
+////            p.put("terbilang", t1);
+            p.put("terbilang", terbilangkata);
             p.put("terbilanglanjut", t2);
 //            p.put("bayar", Math.round(rs1.getDouble(8)));
             p.put("bayar", df1.format(bayar));

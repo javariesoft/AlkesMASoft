@@ -6,13 +6,16 @@
     },
     "template": {
         "header": ["                                                                                                                       HAL : %{PAGE_NO}",
-            "%{32 R105}No Faktur   : ${FAKTUR:15}",
-            "%{32 R40}Kepada : ${PELANGGAN:53}%{32 R3}Tanggal     : ${TANGGAL:10}",
-            "%{32 R49}${ALAMATPELANGGAN:53}%{32 R3}Jatuh Tempo : ${TGLLUNAS:10}",
-            "%{32 R49}${ALAMATPELANGGAN1:53}%{32 R3}Cara Bayar  : ${CASH:10}",
-            "%{32 R40}${NPWP:62}%{32 R3}Sales       : ${salesinisial:10}",
-            "%{32 R49}${ALAMATPEMILIK1:53}",
-            "%{32 R49}${ALAMATPEMILIK2:53}"
+            "                                                                                                   No Faktur   : ${FAKTUR:15}",
+            "                                                                                                   Tanggal     : ${TANGGAL:10}",
+            "                                                                                                   Jatuh Tempo : ${TGLLUNAS:10}",
+            "                                                                                                   Cara Bayar  : ${CASH:10}",
+            "                                                                                                   Sales       : ${salesinisial:4}",
+            "",
+            "",
+            "%{45 R130}",
+            "  Kepada : ${PELANGGAN:87} NPWP / ${NPWP:25}",
+            "           ${ALAMATPELANGGAN:100}"
         ],
         "detail": [
             {
@@ -27,7 +30,7 @@
                     {"caption": "Batch", "source": "batch::right", "width": 12},
                     {"caption": "Expire", "source": "expire", "width": 11},
                     {"caption": "Harga(Rp)", "source": "harga::right", "width": 12},
-                    {"caption": "Disc(%)", "source": "diskon::right", "width": 8},
+                    {"caption": "Disc (%)", "source": "diskon::right", "width": 8},
                     {"caption": "Jumlah(Rp)", "source": "jumlah::right", "width": 14}
                 ]
             }
@@ -43,16 +46,22 @@
             "",
             "",
             "",
+            "",
+            "",
+            "",
             ""
         ],
         "lastPageFooter": [
-            "%{179}       Jumlah        %{179}     Disc Tambahan     %{179}         PPN        %{179}    Ongkos Kirim   %{179}       Bayar       %{179}         TOTAL        %{179}",
-            "%{192}%{196 R129}%{217}",
-            "%{179}${total:20:right} %{179} ${diskonpersentambahan:6:right} % ${diskontambahan:12:right} %{179} ${ppn:18:right} %{179} ${ongkir:18:right}%{179} ${bayar:18:right}%{179} ${totalbersih:21:right}%{179}",
-            "%{179} Terbilang :${terbilang:117}%{179}",
+            "%{179}   ${TOTQTY:8:right:number}%{32 R77}Jumlah          :${total:24:right}%{179}",
+            "%{179}%{32 R88}Diskon Tambahan :${diskonpersentambahan:6:right} % ${diskontambahan:15:right}%{179}",
+            "%{179}%{32 R88}PPN             :${ppn:24:right}%{179}",
+            "%{179}%{32 R88}Ongkos Kirim    :${ongkir:24:right}%{179}",
+            "%{179}  Terbilang :${terbilang:65}%{32 R10}Bayar           :${bayar:24:right}%{179}",
+            "%{179}             ${terbilanglanjut:65}%{32 R10}Total           :${totalbersih:24:right}%{179}",
             "%{192}%{196 R129}%{217}",
             "     Ttd,                                                                                            Padang,${tglcetak}",
             "  Penerima                                        Apoteker,                                             Pimpinan",
+            "%{32 R92}",
             "%{32 R92}",
             "%{32 R92}",
             "(                )%{32 R29}(${apotek:25})%{32 R23}( Jasmarizal.SKp,MARS )",
