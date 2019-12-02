@@ -107,12 +107,12 @@ public class GiroController {
         if (view.getTabelGiro().getSelectedRowCount() == 0) {
             JOptionPane.showMessageDialog(view, "Silahkan seleksi baris yang akan diubah");
             return;
-        } 
-        if(stat.equals("Cair")){
+        }
+        if (stat.equals("Cair")) {
             JOptionPane.showMessageDialog(view, "Giro Sudah Cair");
             return;
-        }    
-        
+        }
+
         Integer id = view.getId();
         String nomorgiro = view.getTxtNomorGiro().getText();
         String jumlah = view.getTxtJumlah().getValue().toString();
@@ -202,18 +202,24 @@ public class GiroController {
         if (stat.equals("Cair")) {
             JOptionPane.showMessageDialog(view, "Giro Sudah Cair");
         } else {
-            try {
-                String id = view.getTabelData().getValueAt(view.getTabelData().getSelectedRow(), 0).toString();
-                model.setID(Integer.parseInt(id));
-                model.setTGLCAIR(tglCair);
-                model.angsuranPiutang(c);
-                JOptionPane.showMessageDialog(view, "Angsuran Berhasil");
-            } catch (Throwable t) {
-                //t.printStackTrace();
-                JOptionPane.showMessageDialog(view, new Object[]{
-                    "Terjadi error di database dengan pesan :",
-                    t.getMessage()
-                });
+            if (view.getTabelpiutang().getSelectedRow() > -1) {
+                int[] selectedrows = view.getTabelpiutang().getSelectedRows();
+                try {
+                    String id = view.getTabelData().getValueAt(view.getTabelData().getSelectedRow(), 0).toString();
+                    model.setID(Integer.parseInt(id));
+                    model.setTGLCAIR(tglCair);
+                    model.angsuranPiutang(c);
+                    JOptionPane.showMessageDialog(view, "Angsuran Berhasil");
+                } catch (Throwable t) {
+                    //t.printStackTrace();
+                    JOptionPane.showMessageDialog(view, new Object[]{
+                        "Terjadi error di database dengan pesan :",
+                        t.getMessage()
+                    });
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(view, "Pilih Faktur Yang Akan Dibayar");
             }
         }
     }

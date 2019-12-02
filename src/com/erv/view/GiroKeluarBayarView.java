@@ -10,6 +10,7 @@ import com.erv.db.koneksi;
 import com.erv.db.supplierDao;
 import com.erv.function.ArrayTable;
 import com.erv.function.ExecuteQuery;
+import com.erv.function.JDBCAdapter;
 import com.erv.fungsi.DecimalFormatRenderer;
 import com.erv.model.GiroKeluarModel;
 import com.erv.model.supplier;
@@ -36,17 +37,18 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
     /**
      * Creates new form GiroBayarView
      */
-    SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     com.erv.function.Util u = new com.erv.function.Util();
     GiroKeluarModel model;
     GiroKeluarController controller;
+
     public GiroKeluarBayarView() {
         model = new GiroKeluarModel();
         controller = new GiroKeluarController();
         initComponents();
         cboBulanCari.setSelectedIndex(u.blnsekarang - 1);
         txtTahun.setText("" + u.thnsekarang);
-        TanggalCair.setDateFormat(df); 
+        TanggalCair.setDateFormat(df);
         jScrollPane2.setVisible(false);
     }
 
@@ -65,8 +67,6 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
     public void setTanggalCair(DateChooserCombo TanggalCair) {
         this.TanggalCair = TanggalCair;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -90,6 +90,8 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         TanggalCair = new datechooser.beans.DateChooserCombo();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setName("Form"); // NOI18N
         setLayout(null);
@@ -144,7 +146,7 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tabelData);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(10, 106, 810, 380);
+        jScrollPane1.setBounds(10, 106, 810, 120);
 
         txtSupplierCari.setText(resourceMap.getString("txtSupplierCari.text")); // NOI18N
         txtSupplierCari.setName("txtSupplierCari"); // NOI18N
@@ -159,7 +161,7 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
             }
         });
         add(txtSupplierCari);
-        txtSupplierCari.setBounds(130, 10, 76, 26);
+        txtSupplierCari.setBounds(130, 10, 76, 20);
 
         txtNamaSupplierCari.setFont(resourceMap.getFont("txtNamaSupplierCari.font")); // NOI18N
         txtNamaSupplierCari.setText(resourceMap.getString("txtNamaSupplierCari.text")); // NOI18N
@@ -196,16 +198,30 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
         });
         add(jButton1);
         jButton1.setBounds(580, 10, 140, 50);
-
-        TanggalCair.setFieldFont(resourceMap.getFont("TanggalCair.dch_combo_fieldFont")); // NOI18N
         add(TanggalCair);
-        TanggalCair.setBounds(130, 70, 150, 26);
+        TanggalCair.setBounds(130, 70, 150, 20);
 
         jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
         add(jLabel2);
-        jLabel2.setBounds(10, 41, 70, 15);
+        jLabel2.setBounds(10, 41, 70, 16);
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTable1.setName("jTable1"); // NOI18N
+        jScrollPane3.setViewportView(jTable1);
+
+        add(jScrollPane3);
+        jScrollPane3.setBounds(12, 242, 810, 240);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -215,7 +231,7 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
 
     private void txtSupplierCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupplierCariActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtSupplierCariActionPerformed
 
     private void txtSupplierCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSupplierCariKeyPressed
@@ -227,7 +243,7 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
             List<Object> newRow;
             try {
                 Connection c = koneksi.getKoneksiJ();
-                supList = supplierDao.getAllFilter(c,where,100);
+                supList = supplierDao.getAllFilter(c, where, 100);
                 c.close();
                 String header[] = {"Kode", "Nama Supplier"};
                 for (ListIterator<supplier> it = supList.listIterator(); it.hasNext();) {
@@ -252,7 +268,7 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
                 jScrollPane2.repaint();
             } catch (SQLException ex) {
 
-            } 
+            }
             jScrollPane2.setVisible(true);
         } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             jScrollPane2.setVisible(false);
@@ -269,9 +285,10 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
             txtNamaSupplierCari.setText(tabelPelanggan.getValueAt(tabelPelanggan.getSelectedRow(), 1).toString());
             jScrollPane2.setVisible(false);
             txtNamaSupplierCari.requestFocus();
+            reloadDataHutangBayar(); 
         }
     }//GEN-LAST:event_tabelPelangganKeyPressed
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private datechooser.beans.DateChooserCombo TanggalCair;
@@ -282,6 +299,8 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable tabelData;
     private javax.swing.JTable tabelPelanggan;
     private javax.swing.JTextField txtNamaSupplierCari;
@@ -289,40 +308,67 @@ public class GiroKeluarBayarView extends javax.swing.JPanel {
     private javax.swing.JTextField txtTahun;
     // End of variables declaration//GEN-END:variables
 
-    public void angsuranHutang(){
-        controller.angsuranHutang(this); 
+    public void angsuranHutang() {
+        controller.angsuranHutang(this);
     }
-    
-    public void updateStatusBatal(){
-        controller.updateStatusBatal(this); 
+
+    public void updateStatusBatal() {
+        controller.updateStatusBatal(this);
         reloadgirobayar();
     }
-    
-    public void reloadgirobayar(){
-        List<List<Object>> rows ;
+
+    public void reloadgirobayar() {
+        List<List<Object>> rows;
         String sql = "select gk.ID,gk.NOMORGIRO,gk.TGLGIRO,TGLJTEMPO,JUMLAH,case gk.STATUS "
                 + "when 0 then 'Open' when 1 then 'Cair' when 2 then 'Batal' end as Status "
-                + "from GIROKELUAR gk inner join SUPPLIER sp on gk.KODESUPPLIER = sp.IDSUPPLIER " 
-                + "WHERE sp.IDSUPPLIER = '"+txtSupplierCari.getText()+"' "
-                + "AND MONTH(gk.TGLGIRO)="+(cboBulanCari.getSelectedIndex()+1)+" "
-                + "AND YEAR(gk.TGLGIRO)="+ txtTahun.getText()+"";
+                + "from GIROKELUAR gk inner join SUPPLIER sp on gk.KODESUPPLIER = sp.IDSUPPLIER "
+                + "WHERE sp.IDSUPPLIER = '" + txtSupplierCari.getText() + "' "
+                + "AND MONTH(gk.TGLGIRO)=" + (cboBulanCari.getSelectedIndex() + 1) + " "
+                + "AND YEAR(gk.TGLGIRO)=" + txtTahun.getText() + "";
         try {
             Connection c = koneksi.getKoneksiJ();
             rows = ExecuteQuery.Query(c, sql);
             c.close();
-            String header[] = {"ID","NOMOR GIRO", "TGL GIRO", "TGL JATUH TEMPO", "JUMLAH", "STATUS"};
+            String header[] = {"ID", "NOMOR GIRO", "TGL GIRO", "TGL JATUH TEMPO", "JUMLAH", "STATUS"};
             ArrayTable a;
             a = new ArrayTable(header, rows);
             jScrollPane1.getViewport().remove(tabelData);
             tabelData = new JTable(a);
             tabelData.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
             tabelData.setFont(new Font("Tahoma", Font.BOLD, 12));
-            
+
             jScrollPane1.getViewport().add(tabelData);
             jScrollPane1.repaint();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(GiroKeluarBayarView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    private void reloadDataHutangBayar() {
+        Connection c=null;
+        try {
+            c = koneksi.getKoneksiJ();
+            JDBCAdapter th = new JDBCAdapter(c);
+            String sql = "SELECT ID,KETERANGAN,NOFAKTUR,NOFAKTURSUPPLIER,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_HUTANG where IDSUPPLIER='" + txtSupplierCari.getText() + "' AND STATUS='BELUM LUNAS'";
+            th.executeQuery(sql);
+            jTable1.setModel(th);
+            jTable1.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
+            jTable1.getColumnModel().getColumn(5).setCellRenderer(new DecimalFormatRenderer());
+            jTable1.setFont(new Font("Tahoma", Font.BOLD, 11));
+            jScrollPane1.repaint();
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(GiroKeluarBayarView.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if(c!=null){
+                try {
+                    c.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GiroKeluarBayarView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
 }

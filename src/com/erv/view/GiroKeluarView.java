@@ -40,6 +40,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -259,7 +260,7 @@ public final class GiroKeluarView extends javax.swing.JPanel implements GiroKelu
         jScrollPane2.setViewportView(tabelPelanggan);
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(520, 60, 70, 40);
+        jScrollPane2.setBounds(410, 60, 70, 40);
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(GiroKeluarView.class);
         jLabel1.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
@@ -488,6 +489,8 @@ public final class GiroKeluarView extends javax.swing.JPanel implements GiroKelu
                 jScrollPane2.getViewport().remove(tabelPelanggan);
                 tabelPelanggan = new JTable(a);
                 tabelPelanggan.setFont(new Font("Tahoma", Font.BOLD, 12));
+                TableColumn col = tabelPelanggan.getColumnModel().getColumn(0);
+                col.setPreferredWidth(10);
                 tabelPelanggan.addKeyListener(new java.awt.event.KeyAdapter() {
                     @Override
                     public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -510,17 +513,6 @@ public final class GiroKeluarView extends javax.swing.JPanel implements GiroKelu
 
     private void cmdFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFilterActionPerformed
         try {
-            //        try {
-//            // TODO add your handling code here:
-//            GirokeluarDAO dao = Database.getGiroKeluarDao();
-//            tableGiroKeluarModel.setList(dao.selectAll(cboKriteria.getSelectedItem().toString(), txtKriteria.getText(), 0));
-//            tabelGiroKeluar.repaint();
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(GiroKeluarView.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(GiroKeluarView.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        reloaddata();
             loadDatabase();
         } catch (SQLException ex) {
             Logger.getLogger(GiroKeluarView.class.getName()).log(Level.SEVERE, null, ex);
