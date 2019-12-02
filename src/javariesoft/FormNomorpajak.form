@@ -152,6 +152,8 @@
         </Container>
         <Component class="javax.swing.JButton" name="btnInsert">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="btnInsert.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnInsert.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="btnInsert.text"/>
             <Property name="name" type="java.lang.String" value="btnInsert" noResource="true"/>
           </Properties>
@@ -160,12 +162,14 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="20" y="120" width="80" height="-1"/>
+              <AbsoluteConstraints x="20" y="120" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="btnUpdate">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="btnInsert.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnUpdate.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="btnUpdate.text"/>
             <Property name="name" type="java.lang.String" value="btnUpdate" noResource="true"/>
           </Properties>
@@ -174,12 +178,14 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="110" y="120" width="80" height="-1"/>
+              <AbsoluteConstraints x="130" y="120" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="btnDelete">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="btnInsert.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnDelete.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="btnDelete.text"/>
             <Property name="name" type="java.lang.String" value="btnDelete" noResource="true"/>
           </Properties>
@@ -188,12 +194,14 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="200" y="120" width="90" height="-1"/>
+              <AbsoluteConstraints x="240" y="120" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="btnCancel">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="btnInsert.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnCancel.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="btnCancel.text"/>
             <Property name="name" type="java.lang.String" value="btnCancel" noResource="true"/>
           </Properties>
@@ -202,12 +210,14 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="300" y="120" width="100" height="-1"/>
+              <AbsoluteConstraints x="350" y="120" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="btnExit">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="btnInsert.font"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="btnExit.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="btnExit.text"/>
             <Property name="name" type="java.lang.String" value="btnExit" noResource="true"/>
           </Properties>
@@ -216,7 +226,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="410" y="120" width="100" height="-1"/>
+              <AbsoluteConstraints x="460" y="120" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

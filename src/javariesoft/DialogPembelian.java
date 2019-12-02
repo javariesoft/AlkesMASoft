@@ -71,7 +71,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIESOFT
  */
 public class DialogPembelian extends javax.swing.JDialog {
 

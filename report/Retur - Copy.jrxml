@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Retur" language="groovy" pageWidth="612" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7b9e59c9-5997-40ad-ac88-918e9d2e366f">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="63"/>
+	<property name="ireport.x" value="454"/>
+	<property name="ireport.y" value="111"/>
 	<parameter name="koderetur" class="java.lang.String">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
@@ -67,8 +67,14 @@ WHERE
 	<variable name="Vtotal" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{TOTJUMLAH}]]></variableExpression>
 	</variable>
+	<variable name="VTotDiskonRinci" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{RETURRINCI_DISKON}]]></variableExpression>
+	</variable>
+	<variable name="VTotDiskonTambahan" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{RETUR_TOTALDISKON} - $V{VTotDiskonRinci}]]></variableExpression>
+	</variable>
 	<variable name="VTotalSemua" class="java.lang.Double">
-		<variableExpression><![CDATA[$V{Vtotal} + $F{RETUR_TOTALPPN}]]></variableExpression>
+		<variableExpression><![CDATA[$V{Vtotal} + $F{RETUR_TOTALPPN} -$V{VTotDiskonTambahan}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -402,12 +408,12 @@ WHERE
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="38" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<line>
-				<reportElement uuid="04ce4f79-2c4f-4cdf-b9c7-0ef56fa7089e" x="0" y="37" width="572" height="1"/>
+				<reportElement uuid="04ce4f79-2c4f-4cdf-b9c7-0ef56fa7089e" x="0" y="49" width="572" height="1"/>
 			</line>
 			<textField pattern="#,##0">
-				<reportElement uuid="cef0922c-67b3-4cf0-8ba1-42ab675ab24c" x="489" y="12" width="81" height="12"/>
+				<reportElement uuid="cef0922c-67b3-4cf0-8ba1-42ab675ab24c" x="489" y="24" width="81" height="12"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
@@ -421,7 +427,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{Vtotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="444" y="0" width="40" height="12"/>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="410" y="0" width="74" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -435,11 +441,52 @@ WHERE
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="444" y="12" width="40" height="12"/>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="410" y="24" width="74" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[PPN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="484" y="24" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="484" y="36" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="410" y="36" width="74" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="90370c7d-05d6-4649-b7dd-6c913ddf1171" x="0" y="0" width="1" height="49"/>
+			</line>
+			<line>
+				<reportElement uuid="90370c7d-05d6-4649-b7dd-6c913ddf1171" x="571" y="0" width="1" height="49"/>
+			</line>
+			<textField>
+				<reportElement uuid="71c463c7-2dba-4368-afc3-a77883c3b285" mode="Opaque" x="3" y="0" width="61" height="12" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RETUR_STATUS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="410" y="12" width="74" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Diskon Tambahan]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="484" y="12" width="5" height="12"/>
@@ -449,38 +496,18 @@ WHERE
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement uuid="687ddf71-5729-4e8d-9f19-6cc244e4de53" x="489" y="24" width="81" height="12"/>
+				<reportElement uuid="bdbfd8fe-4914-46a7-9982-c7ab883719b4" x="489" y="12" width="81" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{VTotDiskonTambahan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="ce435dcc-77ab-44b0-a0ba-635e172053f1" x="489" y="36" width="81" height="12"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{VTotalSemua}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="484" y="24" width="5" height="12"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="444" y="24" width="40" height="12"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[Total]]></text>
-			</staticText>
-			<line>
-				<reportElement uuid="90370c7d-05d6-4649-b7dd-6c913ddf1171" x="0" y="0" width="1" height="38"/>
-			</line>
-			<line>
-				<reportElement uuid="90370c7d-05d6-4649-b7dd-6c913ddf1171" x="571" y="0" width="1" height="37"/>
-			</line>
-			<textField>
-				<reportElement uuid="71c463c7-2dba-4368-afc3-a77883c3b285" mode="Opaque" x="3" y="0" width="61" height="12" backcolor="#CCCCCC"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{RETUR_STATUS}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

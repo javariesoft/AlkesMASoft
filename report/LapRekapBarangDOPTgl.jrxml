@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapRekapBarangDOPTgl" language="groovy" pageWidth="800" pageHeight="600" orientation="Landscape" columnWidth="760" leftMargin="30" rightMargin="10" topMargin="20" bottomMargin="20" uuid="26d95568-6466-4fed-abb0-17535fbbddd1">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="712"/>
+	<property name="ireport.x" value="748"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="tgl1" class="java.lang.String">
 		<defaultValueExpression><![CDATA["2015-01-01"]]></defaultValueExpression>
@@ -104,7 +104,7 @@ WHERE DO."TANGGAL" >= $P{tgl1} AND DO."TANGGAL" <= $P{tgl2} ORDER BY DO."ID"]]>
 					<textFieldExpression><![CDATA[$F{DO_TANGGAL}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="05775dfc-b259-4adf-9d14-4cf29961a929" x="353" y="2" width="200" height="12"/>
+					<reportElement uuid="05775dfc-b259-4adf-9d14-4cf29961a929" x="353" y="2" width="405" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -259,7 +259,7 @@ WHERE DO."TANGGAL" >= $P{tgl1} AND DO."TANGGAL" <= $P{tgl2} ORDER BY DO."ID"]]>
 				<reportElement uuid="2f78f77d-0f2b-4c41-9e23-3dc737700eb2" x="0" y="3" width="759" height="30"/>
 			</rectangle>
 			<rectangle>
-				<reportElement uuid="3b8ee30c-a979-49e6-966a-5294c5b84715" mode="Opaque" x="1" y="4" width="758" height="29" forecolor="#66FF66" backcolor="#CCFFCC"/>
+				<reportElement uuid="3b8ee30c-a979-49e6-966a-5294c5b84715" mode="Opaque" x="1" y="4" width="758" height="29" forecolor="#CCFFCC" backcolor="#CCFFCC"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>

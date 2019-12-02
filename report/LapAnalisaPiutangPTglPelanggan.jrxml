@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapAnalisaPiutangPTglPelanggan" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ab6398e-3c08-46b0-a80e-8a235150dadc">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="68"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="Ptgl1" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -30,7 +30,7 @@ IFNULL((SELECT SALES."NAMA" AS S FROM SALES SALES,PENJUALAN PENJUALAN WHERE PENJ
      /*IFNULL((SELECT SUM(PIUTANGBAYAR."JUMLAH") FROM PIUTANGBAYAR PIUTANGBAYAR WHERE PIUTANG.ID=PIUTANGBAYAR.IDPIUTANG),0) AS PIUTANGBAYAR_ANGSURAN,*/
 IFNULL((SELECT SUM(PIUTANGBAYAR."JUMLAH") FROM PIUTANGBAYAR PIUTANGBAYAR WHERE PIUTANG.ID=PIUTANGBAYAR.IDPIUTANG),0) AS PIUTANGBAYAR_ANGSURAN,
       /* DATEDIFF('DAY', PIUTANG.JATUHTEMPO, CURRENT_DATE()) AS UMUR */
-CASE WHEN PIUTANG."JUMLAH"=  IFNULL((SELECT SUM(PIUTANGBAYAR."JUMLAH") FROM PIUTANGBAYAR PIUTANGBAYAR WHERE PIUTANG.ID=PIUTANGBAYAR.IDPIUTANG),0) THEN '0' ELSE DATEDIFF('DAY', PIUTANG.JATUHTEMPO, CURRENT_DATE()) END AS UMUR
+CASE WHEN PIUTANG."JUMLAH"=  IFNULL((SELECT SUM(PIUTANGBAYAR."JUMLAH") FROM PIUTANGBAYAR PIUTANGBAYAR WHERE PIUTANG.ID=PIUTANGBAYAR.IDPIUTANG),0) THEN '0' ELSE DATEDIFF('DAY', PIUTANG.TANGGAL, CURRENT_DATE()) END AS UMUR
 
 FROM
      PELANGGAN INNER JOIN PIUTANG ON PELANGGAN."KODEPELANGGAN" = PIUTANG."IDPELANGGAN"
@@ -79,7 +79,7 @@ ORDER BY PELANGGAN."NAMA",PENJUALAN_NOFAKTUR]]>
 		<groupHeader>
 			<band height="17">
 				<rectangle radius="10">
-					<reportElement uuid="3ee2d6fc-9943-4cad-b9aa-93a322ae0645" x="3" y="1" width="367" height="15" backcolor="#FFCCCC"/>
+					<reportElement uuid="3ee2d6fc-9943-4cad-b9aa-93a322ae0645" x="3" y="1" width="560" height="15" backcolor="#FFFFCC"/>
 					<graphicElement>
 						<pen lineWidth="0.0"/>
 					</graphicElement>
@@ -92,7 +92,7 @@ ORDER BY PELANGGAN."NAMA",PENJUALAN_NOFAKTUR]]>
 					<text><![CDATA[PELANGGAN   :]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="22af6e3c-6e09-4e6c-bf50-ae4c22b38d16" x="86" y="1" width="258" height="16"/>
+					<reportElement uuid="22af6e3c-6e09-4e6c-bf50-ae4c22b38d16" x="86" y="1" width="463" height="16"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -209,7 +209,7 @@ ORDER BY PELANGGAN."NAMA",PENJUALAN_NOFAKTUR]]>
 	<columnHeader>
 		<band height="29" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="cbcfaf88-60d4-4243-b096-88c0489bc6c5" x="2" y="3" width="775" height="25" backcolor="#FFCC99"/>
+				<reportElement uuid="cbcfaf88-60d4-4243-b096-88c0489bc6c5" x="2" y="3" width="775" height="25" backcolor="#CCFFCC"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>

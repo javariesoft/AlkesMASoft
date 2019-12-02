@@ -70,7 +70,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIESOFT
  */
 public class DialogMutasiBarang extends javax.swing.JDialog {
 

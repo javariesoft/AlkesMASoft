@@ -101,7 +101,7 @@ public class FLapHistoryBarangDO extends javax.swing.JInternalFrame {
 
         tgl2.setFieldFont(resourceMap.getFont("tgl2.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl2);
-        tgl2.setBounds(400, 20, 140, 20);
+        tgl2.setBounds(390, 20, 140, 20);
 
         jLabel4.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N

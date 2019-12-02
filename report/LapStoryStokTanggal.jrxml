@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapStoryStokTanggal" language="groovy" pageWidth="600" pageHeight="842" columnWidth="535" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="587f3ed6-a3e7-4bbd-920e-0c8a7b952e7d">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="358"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="250"/>
+	<property name="ireport.y" value="53"/>
 	<parameter name="Pkdbarang" class="java.lang.String">
 		<defaultValueExpression><![CDATA["00100"]]></defaultValueExpression>
 	</parameter>
@@ -274,7 +274,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{BARANG_NAMABARANG}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="312f77f2-83a9-40d7-a249-e9cd9d0af4af" x="227" y="47" width="68" height="12"/>
+				<reportElement uuid="312f77f2-83a9-40d7-a249-e9cd9d0af4af" x="344" y="47" width="68" height="12"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>

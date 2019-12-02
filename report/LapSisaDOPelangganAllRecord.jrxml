@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapSisaDOPelangganAllRecord" language="groovy" pageWidth="612" pageHeight="842" columnWidth="547" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26d95568-6466-4fed-abb0-17535fbbddd1">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="372"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="tgl1" class="java.lang.String">
 		<defaultValueExpression><![CDATA["2015-01-01"]]></defaultValueExpression>
@@ -88,21 +88,21 @@ WHERE (SELECT SUM(BDO.STOKDO-BDO.STOKRETURDO-BDO.STOKDOFAKTUR) FROM BARANGDO BDO
 					<textFieldExpression><![CDATA[$F{DO_KODEDO}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="b640eec6-35e8-4b43-993f-680fc93b1ccb" x="321" y="13" width="53" height="12"/>
+					<reportElement uuid="b640eec6-35e8-4b43-993f-680fc93b1ccb" x="185" y="13" width="53" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Tanggal DO]]></text>
 				</staticText>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement uuid="e5053563-d54c-4956-b05f-e34c450d6851" x="383" y="13" width="60" height="12"/>
+					<reportElement uuid="e5053563-d54c-4956-b05f-e34c450d6851" x="247" y="13" width="60" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{TANGGAL}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="05775dfc-b259-4adf-9d14-4cf29961a929" x="383" y="2" width="160" height="12"/>
+					<reportElement uuid="05775dfc-b259-4adf-9d14-4cf29961a929" x="247" y="2" width="298" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -130,14 +130,14 @@ WHERE (SELECT SUM(BDO.STOKDO-BDO.STOKRETURDO-BDO.STOKDOFAKTUR) FROM BARANGDO BDO
 					<text><![CDATA[:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="7e64980d-d973-4d4f-86a0-74efe0725e8e" x="321" y="2" width="52" height="12"/>
+					<reportElement uuid="7e64980d-d973-4d4f-86a0-74efe0725e8e" x="185" y="2" width="52" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Pelanggan ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="432b9b03-6f04-42d8-af6b-d3d5546f09a2" x="374" y="2" width="9" height="12"/>
+					<reportElement uuid="432b9b03-6f04-42d8-af6b-d3d5546f09a2" x="238" y="2" width="9" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -151,7 +151,7 @@ WHERE (SELECT SUM(BDO.STOKDO-BDO.STOKRETURDO-BDO.STOKDOFAKTUR) FROM BARANGDO BDO
 					<textFieldExpression><![CDATA[$F{STATUSDO}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="432b9b03-6f04-42d8-af6b-d3d5546f09a2" x="374" y="13" width="9" height="12"/>
+					<reportElement uuid="432b9b03-6f04-42d8-af6b-d3d5546f09a2" x="238" y="13" width="9" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>

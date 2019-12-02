@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Retur" language="groovy" pageWidth="612" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7b9e59c9-5997-40ad-ac88-918e9d2e366f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Retur" language="groovy" pageWidth="612" pageHeight="842" columnWidth="577" leftMargin="15" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7b9e59c9-5997-40ad-ac88-918e9d2e366f">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="454"/>
-	<property name="ireport.y" value="111"/>
+	<property name="ireport.x" value="372"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="koderetur" class="java.lang.String">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
@@ -22,7 +22,7 @@
      PENJUALAN."FAKTUR" AS PENJUALAN_FAKTUR,
      PENJUALAN."TANGGAL" AS PENJUALAN_TANGGAL,
      PENJUALAN."TGLLUNAS" AS PENJUALAN_TGLLUNAS,
-     casewhen(PENJUALAN."CASH"=1,'Hutang','Tunai') AS PENJUALAN_CASH,
+     casewhen(PENJUALAN."CASH"=1,'Kredit','Tunai') AS PENJUALAN_CASH,
      RETUR."TOTALDISKON" AS RETUR_TOTALDISKON,
      RETUR."TOTALPPN" AS RETUR_TOTALPPN,
      RETURRINCI."KODEBATCH" AS RETURRINCI_KODEBATCH,
@@ -80,16 +80,16 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="37" splitType="Stretch">
+		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="c23059f6-6590-4ca0-ae1d-ada708d9dbc8" x="3" y="19" width="261" height="18"/>
+				<reportElement uuid="c23059f6-6590-4ca0-ae1d-ada708d9dbc8" x="0" y="17" width="261" height="18"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Laporan Retur Penjualan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c1b8f2cb-fc9a-4f99-abfb-008fa702c011" x="3" y="2" width="243" height="18"/>
+				<reportElement uuid="c1b8f2cb-fc9a-4f99-abfb-008fa702c011" x="0" y="0" width="261" height="18"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
@@ -98,119 +98,168 @@ WHERE
 		</band>
 	</title>
 	<pageHeader>
-		<band height="53" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<textField>
-				<reportElement uuid="e692bb5c-8d9f-4fd8-afa0-0bb7aa5c214b" x="90" y="5" width="100" height="12"/>
+				<reportElement uuid="e692bb5c-8d9f-4fd8-afa0-0bb7aa5c214b" x="89" y="3" width="163" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{RETUR_KODERETUR}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="0" y="5" width="87" height="12"/>
+				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="1" y="3" width="82" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Kode Retur]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement uuid="b51e98fb-2ad2-40dc-a7df-978ba10768e2" x="90" y="16" width="163" height="12"/>
+				<reportElement uuid="b51e98fb-2ad2-40dc-a7df-978ba10768e2" x="89" y="14" width="163" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{RETUR_TANGGAL}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="c8d7adc1-47c2-4e71-a425-d1b5cf1ccb3f" x="0" y="16" width="87" height="12"/>
+				<reportElement uuid="c8d7adc1-47c2-4e71-a425-d1b5cf1ccb3f" x="1" y="14" width="82" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Tanggal Retur]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="26c5f156-3b53-4d70-a55a-aa257774dd7a" x="90" y="28" width="163" height="12"/>
+				<reportElement uuid="26c5f156-3b53-4d70-a55a-aa257774dd7a" x="89" y="25" width="272" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PELANGGAN_NAMA}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="2d062a3b-bc68-424b-bdc5-fcbdfe80d3ce" x="0" y="28" width="87" height="12"/>
+				<reportElement uuid="2d062a3b-bc68-424b-bdc5-fcbdfe80d3ce" x="1" y="25" width="82" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Nama Pelanggan]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="608da88c-8e6b-4f7e-8e74-2a8f42117292" x="90" y="39" width="249" height="12"/>
-				<textElement>
-					<font size="9"/>
+				<reportElement uuid="608da88c-8e6b-4f7e-8e74-2a8f42117292" stretchType="RelativeToTallestObject" x="89" y="36" width="477" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{RETUR_KETERANGAN}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="7a580b68-40f0-4ef5-bb92-e0031605bc8e" x="0" y="39" width="87" height="12"/>
+				<reportElement uuid="7a580b68-40f0-4ef5-bb92-e0031605bc8e" x="1" y="36" width="82" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Keterangan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="dad8d205-9bcf-44fd-a07a-78702ed27d92" x="376" y="5" width="73" height="12"/>
+				<reportElement uuid="dad8d205-9bcf-44fd-a07a-78702ed27d92" x="387" y="3" width="73" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[No Faktur]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="52905c29-dace-40ae-9ed5-a23fd136686c" x="453" y="5" width="113" height="12"/>
+				<reportElement uuid="52905c29-dace-40ae-9ed5-a23fd136686c" x="467" y="3" width="52" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PENJUALAN_FAKTUR}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="47ac8b10-a874-452e-a6cd-aba82c9cce1e" x="376" y="16" width="73" height="12"/>
+				<reportElement uuid="47ac8b10-a874-452e-a6cd-aba82c9cce1e" x="387" y="14" width="73" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Tanggal Faktur]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="dc723bd6-4fa2-4ebc-b27b-abd12b301aae" x="376" y="28" width="73" height="12"/>
+				<reportElement uuid="dc723bd6-4fa2-4ebc-b27b-abd12b301aae" x="387" y="25" width="73" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Jatuh Tempo]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="ec49cac0-1ee4-4a9f-9507-3fcb1ddc1bbd" x="453" y="16" width="113" height="12"/>
+				<reportElement uuid="ec49cac0-1ee4-4a9f-9507-3fcb1ddc1bbd" x="467" y="14" width="100" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PENJUALAN_TANGGAL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="85a8dc5c-dbde-4cbf-b65b-de9afd6b97c2" x="453" y="28" width="113" height="12"/>
+				<reportElement uuid="85a8dc5c-dbde-4cbf-b65b-de9afd6b97c2" x="467" y="25" width="100" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PENJUALAN_TGLLUNAS}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement uuid="22f9af70-6f1e-4d33-b918-86f3342beba9" x="376" y="39" width="73" height="12"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[Jenis Transaksi]]></text>
-			</staticText>
 			<textField>
-				<reportElement uuid="2974b28d-0515-4ff8-9246-76753c4a395a" x="453" y="39" width="113" height="12"/>
+				<reportElement uuid="2974b28d-0515-4ff8-9246-76753c4a395a" x="522" y="3" width="45" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PENJUALAN_CASH}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="83" y="14" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="83" y="25" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="83" y="3" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="83" y="36" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="461" y="3" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="461" y="14" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="461" y="25" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a22b818-0f5e-4d3a-b9bb-132f9ea7f9f5" x="517" y="3" width="5" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -427,7 +476,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{Vtotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="410" y="0" width="74" height="12"/>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="407" y="0" width="74" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -441,7 +490,7 @@ WHERE
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="410" y="24" width="74" height="12"/>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="407" y="24" width="74" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -462,7 +511,7 @@ WHERE
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="410" y="36" width="74" height="12"/>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="407" y="36" width="74" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -482,7 +531,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{RETUR_STATUS}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="410" y="12" width="74" height="12"/>
+				<reportElement uuid="fda1a7e1-ce0a-4e97-925d-ab83a485d147" x="407" y="12" width="74" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>

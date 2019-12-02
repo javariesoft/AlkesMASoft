@@ -48,10 +48,11 @@ import java.text.ParseException;
 import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumn;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIESOFT
  */
 public class DialogHutang extends javax.swing.JDialog {
 
@@ -161,7 +162,7 @@ public class DialogHutang extends javax.swing.JDialog {
 ////            dbsup = new supplierDao(c);
         tglHutang.setDateFormat(d);
         jScrollPane4.setVisible(false);
-        jScrollPane4.setSize(500, 150);
+        jScrollPane4.setSize(700, 150);
         tglBayar.setDateFormat(d);
         tglBayar1.setDateFormat(d);
         tglHutang.setDateFormat(d);
@@ -3014,7 +3015,7 @@ private void TxtFilter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             }
             jScrollPane4.setVisible(true);
             JDBCAdapter ja = new JDBCAdapter(c);
-            ja.executeQuery("select IDSUPPLIER ,NAMA,ALAMAT from SUPPLIER  where STATUSAKTIF='0' AND (IDSUPPLIER like '" + kodesupplier + "%' or lower(NAMA) like '%" + kodesupplier.toLowerCase() + "%')");
+            ja.executeQuery("select IDSUPPLIER AS ID,NAMA,ALAMAT from SUPPLIER  where STATUSAKTIF='0' AND (IDSUPPLIER like '" + kodesupplier + "%' or lower(NAMA) like '%" + kodesupplier.toLowerCase() + "%')");
             jScrollPane4.getViewport().remove(jTable4);
             jTable4 = new JTable(ja);
             jTable4.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -3024,7 +3025,13 @@ private void TxtFilter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                     jTable4KeyPressed(evt);
                 }
             });
-            jTable4.setFont(new Font("Tahoma", Font.BOLD, 12));
+            TableColumn col = jTable4.getColumnModel().getColumn(0);
+            col.setPreferredWidth(4);
+            col = jTable4.getColumnModel().getColumn(1);
+            col.setPreferredWidth(250);
+            col = jTable4.getColumnModel().getColumn(2);
+            col.setPreferredWidth(300);
+            jTable4.setFont(new Font("Tahoma", Font.BOLD, 11));
             jScrollPane4.getViewport().add(jTable4);
             jScrollPane4.repaint();
             ja.close();

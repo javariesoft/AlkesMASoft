@@ -20,3 +20,20 @@ select kodebarang,tanggal, kodebatch, 0 as in, rdr.jumlahkecil as out, 'RETURDO'
 from RETURDO r 
 inner join RETURDORINCI rdr on r.id = rdr.IDRETURDO)
 order by 2, 7;
+
+==============================================================
+EDIT HERMAN
+
+create view viewstokdo as 
+(select kodebarang,tanggal, kodebatch, dr.jumlahkecil as in, 0 as out, 'DO' as jenis, d.kodedo as kode, 1 as nourut
+from do d 
+inner join DORINCI dr on d.id = dr.iddo 
+union all
+select kodebarang,tanggal, kodebatch, 0 as in, rp.jumlahkecil as out, 'JUAL' as jenis, p.faktur as kode, 2 as nourut
+from PENJUALAN p 
+inner join RINCIPENJUALAN rp on p.id = rp.IDPENJUALAN where rp.IDDO>0
+union all
+select kodebarang,tanggal, kodebatch, 0 as in, rdr.jumlahkecil as out, 'RETURDO' as jenis, r.kodereturdo as kode, 3 as nourut
+from RETURDO r 
+inner join RETURDORINCI rdr on r.id = rdr.IDRETURDO)
+order by 2, 7;

@@ -2797,14 +2797,14 @@ public class DialogPembelianInternal extends javax.swing.JInternalFrame {
         r.setKODERETURBELI(txtkodeRetur.getText());
         r.setTANGGAL(tglRetur.getText());
         r.setIDSUPPLIER(kodeSupplier1.getText());
-        r.setKETERANGAN("Pengembalian Barang Ke " + namaSupplier1.getText());
+        r.setKETERANGAN("Retur Barang Ke " + namaSupplier1.getText());
         r.setIDPEMBELIAN(IDBELI);
         r.setSTATUS(0);
         r.setTOTALRETUR(total);
         r.setTOTALDISKON(diskont);
         r.setTOTALPPN(tppn);
         if (returbeliDao.insertIntoRETURBELI(c, r)) {
-            JOptionPane.showMessageDialog(this, "Entri Retur Ok");
+            JOptionPane.showMessageDialog(this, "Entri Retur Pembelian Ok");
             Statement s = cm.createStatement();
             ResultSet r1 = s.executeQuery("select * from rinci");
             returbelirinci rr = new returbelirinci();

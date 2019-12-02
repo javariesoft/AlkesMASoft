@@ -16,16 +16,20 @@ import com.erv.function.JDBCAdapter;
 import com.erv.function.Util;
 import com.erv.model.jurnal;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
@@ -47,7 +51,7 @@ public class LaporanBukuBesarDetailFormTanggal extends javax.swing.JInternalFram
         initComponents();
         try {
             c = koneksi.getKoneksiJ();
-            jScrollPane1.setSize(500, 150);
+            jScrollPane1.setSize(600, 150);
             jScrollPane1.setVisible(false);
             tglTrans.setDateFormat(d);
             tglTrans1.setDateFormat(d); 
@@ -93,7 +97,7 @@ public class LaporanBukuBesarDetailFormTanggal extends javax.swing.JInternalFram
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(130, 40, 60, 30);
+        jScrollPane1.setBounds(30, 40, 60, 30);
 
         btnOk.setFont(resourceMap.getFont("btnOk.font")); // NOI18N
         btnOk.setIcon(resourceMap.getIcon("btnOk.icon")); // NOI18N
@@ -272,10 +276,35 @@ private void txtKodePerkiraanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     private javax.swing.JTextField txtNamaPerkiraan;
     // End of variables declaration//GEN-END:variables
 
+    public static boolean cekAkunPelanggan(Connection conn, String kode) {
+        boolean hasil = false;
+        try {
+            Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery("select * from PENJUALAN where FAKTUR='" + kode + "'");
+            if (rs.next()) {
+                if (rs.getString(2) != null) {
+                    hasil = true;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+
+        return hasil;
+    }
+    
     void reloadData() {
         try {
             JDBCAdapter j = new JDBCAdapter(c);
-            j.executeQuery("Select * from PERKIRAAN where (tipe='D' or tipe='SD') and KODEPERKIRAAN like '%"+ txtKodePerkiraan.getText() +"%' or lower(NAMAPERKIRAAN) like '%" + txtKodePerkiraan.getText().toLowerCase() + "%'");
+            //String sql="Select KODEPERKIRAAN AS KODE,NAMAPERKIRAAN,GRUP,TIPE from PERKIRAAN where (tipe='D' or tipe='SD') and KODEPERKIRAAN like '%"+ txtKodePerkiraan.getText() +"%' or lower(NAMAPERKIRAAN) like '%" + txtKodePerkiraan.getText().toLowerCase() + "%'";
+            String sql="SELECT P.KODEPERKIRAAN AS KODE,P.NAMAPERKIRAAN,"
+                    + "IFNULL((SELECT PEL.NAMAPEMILIK FROM PELANGGAN PEL WHERE P.KODEPERKIRAAN=PEL.KODEAKUN),'-') AS NAMAPEMILIK,"
+                    + "P.GRUP,P.TIPE "
+                    + "FROM PERKIRAAN P WHERE (P.tipe='D' or P.tipe='SD') "
+                    + "AND P.KODEPERKIRAAN LIKE '%"+ txtKodePerkiraan.getText() +"%' "
+                    + "OR LOWER(NAMAPERKIRAAN) LIKE '%" + txtKodePerkiraan.getText().toLowerCase() + "%'";
+            
+            j.executeQuery(sql);
             jScrollPane1.getViewport().remove(jTable1);
             jTable1 = new JTable(j);
             jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -284,6 +313,17 @@ private void txtKodePerkiraanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     jTable1KeyPressed(evt);
                 }
             });
+            TableColumn col = jTable1.getColumnModel().getColumn(0);
+            col.setPreferredWidth(15);
+            col = jTable1.getColumnModel().getColumn(1);
+            col.setPreferredWidth(200);
+            col = jTable1.getColumnModel().getColumn(2);
+            col.setPreferredWidth(100);
+            col = jTable1.getColumnModel().getColumn(3);
+            col.setPreferredWidth(5);
+            col = jTable1.getColumnModel().getColumn(4);
+            col.setPreferredWidth(5);
+            jTable1.setFont(new Font("Tahoma", Font.BOLD, 11));
             jScrollPane1.getViewport().add(jTable1);
         } catch (Exception ex) {
             Logger.getLogger(LaporanBukuBesarDetailFormTanggal.class.getName()).log(Level.SEVERE, null, ex);
