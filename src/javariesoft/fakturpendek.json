@@ -12,7 +12,7 @@
             "%{32 R35}%{179}            ${ALAMATPELANGGAN1:50}%{179}     Cara Bayar  : ${CASH:10}",
             "%{32 R35}%{179}   ${NPWP:59}%{179}     Sales       : ${salesinisial:10}",
             "%{32 R35}%{179}   ${ALAMATPEMILIK1:59}%{179}",
-            "%{32 R35}%{179}   ${ALAMATPEMILIK2:59}%{179}"
+            "%{32 R35}%{192}%{196 R62}%{217}"
         ],
         "detail": [
             {
