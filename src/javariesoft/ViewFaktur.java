@@ -27,7 +27,7 @@ public class ViewFaktur extends javax.swing.JInternalFrame {
         Template template  = null;
         try {
             //template = new JsonTemplate(ViewFaktur.class.getResourceAsStream("faktur.json"));
-            template = new JsonTemplate(ViewFaktur.class.getResourceAsStream("fakturpendek.json"));
+            template = new JsonTemplate(ViewFaktur.class.getResourceAsStream("fakturPendek.json"));
             PrintPreviewPane preview = new PrintPreviewPane(template, p, null);
             setLayout(new BorderLayout());
             add(preview, BorderLayout.CENTER);

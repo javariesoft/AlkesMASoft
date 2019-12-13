@@ -408,7 +408,7 @@ public class ClassPrintKertasPanjang {
             }
             while (true) {
                 //if (no % 41 != 0) {
-                if (no % 44 != 0) {
+                if (no % 49 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");
                     line.put("banyak", "");
@@ -645,7 +645,7 @@ public class ClassPrintKertasPanjang {
             }
             while (true) {
                 //if (no % 41 != 0) {
-                if (no % 44 != 0) {
+                if (no % 49 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");
                     line.put("banyak", "");

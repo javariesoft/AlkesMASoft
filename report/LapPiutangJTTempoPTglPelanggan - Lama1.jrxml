@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapPiutangJTTempoPTglStatusPelanggan" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ab6398e-3c08-46b0-a80e-8a235150dadc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapPiutangJTTempoPTglPelanggan" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ab6398e-3c08-46b0-a80e-8a235150dadc">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="259"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="Ptgl1" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -37,7 +37,7 @@ CASE WHEN PIUTANG."JUMLAH"=  IFNULL((SELECT SUM(PIUTANGBAYAR."JUMLAH") FROM PIUT
 
 FROM
      PELANGGAN INNER JOIN PIUTANG ON PELANGGAN."KODEPELANGGAN" = PIUTANG."IDPELANGGAN"
-WHERE PIUTANG."JATUHTEMPO" >= $P{Ptgl1} AND PIUTANG."JATUHTEMPO" <= $P{Ptgl2} AND PIUTANG.STATUS=$P{PStatus} AND PIUTANG."IDPELANGGAN"=$P{PPelanggan}
+WHERE PIUTANG."JATUHTEMPO" >= $P{Ptgl1} AND PIUTANG."JATUHTEMPO" <= $P{Ptgl2} AND PIUTANG."IDPELANGGAN"=$P{PPelanggan}
 ORDER BY PELANGGAN."NAMA",PENJUALAN_NOFAKTUR]]>
 	</queryString>
 	<field name="PIUTANG_ID" class="java.lang.Integer"/>
@@ -76,10 +76,6 @@ ORDER BY PELANGGAN."NAMA",PENJUALAN_NOFAKTUR]]>
 	</variable>
 	<variable name="VtotalSisa" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$V{Vsisa}]]></variableExpression>
-	</variable>
-	<variable name="VNoGroup" class="java.lang.Integer" incrementType="Group" incrementGroup="Gpelanggan">
-		<variableExpression><![CDATA[$V{Gpelanggan_COUNT} == 1 ? ($V{VNoGroup} + 1) : $V{VNoGroup}]]></variableExpression>
-		<initialValueExpression><![CDATA[1]]></initialValueExpression>
 	</variable>
 	<group name="Gpelanggan">
 		<groupExpression><![CDATA[$F{PIUTANG_IDPELANGGAN}]]></groupExpression>

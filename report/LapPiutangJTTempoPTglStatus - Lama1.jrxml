@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapPiutangJTTempoPTglStatusPelanggan" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ab6398e-3c08-46b0-a80e-8a235150dadc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapPiutangJTTempoPTglStatus" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ab6398e-3c08-46b0-a80e-8a235150dadc">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="403"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="Ptgl1" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -10,9 +10,6 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PStatus" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PPelanggan" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -37,7 +34,7 @@ CASE WHEN PIUTANG."JUMLAH"=  IFNULL((SELECT SUM(PIUTANGBAYAR."JUMLAH") FROM PIUT
 
 FROM
      PELANGGAN INNER JOIN PIUTANG ON PELANGGAN."KODEPELANGGAN" = PIUTANG."IDPELANGGAN"
-WHERE PIUTANG."JATUHTEMPO" >= $P{Ptgl1} AND PIUTANG."JATUHTEMPO" <= $P{Ptgl2} AND PIUTANG.STATUS=$P{PStatus} AND PIUTANG."IDPELANGGAN"=$P{PPelanggan}
+WHERE PIUTANG."JATUHTEMPO" >= $P{Ptgl1} AND PIUTANG."JATUHTEMPO" <= $P{Ptgl2} AND PIUTANG.STATUS=$P{PStatus}
 ORDER BY PELANGGAN."NAMA",PENJUALAN_NOFAKTUR]]>
 	</queryString>
 	<field name="PIUTANG_ID" class="java.lang.Integer"/>
@@ -76,10 +73,6 @@ ORDER BY PELANGGAN."NAMA",PENJUALAN_NOFAKTUR]]>
 	</variable>
 	<variable name="VtotalSisa" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$V{Vsisa}]]></variableExpression>
-	</variable>
-	<variable name="VNoGroup" class="java.lang.Integer" incrementType="Group" incrementGroup="Gpelanggan">
-		<variableExpression><![CDATA[$V{Gpelanggan_COUNT} == 1 ? ($V{VNoGroup} + 1) : $V{VNoGroup}]]></variableExpression>
-		<initialValueExpression><![CDATA[1]]></initialValueExpression>
 	</variable>
 	<group name="Gpelanggan">
 		<groupExpression><![CDATA[$F{PIUTANG_IDPELANGGAN}]]></groupExpression>
@@ -181,33 +174,33 @@ ORDER BY PELANGGAN."NAMA",PENJUALAN_NOFAKTUR]]>
 				<text><![CDATA[LAPORAN REKAP PIUTANG PELANGGAN JATUH TEMPO]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="063b0e2c-74d2-4aa2-a5ec-bc68ea1c6424" x="335" y="40" width="64" height="16"/>
+				<reportElement uuid="063b0e2c-74d2-4aa2-a5ec-bc68ea1c6424" x="357" y="40" width="64" height="16"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Ptgl1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="bbe74451-cbcf-4131-91ec-abf73bfd39a5" x="400" y="40" width="22" height="16"/>
+				<reportElement uuid="bbe74451-cbcf-4131-91ec-abf73bfd39a5" x="422" y="40" width="22" height="16"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[s/d]]></text>
 			</staticText>
-			<staticText>
-				<reportElement uuid="0fe36d33-3c5d-4e2a-b7f4-affdffee4262" x="252" y="40" width="83" height="16"/>
-				<textElement>
-					<font fontName="Times New Roman" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Jatuh Tempo :]]></text>
-			</staticText>
 			<textField>
-				<reportElement uuid="6814ea55-5ff0-4f20-9ebc-d9cb2877c870" x="422" y="40" width="100" height="16"/>
+				<reportElement uuid="6814ea55-5ff0-4f20-9ebc-d9cb2877c870" x="444" y="40" width="100" height="16"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Ptgl2}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="0fe36d33-3c5d-4e2a-b7f4-affdffee4262" x="275" y="40" width="83" height="16"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jatuh Tempo :]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>

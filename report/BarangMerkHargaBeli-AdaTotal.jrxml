@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BarangMerkHargaBeli" language="groovy" pageWidth="600" pageHeight="842" columnWidth="555" leftMargin="25" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dc9dfc58-3ad3-4c51-8f1b-156ee27700de">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="968"/>
-	<property name="ireport.y" value="173"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="Pmerk" class="java.lang.String">
 		<defaultValueExpression><![CDATA["1%"]]></defaultValueExpression>
 	</parameter>
@@ -48,29 +48,40 @@ ORDER BY JENISBARANG."JENIS",KATEGORI.KATEGORI,BARANG."NAMABARANG"]]>
 	<variable name="HPP_2" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{HPPBARU}]]></variableExpression>
 	</variable>
+	<variable name="GroupCount" class="java.lang.Integer" incrementType="Group" incrementGroup="jenis">
+		<variableExpression><![CDATA[$V{jenis_COUNT} == 1 ? ($V{GroupCount} + 1) : $V{GroupCount}]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
 	<group name="jenis">
 		<groupExpression><![CDATA[$F{JENISBARANG_ID}]]></groupExpression>
 		<groupHeader>
 			<band height="13">
 				<rectangle radius="5">
-					<reportElement uuid="1fc89893-da1b-4da7-8981-226ffd53ee8a" x="0" y="1" width="283" height="12" backcolor="#FFFF99"/>
+					<reportElement uuid="1fc89893-da1b-4da7-8981-226ffd53ee8a" x="0" y="1" width="313" height="12" backcolor="#FFFF99"/>
 					<graphicElement>
 						<pen lineWidth="0.0"/>
 					</graphicElement>
 				</rectangle>
 				<staticText>
-					<reportElement uuid="01c65eca-5729-4664-a791-754cffa800ae" x="7" y="1" width="46" height="12"/>
+					<reportElement uuid="01c65eca-5729-4664-a791-754cffa800ae" x="37" y="1" width="46" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Merk       :		:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="5c70659e-4a2c-40a6-8233-9259ca0f77b0" x="54" y="1" width="218" height="12"/>
+					<reportElement uuid="5c70659e-4a2c-40a6-8233-9259ca0f77b0" x="84" y="1" width="218" height="12"/>
 					<textElement>
 						<font size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{JENISBARANG_JENIS}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="8b517283-d1e5-430d-8d5f-3535b20c4095" x="0" y="1" width="30" height="12"/>
+					<textElement textAlignment="Center">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{GroupCount}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

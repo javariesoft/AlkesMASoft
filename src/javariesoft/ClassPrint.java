@@ -400,7 +400,7 @@ public class ClassPrint {
             }
             while (true) {
                 //if (no % 6 != 0) {
-                if (no % 12 != 0) {
+                if (no % 11 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");
                     line.put("banyak", "");
@@ -634,7 +634,7 @@ public class ClassPrint {
             }
             while (true) {
                 //if (no % 6 != 0) {
-                if (no % 6 != 0) {
+                if (no % 11 != 0) {
                     line = new HashMap<String, Object>();
                     line.put("no", "");
                     line.put("banyak", "");

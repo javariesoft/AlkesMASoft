@@ -47,7 +47,7 @@ public class FLapPiutangJatuhTempo extends javax.swing.JInternalFrame {
         initComponents();
         try {
             tgl1.setDateFormat(d);
-            tgl2.setDateFormat(d);
+//            tgl2.setDateFormat(d);
             c = koneksi.getKoneksiJ();
             kosongForm();
         } catch (SQLException ex) {
@@ -75,8 +75,6 @@ public class FLapPiutangJatuhTempo extends javax.swing.JInternalFrame {
         txtkodePelanggan = new javax.swing.JTextField();
         tgl1 = new datechooser.beans.DateChooserCombo();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        tgl2 = new datechooser.beans.DateChooserCombo();
         pilihan = new javax.swing.JCheckBox();
         cboStatusPiutang = new javax.swing.JComboBox();
         OptAwal = new javax.swing.JCheckBox();
@@ -86,6 +84,7 @@ public class FLapPiutangJatuhTempo extends javax.swing.JInternalFrame {
         OptPelanggan = new javax.swing.JCheckBox();
         btnClear = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        cboIsiTgl = new javax.swing.JComboBox();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FLapPiutangJatuhTempo.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
@@ -165,24 +164,13 @@ public class FLapPiutangJatuhTempo extends javax.swing.JInternalFrame {
 
         tgl1.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl1);
-        tgl1.setBounds(150, 50, 130, 20);
+        tgl1.setBounds(280, 50, 130, 20);
 
         jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 50, 110, 20);
-
-        jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
-        jLabel5.setName("jLabel5"); // NOI18N
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(280, 50, 30, 15);
-
-        tgl2.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
-        getContentPane().add(tgl2);
-        tgl2.setBounds(310, 50, 130, 20);
+        jLabel3.setBounds(20, 50, 120, 20);
 
         pilihan.setFont(resourceMap.getFont("pilihan.font")); // NOI18N
         pilihan.setText(resourceMap.getString("pilihan.text")); // NOI18N
@@ -196,10 +184,10 @@ public class FLapPiutangJatuhTempo extends javax.swing.JInternalFrame {
         pilihan.setBounds(170, 260, 140, 25);
 
         cboStatusPiutang.setFont(resourceMap.getFont("cboStatusPiutang.font")); // NOI18N
-        cboStatusPiutang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Lunas", "Belum Lunas" }));
+        cboStatusPiutang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Belum Lunas", "Lunas" }));
         cboStatusPiutang.setName("cboStatusPiutang"); // NOI18N
         getContentPane().add(cboStatusPiutang);
-        cboStatusPiutang.setBounds(150, 80, 140, 21);
+        cboStatusPiutang.setBounds(150, 80, 120, 21);
 
         OptAwal.setText(resourceMap.getString("OptAwal.text")); // NOI18N
         OptAwal.setName("OptAwal"); // NOI18N
@@ -222,19 +210,19 @@ public class FLapPiutangJatuhTempo extends javax.swing.JInternalFrame {
         OptTanggal.setEnabled(false);
         OptTanggal.setName("OptTanggal"); // NOI18N
         getContentPane().add(OptTanggal);
-        OptTanggal.setBounds(150, 10, 81, 25);
+        OptTanggal.setBounds(150, 10, 130, 25);
 
         OptStatus.setFont(resourceMap.getFont("OptStatus.font")); // NOI18N
         OptStatus.setText(resourceMap.getString("OptStatus.text")); // NOI18N
         OptStatus.setName("OptStatus"); // NOI18N
         getContentPane().add(OptStatus);
-        OptStatus.setBounds(240, 10, 81, 25);
+        OptStatus.setBounds(280, 10, 81, 25);
 
         OptPelanggan.setFont(resourceMap.getFont("OptPelanggan.font")); // NOI18N
         OptPelanggan.setText(resourceMap.getString("OptPelanggan.text")); // NOI18N
         OptPelanggan.setName("OptPelanggan"); // NOI18N
         getContentPane().add(OptPelanggan);
-        OptPelanggan.setBounds(330, 10, 100, 25);
+        OptPelanggan.setBounds(360, 10, 100, 25);
 
         btnClear.setFont(resourceMap.getFont("btnClear.font")); // NOI18N
         btnClear.setIcon(resourceMap.getIcon("btnClear.icon")); // NOI18N
@@ -252,6 +240,17 @@ public class FLapPiutangJatuhTempo extends javax.swing.JInternalFrame {
         getContentPane().add(jSeparator1);
         jSeparator1.setBounds(20, 40, 520, 10);
 
+        cboIsiTgl.setFont(resourceMap.getFont("cboIsiTgl.font")); // NOI18N
+        cboIsiTgl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Kecil Dari", "Sama Dengan", "Besar Dari" }));
+        cboIsiTgl.setName("cboIsiTgl"); // NOI18N
+        cboIsiTgl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboIsiTglActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cboIsiTgl);
+        cboIsiTgl.setBounds(150, 50, 120, 21);
+
         setBounds(0, 0, 578, 273);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -261,53 +260,89 @@ public class FLapPiutangJatuhTempo extends javax.swing.JInternalFrame {
         HashMap parameter = new HashMap();
         JasperPrint jasperPrint = null;
         String stat;
-        
+        String tgl,bln,thn,tanggal="";
+        tgl=tgl1.getText().substring(8, 10);
+        bln=tgl1.getText().substring(5, 7);
+        thn=tgl1.getText().substring(0, 4);
+        tanggal=tgl+"-"+bln+"-"+thn;
         try {
             Connection c = koneksi.getKoneksiJ();
+            URL url = null;
             //jasperPrint = JasperFillManager.fillReport("report\\LapAnalisaPiutang.jasper", parameter, c);
             if (OptTanggal.isSelected() && OptStatus.isSelected() && OptPelanggan.isSelected()) {
                 if (cboStatusPiutang.getSelectedIndex() == 0) {
-                    stat = "0";
-                } else {
                     stat = "1";
+                } else {
+                    stat = "0";
                 }
                 parameter.put("Ptgl1", tgl1.getText());
-                parameter.put("Ptgl2", tgl2.getText());
+                parameter.put("Pformattgl", tanggal);
+                parameter.put("Plabelisitgl", cboIsiTgl.getSelectedItem());
                 parameter.put("PStatus", stat);
                 parameter.put("PPelanggan", txtkodePelanggan.getText());
-                URL url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatusPelanggan.jasper");
-                InputStream in = url.openStream();
-                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-                JasperViewer.viewReport(jasperPrint, false);
+                if (cboIsiTgl.getSelectedIndex() == 0) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatusPelangganKecil.jasper");
+                } else if (cboIsiTgl.getSelectedIndex() == 1) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatusPelangganSama.jasper");
+                } else if (cboIsiTgl.getSelectedIndex() == 2) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatusPelangganBesar.jasper");
+                }
+//                url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatusPelanggan.jasper");
+//                InputStream in = url.openStream();
+//                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+//                JasperViewer.viewReport(jasperPrint, false);
             } else if (OptTanggal.isSelected() && OptStatus.isSelected()) {
                 if (cboStatusPiutang.getSelectedIndex() == 0) {
-                    stat = "0";
-                } else {
                     stat = "1";
+                } else {
+                    stat = "0";
                 }
                 parameter.put("Ptgl1", tgl1.getText());
-                parameter.put("Ptgl2", tgl2.getText());
+                parameter.put("Pformattgl", tanggal);
+                parameter.put("Plabelisitgl", cboIsiTgl.getSelectedItem());
                 parameter.put("PStatus", stat);
-                URL url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatus.jasper");
-                InputStream in = url.openStream();
-                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-                JasperViewer.viewReport(jasperPrint, false);
+                if (cboIsiTgl.getSelectedIndex() == 0) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatusKecil.jasper");
+                } else if (cboIsiTgl.getSelectedIndex() == 1) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatusSama.jasper");
+                } else if (cboIsiTgl.getSelectedIndex() == 2) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatusBesar.jasper");
+                }
+//                url = new URL(global.REPORT + "/LapPiutangJTTempoPTglStatusKecil.jasper");
+//                InputStream in = url.openStream();
+//                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+//                JasperViewer.viewReport(jasperPrint, false);
             } else if (OptTanggal.isSelected() && OptPelanggan.isSelected()) {
                 parameter.put("Ptgl1", tgl1.getText());
-                parameter.put("Ptgl2", tgl2.getText());
+                parameter.put("Pformattgl", tanggal);
+                parameter.put("Plabelisitgl", cboIsiTgl.getSelectedItem());
                 parameter.put("PPelanggan", txtkodePelanggan.getText());
-                URL url = new URL(global.REPORT + "/LapPiutangJTTempoPTglPelanggan.jasper");
-                InputStream in = url.openStream();
-                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-                JasperViewer.viewReport(jasperPrint, false);
+                if (cboIsiTgl.getSelectedIndex() == 0) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglPelangganKecil.jasper");
+                } else if (cboIsiTgl.getSelectedIndex() == 1) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglPelangganSama.jasper");
+                } else if (cboIsiTgl.getSelectedIndex() == 2) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglPelangganBesar.jasper");
+                }
+//                url = new URL(global.REPORT + "/LapPiutangJTTempoPTglPelanggan.jasper");
+//                InputStream in = url.openStream();
+//                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+//                JasperViewer.viewReport(jasperPrint, false);
             } else if (OptTanggal.isSelected()) {
                 parameter.put("Ptgl1", tgl1.getText());
-                parameter.put("Ptgl2", tgl2.getText());
-                URL url = new URL(global.REPORT + "/LapPiutangJTTempoPTgl.jasper");
-                InputStream in = url.openStream();
-                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-                JasperViewer.viewReport(jasperPrint, false);
+                parameter.put("Pformattgl", tanggal);
+                parameter.put("Plabelisitgl", cboIsiTgl.getSelectedItem());
+                if (cboIsiTgl.getSelectedIndex() == 0) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglKecil.jasper");
+                } else if (cboIsiTgl.getSelectedIndex() == 1) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglSama.jasper");
+                } else if (cboIsiTgl.getSelectedIndex() == 2) {
+                    url = new URL(global.REPORT + "/LapPiutangJTTempoPTglBesar.jasper");
+                }
             }
+            InputStream in = url.openStream();
+            jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+            JasperViewer.viewReport(jasperPrint, false);
             c.close();
         } catch (SQLException ex) {
             System.out.print(ex.toString());
@@ -379,6 +414,15 @@ private void txtnamaPelangganActionPerformed(java.awt.event.ActionEvent evt) {//
         kosongForm();
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void cboIsiTglActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboIsiTglActionPerformed
+        // TODO add your handling code here:
+        //        if(cboIsiQuantity.getSelectedIndex()==1){
+            //            txtNilaiStok.setEnabled(false);
+            //        }else{
+            //            txtNilaiStok.setEnabled(true);
+            //        }
+    }//GEN-LAST:event_cboIsiTglActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox OptAwal;
@@ -388,18 +432,17 @@ private void txtnamaPelangganActionPerformed(java.awt.event.ActionEvent evt) {//
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnPreview;
+    private javax.swing.JComboBox cboIsiTgl;
     private javax.swing.JComboBox cboStatusPiutang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JCheckBox pilihan;
     private datechooser.beans.DateChooserCombo tgl1;
-    private datechooser.beans.DateChooserCombo tgl2;
     private javax.swing.JTextField txtkodePelanggan;
     private javax.swing.JTextField txtnamaPelanggan;
     // End of variables declaration//GEN-END:variables
