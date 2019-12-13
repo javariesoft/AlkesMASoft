@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package javariesoft;
+
 import com.erv.db.koneksi;
 import com.erv.exception.GiroException;
 import java.sql.Connection;
@@ -22,22 +22,21 @@ public class FormGiro extends javax.swing.JInternalFrame {
     /**
      * Creates new form FormGiro
      */
-    Connection con=null;
-    
+    Connection con = null;
+
     public FormGiro() {
-        
-        initComponents();
-        btnDelete.setVisible(false);
         try {
             con = koneksi.getKoneksiJ();
-            giroView1.loadDatabase(con);
-            giroView1.isiCombo(con);
-            giroView1.reset(con);
+            initComponents();
+            giroView1.loadDatabase();
+            giroView1.isiCombo();
+            giroView1.reset();
+            btnDelete.setVisible(false);
         } catch (SQLException ex) {
             Logger.getLogger(FormGiro.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FormGiro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (GiroException ex) {
+            Logger.getLogger(FormGiro.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(FormGiro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -59,13 +58,14 @@ public class FormGiro extends javax.swing.JInternalFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
-        giroView1 = new com.erv.view.GiroView();
+        giroView1 = new com.erv.view.GiroView(con);
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        giroBayarView1 = new com.erv.view.GiroBayarView();
+        jButton1 = new javax.swing.JButton();
+        giroBayarView1 = new com.erv.view.GiroBayarView(con);
 
         setClosable(true);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormGiro.class);
@@ -75,6 +75,7 @@ public class FormGiro extends javax.swing.JInternalFrame {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
             }
             public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameClosing(evt);
@@ -207,6 +208,16 @@ public class FormGiro extends javax.swing.JInternalFrame {
         jPanel4.add(jButton9);
         jButton9.setBounds(300, 10, 200, 40);
 
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton1);
+        jButton1.setBounds(130, 10, 130, 40);
+
         jPanel3.add(jPanel4);
         jPanel4.setBounds(0, 500, 880, 70);
 
@@ -232,7 +243,7 @@ public class FormGiro extends javax.swing.JInternalFrame {
 //                Logger.getLogger(FormGiro.class.getName()).log(Level.SEVERE, null, ex);
 //            }
             dispose();
-            
+
         } else {
             btnExit.requestFocus();
         }
@@ -240,27 +251,27 @@ public class FormGiro extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        giroView1.delete(con);
+        giroView1.delete();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        giroView1.update(con);
+        giroView1.update();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         // TODO add your handling code here:
-        giroView1.insert(con);
+        giroView1.insert();
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         // TODO add your handling code here:
-        giroView1.reset(con);
+        giroView1.reset();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        giroBayarView1.angsuranPiutang(con);
+        giroBayarView1.angsuranPiutang();
         giroBayarView1.reloaddatacair();
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -271,18 +282,28 @@ public class FormGiro extends javax.swing.JInternalFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        giroBayarView1.updateStatusBatal(con);
+        giroBayarView1.updateStatusBatal();
         giroBayarView1.reloaddatacair();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        // TODO add your handling code here:
         try {
             // TODO add your handling code here:
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(FormGiro.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_formInternalFrameClosing
+    }//GEN-LAST:event_formInternalFrameClosed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -293,6 +314,7 @@ public class FormGiro extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnUpdate;
     private com.erv.view.GiroBayarView giroBayarView1;
     private com.erv.view.GiroView giroView1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;

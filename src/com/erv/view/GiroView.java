@@ -8,11 +8,11 @@ package com.erv.view;
 import com.erv.controller.GiroController;
 import com.erv.db.GiroDao;
 import com.erv.db.bankDao;
-import com.erv.db.koneksi;
 import com.erv.db.pelangganDao;
 import com.erv.exception.GiroException;
 import com.erv.function.ArrayTable;
 import com.erv.function.ExecuteQuery;
+import com.erv.function.JDBCAdapter;
 import com.erv.fungsi.DecimalFormatRenderer;
 import com.erv.model.Giro;
 import com.erv.model.GiroModel;
@@ -56,23 +56,24 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
     private final GiroController controller;
     private int id;
     private final SimpleDateFormat df;
+    Connection c = null;
 
-    public GiroView() {
+    public GiroView(Connection con) {
         tableGiroModel = new TableGiroModel();
         model = new GiroModel();
         model.setListener(this);
         controller = new GiroController();
         controller.setModel(model);
         initComponents();
-        tabelGiro.getSelectionModel().addListSelectionListener(this);
-        tabelGiro.setModel(tableGiroModel);
+        c = con;
+        //tabelGiro.getSelectionModel().addListSelectionListener(this);
+        //tabelGiro.setModel(tableGiroModel);
         //reloaddata();
-        
         df = new SimpleDateFormat("yyyy-MM-dd");
         dcTanggalGiro.setDateFormat(df);
         dcTanggalJTempo.setDateFormat(df);
         jScrollPane2.setVisible(false);
-        jScrollPane2.setSize(350, 150);
+        jScrollPane2.setSize(450, 150);
 //        txtKriteria.setVisible(true);
         CboStatCari.setVisible(false);
 //        try {
@@ -86,6 +87,7 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
 //        } catch (ClassNotFoundException ex) {
 //            Logger.getLogger(GiroView.class.getName()).log(Level.SEVERE, null, ex);
 //        }
+
     }
 
     public JComboBox getCboBankPenerima() {
@@ -230,8 +232,15 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
         jSeparator1 = new javax.swing.JSeparator();
         txtNamaPGiro = new javax.swing.JTextField();
         CboStatCari = new javax.swing.JComboBox();
+        jLabel11 = new javax.swing.JLabel();
+        txtTotalPiutang = new javax.swing.JFormattedTextField();
 
         setName("Form"); // NOI18N
+        addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentRemoved(java.awt.event.ContainerEvent evt) {
+                formComponentRemoved(evt);
+            }
+        });
         setLayout(null);
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
@@ -256,7 +265,7 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
         jScrollPane2.setViewportView(tabelPelanggan);
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(510, 60, 60, 30);
+        jScrollPane2.setBounds(420, 60, 140, 30);
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(GiroView.class);
         jLabel1.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
@@ -392,27 +401,29 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
         cboBankPenerima.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboBankPenerima.setName("cboBankPenerima"); // NOI18N
         add(cboBankPenerima);
-        cboBankPenerima.setBounds(522, 89, 190, 21);
+        cboBankPenerima.setBounds(522, 89, 340, 21);
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         tabelGiro.setFont(resourceMap.getFont("tabelGiro.font")); // NOI18N
         tabelGiro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         tabelGiro.setName("tabelGiro"); // NOI18N
+        tabelGiro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelGiroMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelGiro);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(10, 192, 850, 309);
+        jScrollPane1.setBounds(10, 151, 860, 350);
 
         jLabel10.setFont(resourceMap.getFont("jLabel10.font")); // NOI18N
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
@@ -469,6 +480,17 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
         CboStatCari.setName("CboStatCari"); // NOI18N
         add(CboStatCari);
         CboStatCari.setBounds(290, 164, 90, 21);
+
+        jLabel11.setFont(resourceMap.getFont("jLabel11.font")); // NOI18N
+        jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
+        jLabel11.setName("jLabel11"); // NOI18N
+        add(jLabel11);
+        jLabel11.setBounds(420, 120, 100, 15);
+
+        txtTotalPiutang.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        txtTotalPiutang.setName("txtTotalPiutang"); // NOI18N
+        add(txtTotalPiutang);
+        txtTotalPiutang.setBounds(520, 120, 340, 20);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPemilikGiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPemilikGiroActionPerformed
@@ -485,7 +507,6 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
             List<pelanggan> pelangganList;
             List<Object> newRow;
             try {
-                Connection c = koneksi.getKoneksiJ();
                 bDao = new pelangganDao(c);
                 pelangganList = bDao.getAllFilter(where, 100);
                 String header[] = {"Kode", "Nama", "Alamat"};
@@ -499,25 +520,16 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
                 }
                 ArrayTable a;
                 a = new ArrayTable(header, rows);
-                jScrollPane2.getViewport().remove(tabelPelanggan);
-                tabelPelanggan = new JTable(a);
-                TableColumn col = tabelPelanggan.getColumnModel().getColumn(0);
-                col.setPreferredWidth(30);
+                tabelPelanggan.setModel(a);
                 tabelPelanggan.setFont(new Font("Tahoma", Font.BOLD, 12));
-                tabelPelanggan.addKeyListener(new java.awt.event.KeyAdapter() {
-                    @Override
-                    public void keyPressed(java.awt.event.KeyEvent evt) {
-                        tabelPelangganKeyPressed(evt);
-                    }
-                });
-                jScrollPane2.getViewport().add(tabelPelanggan);
-                jScrollPane2.repaint();
-                bDao.close();
-                c.close();
+                TableColumn col = tabelPelanggan.getColumnModel().getColumn(0);
+                col.setPreferredWidth(10);
+                col = tabelPelanggan.getColumnModel().getColumn(1);
+                col.setPreferredWidth(100);
             } catch (SQLException ex) {
-
-            } 
+            }
             jScrollPane2.setVisible(true);
+            revalidate();
         } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             jScrollPane2.setVisible(false);
         } else if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -532,24 +544,10 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
             txtPemilikGiro.setText(tabelPelanggan.getValueAt(tabelPelanggan.getSelectedRow(), 0).toString());
             txtNamaPGiro.setText(tabelPelanggan.getValueAt(tabelPelanggan.getSelectedRow(), 1).toString());
             jScrollPane2.setVisible(false);
+            reloadDataPiutangBayar();
             txtBankAsal.requestFocus();
         }
     }//GEN-LAST:event_tabelPelangganKeyPressed
-
-    private void cmdFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFilterActionPerformed
-        try {
-            //reloaddata();
-            Connection c = koneksi.getKoneksiJ();
-            loadDatabase(c);
-            c.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(GiroView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (GiroException ex) {
-            Logger.getLogger(GiroView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(GiroView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_cmdFilterActionPerformed
 
     private void txtJumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJumlahActionPerformed
         // TODO add your handling code here:
@@ -571,6 +569,28 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
         cboBankPenerima.requestFocus();
     }//GEN-LAST:event_txtBankAsalActionPerformed
 
+    private void formComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentRemoved
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_formComponentRemoved
+
+    private void cmdFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFilterActionPerformed
+        try {
+            loadDatabase();
+        } catch (SQLException ex) {
+            Logger.getLogger(GiroView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (GiroException ex) {
+            Logger.getLogger(GiroView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GiroView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmdFilterActionPerformed
+
+    private void txtKriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKriteriaActionPerformed
+        // TODO add your handling code here:
+        reloaddata();
+    }//GEN-LAST:event_txtKriteriaActionPerformed
+
     private void cboKriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboKriteriaActionPerformed
         // TODO add your handling code here:
         if (cboKriteria.getSelectedIndex() == 0) {
@@ -582,16 +602,28 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
         }
     }//GEN-LAST:event_cboKriteriaActionPerformed
 
-    private void txtKriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKriteriaActionPerformed
-        try {
-            // TODO add your handling code here:
-            Connection c = koneksi.getKoneksiJ();
-            reloaddata(c);
-            c.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(GiroView.class.getName()).log(Level.SEVERE, null, ex);
+    private void tabelGiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelGiroMouseClicked
+        // TODO add your handling code here:
+        int row = tabelGiro.rowAtPoint(evt.getPoint());
+
+        int col = tabelGiro.columnAtPoint(evt.getPoint());
+        double total = 0;
+        if(col==7){
+            for(int i =0;i<tabelGiro.getRowCount();i++){
+                if(tabelGiro.getValueAt(i, col).equals(true)){ 
+                    total += (double) tabelGiro.getValueAt(i, 4);
+                }
+            }
         }
-    }//GEN-LAST:event_txtKriteriaActionPerformed
+        txtTotalPiutang.setValue(total); 
+//        JOptionPane.showMessageDialog(null,
+//                " Value in the cell clicked:" + "["+  col + "]" + tabelGiro.getValueAt(row, col).toString()
+//        );
+//
+//        System.out.println(
+//                " Value in the cell clicked:" + " " + tabelGiro.getValueAt(row, col).toString()
+//        );
+    }//GEN-LAST:event_tabelGiroMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -604,6 +636,7 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
     private datechooser.beans.DateChooserCombo dcTanggalJTempo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -624,6 +657,7 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
     private javax.swing.JTextField txtNamaPenerima;
     private javax.swing.JTextField txtNomorGiro;
     private javax.swing.JTextField txtPemilikGiro;
+    private javax.swing.JFormattedTextField txtTotalPiutang;
     // End of variables declaration//GEN-END:variables
 
     public void onChange(GiroModel model) {
@@ -667,7 +701,7 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
             txtNamaPenerima.setText(giro.getNAMAPENERIMA());
             cboStatus.setSelectedIndex(giro.getSTATUS());
             txtPemilikGiro.setText(giro.getKODEPELANGGAN());
-            txtNamaPGiro.setText(giro.getPlg().getNAMA()); 
+            txtNamaPGiro.setText(giro.getPlg().getNAMA());
             txtBankAsal.setText(giro.getBANKASAL());
             cboBankPenerima.setSelectedItem(giro.getIDBANK());
         } catch (IndexOutOfBoundsException exception) {
@@ -676,59 +710,59 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
         }
     }
 
-    public void loadDatabase(Connection con) throws SQLException, GiroException, ClassNotFoundException {
-        GiroDao dao = new GiroDao(con);
-        String kriteria="";
+    public void loadDatabase() throws SQLException, GiroException, ClassNotFoundException {
+        GiroDao dao = new GiroDao(c);
+        String kriteria = "";
         if (cboKriteria.getSelectedIndex() == 0) {
-            if(txtKriteria.getText().equals("")){
+            if (txtKriteria.getText().equals("")) {
                 kriteria += "AND STATUS=0 ";
-            }else{
+            } else {
                 kriteria += "AND NOMORGIRO='" + txtKriteria.getText() + "' ";
-            }           
+            }
         } else if (cboKriteria.getSelectedIndex() == 1) {
             kriteria += "AND STATUS='" + CboStatCari.getSelectedIndex() + "' ";
         } else if (cboKriteria.getSelectedIndex() == 2) {
-            kriteria += "AND lower(pelanggan.NAMA) like '%" + txtKriteria.getText()+ "%' ";
+            kriteria += "AND lower(pelanggan.NAMA) like '%" + txtKriteria.getText() + "%' ";
         }
         tableGiroModel.setList(dao.selectAll(kriteria));
         tabelGiro.revalidate();
         repaint();
     }
 
-    public void isiCombo(Connection con) {
+    public void isiCombo() {
         try {
             cboStatus.removeAllItems();
             cboStatus.addItem("Open");
             cboBankPenerima.removeAllItems();
-            List<bank> banks = bankDao.getAlldetails(con);
+            List<bank> banks = bankDao.getAlldetails(c);
             for (bank object : banks) {
                 cboBankPenerima.addItem(object.getIDBANK() + "-" + object.getNAMABANK());
             }
             cboKriteria.removeAllItems();
-            cboKriteria.addItem("NOMORGIRO");       
+            cboKriteria.addItem("NOMORGIRO");
             cboKriteria.addItem("STATUS");
             cboKriteria.addItem("PELANGGAN");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex.toString());
-        } 
+        }
     }
 
-    public void insert(Connection c) {
-        controller.insertGiro(c,this);
+    public void insert() {
+        controller.insertGiro(c, this);
     }
 
-    public void update(Connection c) {
+    public void update() {
         controller.updateGiro(c, this);
     }
 
-    public void delete(Connection c) {
-        controller.deleteGiro(c,this);
+    public void delete() {
+        controller.deleteGiro(c, this);
     }
 
-    public void reset(Connection c) {
+    public void reset() {
         try {
             controller.resetGiro(c);
-            this.txtNomorGiro.setText(model.getNOMORGIRO()); 
+            this.txtNomorGiro.setText(model.getNOMORGIRO());
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(GiroView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -736,27 +770,27 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
         }
     }
 
-    void reloaddata(Connection c) {
+    void reloaddata() {
         List<List<Object>> rows = new ArrayList<List<Object>>();
         String sql = "select g.ID, g.NOMORGIRO,p.NAMA, g.TGLGIRO, g.TGLJTEMPO, g.JUMLAH, case g.STATUS when 0 then 'Open' when 1 then 'Clear' end as Status from GIRO g \n"
                 + "inner join PELANGGAN p on g.KODEPELANGGAN = p.KODEPELANGGAN\n"
                 + "inner join BANK b on g.IDBANK = b.IDBANK WHERE 1=1 ";
         if (cboKriteria.getSelectedIndex() == 0) {
-            if(txtKriteria.getText().equals("")){
+            if (txtKriteria.getText().equals("")) {
                 sql += "AND g.STATUS=0 ";
-            }else{
+            } else {
                 sql += "AND g.NOMORGIRO='" + txtKriteria.getText() + "' ";
-            }           
+            }
         } else if (cboKriteria.getSelectedIndex() == 1) {
             sql += "AND g.STATUS='" + CboStatCari.getSelectedIndex() + "' ";
         } else if (cboKriteria.getSelectedIndex() == 2) {
-            sql += "AND lower(p.NAMA) like '%" + txtKriteria.getText()+ "%' ";
+            sql += "AND lower(p.NAMA) like '%" + txtKriteria.getText() + "%' ";
         }
 
         try {
-            
+
             rows = ExecuteQuery.Query(c, sql);
-            String header[] = {"ID", "NOMOR GIRO","PELANGGAN", "TGL GIRO", "TGL JATUH TEMPO", "JUMLAH", "STATUS"};
+            String header[] = {"ID", "NOMOR GIRO", "PELANGGAN", "TGL GIRO", "TGL JATUH TEMPO", "JUMLAH", "STATUS"};
             ArrayTable a;
             a = new ArrayTable(header, rows);
             jScrollPane1.getViewport().remove(tabelGiro);
@@ -765,8 +799,20 @@ public final class GiroView extends javax.swing.JPanel implements GiroListener, 
             tabelGiro.setFont(new Font("Tahoma", Font.BOLD, 12));
             jScrollPane1.getViewport().add(tabelGiro);
             jScrollPane1.repaint();
-        }  catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(GiroBayarView.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
+    }
+
+    private void reloadDataPiutangBayar() {
+        JDBCAdapter th = new JDBCAdapter(c);
+        String sql = "";
+        sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS, false as PILIH from VIEW_PIUTANG where IDPELANGGAN='" + txtPemilikGiro.getText() + "' AND STATUS='BELUM LUNAS'";
+        th.executeQuery(sql);
+        tabelGiro.setModel(th);
+        tabelGiro.getColumnModel().getColumn(3).setCellRenderer(new DecimalFormatRenderer());
+        tabelGiro.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
+        tabelGiro.setFont(new Font("Tahoma", Font.BOLD, 11));
+        jScrollPane1.repaint();
     }
 }

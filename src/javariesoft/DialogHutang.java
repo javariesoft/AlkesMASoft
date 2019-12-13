@@ -534,7 +534,7 @@ public class DialogHutang extends javax.swing.JDialog {
         jScrollPane2.setViewportView(jTable2);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(20, 258, 860, 402);
+        jScrollPane2.setBounds(20, 258, 860, 380);
 
         jSeparator1.setName("jSeparator1"); // NOI18N
         jPanel1.add(jSeparator1);

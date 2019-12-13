@@ -252,6 +252,19 @@ public class GiroModel {
         }
     }
 
+    public void angsuranPiutang1(Connection c) throws GiroException {
+        try {
+            GiroDao giroDao = new GiroDao(c);
+            Giro giro;
+            giro = giroDao.getGiro(ID);
+            giroDao.angsuranPiutang(giro, TGLCAIR);
+            //giroDao.close();
+        } catch (Exception ex) {
+            throw new GiroException(ex.getMessage());
+        }
+    }
+
+    
     public void updateStatusBatal(Connection c) throws GiroException {
         try {
             GiroDao giroDao = new GiroDao(c);
