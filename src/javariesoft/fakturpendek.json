@@ -6,13 +6,14 @@
     },
     "template": {
         "header": ["                                                                                                                       HAL : %{PAGE_NO}",
-            "%{32 R35}%{218}%{196 R62}%{191}     No Faktur   : ${FAKTUR:15}",
-            "%{32 R35}%{179}   Kepada : ${PELANGGAN:50}%{179}     Tanggal     : ${TANGGAL:10}",
-            "%{32 R35}%{179}            ${ALAMATPELANGGAN:50}%{179}     Jatuh Tempo : ${TGLLUNAS:10}",
-            "%{32 R35}%{179}            ${ALAMATPELANGGAN1:50}%{179}     Cara Bayar  : ${CASH:10}",
-            "%{32 R35}%{179}   ${NPWP:59}%{179}     Sales       : ${salesinisial:10}",
-            "%{32 R35}%{179}   ${ALAMATPEMILIK1:59}%{179}",
-            "%{32 R35}%{192}%{196 R62}%{217}"
+            "%{32 R37}%{218}%{196 R65}%{191}",
+            "%{32 R37}%{179} Kepada : ${PELANGGAN:54} %{179} No Faktur   : ${FAKTUR:15}",
+            "%{32 R37}%{179}          ${ALAMATPELANGGAN:54} %{179} Tanggal     : ${TANGGAL:10}",
+            "%{32 R37}%{179}          ${ALAMATPELANGGAN1:54} %{179} Jatuh Tempo : ${TGLLUNAS:10}",
+            "%{32 R37}%{179} ${NPWP:63} %{179} Cara Bayar  : ${CASH:10}",
+            "%{32 R37}%{179}          ${ALAMATPEMILIK1:54} %{179} Sales       : ${salesinisial:10}",
+            "%{32 R37}%{179}          ${ALAMATPEMILIK2:54} %{179}",
+            "%{32 R37}%{192}%{196 R65}%{217}"
         ],
         "detail": [
             {
