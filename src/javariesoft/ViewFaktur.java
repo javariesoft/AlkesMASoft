@@ -6,7 +6,6 @@
 
 package javariesoft;
 
-import com.erv.model.penjualan;
 import java.awt.BorderLayout;
 import java.util.Map;
 import simple.escp.Template;

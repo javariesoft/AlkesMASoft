@@ -1,0 +1,62 @@
+{
+    "pageFormat": {
+        "pageLength": 35,
+        "pageWidth": 140,
+        "usePageLengthFromPrinter": false
+    },
+    "template": {
+        "header": ["                                                                                                                       HAL : %{PAGE_NO}",
+            "%{32 R35}%{218}%{196 R62}%{191}     No Faktur   : ${FAKTUR:15}",
+            "%{32 R35}%{179}   Kepada : ${PELANGGAN:50}%{179}     Tanggal     : ${TANGGAL:10}",
+            "%{32 R35}%{179}            ${ALAMATPELANGGAN:50}%{179}     Jatuh Tempo : ${TGLLUNAS:10}",
+            "%{32 R35}%{179}            ${ALAMATPELANGGAN1:50}%{179}     Cara Bayar  : ${CASH:10}",
+            "%{32 R35}%{179}   ${NPWP:59}%{179}     Sales       : ${salesinisial:10}",
+            "%{32 R35}%{179}   ${ALAMATPEMILIK1:59}%{179}",
+            "%{32 R35}%{179}   ${ALAMATPEMILIK2:59}%{179}"
+        ],
+        "detail": [
+            {
+                "table": "table_source",
+                "border": true,
+                "columns": [
+                    {"source": "no::center", "width": 4, "caption": "No"},
+                    {"caption": "Banyak", "source": "banyak::right", "width": 8},
+                    {"caption": "Satuan", "source": "satuan", "width": 14, "wrap": true},
+                    {"caption": "Kode", "source": "kode", "width": 6},
+                    {"caption": "Nama Barang", "source": "nmbrg", "width": 41},
+                    {"caption": "Batch", "source": "batch::right", "width": 12},
+                    {"caption": "Expire", "source": "expire", "width": 11},
+                    {"caption": "Harga(Rp)", "source": "harga::right", "width": 12},
+                    {"caption": "Disc(%)", "source": "diskon::right", "width": 8},
+                    {"caption": "Jumlah(Rp)", "source": "jumlah::right", "width": 14}
+                ]
+            }
+        ],
+        "footer": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "lastPageFooter": [
+            "%{179}       Jumlah        %{179}     Disc Tambahan     %{179}         PPN        %{179}    Ongkos Kirim   %{179}       Bayar       %{179}         TOTAL        %{179}",
+            "%{192}%{196 R129}%{217}",
+            "%{179}${total:20:right} %{179} ${diskonpersentambahan:6:right} % ${diskontambahan:12:right} %{179} ${ppn:18:right} %{179} ${ongkir:18:right}%{179} ${bayar:18:right}%{179} ${totalbersih:21:right}%{179}",
+            "%{179} Terbilang :${terbilang:117}%{179}",
+            "%{192}%{196 R129}%{217}",
+            "     Ttd,                                                                                            Padang,${tglcetak}",
+            "  Penerima                                        Apoteker,                                             Pimpinan",
+            "%{32 R92}",
+            "%{32 R92}",
+            "(                )%{32 R29}(${apotek:25})%{32 R23}( Jasmarizal.SKp,MARS )",
+            "%{32 R47}${ketapotek:50}"
+        ]
+    }
+}

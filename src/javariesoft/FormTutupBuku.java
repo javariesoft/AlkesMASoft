@@ -470,7 +470,7 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
         if (JavarieSoftApp.groupuser.equals("Accounting")) {
             settingtombol(false, false, false, false);
         } else if (JavarieSoftApp.groupuser.equals("Administrator")) {
-            settingtombol(false, true, true, true);
+            settingtombol(false, false, false, true);
         }
 
     } catch (SQLException ex) {
@@ -645,7 +645,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         String sql = "Select s.PERIODE,s.KODEAKUN,p.NAMAPERKIRAAN,s.SALDO from SALDOPERIODE s,PERKIRAAN p "
                 + "where s.KODEAKUN=p.KODEPERKIRAAN "
                 + "AND s.PERIODE='" + (txtTahun.getText() + "." + (cboBulan.getSelectedIndex() + 1)) + "' order by p.KODEPERKIRAAN";
-        System.out.println(sql);
+        //System.out.println(sql);
         j.executeQuery(sql);
         jScrollPane1.getViewport().remove(jTable1);
         jTable1 = new JTable(j);

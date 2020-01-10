@@ -454,7 +454,7 @@ private void txtNamaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN
             String sql = "select s.PERIODE,s.KODEBARANG,b.NAMABARANG,s.JUMLAH,s.COGS  from STOKPERIODE s "
                     + "inner join BARANG b on (s.KODEBARANG=b.KODEBARANG) "
                     + "where s.KODEBARANG like '" + txtNamaBarang.getText() + "%' or lower(b.NAMABARANG) like '%" + txtNamaBarang.getText() + "%' order by s.KODEBARANG";
-            System.out.println(sql);
+//            System.out.println(sql);
             j.executeQuery(sql);
             jScrollPane1.getViewport().remove(jTable1);
             jTable1 = new JTable(j);
