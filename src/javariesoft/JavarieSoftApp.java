@@ -5,6 +5,7 @@ package javariesoft;
 
 import com.erv.db.koneksi;
 import static com.erv.db.koneksi.IP;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -69,6 +70,7 @@ public class JavarieSoftApp extends SingleFrameApplication {
         //String connection = "jdbc:h2:~/satuan";
         Connection c = null;
         try {
+//            koneksi.createPoolKoneksi();
             if (!com.erv.fungsi.Fungsi.cekVersi(VERSI)) {
                 System.exit(0);
             }
@@ -88,51 +90,46 @@ public class JavarieSoftApp extends SingleFrameApplication {
             /*if (!com.erv.fungsi.Fungsi.cekVersiServer(VERSISERVER)) {
                 System.exit(0);
             }*/
-//            String path = new File(".").getCanonicalPath();
-//            System.out.println(path);
-//            Properties p = new Properties();
-//            p.load(new FileInputStream("javarie.properties"));
-//            global.IPADDRESS = p.getProperty("IPADDRESS");
-//            koneksi.IP = p.getProperty("IPADDRESS");
-//            global.REPORT = p.getProperty("REPORT");
-            //server = Server.createTcpServer(connection).start();
+////            String path = new File(".").getCanonicalPath();
+////            System.out.println(path);
+////            Properties p = new Properties();
+////            p.load(new FileInputStream("javarie.properties"));
+////            global.IPADDRESS = p.getProperty("IPADDRESS");
+////            koneksi.IP = p.getProperty("IPADDRESS");
+////            global.REPORT = p.getProperty("REPORT");
+////NotUsed            server = Server.createTcpServer(connection).start();
             System.out.println("Server Database Aktif");
-            //launch(JavarieSoftApp.class, args);
+            
 //MulaiCdCPU
             c = koneksi.getKoneksiJ();
-//            Statement stat=c.createStatement();
-//            String h="";
-//               byte[] hasil;
-//            try {
-//                hasil = com.erv.function.Authentication.encryptPassword(com.erv.function.MiscUtils.getCpuID());
-//            
-//               for(int i=0;i<hasil.length;i++){
-//                   h+=hasil[i];
-//                }
-//            } catch (UnsupportedEncodingException ex) {
-//                Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (NoSuchAlgorithmException ex) {
-//                Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            ResultSet rs=stat.executeQuery("select * from KODEAKSES where KODE='"+h+"'");
-//            if(rs.next()){
+            Statement stat=c.createStatement();
+            String h="";
+               byte[] hasil;
+            try {
+                hasil = com.erv.function.Authentication.encryptPassword(com.erv.function.MiscUtils.getCpuID());
+            
+               for(int i=0;i<hasil.length;i++){
+                   h+=hasil[i];
+                }
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ResultSet rs=stat.executeQuery("select * from KODEAKSES where KODE='"+h+"'");
+            if(rs.next()){
             launch(JavarieSoftApp.class, args);
-//            }else{
-//                DialogRegister d=new DialogRegister(null, true);
-//                    d.setVisible(true);
-//            }
-//            rs.close();
-//            stat.close();
-//            c.close();
-//        } catch (IOException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage());
-        
+            }else{
+                DialogRegister d=new DialogRegister(null, true);
+                    d.setVisible(true);
+            }
+            rs.close();
+            stat.close();
+            c.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Database Belum Aktif");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(JavarieSoftApp.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -601,6 +601,7 @@
                 <Component class="javax.swing.JButton" name="btnKeluar1">
                   <Properties>
                     <Property name="font" type="java.awt.Font" resourceKey="btnKeluar1.font"/>
+                    <Property name="icon" type="javax.swing.Icon" resourceKey="btnKeluar1.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="btnKeluar1.text"/>
                     <Property name="name" type="java.lang.String" value="btnKeluar1" noResource="true"/>
                   </Properties>
@@ -609,7 +610,7 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="750" y="103" width="120" height="30"/>
+                      <AbsoluteConstraints x="930" y="10" width="120" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>

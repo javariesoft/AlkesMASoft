@@ -651,6 +651,7 @@ public class DialogPembelianInternal extends javax.swing.JInternalFrame {
         namaSupplier1.setBounds(130, 100, 270, 22);
 
         btnKeluar1.setFont(resourceMap.getFont("btnKeluar1.font")); // NOI18N
+        btnKeluar1.setIcon(resourceMap.getIcon("btnKeluar1.icon")); // NOI18N
         btnKeluar1.setText(resourceMap.getString("btnKeluar1.text")); // NOI18N
         btnKeluar1.setName("btnKeluar1"); // NOI18N
         btnKeluar1.addActionListener(new java.awt.event.ActionListener() {
@@ -659,7 +660,7 @@ public class DialogPembelianInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(btnKeluar1);
-        btnKeluar1.setBounds(750, 103, 120, 30);
+        btnKeluar1.setBounds(930, 10, 120, 30);
 
         jTabbedPane2.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
 
