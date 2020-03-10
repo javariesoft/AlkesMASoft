@@ -10,6 +10,7 @@
  */
 package javariesoft;
 
+import javariesoft.*;
 import com.erv.db.koneksi;
 import java.awt.Cursor;
 import java.io.IOException;

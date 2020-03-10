@@ -3,6 +3,7 @@
  */
 package javariesoft;
 
+import com.eigher.form.FRekapJualJenisPajak;
 import com.eigher.form.FLapAnalisaPenjualanMerk;
 import com.eigher.form.FLapDetailDO;
 import com.eigher.form.FLapDetailReturDO;
@@ -187,7 +188,7 @@ public class JavarieSoftView extends FrameView {
         MlogOf = new javax.swing.JMenuItem();
         Mkonfigurasi = new javax.swing.JMenu();
         MBackupdatabase = new javax.swing.JMenuItem();
-        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
+        MFile = new javax.swing.JMenu();
         MuserAccount = new javax.swing.JMenuItem();
         MeditPassword = new javax.swing.JMenuItem();
         MaktivaTetap = new javax.swing.JMenuItem();
@@ -209,7 +210,7 @@ public class JavarieSoftView extends FrameView {
         Manalisastokbrg = new javax.swing.JMenuItem();
         MSearchingBarang = new javax.swing.JMenuItem();
         MNomorPajak = new javax.swing.JMenuItem();
-        Mtransaksi = new javax.swing.JMenu();
+        MTransaksi = new javax.swing.JMenu();
         Mjurnal = new javax.swing.JMenuItem();
         Mpenjualan = new javax.swing.JMenuItem();
         Mpembelian = new javax.swing.JMenuItem();
@@ -225,7 +226,7 @@ public class JavarieSoftView extends FrameView {
         Mtutupbuku = new javax.swing.JMenuItem();
         MTutupHarian = new javax.swing.JMenuItem();
         MPajak = new javax.swing.JMenuItem();
-        Mlaporan = new javax.swing.JMenu();
+        MLaporan = new javax.swing.JMenu();
         Mlappembelian = new javax.swing.JMenu();
         MLBPerFaktur = new javax.swing.JMenuItem();
         MLBDetailHarian = new javax.swing.JMenuItem();
@@ -245,6 +246,7 @@ public class JavarieSoftView extends FrameView {
         MLJRekapPerSales = new javax.swing.JMenuItem();
         MLJRekapPerPelanggan = new javax.swing.JMenuItem();
         MLJRekapPerMerk = new javax.swing.JMenuItem();
+        MLJRekapPerJenisPajak = new javax.swing.JMenuItem();
         Mreturpenjualan = new javax.swing.JMenu();
         MLRJualfaktur = new javax.swing.JMenuItem();
         MLRJRekapreturjual = new javax.swing.JMenuItem();
@@ -438,9 +440,9 @@ public class JavarieSoftView extends FrameView {
 
         menuBar.add(Mkonfigurasi);
 
-        fileMenu.setIcon(resourceMap.getIcon("fileMenu.icon")); // NOI18N
-        fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
-        fileMenu.setName("fileMenu"); // NOI18N
+        MFile.setIcon(resourceMap.getIcon("MFile.icon")); // NOI18N
+        MFile.setText(resourceMap.getString("MFile.text")); // NOI18N
+        MFile.setName("MFile"); // NOI18N
 
         MuserAccount.setIcon(resourceMap.getIcon("MuserAccount.icon")); // NOI18N
         MuserAccount.setText(resourceMap.getString("MuserAccount.text")); // NOI18N
@@ -450,7 +452,7 @@ public class JavarieSoftView extends FrameView {
                 MuserAccountActionPerformed(evt);
             }
         });
-        fileMenu.add(MuserAccount);
+        MFile.add(MuserAccount);
 
         MeditPassword.setIcon(resourceMap.getIcon("MeditPassword.icon")); // NOI18N
         MeditPassword.setText(resourceMap.getString("MeditPassword.text")); // NOI18N
@@ -460,7 +462,7 @@ public class JavarieSoftView extends FrameView {
                 MeditPasswordActionPerformed(evt);
             }
         });
-        fileMenu.add(MeditPassword);
+        MFile.add(MeditPassword);
 
         MaktivaTetap.setIcon(resourceMap.getIcon("MaktivaTetap.icon")); // NOI18N
         MaktivaTetap.setText(resourceMap.getString("MaktivaTetap.text")); // NOI18N
@@ -470,7 +472,7 @@ public class JavarieSoftView extends FrameView {
                 MaktivaTetapActionPerformed(evt);
             }
         });
-        fileMenu.add(MaktivaTetap);
+        MFile.add(MaktivaTetap);
 
         Mperkiraan.setIcon(resourceMap.getIcon("Mperkiraan.icon")); // NOI18N
         Mperkiraan.setText(resourceMap.getString("Mperkiraan.text")); // NOI18N
@@ -480,7 +482,7 @@ public class JavarieSoftView extends FrameView {
                 MperkiraanActionPerformed(evt);
             }
         });
-        fileMenu.add(Mperkiraan);
+        MFile.add(Mperkiraan);
 
         Mbarang.setIcon(resourceMap.getIcon("Mbarang.icon")); // NOI18N
         Mbarang.setText(resourceMap.getString("Mbarang.text")); // NOI18N
@@ -526,7 +528,7 @@ public class JavarieSoftView extends FrameView {
         });
         Mbarang.add(Mdatabarang);
 
-        fileMenu.add(Mbarang);
+        MFile.add(Mbarang);
 
         Mpelanggan.setIcon(resourceMap.getIcon("Mpelanggan.icon")); // NOI18N
         Mpelanggan.setText(resourceMap.getString("Mpelanggan.text")); // NOI18N
@@ -536,7 +538,7 @@ public class JavarieSoftView extends FrameView {
                 MpelangganActionPerformed(evt);
             }
         });
-        fileMenu.add(Mpelanggan);
+        MFile.add(Mpelanggan);
 
         Msupplier.setIcon(resourceMap.getIcon("Msupplier.icon")); // NOI18N
         Msupplier.setText(resourceMap.getString("Msupplier.text")); // NOI18N
@@ -546,7 +548,7 @@ public class JavarieSoftView extends FrameView {
                 MsupplierActionPerformed(evt);
             }
         });
-        fileMenu.add(Msupplier);
+        MFile.add(Msupplier);
 
         Msales.setIcon(resourceMap.getIcon("Msales.icon")); // NOI18N
         Msales.setText(resourceMap.getString("Msales.text")); // NOI18N
@@ -556,7 +558,7 @@ public class JavarieSoftView extends FrameView {
                 MsalesActionPerformed(evt);
             }
         });
-        fileMenu.add(Msales);
+        MFile.add(Msales);
 
         Mbank.setIcon(resourceMap.getIcon("Mbank.icon")); // NOI18N
         Mbank.setText(resourceMap.getString("Mbank.text")); // NOI18N
@@ -566,7 +568,7 @@ public class JavarieSoftView extends FrameView {
                 MbankActionPerformed(evt);
             }
         });
-        fileMenu.add(Mbank);
+        MFile.add(Mbank);
 
         Msetting.setIcon(resourceMap.getIcon("Msetting.icon")); // NOI18N
         Msetting.setText(resourceMap.getString("Msetting.text")); // NOI18N
@@ -576,7 +578,7 @@ public class JavarieSoftView extends FrameView {
                 MsettingActionPerformed(evt);
             }
         });
-        fileMenu.add(Msetting);
+        MFile.add(Msetting);
 
         MsettingStatPeriode.setIcon(resourceMap.getIcon("MsettingStatPeriode.icon")); // NOI18N
         MsettingStatPeriode.setText(resourceMap.getString("MsettingStatPeriode.text")); // NOI18N
@@ -586,7 +588,7 @@ public class JavarieSoftView extends FrameView {
                 MsettingStatPeriodeActionPerformed(evt);
             }
         });
-        fileMenu.add(MsettingStatPeriode);
+        MFile.add(MsettingStatPeriode);
 
         MKontrolTanggal.setIcon(resourceMap.getIcon("MKontrolTanggal.icon")); // NOI18N
         MKontrolTanggal.setText(resourceMap.getString("MKontrolTanggal.text")); // NOI18N
@@ -596,7 +598,7 @@ public class JavarieSoftView extends FrameView {
                 MKontrolTanggalActionPerformed(evt);
             }
         });
-        fileMenu.add(MKontrolTanggal);
+        MFile.add(MKontrolTanggal);
 
         MlogHistory.setIcon(resourceMap.getIcon("MlogHistory.icon")); // NOI18N
         MlogHistory.setText(resourceMap.getString("MlogHistory.text")); // NOI18N
@@ -606,7 +608,7 @@ public class JavarieSoftView extends FrameView {
                 MlogHistoryActionPerformed(evt);
             }
         });
-        fileMenu.add(MlogHistory);
+        MFile.add(MlogHistory);
 
         Manalisa.setIcon(resourceMap.getIcon("Manalisa.icon")); // NOI18N
         Manalisa.setText(resourceMap.getString("Manalisa.text")); // NOI18N
@@ -621,7 +623,7 @@ public class JavarieSoftView extends FrameView {
         });
         Manalisa.add(Manalisastokbrg);
 
-        fileMenu.add(Manalisa);
+        MFile.add(Manalisa);
 
         MSearchingBarang.setIcon(resourceMap.getIcon("MSearchingBarang.icon")); // NOI18N
         MSearchingBarang.setText(resourceMap.getString("MSearchingBarang.text")); // NOI18N
@@ -631,7 +633,7 @@ public class JavarieSoftView extends FrameView {
                 MSearchingBarangActionPerformed(evt);
             }
         });
-        fileMenu.add(MSearchingBarang);
+        MFile.add(MSearchingBarang);
 
         MNomorPajak.setIcon(resourceMap.getIcon("MNomorPajak.icon")); // NOI18N
         MNomorPajak.setText(resourceMap.getString("MNomorPajak.text")); // NOI18N
@@ -641,16 +643,16 @@ public class JavarieSoftView extends FrameView {
                 MNomorPajakActionPerformed(evt);
             }
         });
-        fileMenu.add(MNomorPajak);
+        MFile.add(MNomorPajak);
 
-        menuBar.add(fileMenu);
+        menuBar.add(MFile);
 
-        Mtransaksi.setIcon(resourceMap.getIcon("Mtransaksi.icon")); // NOI18N
-        Mtransaksi.setText(resourceMap.getString("Mtransaksi.text")); // NOI18N
-        Mtransaksi.setName("Mtransaksi"); // NOI18N
-        Mtransaksi.addActionListener(new java.awt.event.ActionListener() {
+        MTransaksi.setIcon(resourceMap.getIcon("MTransaksi.icon")); // NOI18N
+        MTransaksi.setText(resourceMap.getString("MTransaksi.text")); // NOI18N
+        MTransaksi.setName("MTransaksi"); // NOI18N
+        MTransaksi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MtransaksiActionPerformed(evt);
+                MTransaksiActionPerformed(evt);
             }
         });
 
@@ -662,7 +664,7 @@ public class JavarieSoftView extends FrameView {
                 MjurnalActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mjurnal);
+        MTransaksi.add(Mjurnal);
 
         Mpenjualan.setIcon(resourceMap.getIcon("Mpenjualan.icon")); // NOI18N
         Mpenjualan.setText(resourceMap.getString("Mpenjualan.text")); // NOI18N
@@ -672,7 +674,7 @@ public class JavarieSoftView extends FrameView {
                 MpenjualanActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mpenjualan);
+        MTransaksi.add(Mpenjualan);
 
         Mpembelian.setIcon(resourceMap.getIcon("Mpembelian.icon")); // NOI18N
         Mpembelian.setText(resourceMap.getString("Mpembelian.text")); // NOI18N
@@ -682,7 +684,7 @@ public class JavarieSoftView extends FrameView {
                 MpembelianActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mpembelian);
+        MTransaksi.add(Mpembelian);
 
         Mhutang.setIcon(resourceMap.getIcon("Mhutang.icon")); // NOI18N
         Mhutang.setText(resourceMap.getString("Mhutang.text")); // NOI18N
@@ -692,7 +694,7 @@ public class JavarieSoftView extends FrameView {
                 MhutangActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mhutang);
+        MTransaksi.add(Mhutang);
 
         Mgirokeluar.setIcon(resourceMap.getIcon("Mgirokeluar.icon")); // NOI18N
         Mgirokeluar.setText(resourceMap.getString("Mgirokeluar.text")); // NOI18N
@@ -702,7 +704,7 @@ public class JavarieSoftView extends FrameView {
                 MgirokeluarActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mgirokeluar);
+        MTransaksi.add(Mgirokeluar);
 
         Mpiutang.setIcon(resourceMap.getIcon("Mpiutang.icon")); // NOI18N
         Mpiutang.setText(resourceMap.getString("Mpiutang.text")); // NOI18N
@@ -712,7 +714,7 @@ public class JavarieSoftView extends FrameView {
                 MpiutangActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mpiutang);
+        MTransaksi.add(Mpiutang);
 
         Mgiromasuk.setIcon(resourceMap.getIcon("Mgiromasuk.icon")); // NOI18N
         Mgiromasuk.setText(resourceMap.getString("Mgiromasuk.text")); // NOI18N
@@ -722,7 +724,7 @@ public class JavarieSoftView extends FrameView {
                 MgiromasukActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mgiromasuk);
+        MTransaksi.add(Mgiromasuk);
 
         MkoreksiStok.setIcon(resourceMap.getIcon("MkoreksiStok.icon")); // NOI18N
         MkoreksiStok.setText(resourceMap.getString("MkoreksiStok.text")); // NOI18N
@@ -732,7 +734,7 @@ public class JavarieSoftView extends FrameView {
                 MkoreksiStokActionPerformed(evt);
             }
         });
-        Mtransaksi.add(MkoreksiStok);
+        MTransaksi.add(MkoreksiStok);
 
         Mmutasibarang.setIcon(resourceMap.getIcon("Mmutasibarang.icon")); // NOI18N
         Mmutasibarang.setText(resourceMap.getString("Mmutasibarang.text")); // NOI18N
@@ -742,7 +744,7 @@ public class JavarieSoftView extends FrameView {
                 MmutasibarangActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mmutasibarang);
+        MTransaksi.add(Mmutasibarang);
 
         MRetur.setIcon(resourceMap.getIcon("MRetur.icon")); // NOI18N
         MRetur.setText(resourceMap.getString("MRetur.text")); // NOI18N
@@ -752,7 +754,7 @@ public class JavarieSoftView extends FrameView {
                 MReturActionPerformed(evt);
             }
         });
-        Mtransaksi.add(MRetur);
+        MTransaksi.add(MRetur);
 
         MDeliveryOrder.setIcon(resourceMap.getIcon("MDeliveryOrder.icon")); // NOI18N
         MDeliveryOrder.setText(resourceMap.getString("MDeliveryOrder.text")); // NOI18N
@@ -762,7 +764,7 @@ public class JavarieSoftView extends FrameView {
                 MDeliveryOrderActionPerformed(evt);
             }
         });
-        Mtransaksi.add(MDeliveryOrder);
+        MTransaksi.add(MDeliveryOrder);
 
         Mtutupstok.setIcon(resourceMap.getIcon("Mtutupstok.icon")); // NOI18N
         Mtutupstok.setText(resourceMap.getString("Mtutupstok.text")); // NOI18N
@@ -772,7 +774,7 @@ public class JavarieSoftView extends FrameView {
                 MtutupstokActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mtutupstok);
+        MTransaksi.add(Mtutupstok);
 
         Mtutupbuku.setIcon(resourceMap.getIcon("Mtutupbuku.icon")); // NOI18N
         Mtutupbuku.setText(resourceMap.getString("Mtutupbuku.text")); // NOI18N
@@ -782,7 +784,7 @@ public class JavarieSoftView extends FrameView {
                 MtutupbukuActionPerformed(evt);
             }
         });
-        Mtransaksi.add(Mtutupbuku);
+        MTransaksi.add(Mtutupbuku);
 
         MTutupHarian.setIcon(resourceMap.getIcon("MTutupHarian.icon")); // NOI18N
         MTutupHarian.setText(resourceMap.getString("MTutupHarian.text")); // NOI18N
@@ -792,7 +794,7 @@ public class JavarieSoftView extends FrameView {
                 MTutupHarianActionPerformed(evt);
             }
         });
-        Mtransaksi.add(MTutupHarian);
+        MTransaksi.add(MTutupHarian);
 
         MPajak.setIcon(resourceMap.getIcon("MPajak.icon")); // NOI18N
         MPajak.setText(resourceMap.getString("MPajak.text")); // NOI18N
@@ -802,13 +804,13 @@ public class JavarieSoftView extends FrameView {
                 MPajakActionPerformed(evt);
             }
         });
-        Mtransaksi.add(MPajak);
+        MTransaksi.add(MPajak);
 
-        menuBar.add(Mtransaksi);
+        menuBar.add(MTransaksi);
 
-        Mlaporan.setIcon(resourceMap.getIcon("Mlaporan.icon")); // NOI18N
-        Mlaporan.setText(resourceMap.getString("Mlaporan.text")); // NOI18N
-        Mlaporan.setName("Mlaporan"); // NOI18N
+        MLaporan.setIcon(resourceMap.getIcon("MLaporan.icon")); // NOI18N
+        MLaporan.setText(resourceMap.getString("MLaporan.text")); // NOI18N
+        MLaporan.setName("MLaporan"); // NOI18N
 
         Mlappembelian.setText(resourceMap.getString("Mlappembelian.text")); // NOI18N
         Mlappembelian.setName("Mlappembelian"); // NOI18N
@@ -849,7 +851,7 @@ public class JavarieSoftView extends FrameView {
         });
         Mlappembelian.add(MLBPerSupplier);
 
-        Mlaporan.add(Mlappembelian);
+        MLaporan.add(Mlappembelian);
 
         Mreturpembelian.setText(resourceMap.getString("Mreturpembelian.text")); // NOI18N
         Mreturpembelian.setName("Mreturpembelian"); // NOI18N
@@ -872,7 +874,7 @@ public class JavarieSoftView extends FrameView {
         });
         Mreturpembelian.add(MLRBRekapreturbeli);
 
-        Mlaporan.add(Mreturpembelian);
+        MLaporan.add(Mreturpembelian);
 
         MlapPenjualan.setText(resourceMap.getString("MlapPenjualan.text")); // NOI18N
         MlapPenjualan.setName("MlapPenjualan"); // NOI18N
@@ -961,7 +963,16 @@ public class JavarieSoftView extends FrameView {
         });
         MlapPenjualan.add(MLJRekapPerMerk);
 
-        Mlaporan.add(MlapPenjualan);
+        MLJRekapPerJenisPajak.setText(resourceMap.getString("MLJRekapPerJenisPajak.text")); // NOI18N
+        MLJRekapPerJenisPajak.setName("MLJRekapPerJenisPajak"); // NOI18N
+        MLJRekapPerJenisPajak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MLJRekapPerJenisPajakActionPerformed(evt);
+            }
+        });
+        MlapPenjualan.add(MLJRekapPerJenisPajak);
+
+        MLaporan.add(MlapPenjualan);
 
         Mreturpenjualan.setText(resourceMap.getString("Mreturpenjualan.text")); // NOI18N
         Mreturpenjualan.setName("Mreturpenjualan"); // NOI18N
@@ -984,7 +995,7 @@ public class JavarieSoftView extends FrameView {
         });
         Mreturpenjualan.add(MLRJRekapreturjual);
 
-        Mlaporan.add(Mreturpenjualan);
+        MLaporan.add(Mreturpenjualan);
 
         MlapPengiriman.setText(resourceMap.getString("MlapPengiriman.text")); // NOI18N
         MlapPengiriman.setName("MlapPengiriman"); // NOI18N
@@ -1016,7 +1027,7 @@ public class JavarieSoftView extends FrameView {
         });
         MlapPengiriman.add(MLapRekapPengiriman);
 
-        Mlaporan.add(MlapPengiriman);
+        MLaporan.add(MlapPengiriman);
 
         MReturCabang.setText(resourceMap.getString("MReturCabang.text")); // NOI18N
         MReturCabang.setName("MReturCabang"); // NOI18N
@@ -1039,7 +1050,7 @@ public class JavarieSoftView extends FrameView {
         });
         MReturCabang.add(MRekapReturCabang);
 
-        Mlaporan.add(MReturCabang);
+        MLaporan.add(MReturCabang);
 
         Mlapdeliveryorder.setText(resourceMap.getString("Mlapdeliveryorder.text")); // NOI18N
         Mlapdeliveryorder.setName("Mlapdeliveryorder"); // NOI18N
@@ -1116,7 +1127,7 @@ public class JavarieSoftView extends FrameView {
         });
         Mlapdeliveryorder.add(MKartuStokDO);
 
-        Mlaporan.add(Mlapdeliveryorder);
+        MLaporan.add(Mlapdeliveryorder);
 
         MLapReturDeliveryOrder.setText(resourceMap.getString("MLapReturDeliveryOrder.text")); // NOI18N
         MLapReturDeliveryOrder.setName("MLapReturDeliveryOrder"); // NOI18N
@@ -1139,7 +1150,7 @@ public class JavarieSoftView extends FrameView {
         });
         MLapReturDeliveryOrder.add(MLRDO_DetailReturDO);
 
-        Mlaporan.add(MLapReturDeliveryOrder);
+        MLaporan.add(MLapReturDeliveryOrder);
 
         MlapBarang.setText(resourceMap.getString("MlapBarang.text")); // NOI18N
         MlapBarang.setName("MlapBarang"); // NOI18N
@@ -1243,7 +1254,7 @@ public class JavarieSoftView extends FrameView {
         });
         MlapBarang.add(MLB_BarangPembelian);
 
-        Mlaporan.add(MlapBarang);
+        MLaporan.add(MlapBarang);
 
         MlapHutang.setText(resourceMap.getString("MlapHutang.text")); // NOI18N
         MlapHutang.setName("MlapHutang"); // NOI18N
@@ -1275,7 +1286,7 @@ public class JavarieSoftView extends FrameView {
         });
         MlapHutang.add(MLH_RekapHutangALLSupplier);
 
-        Mlaporan.add(MlapHutang);
+        MLaporan.add(MlapHutang);
 
         MlapPiutang.setText(resourceMap.getString("MlapPiutang.text")); // NOI18N
         MlapPiutang.setName("MlapPiutang"); // NOI18N
@@ -1325,7 +1336,7 @@ public class JavarieSoftView extends FrameView {
         });
         MlapPiutang.add(MLP_RekapPiutangJatuhTempo);
 
-        Mlaporan.add(MlapPiutang);
+        MLaporan.add(MlapPiutang);
 
         MLapPerkiraan.setText(resourceMap.getString("MLapPerkiraan.text")); // NOI18N
         MLapPerkiraan.setName("MLapPerkiraan"); // NOI18N
@@ -1334,7 +1345,7 @@ public class JavarieSoftView extends FrameView {
                 MLapPerkiraanActionPerformed(evt);
             }
         });
-        Mlaporan.add(MLapPerkiraan);
+        MLaporan.add(MLapPerkiraan);
 
         MlapFakturPajak.setText(resourceMap.getString("MlapFakturPajak.text")); // NOI18N
         MlapFakturPajak.setName("MlapFakturPajak"); // NOI18N
@@ -1343,7 +1354,7 @@ public class JavarieSoftView extends FrameView {
                 MlapFakturPajakActionPerformed(evt);
             }
         });
-        Mlaporan.add(MlapFakturPajak);
+        MLaporan.add(MlapFakturPajak);
 
         MlapTutupBuku.setText(resourceMap.getString("MlapTutupBuku.text")); // NOI18N
         MlapTutupBuku.setName("MlapTutupBuku"); // NOI18N
@@ -1352,7 +1363,7 @@ public class JavarieSoftView extends FrameView {
                 MlapTutupBukuActionPerformed(evt);
             }
         });
-        Mlaporan.add(MlapTutupBuku);
+        MLaporan.add(MlapTutupBuku);
 
         MlapJurnal.setText(resourceMap.getString("MlapJurnal.text")); // NOI18N
         MlapJurnal.setName("MlapJurnal"); // NOI18N
@@ -1361,7 +1372,7 @@ public class JavarieSoftView extends FrameView {
                 MlapJurnalActionPerformed(evt);
             }
         });
-        Mlaporan.add(MlapJurnal);
+        MLaporan.add(MlapJurnal);
 
         MLapBukuBesar.setText(resourceMap.getString("MLapBukuBesar.text")); // NOI18N
         MLapBukuBesar.setName("MLapBukuBesar"); // NOI18N
@@ -1393,7 +1404,7 @@ public class JavarieSoftView extends FrameView {
         });
         MLapBukuBesar.add(MLAKT_BukuBesarBiayaTahunan);
 
-        Mlaporan.add(MLapBukuBesar);
+        MLaporan.add(MLapBukuBesar);
 
         MlapNeraca.setText(resourceMap.getString("MlapNeraca.text")); // NOI18N
         MlapNeraca.setName("MlapNeraca"); // NOI18N
@@ -1402,7 +1413,7 @@ public class JavarieSoftView extends FrameView {
                 MlapNeracaActionPerformed(evt);
             }
         });
-        Mlaporan.add(MlapNeraca);
+        MLaporan.add(MlapNeraca);
 
         MlapRugiLaba.setText(resourceMap.getString("MlapRugiLaba.text")); // NOI18N
         MlapRugiLaba.setName("MlapRugiLaba"); // NOI18N
@@ -1411,7 +1422,7 @@ public class JavarieSoftView extends FrameView {
                 MlapRugiLabaActionPerformed(evt);
             }
         });
-        Mlaporan.add(MlapRugiLaba);
+        MLaporan.add(MlapRugiLaba);
 
         MlapEkuitas.setText(resourceMap.getString("MlapEkuitas.text")); // NOI18N
         MlapEkuitas.setName("MlapEkuitas"); // NOI18N
@@ -1420,7 +1431,7 @@ public class JavarieSoftView extends FrameView {
                 MlapEkuitasActionPerformed(evt);
             }
         });
-        Mlaporan.add(MlapEkuitas);
+        MLaporan.add(MlapEkuitas);
 
         MLapPajak.setText(resourceMap.getString("MLapPajak.text")); // NOI18N
         MLapPajak.setName("MLapPajak"); // NOI18N
@@ -1461,7 +1472,7 @@ public class JavarieSoftView extends FrameView {
         });
         MLapPajak.add(MLPajakReturPenjualan);
 
-        Mlaporan.add(MLapPajak);
+        MLaporan.add(MLapPajak);
 
         MLapAnalisis.setText(resourceMap.getString("MLapAnalisis.text")); // NOI18N
         MLapAnalisis.setName("MLapAnalisis"); // NOI18N
@@ -1475,9 +1486,9 @@ public class JavarieSoftView extends FrameView {
         });
         MLapAnalisis.add(MLAnalisisPenjualanMerk);
 
-        Mlaporan.add(MLapAnalisis);
+        MLaporan.add(MLapAnalisis);
 
-        menuBar.add(Mlaporan);
+        menuBar.add(MLaporan);
 
         helpMenu.setIcon(resourceMap.getIcon("helpMenu.icon")); // NOI18N
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
@@ -1845,9 +1856,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MLBDetailHarianActionPerformed
 
-    private void MtransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MtransaksiActionPerformed
+    private void MTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MTransaksiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_MtransaksiActionPerformed
+    }//GEN-LAST:event_MTransaksiActionPerformed
 
     private void MkoreksiStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MkoreksiStokActionPerformed
         // TODO add your handling code here:
@@ -2457,6 +2468,14 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MLB_BarangPembelianActionPerformed
 
+    private void MLJRekapPerJenisPajakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLJRekapPerJenisPajakActionPerformed
+        // TODO add your handling code here:
+        FRekapJualJenisPajak p= new FRekapJualJenisPajak();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_MLJRekapPerJenisPajakActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
     private javax.swing.JLabel LblJenis1;
@@ -2466,6 +2485,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JLabel Lblgroup;
     public static javax.swing.JMenuItem MBackupdatabase;
     public static javax.swing.JMenuItem MDeliveryOrder;
+    public static javax.swing.JMenu MFile;
     private javax.swing.JMenuItem MKartuStokDO;
     public static javax.swing.JMenuItem MKontrolTanggal;
     private javax.swing.JMenuItem MLAKT_BukuBesarBiayaTahunan;
@@ -2502,6 +2522,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MLJPerMerkKemenkes;
     public static javax.swing.JMenuItem MLJPerMerkSparindo;
     public static javax.swing.JMenuItem MLJRekapHarian;
+    private javax.swing.JMenuItem MLJRekapPerJenisPajak;
     public static javax.swing.JMenuItem MLJRekapPerMerk;
     public static javax.swing.JMenuItem MLJRekapPerPelanggan;
     public static javax.swing.JMenuItem MLJRekapPerSales;
@@ -2528,6 +2549,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private javax.swing.JMenuItem MLapRekapPengiriman;
     public static javax.swing.JMenu MLapReturDeliveryOrder;
     private javax.swing.JMenuItem MLapSisaDO;
+    public static javax.swing.JMenu MLaporan;
     private static javax.swing.JMenuItem MNomorPajak;
     private static javax.swing.JMenuItem MPajak;
     private javax.swing.JMenuItem MRekapReturCabang;
@@ -2535,6 +2557,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenu MReturCabang;
     private javax.swing.JMenuItem MReturCabangFaktur;
     public static javax.swing.JMenuItem MSearchingBarang;
+    public static javax.swing.JMenu MTransaksi;
     public static javax.swing.JMenuItem MTutupHarian;
     public static javax.swing.JMenuItem MaktivaTetap;
     public static javax.swing.JMenu Manalisa;
@@ -2564,7 +2587,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MlapRugiLaba;
     public static javax.swing.JMenuItem MlapTutupBuku;
     public static javax.swing.JMenu Mlapdeliveryorder;
-    private javax.swing.JMenu Mlaporan;
     public static javax.swing.JMenu Mlappembelian;
     public static javax.swing.JMenuItem MlogHistory;
     public static javax.swing.JMenuItem MlogOf;
@@ -2584,7 +2606,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem Msetting;
     public static javax.swing.JMenuItem MsettingStatPeriode;
     public static javax.swing.JMenuItem Msupplier;
-    public static javax.swing.JMenu Mtransaksi;
     public static javax.swing.JMenuItem Mtutupbuku;
     public static javax.swing.JMenuItem Mtutupstok;
     public static javax.swing.JMenuItem MuserAccount;
@@ -2608,8 +2629,12 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private JDialog aboutBox;
 
     public static void aktif() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
         MBackupdatabase.setVisible(true);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(true);
         MuserAccount.setVisible(true);
         MeditPassword.setVisible(true);
         Mperkiraan.setVisible(true);
@@ -2629,7 +2654,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(true);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
-        Mtransaksi.setVisible(true);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(true);
         Mjurnal.setVisible(true);
         Mpenjualan.setVisible(true);
         Mpembelian.setVisible(true);
@@ -2644,6 +2671,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         Mmutasibarang.setVisible(false);
         MRetur.setVisible(true);
         MDeliveryOrder.setVisible(true);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(true);
         Mlappembelian.setVisible(true);
         MlapPenjualan.setVisible(true);
         MLJPerFaktur.setVisible(true);
@@ -2677,11 +2707,16 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(true);
         MNomorPajak.setVisible(true);
         MPajak.setVisible(true);
+        //End Menu Laporan
     }
 
     public static void nonaktif() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(false);
         MBackupdatabase.setVisible(false);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(false);
         MuserAccount.setVisible(false);
         MeditPassword.setVisible(false);
         Mperkiraan.setVisible(false);
@@ -2701,6 +2736,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(false);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(false);
         Mjurnal.setVisible(false);
         Mpenjualan.setVisible(false);
         Mpembelian.setVisible(false);
@@ -2715,6 +2753,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         Mmutasibarang.setVisible(false);
         MRetur.setVisible(false); 
         MDeliveryOrder.setVisible(false);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(false);
         Mlappembelian.setVisible(false);
         MlapPenjualan.setVisible(false);
         MLJPerFaktur.setVisible(false);
@@ -2748,6 +2789,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(false);
         MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
+        //End Menu Laporan
     }
 
 //    public static void pembelianakses() {
@@ -2859,8 +2901,12 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 //    }
 
     public static void accountingakses() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
         MBackupdatabase.setVisible(true);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(true);
         MuserAccount.setVisible(false);
         MeditPassword.setVisible(true);
         Mperkiraan.setVisible(true);
@@ -2880,7 +2926,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
-        Mtransaksi.setVisible(true);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(true);
         Mjurnal.setVisible(true);
         Mpenjualan.setVisible(false);
         Mpembelian.setVisible(false);
@@ -2893,6 +2941,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MTutupHarian.setVisible(false);
         MkoreksiStok.setVisible(false);
         Mmutasibarang.setVisible(false);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(true);
         Mlappembelian.setVisible(true);
         MlapPenjualan.setVisible(true);
         MLJPerFaktur.setVisible(true);
@@ -2926,11 +2977,16 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(false);
         MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
+        //End Menu Laporan
     }
 
     public static void pajakakses() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(false);
         MBackupdatabase.setVisible(false);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(false);
         MuserAccount.setVisible(false);
         MeditPassword.setVisible(true);
         Mperkiraan.setVisible(false);
@@ -2950,7 +3006,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(false);
-        Mtransaksi.setVisible(false);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(false);
         Mjurnal.setVisible(false);
         Mpenjualan.setVisible(false);
         Mpembelian.setVisible(false);
@@ -2963,6 +3021,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MTutupHarian.setVisible(false);
         MkoreksiStok.setVisible(false);
         Mmutasibarang.setVisible(false);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(false);
         Mlappembelian.setVisible(false);
         MlapPenjualan.setVisible(true);
         MLJPerFaktur.setVisible(false);
@@ -2996,11 +3057,16 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(false);
         MNomorPajak.setVisible(true);
         MPajak.setVisible(true);
+        //End Menu Laporan
     }
 
     public static void operatorakses() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
         MBackupdatabase.setVisible(true);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(true);
         MuserAccount.setVisible(false);
         MeditPassword.setVisible(true);
         Mperkiraan.setVisible(false);
@@ -3020,7 +3086,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
-        Mtransaksi.setVisible(true);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(true);
         Mjurnal.setVisible(false);
         Mpenjualan.setVisible(true);
         Mpembelian.setVisible(true);
@@ -3034,6 +3102,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MkoreksiStok.setVisible(false);
         Mmutasibarang.setVisible(false); 
         MDeliveryOrder.setVisible(true);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(true);
         Mlappembelian.setVisible(true);
         MlapPenjualan.setVisible(true);
         MLJPerFaktur.setVisible(true);
@@ -3067,73 +3138,16 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(false);
         MNomorPajak.setVisible(true);
         MPajak.setVisible(true);
+        //End Menu Laporan
     }
 
-//    public static void gudangakses() {
-//        Mkonfigurasi.setVisible(false);
-//        MBackupdatabase.setVisible(false);
-//        MuserAccount.setVisible(false);
-//        MeditPassword.setVisible(true);
-//        Mperkiraan.setVisible(false);
-//        MaktivaTetap.setVisible(false);
-//        Mbarang.setVisible(true);
-//        Msatuan.setVisible(false);
-//        Mmerk.setVisible(false);
-//        Mkategori.setVisible(false);
-//        Mdatabarang.setVisible(true);
-//        Mpelanggan.setVisible(false);
-//        Msupplier.setVisible(false);
-//        Msales.setVisible(false);
-//        Mbank.setVisible(false);
-//        Msetting.setVisible(false);
-//        MsettingStatPeriode.setVisible(false);
-//        MKontrolTanggal.setVisible(false);
-//        MlogHistory.setVisible(false);
-//        Manalisa.setVisible(false);
-//        MSearchingBarang.setVisible(true);
-//        Mjurnal.setVisible(false);
-//        Mpenjualan.setVisible(false);
-//        Mpembelian.setVisible(false);
-//        Mhutang.setVisible(false);
-//        Mgirokeluar.setVisible(false);
-//        Mpiutang.setVisible(false);
-//        Mgiromasuk.setVisible(false);
-//        Mtutupbuku.setVisible(false);
-//        Mtutupstok.setVisible(false);
-//        MTutupHarian.setVisible(false);
-//        MkoreksiStok.setVisible(false);
-//        Mmutasibarang.setVisible(false);
-//        Mlappembelian.setVisible(false);
-//        MlapPenjualan.setVisible(false);
-//        MlapPengiriman.setVisible(false);
-//        Mreturpembelian.setVisible(false);
-//        Mreturpenjualan.setVisible(false);
-//        MReturCabang.setVisible(false);
-//        Mlapdeliveryorder.setVisible(false);
-//        MlapBarang.setVisible(true);
-//        MlapBarangPerMerk.setVisible(false);
-//        MLapBarangPerKategori.setVisible(false);
-//        MLapBrgAkhirPeriode.setVisible(false);
-//        MLapKartuStokBulan.setVisible(false);
-//        MLapKartuStokTanggal.setVisible(false);
-//        MLapPersediaanBrgDagang.setVisible(false);
-//        MLapKatalogBarang.setVisible(false);
-//        MLapStokBarang.setVisible(true);
-//        MlapHutang.setVisible(false);
-//        MlapPiutang.setVisible(false);
-//        MLapPerkiraan.setVisible(false);
-//        MlapFakturPajak.setVisible(false);
-//        MlapTutupBuku.setVisible(false);
-//        MlapJurnal.setVisible(false);
-//        MLapBukuBesar.setVisible(false);
-//        MlapNeraca.setVisible(false);
-//        MlapRugiLaba.setVisible(false);
-//        MlapEkuitas.setVisible(false);
-//    }
-    
     public static void apotekerakses() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
         MBackupdatabase.setVisible(true);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(true);
         MuserAccount.setVisible(false);
         MeditPassword.setVisible(true);
         Mperkiraan.setVisible(false);
@@ -3153,7 +3167,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
-        Mtransaksi.setVisible(false);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(false);
         Mjurnal.setVisible(false);
         Mpenjualan.setVisible(false);
         Mpembelian.setVisible(false);
@@ -3166,6 +3182,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MTutupHarian.setVisible(false);
         MkoreksiStok.setVisible(false);
         Mmutasibarang.setVisible(false);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(true);
         Mlappembelian.setVisible(true);
         MlapPenjualan.setVisible(true);
         MLJPerFaktur.setVisible(true);
@@ -3206,11 +3225,16 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(false);
         MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
+        //End Menu Laporan
     }
     
     public static void generalakses() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(false);
         MBackupdatabase.setVisible(false);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(true);
         MuserAccount.setVisible(false);
         MeditPassword.setVisible(true);
         Mperkiraan.setVisible(false);
@@ -3230,7 +3254,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(false);
-        Mtransaksi.setVisible(false);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(false);
         Mjurnal.setVisible(false);
         Mpenjualan.setVisible(false);
         Mpembelian.setVisible(false);
@@ -3243,6 +3269,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MTutupHarian.setVisible(false);
         MkoreksiStok.setVisible(false);
         Mmutasibarang.setVisible(false);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(true);
         Mlappembelian.setVisible(true);
         MlapPenjualan.setVisible(true);
         MLJPerFaktur.setVisible(true);
@@ -3276,11 +3305,16 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(false);
         MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
+        //End Menu Laporan
     }
     
     public static void asistenadminakses() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
         MBackupdatabase.setVisible(true);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(true);
         MuserAccount.setVisible(false);
         MeditPassword.setVisible(true);
         Mperkiraan.setVisible(false);
@@ -3300,7 +3334,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
-        Mtransaksi.setVisible(true);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(true);
         Mjurnal.setVisible(false);
         Mpenjualan.setVisible(false);
         Mpembelian.setVisible(false);
@@ -3329,6 +3365,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         Mreturpembelian.setVisible(true);
         Mreturpenjualan.setVisible(true);
         MReturCabang.setVisible(false);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(true);
         Mlapdeliveryorder.setVisible(true);
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
@@ -3347,23 +3386,28 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(false);
         MNomorPajak.setVisible(true);
         MPajak.setVisible(true);
+        //End Menu Laporan
     }
     
     public static void masterdataakses() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
         MBackupdatabase.setVisible(true);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(false);
         MuserAccount.setVisible(false);
         MeditPassword.setVisible(true);
         Mperkiraan.setVisible(false);
         MaktivaTetap.setVisible(false);
-        Mbarang.setVisible(true);
-        Msatuan.setVisible(true);
-        Mmerk.setVisible(true);
-        Mkategori.setVisible(true);
-        Mdatabarang.setVisible(true);
-        Mpelanggan.setVisible(true);
-        Msupplier.setVisible(true);
-        Msales.setVisible(true);
+        Mbarang.setVisible(false);
+        Msatuan.setVisible(false);
+        Mmerk.setVisible(false);
+        Mkategori.setVisible(false);
+        Mdatabarang.setVisible(false);
+        Mpelanggan.setVisible(false);
+        Msupplier.setVisible(false);
+        Msales.setVisible(false);
         Mbank.setVisible(false);
         Msetting.setVisible(false);
         MsettingStatPeriode.setVisible(false);
@@ -3371,7 +3415,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
-        Mtransaksi.setVisible(false);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(false);
         Mjurnal.setVisible(false);
         Mpenjualan.setVisible(false);
         Mpembelian.setVisible(false);
@@ -3386,6 +3432,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         Mtutupbuku.setVisible(false);
         Mtutupstok.setVisible(false);
         MTutupHarian.setVisible(false);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(false);
         Mlappembelian.setVisible(true);
         MlapPenjualan.setVisible(true);
         MLJPerFaktur.setVisible(true);
@@ -3419,11 +3468,16 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(false);
         MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
+        //End Menu Laporan
     }
     
     public static void gudangakses() {
+        //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
         MBackupdatabase.setVisible(true);
+        //End Menu Konfigurasi
+        //Start Menu File
+        MFile.setVisible(true);
         MuserAccount.setVisible(false);
         MeditPassword.setVisible(true);
         Mperkiraan.setVisible(false);
@@ -3443,7 +3497,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
-        Mtransaksi.setVisible(false);
+        //End Menu File
+        //Start Menu Transaksi
+        MTransaksi.setVisible(false);
         Mjurnal.setVisible(false);
         Mpenjualan.setVisible(false);
         Mpembelian.setVisible(false);
@@ -3456,6 +3512,9 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MTutupHarian.setVisible(false);
         MkoreksiStok.setVisible(false);
         Mmutasibarang.setVisible(false);
+        //End Menu Transaksi
+        //Start Menu Laporan
+        MLaporan.setVisible(true);
         Mlappembelian.setVisible(true);
         MlapPenjualan.setVisible(true);
         MLJPerFaktur.setVisible(true);
@@ -3496,6 +3555,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapAnalisis.setVisible(false);
         MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
+        //End Menu Laporan
     }
 
     void konek() {

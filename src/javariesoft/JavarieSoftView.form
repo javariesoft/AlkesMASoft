@@ -215,15 +215,14 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="fileMenu">
+        <Menu class="javax.swing.JMenu" name="MFile">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="fileMenu.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="fileMenu.text"/>
-            <Property name="name" type="java.lang.String" value="fileMenu" noResource="true"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="MFile.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="MFile.text"/>
+            <Property name="name" type="java.lang.String" value="MFile" noResource="true"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="MuserAccount">
@@ -498,14 +497,14 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="Mtransaksi">
+        <Menu class="javax.swing.JMenu" name="MTransaksi">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="Mtransaksi.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="Mtransaksi.text"/>
-            <Property name="name" type="java.lang.String" value="Mtransaksi" noResource="true"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="MTransaksi.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="MTransaksi.text"/>
+            <Property name="name" type="java.lang.String" value="MTransaksi" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MtransaksiActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MTransaksiActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -708,12 +707,15 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="Mlaporan">
+        <Menu class="javax.swing.JMenu" name="MLaporan">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="Mlaporan.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="Mlaporan.text"/>
-            <Property name="name" type="java.lang.String" value="Mlaporan" noResource="true"/>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="MLaporan.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="MLaporan.text"/>
+            <Property name="name" type="java.lang.String" value="MLaporan" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="Mlappembelian">
               <Properties>
@@ -924,6 +926,15 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MLJRekapPerJenisPajak">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="MLJRekapPerJenisPajak.text"/>
+                    <Property name="name" type="java.lang.String" value="MLJRekapPerJenisPajak" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLJRekapPerJenisPajakActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>

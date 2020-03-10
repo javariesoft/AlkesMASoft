@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapAnalisaHutangPTglSupplier" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04185182-c743-4436-b07e-790ed50f5087">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="335"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapAnalisaHutangPTglSupplier" pageWidth="830" pageHeight="595" orientation="Landscape" columnWidth="772" leftMargin="30" rightMargin="28" topMargin="20" bottomMargin="20" uuid="04185182-c743-4436-b07e-790ed50f5087">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="1658"/>
+	<property name="ireport.y" value="219"/>
 	<parameter name="Psupplier" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -111,7 +111,7 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 					<text><![CDATA[PHONE  :]]></text>
 				</staticText>
 				<line>
-					<reportElement uuid="207f4b02-7743-49c6-aa01-561c337737c3" x="1" y="17" width="775" height="1"/>
+					<reportElement uuid="207f4b02-7743-49c6-aa01-561c337737c3" x="1" y="17" width="771" height="1"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -148,7 +148,7 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 					<textFieldExpression><![CDATA[$V{Vtotsisa}]]></textFieldExpression>
 				</textField>
 				<rectangle>
-					<reportElement uuid="3283b1d8-75ec-48b0-abc1-22f8005602a1" x="727" y="-1" width="50" height="12"/>
+					<reportElement uuid="3283b1d8-75ec-48b0-abc1-22f8005602a1" x="722" y="-1" width="49" height="12"/>
 				</rectangle>
 				<rectangle>
 					<reportElement uuid="db97aef6-9f39-4797-bc10-0517056ae5f1" x="1" y="-1" width="351" height="12"/>
@@ -161,7 +161,7 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 					<text><![CDATA[SUB TOTAL  :]]></text>
 				</staticText>
 				<rectangle>
-					<reportElement uuid="3283b1d8-75ec-48b0-abc1-22f8005602a1" x="657" y="-1" width="70" height="12"/>
+					<reportElement uuid="3283b1d8-75ec-48b0-abc1-22f8005602a1" x="657" y="-1" width="65" height="12"/>
 				</rectangle>
 			</band>
 		</groupFooter>
@@ -200,14 +200,14 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 				<text><![CDATA[S/D]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0b066b7b-44cb-4ab5-971a-0372aac1907f" x="55" y="0" width="777" height="17"/>
+				<reportElement uuid="0b066b7b-44cb-4ab5-971a-0372aac1907f" x="0" y="0" width="772" height="17"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PT.MIRANTI ADILHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="75caaf40-4f94-4967-8647-bbc0d24cd654" x="55" y="16" width="776" height="17"/>
+				<reportElement uuid="75caaf40-4f94-4967-8647-bbc0d24cd654" x="0" y="16" width="772" height="17"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
@@ -221,7 +221,7 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 	<columnHeader>
 		<band height="34" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="cbcfaf88-60d4-4243-b096-88c0489bc6c5" x="1" y="4" width="775" height="29" backcolor="#CCFFCC"/>
+				<reportElement uuid="cbcfaf88-60d4-4243-b096-88c0489bc6c5" x="1" y="4" width="771" height="29" backcolor="#CCFFCC"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
@@ -269,7 +269,7 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 				<text><![CDATA[TOTAL ANGSURAN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9099aa14-c919-41ff-8a80-b083399b4ccf" x="730" y="6" width="42" height="27"/>
+				<reportElement uuid="9099aa14-c919-41ff-8a80-b083399b4ccf" x="726" y="6" width="42" height="27"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
@@ -290,13 +290,13 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 				<text><![CDATA[NO]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="3f26deeb-4203-4ee1-9679-501532257b8c" x="0" y="4" width="777" height="1"/>
+				<reportElement uuid="3f26deeb-4203-4ee1-9679-501532257b8c" x="0" y="4" width="771" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="7e5b1418-82cf-4d94-b1b4-bc07466eaae5" x="1" y="33" width="775" height="1"/>
+				<reportElement uuid="7e5b1418-82cf-4d94-b1b4-bc07466eaae5" x="1" y="33" width="771" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="9099aa14-c919-41ff-8a80-b083399b4ccf" x="660" y="6" width="65" height="27"/>
+				<reportElement uuid="9099aa14-c919-41ff-8a80-b083399b4ccf" x="660" y="6" width="60" height="27"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
@@ -309,10 +309,10 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 				<reportElement uuid="5c1770f9-008c-4a47-90b4-ee13dab3bf6c" x="290" y="4" width="1" height="29"/>
 			</line>
 			<line>
-				<reportElement uuid="f27de4f1-6aee-4b9f-827c-1c370bd231a0" x="727" y="4" width="1" height="29"/>
+				<reportElement uuid="f27de4f1-6aee-4b9f-827c-1c370bd231a0" x="722" y="4" width="1" height="29"/>
 			</line>
 			<line>
-				<reportElement uuid="9dda0a75-e54b-43ee-bb29-ce821833e45d" x="776" y="4" width="1" height="29"/>
+				<reportElement uuid="9dda0a75-e54b-43ee-bb29-ce821833e45d" x="771" y="4" width="1" height="29"/>
 			</line>
 			<line>
 				<reportElement uuid="5a8d040d-8da6-4862-94e0-15d0761dccc3" x="32" y="4" width="1" height="29"/>
@@ -354,10 +354,10 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 				<text><![CDATA[Net 45]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="9dda0a75-e54b-43ee-bb29-ce821833e45d" x="776" y="-19" width="1" height="31"/>
+				<reportElement uuid="9dda0a75-e54b-43ee-bb29-ce821833e45d" x="771" y="-19" width="1" height="31"/>
 			</line>
 			<line>
-				<reportElement uuid="f27de4f1-6aee-4b9f-827c-1c370bd231a0" x="727" y="0" width="1" height="12"/>
+				<reportElement uuid="f27de4f1-6aee-4b9f-827c-1c370bd231a0" x="722" y="0" width="1" height="12"/>
 			</line>
 			<line>
 				<reportElement uuid="4d3f7159-e26a-4f5f-929d-78aae9b69c69" x="459" y="0" width="1" height="12"/>
@@ -402,7 +402,7 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 				<textFieldExpression><![CDATA[$F{HUTANG_JUMLAH}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="49c7ab4c-810e-4a44-8a1b-1d7e5b8b1fd5" x="730" y="0" width="42" height="12"/>
+				<reportElement uuid="49c7ab4c-810e-4a44-8a1b-1d7e5b8b1fd5" x="726" y="0" width="42" height="12"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
@@ -433,10 +433,10 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 				<textFieldExpression><![CDATA[$F{PEMBELIAN_NOFAKTUR}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="48986ebc-ba6d-4ff2-82be-7abce67f6972" x="0" y="12" width="777" height="1"/>
+				<reportElement uuid="48986ebc-ba6d-4ff2-82be-7abce67f6972" x="0" y="12" width="771" height="1"/>
 			</line>
 			<textField>
-				<reportElement uuid="bbb7ae06-1683-4bed-826e-98678efefd0b" x="660" y="0" width="65" height="12"/>
+				<reportElement uuid="bbb7ae06-1683-4bed-826e-98678efefd0b" x="660" y="0" width="60" height="12"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
@@ -491,13 +491,13 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 				<reportElement uuid="db97aef6-9f39-4797-bc10-0517056ae5f1" x="1" y="-1" width="351" height="12"/>
 			</rectangle>
 			<rectangle>
-				<reportElement uuid="3283b1d8-75ec-48b0-abc1-22f8005602a1" x="657" y="-1" width="70" height="12"/>
+				<reportElement uuid="3283b1d8-75ec-48b0-abc1-22f8005602a1" x="657" y="-1" width="65" height="12"/>
 			</rectangle>
 			<rectangle>
 				<reportElement uuid="af854a24-a61d-4dc1-a52f-08ee6ef47f81" x="459" y="-1" width="99" height="12"/>
 			</rectangle>
 			<rectangle>
-				<reportElement uuid="3283b1d8-75ec-48b0-abc1-22f8005602a1" x="727" y="-1" width="50" height="12"/>
+				<reportElement uuid="3283b1d8-75ec-48b0-abc1-22f8005602a1" x="722" y="-1" width="49" height="12"/>
 			</rectangle>
 			<rectangle>
 				<reportElement uuid="0fd7a2c8-addc-4233-8534-d2720c6b93c3" x="352" y="-1" width="107" height="12"/>
@@ -524,7 +524,7 @@ order by SUPPLIER."NAMA",PEMBELIAN_NOFAKTUR]]>
 				<textFieldExpression><![CDATA[$V{VTotalSisa}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="8a35aaab-750d-47e2-a00f-5057b3d12265" x="263" y="-1" width="68" height="12"/>
+				<reportElement uuid="8a35aaab-750d-47e2-a00f-5057b3d12265" x="304" y="-1" width="44" height="12"/>
 				<textElement textAlignment="Left">
 					<font size="9" isBold="true"/>
 				</textElement>

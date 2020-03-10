@@ -10,6 +10,7 @@
  */
 package javariesoft;
 
+import com.eigher.form.FRekapJualJenisPajak;
 import com.erv.db.koneksi;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -1135,7 +1136,7 @@ public class Zaren extends javax.swing.JApplet {
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
         // TODO add your handling code here:
         konek();
-        FRekapPenjualanHarian p = new FRekapPenjualanHarian();
+        FRekapJualJenisPajak p = new FRekapJualJenisPajak();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);

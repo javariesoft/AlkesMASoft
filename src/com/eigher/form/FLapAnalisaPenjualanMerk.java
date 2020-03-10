@@ -178,16 +178,6 @@ public class FLapAnalisaPenjualanMerk extends javax.swing.JInternalFrame {
         txtkodemerk.setEditable(false);
         txtkodemerk.setFont(resourceMap.getFont("txtkodemerk.font")); // NOI18N
         txtkodemerk.setName("txtkodemerk"); // NOI18N
-        txtkodemerk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtkodemerkActionPerformed(evt);
-            }
-        });
-        txtkodemerk.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtkodemerkKeyPressed(evt);
-            }
-        });
         getContentPane().add(txtkodemerk);
         txtkodemerk.setBounds(454, 40, 60, 21);
 
@@ -230,33 +220,33 @@ public class FLapAnalisaPenjualanMerk extends javax.swing.JInternalFrame {
 
 private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
 // TODO add your handling code here:
-    this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-    HashMap parameter = new HashMap();
-    JasperPrint jasperPrint = null;
-    String nmmerk="";
-    try {
-        Connection c = koneksi.getKoneksiJ();
-        if(txtkodemerk.getText().trim().equals("")){
-            JOptionPane.showMessageDialog(null, "Isi Data Merk .. !");
-            txtnamamerk.requestFocus();
-        }else{
-           j=jenisbarangDao.getDetails(c, txtkodemerk.getText());
-           nmmerk = j.getJENIS();
+    if(txtkodemerk.getText().trim().equals("")){
+        JOptionPane.showMessageDialog(null, "Isi Data Merk .. !");
+        txtnamamerk.requestFocus();
+    }else{
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        HashMap parameter = new HashMap();
+        JasperPrint jasperPrint = null;
+        String nmmerk="";
+        try {
+            Connection c = koneksi.getKoneksiJ();
+            j=jenisbarangDao.getDetails(c, txtkodemerk.getText());
+            nmmerk = j.getJENIS();
+            parameter.put("tgl1", tgl1.getText());
+            parameter.put("tgl2", tgl2.getText());
+            parameter.put("PMerk", txtkodemerk.getText());
+            parameter.put("PNamaMerk", nmmerk);
+            URL url = new URL(global.REPORT + "/AnalisaPenjualanPerMerk.jasper");
+            InputStream in = url.openStream();
+            jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+            JasperViewer.viewReport(jasperPrint, false);
+            c.close();
+        } catch (Exception ex) {
+            System.out.print(ex.toString());
+            //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
         }
-        parameter.put("tgl1", tgl1.getText());
-        parameter.put("tgl2", tgl2.getText());
-        parameter.put("PMerk", txtkodemerk.getText());
-        parameter.put("PNamaMerk", nmmerk);
-        URL url = new URL(global.REPORT + "/AnalisaPenjualanPerMerk.jasper");
-        InputStream in = url.openStream();
-        jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-        JasperViewer.viewReport(jasperPrint, false);
-        c.close();
-    } catch (Exception ex) {
-        System.out.print(ex.toString());
-        //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
-    this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 }//GEN-LAST:event_btnPreviewActionPerformed
 
 private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
@@ -282,16 +272,6 @@ private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         }
     }//GEN-LAST:event_txtnamamerkKeyPressed
 
-    private void txtkodemerkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkodemerkActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtkodemerkActionPerformed
-
-    private void txtkodemerkKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtkodemerkKeyPressed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtkodemerkKeyPressed
-
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == 10) {
@@ -312,14 +292,19 @@ private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
-            System.out.println(selectedFile.getAbsolutePath());
+            //System.out.println(selectedFile.getAbsolutePath());
             txtPath.setText(selectedFile.getAbsolutePath()+".csv");
         }
     }//GEN-LAST:event_btnBrowseActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
-        toCsv(txtPath.getText());
+        if ((txtkodemerk.getText().equals("")) && (txtPath.getText().equals(""))){
+            JOptionPane.showMessageDialog(null, "Lengkapi Isian Data ...!");
+        }else{    
+            toCsv(txtPath.getText());
+        }
+        
     }//GEN-LAST:event_btnExportActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

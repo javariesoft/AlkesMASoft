@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GrafJualTahunan" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="409e7d03-89d4-4b7d-81c3-e25880c8736e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="85"/>
+	<queryString>
+		<![CDATA[SELECT VP.PENJUALAN_BULAN,VP.PENJUALAN_NAMABULAN, VP.PENJUALAN_TAHUN, SUM(VP.RINCIPENJUALAN_TOTAL) AS TOTAL
+FROM VIEWPENJUALAN VP
+WHERE VP.PENJUALAN_TAHUN='2015'
+GROUP BY VP.PENJUALAN_BULAN,VP.PENJUALAN_TAHUN
+ORDER BY VP.PENJUALAN_TAHUN,VP.PENJUALAN_BULAN]]>
+	</queryString>
+	<field name="PENJUALAN_BULAN" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PENJUALAN_NAMABULAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PENJUALAN_TAHUN" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOTAL" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="513" splitType="Stretch">
+			<xyBarChart>
+				<chart isShowLegend="true" evaluationTime="Report" renderType="draw" theme="eye.candy.sixties">
+					<reportElement uuid="64c2bbf1-ee9a-4608-8b34-335bf58bc7b6" x="0" y="0" width="488" height="513"/>
+					<chartTitle position="Top">
+						<font fontName="Times New Roman"/>
+					</chartTitle>
+					<chartSubtitle>
+						<font fontName="Times New Roman"/>
+					</chartSubtitle>
+					<chartLegend position="Top">
+						<font fontName="Times New Roman"/>
+					</chartLegend>
+				</chart>
+				<xyDataset>
+					<xySeries>
+						<seriesExpression><![CDATA["Penjualan Tahun "+$F{PENJUALAN_TAHUN}]]></seriesExpression>
+						<xValueExpression><![CDATA[$F{PENJUALAN_BULAN}]]></xValueExpression>
+						<yValueExpression><![CDATA[$F{TOTAL}]]></yValueExpression>
+					</xySeries>
+				</xyDataset>
+				<barPlot isShowLabels="true" isShowTickLabels="true" isShowTickMarks="true">
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF">
+						<font fontName="Times New Roman" size="5" pdfFontName="Helvetica"/>
+					</itemLabel>
+					<categoryAxisFormat>
+						<axisFormat verticalTickLabels="false">
+							<labelFont>
+								<font fontName="Times New Roman" size="8"/>
+							</labelFont>
+							<tickLabelFont>
+								<font fontName="Times New Roman"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat verticalTickLabels="false">
+							<labelFont>
+								<font fontName="Times New Roman"/>
+							</labelFont>
+							<tickLabelFont>
+								<font fontName="Times New Roman"/>
+							</tickLabelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</barPlot>
+			</xyBarChart>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
