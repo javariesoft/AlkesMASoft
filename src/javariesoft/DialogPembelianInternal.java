@@ -9,6 +9,7 @@ import com.eigher.db.loghistoryDao;
 import com.eigher.model.loghistory;
 import com.erv.db.BarangstokDao;
 import com.erv.db.BarangstokbatchDao;
+import com.erv.db.DODao;
 import com.erv.db.KontrolTanggalDao;
 import com.erv.db.bankDao;
 import com.erv.db.barangDao;
@@ -2470,16 +2471,33 @@ public class DialogPembelianInternal extends javax.swing.JInternalFrame {
                     idbarangstok = BarangstokDao.insertIntoBARANGSTOK(c, bs);
                     bs.setID(idbarangstok);
                 }
-                double ttotcogs = bs.getCOGS() * Math.abs(bs.getSTOK());
-                double thpp;
-                int tjumbrg = rp.getJUMLAHKECIL() + Math.abs(bs.getSTOK());
-                thpp = ((ttot - tdisk) + ttotcogs) / tjumbrg;
-                //hpp+= 
-                if (bs.getCOGS() == 0) {
-                    bs.setCOGS((ttot - tdisk) / rp.getJUMLAHKECIL());
-                } else {
-                    bs.setCOGS(thpp);
-                }                //
+//                double ttotcogs = bs.getCOGS() * Math.abs(bs.getSTOK());
+//                double thpp;
+//                int tjumbrg = rp.getJUMLAHKECIL() + Math.abs(bs.getSTOK());
+//                thpp = ((ttot - tdisk) + ttotcogs) / tjumbrg;
+//                //hpp+= 
+//                if (bs.getCOGS() == 0) {
+//                    bs.setCOGS((ttot - tdisk) / rp.getJUMLAHKECIL());
+//                } else {
+//                    bs.setCOGS(thpp);
+//                }                //
+                ////////// COGS
+                if (rp.getBONUS().trim().length() == 0) {
+                    int stok_do = DODao.getStokDO(c, txtTglMasuk.getText(), rp.getKODEBARANG());
+                    double ttotcogs_do = bs.getCOGS() * stok_do;
+                    double ttot_beli = ttot - tdisk;
+                    double ttotcogs = bs.getCOGS() * Math.abs(bs.getSTOK());
+                    double thpp;
+                    int tjumbrg = rp.getJUMLAHKECIL() + Math.abs(bs.getSTOK()) + stok_do;
+                    thpp = (ttot_beli + ttotcogs + ttotcogs_do) / tjumbrg;
+                    //hpp+= 
+                    if (bs.getCOGS() == 0) {
+                        bs.setCOGS(ttot_beli / rp.getJUMLAHKECIL());
+                    } else {
+                        bs.setCOGS(thpp);
+                    }                //
+                }
+                ///////
                 BarangstokDao.updateBARANGSTOK(c, bs);
                 if (rp.getKODEBATCH().length() > 0) {
                     Barangstokbatch br = BarangstokbatchDao.getDetailKodeBatch(c, rp.getKODEBATCH(), bs.getID());
