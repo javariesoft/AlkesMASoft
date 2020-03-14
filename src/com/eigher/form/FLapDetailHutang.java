@@ -185,6 +185,7 @@ public class FLapDetailHutang extends javax.swing.JInternalFrame {
         pilihan.setBounds(140, 300, 140, 25);
 
         btnClear.setFont(resourceMap.getFont("btnClear.font")); // NOI18N
+        btnClear.setIcon(resourceMap.getIcon("btnClear.icon")); // NOI18N
         btnClear.setText(resourceMap.getString("btnClear.text")); // NOI18N
         btnClear.setName("btnClear"); // NOI18N
         btnClear.addActionListener(new java.awt.event.ActionListener() {

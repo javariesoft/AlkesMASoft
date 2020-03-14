@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GrafJualTahunan" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="409e7d03-89d4-4b7d-81c3-e25880c8736e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GrafBarJualTahunan" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="409e7d03-89d4-4b7d-81c3-e25880c8736e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="85"/>
+	<property name="ireport.y" value="55"/>
 	<queryString>
 		<![CDATA[SELECT VP.PENJUALAN_BULAN,VP.PENJUALAN_NAMABULAN, VP.PENJUALAN_TAHUN, SUM(VP.RINCIPENJUALAN_TOTAL) AS TOTAL
 FROM VIEWPENJUALAN VP
@@ -35,8 +35,8 @@ ORDER BY VP.PENJUALAN_TAHUN,VP.PENJUALAN_BULAN]]>
 	<detail>
 		<band height="513" splitType="Stretch">
 			<xyBarChart>
-				<chart isShowLegend="true" evaluationTime="Report" renderType="draw" theme="eye.candy.sixties">
-					<reportElement uuid="64c2bbf1-ee9a-4608-8b34-335bf58bc7b6" x="0" y="0" width="488" height="513"/>
+				<chart isShowLegend="true" evaluationTime="Report" renderType="draw" theme="generic">
+					<reportElement uuid="64c2bbf1-ee9a-4608-8b34-335bf58bc7b6" x="39" y="0" width="465" height="273"/>
 					<chartTitle position="Top">
 						<font fontName="Times New Roman"/>
 					</chartTitle>

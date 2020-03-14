@@ -184,6 +184,7 @@
     <Component class="javax.swing.JButton" name="btnClear">
       <Properties>
         <Property name="font" type="java.awt.Font" resourceKey="btnClear.font"/>
+        <Property name="icon" type="javax.swing.Icon" resourceKey="btnClear.icon"/>
         <Property name="text" type="java.lang.String" resourceKey="btnClear.text"/>
         <Property name="name" type="java.lang.String" value="btnClear" noResource="true"/>
       </Properties>
