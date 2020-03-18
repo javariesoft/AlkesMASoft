@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GrafLineJualTahunan" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="409e7d03-89d4-4b7d-81c3-e25880c8736e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Graf3DJualTahunan" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="409e7d03-89d4-4b7d-81c3-e25880c8736e">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -34,26 +34,27 @@ ORDER BY VP.PENJUALAN_TAHUN,VP.PENJUALAN_BULAN]]>
 	</columnHeader>
 	<detail>
 		<band height="513" splitType="Stretch">
-			<barChart>
-				<chart>
-					<reportElement uuid="bee2edc4-b2f3-4287-a533-224b275b4e42" x="0" y="0" width="555" height="348"/>
-					<chartTitle/>
+			<bar3DChart>
+				<chart theme="default">
+					<reportElement uuid="20913705-58e3-4961-9c3b-90587e22fa3e" x="0" y="0" width="718" height="388"/>
+					<chartTitle position="Top"/>
 					<chartSubtitle/>
-					<chartLegend/>
+					<chartLegend position="Bottom"/>
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA[$F{PENJUALAN_NAMABULAN}]]></seriesExpression>
+						<seriesExpression><![CDATA["Penjualan Tahun : " + $F{PENJUALAN_TAHUN}]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{PENJUALAN_NAMABULAN}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{TOTAL}]]></valueExpression>
-						<labelExpression><![CDATA["Test" + $F{PENJUALAN_NAMABULAN}]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>
-				<barPlot>
+				<bar3DPlot isShowLabels="true">
 					<plot/>
-					<itemLabel/>
-				</barPlot>
-			</barChart>
+					<itemLabel>
+						<font fontName="Times New Roman"/>
+					</itemLabel>
+				</bar3DPlot>
+			</bar3DChart>
 		</band>
 	</detail>
 	<columnFooter>
