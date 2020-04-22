@@ -313,7 +313,7 @@ public class ClassPrintKertasPanjang {
                     + "INNER JOIN BARANG BARANG ON RINCIPENJUALAN.KODEBARANG = BARANG.KODEBARANG "
                     + "INNER JOIN JENISBARANG JENISBARANG ON BARANG.IDJENIS = JENISBARANG.ID "
                     + "INNER JOIN SALES SALES ON PENJUALAN.IDSALES = SALES.IDSALES "
-                    + "WHERE PENJUALAN.FAKTUR = '" + nfak + "'";
+                    + "WHERE PENJUALAN.FAKTUR = '" + nfak + "' ORDER BY lower(BARANG.NAMABARANG)";
 
             String spasi = " ";
             Statement stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -539,7 +539,7 @@ public class ClassPrintKertasPanjang {
                     + "INNER JOIN BARANG BARANG ON RINCIPENJUALAN.KODEBARANG = BARANG.KODEBARANG "
                     + "INNER JOIN JENISBARANG JENISBARANG ON BARANG.IDJENIS = JENISBARANG.ID "
                     + "INNER JOIN SALES SALES ON PENJUALAN.IDSALES = SALES.IDSALES "
-                    + "WHERE PENJUALAN.FAKTUR = '" + nfak + "'";
+                    + "WHERE PENJUALAN.FAKTUR = '" + nfak + "' ORDER BY lower(BARANG.NAMABARANG)";
 
             String spasi = " ";
             Statement stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
