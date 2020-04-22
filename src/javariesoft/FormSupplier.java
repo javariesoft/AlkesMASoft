@@ -259,7 +259,7 @@ public class FormSupplier extends javax.swing.JInternalFrame {
 
         jSeparator1.setName("jSeparator1"); // NOI18N
         panelCool1.add(jSeparator1);
-        jSeparator1.setBounds(30, 260, 620, 10);
+        jSeparator1.setBounds(30, 260, 820, 10);
 
         btnInsert.setFont(resourceMap.getFont("btnInsert.font")); // NOI18N
         btnInsert.setIcon(resourceMap.getIcon("btnInsert.icon")); // NOI18N
@@ -311,7 +311,7 @@ public class FormSupplier extends javax.swing.JInternalFrame {
 
         jSeparator2.setName("jSeparator2"); // NOI18N
         panelCool1.add(jSeparator2);
-        jSeparator2.setBounds(30, 300, 620, 10);
+        jSeparator2.setBounds(30, 300, 820, 10);
 
         jLabel7.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
         jLabel7.setForeground(resourceMap.getColor("jLabel7.foreground")); // NOI18N
@@ -353,7 +353,7 @@ public class FormSupplier extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable1);
 
         panelCool1.add(jScrollPane2);
-        jScrollPane2.setBounds(10, 340, 660, 260);
+        jScrollPane2.setBounds(10, 340, 840, 260);
 
         lblKodeAkun.setFont(resourceMap.getFont("lblKodeAkun.font")); // NOI18N
         lblKodeAkun.setForeground(resourceMap.getColor("lblKodeAkun.foreground")); // NOI18N
@@ -419,7 +419,7 @@ public class FormSupplier extends javax.swing.JInternalFrame {
 
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
-        setBounds(0, 0, 695, 638);
+        setBounds(0, 0, 878, 638);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed

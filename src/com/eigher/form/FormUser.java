@@ -412,21 +412,25 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
 
 private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
 // TODO add your handling code here:
-    int x = JOptionPane.showConfirmDialog(this, "Apakah Data Diedit?", "", JOptionPane.YES_NO_OPTION);
-    if (x == 0) {
-        if ((txtUsername.getText().equals("")) || (txtPassw.getText().equals("")) || (txtNamaLengkap.getText().equals(""))) {
-            JOptionPane.showMessageDialog(null, "Data Belum Lengkap.. !");
-            txtUsername.requestFocus();
+try {
+
+        int x = JOptionPane.showConfirmDialog(this, "Apakah Data Diedit?", "", JOptionPane.YES_NO_OPTION);
+        if (x == 0) {
+            if ((txtUsername.getText().equals("")) || (txtPassw.getText().equals("")) || (txtNamaLengkap.getText().equals(""))) {
+                JOptionPane.showMessageDialog(null, "Data Belum Lengkap.. !");
+                txtUsername.requestFocus();
+            } else {
+                aksilog = "Update";
+                prosesUpdate(1);
+                prosesUpdateLog();
+                reloadData(cboAktif.getSelectedIndex());
+                kosongkan();
+                txtUsername.requestFocus();
+            }
         } else {
-            aksilog = "Update";
-            prosesUpdate(1);
-            prosesUpdateLog();
-            reloadData(cboAktif.getSelectedIndex());
-            kosongkan();
-            txtUsername.requestFocus();
+            txtPassw.requestFocus();
         }
-    } else {
-        txtPassw.requestFocus();
+    } catch (Exception e) {
     }
 }//GEN-LAST:event_btnUpdateActionPerformed
 

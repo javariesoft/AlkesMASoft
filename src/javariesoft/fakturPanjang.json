@@ -52,12 +52,11 @@
             "%{179}${total:20:right} %{179} ${diskonpersentambahan:6:right} % ${diskontambahan:12:right} %{179} ${ppn:18:right} %{179} ${ongkir:18:right}%{179} ${bayar:18:right}%{179} ${totalbersih:21:right}%{179}",
             "%{179} Terbilang : ${terbilang:116}%{179}",
             "%{192}%{196 R129}%{217}",
-            "     Ttd,                                                                                            Padang,${tglcetak}",
-            "  Penerima                                        Apoteker,                                             Pimpinan",
+            "     Ttd,                                         Penanggung Jawab,                                     Padang,${tglcetak}",
+            "  Penerima                                                                                                  Pimpinan",
             "%{32 R92}",
-            "%{32 R92}",
-            "(                )%{32 R29}(${apotek:25})%{32 R23}( Jasmarizal.SKp,MARS )",
-            "%{32 R47}${ketapotek:50}"
+            "(                )%{32 R8}( ${apotek:25} )%{32 R7}( Desi Eryon, S. Farm., Apt )%{32 R12}( Jasmarizal.SKp,MARS )",
+            "%{32 R23}${ketapotek:35}    19931203/SIPA_13.71/2018/2.30"
         ]
     }
 }
