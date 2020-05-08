@@ -7,10 +7,12 @@ package javariesoft;
 
 import com.eigher.db.loghistoryDao;
 import com.eigher.model.loghistory;
+import com.erv.controller.PoController;
 import com.erv.db.BarangstokDao;
 import com.erv.db.DODao;
 import com.erv.db.DORinciDao;
 import com.erv.db.KontrolTanggalDao;
+import com.erv.db.PoDao;
 import com.erv.db.bankDao;
 import com.erv.db.barangDao;
 import com.erv.db.jurnalDao;
@@ -46,6 +48,7 @@ import com.erv.model.rinciretur;
 import com.erv.model.sales;
 import com.erv.model.stok;
 import com.erv.model.DO;
+import com.erv.model.PO;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -142,6 +145,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
     String[] expire;
     ResourceMap resourceMap1 = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(DialogPenjualan.class);
     Connection c = null;
+    private int idpo = -1;
 
     public DialogPenjualanInternal() {
         initComponents();
@@ -175,7 +179,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             tgllunas.setDateFormat(d);
             tglRetur.setDateFormat(d);
             statusbayar.requestFocus();
-            this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2);
+            this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2 - 50);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
@@ -255,7 +259,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                 ResultSet re = c.createStatement().executeQuery("select *, barang.namabarang from RINCIPENJUALAN, BARANG where RINCIPENJUALAN.KODEBARANG=BARANG.KODEBARANG and IDPENJUALAN=" + p.getID() + "");
 //                hapusTabel();
 //                buatTabel();
-                
+
                 while (re.next()) {
                     nomor++;
                     //brg = new barangDao().getDetails(re.getString(3));
@@ -316,6 +320,125 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
             this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2);
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    PoController controller;
+
+    public DialogPenjualanInternal(int idpo) {
+        initComponents();
+        setting();
+        kosongFaktur();
+        kosongBarang();
+        kosongHasil();
+        pilihJatuhTempo();
+        jScrollPane2.setVisible(false);
+        jScrollPane3.setVisible(false);
+//        Connection c = null;
+        try {
+            this.idpo = idpo;
+            c = koneksi.getKoneksiJ();
+            controller = new PoController(this, c, idpo);
+            dbpenjualan = new penjualanDao();
+            dbbarang = new barangDao();
+            cm = koneksi.getKoneksiM();
+            stat = cm.createStatement();
+            setFaktur(c);
+            lh = new loghistory();
+            lhdao = new loghistoryDao();
+            model = (DefaultTableModel) jTable1.getModel();
+            jTabbedPane1.setEnabledAt(0, false);
+            tgl.setDateFormat(d);
+            tgllunas.setDateFormat(d);
+            tglRetur.setDateFormat(d);
+
+            // TODO add your handling code here:
+            p = controller.getJual();
+            IDjual = p.getID();
+            nofaktur.setText(p.getFAKTUR());
+            txtNofakturTemp.setText(p.getFAKTUR());
+            Calendar cld = Calendar.getInstance();
+            cld.setTime(d.parse(p.getTANGGAL()));
+            tgl.setSelectedDate(cld);
+            kodepelanggan.setText(p.getKODEPELANGGAN());
+            kodepelanggan1.setText(p.getKODEPELANGGAN());
+            pelanggan plg = new pelangganDao(c).getDetails(p.getKODEPELANGGAN());
+            namapelanggan.setText(plg.getNAMA());
+            namapelanggan1.setText(plg.getNAMA());
+            //sales sls = new salesDao(c).getDetails(p.getKODEPELANGGAN());
+            sls = salesDao.getDetails(c, p.getIDSALES());
+            txtSales.setText(sls.getIDSALES());
+            txtNamaSales.setText(sls.getNAMA());
+            //txtKodeDO.setText();
+            namapelanggan.setText(plg.getNAMA());
+            namapelanggan1.setText(plg.getNAMA());
+            statusbayar.setSelectedIndex(Integer.parseInt(p.getCASH()));
+            cld.setTime(d.parse(p.getTGLLUNAS()));
+            tgllunas.setSelectedDate(cld);
+            diskon.setText("" + p.getDISKON());
+            cboStatDiskon.setSelectedIndex(0);
+            DiskonTambah.setText("" + p.getDISKON());
+            CboJenisTrans.setSelectedItem(p.getJENISTRANS());
+            hasilBayar.setText("" + p.getDP());
+            ongkoskirim.setText("" + p.getONGKOSKIRIM());
+            txtDiskonPersen.setText("" + p.getDISKONPERSEN());
+            if (p.getPPN() > 0) {
+                cbPPN.setSelected(true);
+                cbPPN.setEnabled(false);
+            } else {
+                cbPPN.setSelected(false);
+                cbPPN.setEnabled(true);
+            }
+            cogs = 0;
+            boolean sdo = false;
+            model = (DefaultTableModel) jTable1.getModel();
+            for (rincipenjualan re : p.getRincipenjualans()) {
+                nomor++;
+                //brg = new barangDao().getDetails(re.getString(3));
+                Vector data = new Vector();
+                data.add(0, nomor);
+                data.add(1, re.getKODEBARANG());
+                data.add(2, dbbarang.getDetails(c, re.getKODEBARANG()).getNAMABARANG());
+                data.add(3, re.getKODEBATCH());
+                data.add(4, re.getEXPIRE());
+                data.add(5, re.getJUMLAH());
+                data.add(6, re.getSATUAN());
+                data.add(7, re.getHARGA());
+                data.add(8, re.getDISKON());
+                data.add(9, re.getPPN());
+                data.add(10, re.getTOTAL());
+                data.add(11, re.getIDDO());
+                data.add(12, re.getCOGS());
+                data.add(13, re.getJUMLAHKECIL());
+                data.add(14, re.getDISKONP());
+                data.add(15, re.getBONUS());
+                model.addRow(data);
+                if (re.getIDDO() == 0) {
+                    sdo = true;
+                }
+            }
+
+            if (sdo == false) {
+                cbStatusDO.setSelected(true);
+                cbStatusDO.setEnabled(false);
+                txtNamaDo.setEditable(true);
+                txtNamaDo.setText("");
+            } else {
+                cbStatusDO.setSelected(false);
+                cbStatusDO.setEnabled(false);
+                txtNamaDo.setText("0");
+                txtNamaDo.setEditable(false);
+            }
+
+            total = 0;
+            hpp = 0;
+            bonus = 0;
+            reloadData(c);
+            hasilBayar.setText("" + p.getDP());
+            this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2 - 50);
+        } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
@@ -446,6 +569,23 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(DialogPenjualanInternal.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         panelCool2.setName("panelCool2"); // NOI18N
         panelCool2.setLayout(null);
@@ -2004,35 +2144,43 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             jScrollPane2.setVisible(true);
             JDBCAdapter ja = new JDBCAdapter(c);
             String sql = "";
-            if (txtKodeDO.getText().equals("0")) {
-                sql = "select BARANG.KODEBARANG,BARANG.NAMABARANG,"
-                        + "bsb.KODEBATCH , EXPIRE,"
-                        + "bs.HARGAJUAL as `Jual`,"
-                        + "CASEWHEN(KODEBATCH is null,bs.STOK,bsb.STOK) as STOK, "
-                        + "JENISBARANG.JENIS "
-                        + "from BARANG,JENISBARANG,KATEGORI "
-                        + "inner join BARANGSTOK bs on bs.KODEBARANG=BARANG.KODEBARANG "
-                        + "left join BARANGSTOKBATCH bsb on bs.ID=bsb.IDBARANGSTOK "
-                        + "where BARANG.IDJENIS=JENISBARANG.ID "
-                        + "AND BARANG.IDKATEGORI=KATEGORI.IDKATEGORI AND BARANG.STATUS='0' "
-                        + "AND (BARANG.KODEBARANG like '" + kodebarang.getText() + "%' "
-                        + "OR lower(BARANG.NAMABARANG) like '%" + kodebarang.getText().toLowerCase() + "%' "
-                        + "OR bsb.KODEBATCH like '%" + kodebarang.getText() + "%')";
+            if (cbBonus.isSelected()) {
+                sql = "select  kodebarang, namabarang, kodebatch,expire, 0 as jual, sum(in) - sum(out) as stok "
+                        + "from VIEWBARANGBONUS "
+                        + "where (kodebarang like '" + kodebarang.getText() + "%' "
+                        + "OR lower(NAMABARANG) like '%" + kodebarang.getText().toLowerCase() + "%') "
+                        + "group by kodebarang, kodebatch,EXPIRE order by kodebarang";
             } else {
-                sql = "Select DR.KODEBARANG,BR.NAMABARANG, DR.KODEBATCH, DR.EXPIRE, \n"
-                        + "0 as HARGAJUAL, "
-                        + "     DR.JUMLAHKECIL -\n"
-                        + "IFNULL((SELECT\n"
-                        + "     RETURDORINCI.\"JUMLAHKECIL\" AS RETURDORINCI_JUMLAHKECIL\n"
-                        + "FROM\n"
-                        + "     \"PUBLIC\".\"RETURDO\" RETURDO INNER JOIN \"PUBLIC\".\"RETURDORINCI\" RETURDORINCI ON RETURDO.\"ID\" = RETURDORINCI.\"IDRETURDO\"\n"
-                        + "     where RETURDO.\"IDDO\"=DO.ID and DR.KODEBARANG = RETURDORINCI.\"KODEBARANG\" and RETURDORINCI.\"KODEBATCH\"= DR.KODEBATCH),0) "
-                        + "- IFNULL((select SUM(RP.JUMLAHKECIL) from RINCIPENJUALAN RP where RP.KODEBARANG = DR.KODEBARANG AND RP.KODEBATCH=DR.KODEBATCH AND RP.IDDO=DO.ID),0) as STOK"
-                        + "      , JB.JENIS \n"
-                        + "FROM DO inner join DORINCI DR on DO.ID = DR.IDDO\n"
-                        + "inner join BARANG BR on BR.KODEBARANG=DR.KODEBARANG \n"
-                        + "inner join JENISBARANG JB on BR.IDJENIS = JB.ID "
-                        + "where DO.ID = '" + txtKodeDO.getText() + "' and DO.KODEPELANGGAN='" + kodepelanggan.getText() + "'";
+                if (txtKodeDO.getText().equals("0")) {
+                    sql = "select BARANG.KODEBARANG,BARANG.NAMABARANG,"
+                            + "bsb.KODEBATCH , EXPIRE,"
+                            + "bs.HARGAJUAL as `Jual`,"
+                            + "CASEWHEN(KODEBATCH is null,bs.STOK,bsb.STOK) as STOK, "
+                            + "JENISBARANG.JENIS "
+                            + "from BARANG,JENISBARANG,KATEGORI "
+                            + "inner join BARANGSTOK bs on bs.KODEBARANG=BARANG.KODEBARANG "
+                            + "left join BARANGSTOKBATCH bsb on bs.ID=bsb.IDBARANGSTOK "
+                            + "where BARANG.IDJENIS=JENISBARANG.ID "
+                            + "AND BARANG.IDKATEGORI=KATEGORI.IDKATEGORI AND BARANG.STATUS='0' "
+                            + "AND (BARANG.KODEBARANG like '" + kodebarang.getText() + "%' "
+                            + "OR lower(BARANG.NAMABARANG) like '%" + kodebarang.getText().toLowerCase() + "%' "
+                            + "OR bsb.KODEBATCH like '%" + kodebarang.getText() + "%')";
+                } else {
+                    sql = "Select DR.KODEBARANG,BR.NAMABARANG, DR.KODEBATCH, DR.EXPIRE, \n"
+                            + "0 as HARGAJUAL, "
+                            + "     DR.JUMLAHKECIL -\n"
+                            + "IFNULL((SELECT\n"
+                            + "     RETURDORINCI.\"JUMLAHKECIL\" AS RETURDORINCI_JUMLAHKECIL\n"
+                            + "FROM\n"
+                            + "     \"PUBLIC\".\"RETURDO\" RETURDO INNER JOIN \"PUBLIC\".\"RETURDORINCI\" RETURDORINCI ON RETURDO.\"ID\" = RETURDORINCI.\"IDRETURDO\"\n"
+                            + "     where RETURDO.\"IDDO\"=DO.ID and DR.KODEBARANG = RETURDORINCI.\"KODEBARANG\" and RETURDORINCI.\"KODEBATCH\"= DR.KODEBATCH),0) "
+                            + "- IFNULL((select SUM(RP.JUMLAHKECIL) from RINCIPENJUALAN RP where RP.KODEBARANG = DR.KODEBARANG AND RP.KODEBATCH=DR.KODEBATCH AND RP.IDDO=DO.ID),0) as STOK"
+                            + "      , JB.JENIS \n"
+                            + "FROM DO inner join DORINCI DR on DO.ID = DR.IDDO\n"
+                            + "inner join BARANG BR on BR.KODEBARANG=DR.KODEBARANG \n"
+                            + "inner join JENISBARANG JB on BR.IDJENIS = JB.ID "
+                            + "where DO.ID = '" + txtKodeDO.getText() + "' and DO.KODEPELANGGAN='" + kodepelanggan.getText() + "'";
+                }
             }
 //            System.out.println(sql);
             ja.executeQuery(sql);
@@ -2799,6 +2947,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                                     aksilog = "InsertJual";
                                     prosesSimpan(c);
                                     prosesUpdateLog(c);
+                                    //nofak = nofaktur.getText();
                                     selesai(c);
                                     //                                int a = JOptionPane.showConfirmDialog(null, "Cetak PPN ?", "Pesan", JOptionPane.YES_NO_OPTION);
                                     //                                if (a == 0) {
@@ -2808,6 +2957,12 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                                     //                                    cetakFaktur("1");
                                     //                                    txtNofakturTemp.setText(nofak);
                                     //                                }
+                                    if (idpo >= 0) {
+                                        PO po = PoDao.getPO(c, idpo);
+                                        po.setNofaktur(nofak);
+                                        PoDao.updatePO(c, po.getId(), po.getKodepo(), po.getTanggal(), po.getKodepelanggan(), po.getNofaktur());
+
+                                    }
                                     c.commit();
                                     JOptionPane.showMessageDialog(this, "Transaksi Penjualan Ok..!");
                                 } else {
@@ -2858,6 +3013,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
                 System.out.print("tidak");
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             try {
                 c.rollback();
                 JOptionPane.showMessageDialog(this, "Rollback " + ex.getMessage());
@@ -2868,6 +3024,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 //                if (c != null) {
             try {
                 c.createStatement().execute("set autocommit true");
+                System.out.println("Eksekusi");
 //                        c.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DialogPenjualan.class.getName()).log(Level.SEVERE, null, ex);
@@ -3483,6 +3640,15 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtNamaDoKeyPressed
 
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        try {
+            // TODO add your handling code here:
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogPenjualanInternal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formInternalFrameClosed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGenNum;
@@ -3607,10 +3773,6 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         col.setPreferredWidth(50);
         col = jTable1.getColumnModel().getColumn(2);
         col.setPreferredWidth(250);
-//        col = jTable1.getColumnModel().getColumn(7);
-//        col.setPreferredWidth(10);
-//        col = jTable1.getColumnModel().getColumn(9);
-//        col.setPreferredWidth(5);
         col = jTable1.getColumnModel().getColumn(11);
         col.setPreferredWidth(30);
         TableColumn col1 = jTable1.getColumnModel().getColumn(12);
@@ -4899,19 +5061,18 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 //        cboBatch.setBounds(430, 20, 100, 20);
 //
 //    }
-
     private List<List<Object>> getDataRetur(int id) throws SQLException {
         List<List<Object>> dataRow = new ArrayList<>();
-        String sql="select kodebarang, kodebatch, sum(jumlah)  from RETUR r  "
+        String sql = "select kodebarang, kodebatch, sum(jumlah)  from RETUR r  "
                 + "inner join RETURRINCI rr on r.id = rr.IDRETUR "
                 + "where r.idpenjualan=? "
                 + "group by kodebarang, kodebatch "
                 + "";
         PreparedStatement ps = c.prepareStatement(sql);
-        ResultSet rs =ps.executeQuery();
-        while(rs.next()){
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
             List<Object> newRow = new ArrayList<>();
-            for(int i=1;i<=3;i++){
+            for (int i = 1; i <= 3; i++) {
                 newRow.add(rs.getObject(i));
             }
             dataRow.add(newRow);

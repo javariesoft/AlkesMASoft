@@ -278,7 +278,7 @@ public class ClassPrintDO {
                     + "INNER JOIN DO DO ON PELANGGAN.KODEPELANGGAN = DO.KODEPELANGGAN "
                     + "INNER JOIN DORINCI DORINCI ON DO.ID = DORINCI.IDDO "
                     + "INNER JOIN PUBLIC.BARANG BARANG ON DORINCI.KODEBARANG = BARANG.KODEBARANG "
-                    + "where DO.KODEDO = '" + nfak + "'";
+                    + "where DO.KODEDO = '" + nfak + "' ORDER BY BARANG.NAMABARANG";
 
             String spasi = " ";
             Statement stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -387,6 +387,121 @@ public class ClassPrintDO {
         return p;
     }
 
+    public static Map<String, Object> cetakfakturDOMap(Connection con, String nfak) {
+        java.text.DateFormat d = new SimpleDateFormat("dd-MMMM-yyyy");
+        java.util.Date tgl=new java.util.Date();
+        DecimalFormat df = new DecimalFormat("###,###,###,###");
+        DecimalFormat df1 = new DecimalFormat("###,###,###,###.##");
+        Map<String, Object> p = new HashMap<String, Object>();
+
+        try {
+
+            String sql = "SELECT DO.ID AS DO_ID,"                  //1
+                    + "DO.KODEDO AS DO_KODEDO,"                    //2
+                    + "DORINCI.KODEBARANG AS DORINCI_KODEBARANG,"  //3
+                    + "BARANG.NAMABARANG AS BARANG_NAMABARANG,"   //4
+                    + "BARANG.COGS AS BARANG_COGS,"               //5
+                    + "BARANG.SATUAN AS BARANG_SATUAN,"           //6
+                    + "DORINCI.JUMLAH AS DORINCI_JUMLAH,"         //7
+                    + "DORINCI.KODEBATCH AS DORINCI_KODEBATCH,"   //8
+                    + "DORINCI.EXPIRE AS DORINCI_EXPIRE,"         //9
+                    + "DO.KODEPELANGGAN AS DO_KODEPELANGGAN,"     //10
+                    + "PELANGGAN.NAMA AS PELANGGAN_NAMA,"         //11
+                    + "PELANGGAN.ALAMAT AS PELANGGAN_ALAMAT,"     //12
+                    + "DO.TANGGAL AS DO_TANGGAL,"                 //13
+                    + "casewhen(DO.STATUS='A','Delivery Order','Close') AS STATUSDO, "  //14
+                    + "(select namalengkap from usertable where groupuser='Apoteker' and statusaktif='0') as apoteker, "  //15
+                    + "(select keterangan from usertable where groupuser='Apoteker' and statusaktif='0') as ketapoteker, " //16
+                    + "PELANGGAN.NPWP AS PELANGGAN_NPWP, " //17
+                    + "DORINCI.HARGA " // 18
+                    + "FROM PELANGGAN PELANGGAN "  
+                    + "INNER JOIN DO DO ON PELANGGAN.KODEPELANGGAN = DO.KODEPELANGGAN "
+                    + "INNER JOIN DORINCI DORINCI ON DO.ID = DORINCI.IDDO "
+                    + "INNER JOIN PUBLIC.BARANG BARANG ON DORINCI.KODEBARANG = BARANG.KODEBARANG "
+                    + "where DO.KODEDO = '" + nfak + "' ORDER BY BARANG.NAMABARANG";
+
+            String spasi = " ";
+            Statement stat = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stat.executeQuery(sql);
+            Statement stat1 = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs1 = stat1.executeQuery(sql);
+            //ResultSet rs1 = stat.executeQuery(sql);
+            rs1.next();
+            String pel = "", Altpel = "", Altpel1 = "", Altpel2 = "";
+            if (rs1.getString(11).length() >= 45) {
+                pel = rs1.getString(11).substring(0, 45);
+            } else {
+                pel = rs1.getString(11);
+            }
+
+            Altpel = rs1.getString(12);
+            p.put("FAKTURDO", rs1.getString(2));
+            p.put("TANGGAL", rs1.getString(13));
+           // p.put("TGLLUNAS", rs1.getString(6));
+            p.put("STATDO", rs1.getString(14));
+            p.put("PELANGGAN", pel);
+            p.put("ALAMATPELANGGAN", Altpel);
+            p.put("NPWP", rs1.getString(17));
+            //p.put("INISIAL", rs1.getString(39));
+
+            int no = 0, totqty = 0;
+            double total = 0, ppn = 0, totalbersih = 0, bayar =0;
+            //int jml=0;
+            String kdbrg = "", nmbrg = "";
+            List<Map<String, Object>> tables = new ArrayList<Map<String, Object>>();
+            Map<String, Object> line;
+            while (rs.next()) {
+                no++;
+                line = new HashMap<String, Object>();
+                totqty = totqty + Integer.parseInt(rs.getString(7));
+                total = rs.getInt(7) * rs.getDouble(18); 
+                totalbersih += total;
+                //System.out.print(rs.getDouble(33));
+                kdbrg = rs.getString(3);
+                nmbrg = rs.getString(4);
+                line.put("no", no);
+                line.put("kodebrg", kdbrg);
+                line.put("nmbrg", nmbrg);
+                line.put("batch", rs.getString(8));
+                line.put("expire", rs.getString(9));
+                line.put("banyak", rs.getString(7));
+                line.put("satuan", rs.getString(6));
+                line.put("harga", df.format(rs.getDouble(18)));
+                line.put("total", df.format(total));
+                tables.add(line);
+            }
+            while (true) {
+                if (no % 7 != 0) {
+                    line = new HashMap<String, Object>();
+                    line.put("no", "");
+                    line.put("kodebrg", "");
+                    line.put("nmbrg", "");
+                    line.put("batch", "");
+                    line.put("expire", "");
+                    line.put("banyak", "");
+                    line.put("satuan", "");
+                    line.put("harga", "");
+                    line.put("total", "");
+                    tables.add(line);
+                    no++;
+                }else{
+                    break;
+                }
+            }
+            p.put("table_source", tables);
+            p.put("TOTQTY", totqty);
+            p.put("totalbersih", totalbersih);
+            p.put("tglcetak",d.format(tgl));
+            p.put("namauser",JavarieSoftApp.jenisuser);
+            p.put("apotek", rs1.getString(15));
+            p.put("ketapotek", rs1.getString(16));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return p;
+    }
+
+    
     public String cetak(String data, int panjang, int align) {
         String hasil = data;
         if (align == 0) {

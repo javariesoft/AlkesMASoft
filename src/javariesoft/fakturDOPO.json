@@ -1,0 +1,63 @@
+{
+    "pageFormat": {
+        "pageLength": 35,
+        "pageWidth": 140,
+        "usePageLengthFromPrinter": false
+    },
+    "template": {
+        "header": ["                                                                                                                       HAL : %{PAGE_NO}",
+            "                                                                                                 No Faktur DO   : ${FAKTURDO:15}",
+            "                                                                                                 Tanggal DO     : ${TANGGAL:10}",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "%{45 R130}",
+            "  Kepada : ${PELANGGAN:85} NPWP / ${NPWP:25}",
+            "           ${ALAMATPELANGGAN:100}"
+        ],
+        "detail": [
+            {
+                "table": "table_source",
+                "border": true,
+                "columns": [
+                    {"source": "no::center", "width": 4, "caption": "No"},
+                    {"caption": "Kode Barang", "source": "kodebrg", "width": 6},
+                    {"caption": "Nama Barang", "source": "nmbrg", "width": 54},
+                    {"caption": "Batch", "source": "batch::right", "width": 13},
+                    {"caption": "Expire", "source": "expire::center", "width": 12},
+                    {"caption": "Banyak", "source": "banyak::right", "width": 8},
+                    {"caption": "Satuan", "source": "satuan", "width": 10, "wrap": true},
+                    {"caption": "Harga", "source": "harga::right", "width": 10},
+                    {"caption": "Total", "source": "total::right", "width": 13}
+                ]
+            }
+        ],
+        "footer": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "lastPageFooter": [
+            "%{179}%{32 R100}Jumlah :${TOTQTY:8:right:number}%{179}${totalbersih:12:right:number}│",
+            "%{192}%{196 R129}%{217}",
+            "     Ttd,                                                                                            Padang,${tglcetak}",
+            "  Penerima                                        Apoteker,                                             Pimpinan",
+            "%{32 R92}",
+            "%{32 R92}",
+            "%{32 R92}",
+            "(                )%{32 R29}(${apotek:25})%{32 R23}( Jasmarizal.SKp,MARS )",
+            "%{32 R47}${ketapotek:50}"
+        ]
+    }
+}

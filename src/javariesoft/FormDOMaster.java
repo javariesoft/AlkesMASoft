@@ -115,7 +115,7 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnTambah);
-        btnTambah.setBounds(12, 7, 100, 29);
+        btnTambah.setBounds(20, 10, 90, 29);
 
         btnView.setFont(resourceMap.getFont("btnView.font")); // NOI18N
         btnView.setIcon(resourceMap.getIcon("btnView.icon")); // NOI18N
@@ -127,7 +127,7 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnView);
-        btnView.setBounds(118, 7, 100, 29);
+        btnView.setBounds(120, 10, 100, 29);
 
         btnRetur.setFont(resourceMap.getFont("btnRetur.font")); // NOI18N
         btnRetur.setIcon(resourceMap.getIcon("btnRetur.icon")); // NOI18N
@@ -139,7 +139,7 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnRetur);
-        btnRetur.setBounds(224, 7, 100, 29);
+        btnRetur.setBounds(230, 10, 120, 29);
 
         btnDeleteDO.setFont(resourceMap.getFont("btnDeleteDO.font")); // NOI18N
         btnDeleteDO.setIcon(resourceMap.getIcon("btnDeleteDO.icon")); // NOI18N
@@ -151,7 +151,7 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnDeleteDO);
-        btnDeleteDO.setBounds(330, 7, 130, 29);
+        btnDeleteDO.setBounds(360, 10, 120, 29);
 
         btnDeleteRetur.setFont(resourceMap.getFont("btnDeleteRetur.font")); // NOI18N
         btnDeleteRetur.setIcon(resourceMap.getIcon("btnDeleteRetur.icon")); // NOI18N
@@ -163,16 +163,16 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnDeleteRetur);
-        btnDeleteRetur.setBounds(470, 7, 160, 29);
+        btnDeleteRetur.setBounds(490, 10, 130, 29);
 
         jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(670, 16, 48, 15);
+        jLabel1.setBounds(658, 16, 60, 15);
 
         cboTrans.setFont(resourceMap.getFont("cboTrans.font")); // NOI18N
-        cboTrans.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DO", "Retur DO" }));
+        cboTrans.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DO", "Retur DO", "PO" }));
         cboTrans.setName("cboTrans"); // NOI18N
         cboTrans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,6 +255,12 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
                 p.setVisible(true);
             } else if (cboTrans.getSelectedIndex() == 1) {
                 FormDO p = new FormDO(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()), "view retur");
+                p.toFront();
+                panelCool1.add(p);
+                p.setVisible(true);
+            } else if(cboTrans.getSelectedIndex()==2){
+                int id =Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+                FormPO p = new FormPO(id);
                 p.toFront();
                 panelCool1.add(p);
                 p.setVisible(true);
@@ -378,12 +384,33 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
         JDBCAdapter j = new JDBCAdapter(c);
         String sql = "select DO.ID, DO.KODEDO, DO.TANGGAL, PEL.NAMA, casewhen(DO.STATUS='A','Delivery Order','Close') AS STATUSDO "
                 + "from DO inner join PELANGGAN PEL ON DO.KODEPELANGGAN = PEL.KODEPELANGGAN "
-                + "WHERE 1=1 ";
+                + "WHERE DO.ID not in (select PORINCI.iddo from PORINCI) ";
         if (pil == 0) {
             sql += " AND DO.KODEDO LIKE '" + txtKriteria.getText() + "%'";
         }
         if (pil == 1) {
             sql += " AND lower(PEL.NAMA) LIKE '%" + txtKriteria.getText() + "%'";
+        }
+        j.executeQuery(sql);
+        jScrollPane1.getViewport().remove(jTable1);
+        jTable1 = new JTable(j);
+        TableColumn col = jTable1.getColumnModel().getColumn(0);
+        col.setPreferredWidth(50);
+        col = jTable1.getColumnModel().getColumn(1);
+        col.setPreferredWidth(80);
+        jTable1.setRowHeight(25);
+        jTable1.setFont(new Font("Tahoma", Font.BOLD, 14));
+        jScrollPane1.getViewport().add(jTable1);
+        jScrollPane1.repaint();
+        j.close();
+    }
+    
+    public void reloadPO(int pil) throws SQLException {
+        JDBCAdapter j = new JDBCAdapter(c);
+        String sql = "select * from po "
+                + "WHERE 1=1 ";
+        if (pil == 0) {
+            sql += " AND kodepo LIKE '" + txtKriteria.getText() + "%'";
         }
         j.executeQuery(sql);
         jScrollPane1.getViewport().remove(jTable1);
@@ -436,6 +463,9 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
             cboKriteria.removeAllItems();
             cboKriteria.addItem("Kode Retur DO");
             cboKriteria.addItem("Pelanggan");
+        } else if (pil == 2) {
+            cboKriteria.removeAllItems();
+            cboKriteria.addItem("Kode PO");
         }
     }
 
@@ -448,12 +478,16 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
             } else if (pil == 1) {
                 settingtombol(true, true, false, false, false);
                 reloadRetur(cboKriteria.getSelectedIndex());
+            } else if(pil == 2){
+                settingtombol(true, true, false, false, false);
+                reloadPO(cboKriteria.getSelectedIndex());
             }
         } catch (SQLException ex) {
             Logger.getLogger(FormDOMaster.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-private void settingtombol(boolean tambah, boolean view, boolean returdo, boolean hapusdo, boolean hapusreturdo) {
+
+    private void settingtombol(boolean tambah, boolean view, boolean returdo, boolean hapusdo, boolean hapusreturdo) {
         btnTambah.setVisible(tambah);
         btnView.setVisible(view);
         btnRetur.setVisible(returdo);

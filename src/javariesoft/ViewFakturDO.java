@@ -34,6 +34,20 @@ public class ViewFakturDO extends javax.swing.JInternalFrame {
         setLayout(new BorderLayout());
         add(preview, BorderLayout.CENTER);
     }
+    
+    public ViewFakturDO(Map<String,Object> p, String json) {
+        initComponents();
+        Template template  = null;
+        try {
+            template = new JsonTemplate(ViewFakturDO.class.getResourceAsStream(json));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        PrintPreviewPane preview = new PrintPreviewPane(template, p, null);
+        setLayout(new BorderLayout());
+        add(preview, BorderLayout.CENTER);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * FormDO.java
  *
  * Created on Mar 13, 2012, 7:10:03 AM
@@ -35,6 +35,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import com.eigher.db.loghistoryDao;
 import com.eigher.model.loghistory;
+import com.erv.controller.PoController;
 import com.erv.db.BarangstokDao;
 import com.erv.db.KontrolTanggalDao;
 import com.erv.db.ReturdoDao;
@@ -68,7 +69,7 @@ import simple.escp.json.JsonTemplate;
  *
  * @author JavarieSoft
  */
-public final class FormDO extends javax.swing.JInternalFrame {
+public final class FormDOPO extends javax.swing.JInternalFrame {
 
     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
     java.text.DateFormat d = new SimpleDateFormat("yyyy-MM-dd");
@@ -81,17 +82,24 @@ public final class FormDO extends javax.swing.JInternalFrame {
     com.erv.function.Util u = new com.erv.function.Util();
     String aksilog = "";
     String[] expire;
-    ResourceMap resourceMap1 = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormDO.class);
+    ResourceMap resourceMap1 = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormDOPO.class);
     Connection c;
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();
     int no = 0;
+    FormPO formPO;
 
     /**
      * Creates new form FormDO
+     *
+     * @param formPO
+     * @param c
      */
-    public FormDO() {
+    PoController controller;
+
+    public FormDOPO(FormPO formPO) {
         try {
+            this.formPO = formPO;
             initComponents();
             c = koneksi.getKoneksiJ();
             tglDO.setDateFormat(d);
@@ -107,16 +115,18 @@ public final class FormDO extends javax.swing.JInternalFrame {
             kosongBarang();
             pilihanKertasPendek();
             settingPosisi();
+            txtKodePelanggan.setText(this.formPO.getTxtKodePelanggan().getText());
+            txtNamaPelanggan.setText(this.formPO.getTxtNamaPelanggan().getText()); 
             pilihJTabbedPane(jTabbedPane1, 0);
-            this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2 - 40);
+            this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2 - 50);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public FormDO(int id, String pil) {
+    public FormDOPO(int id, String pil) {
         try {
             initComponents();
             c = koneksi.getKoneksiJ();
@@ -136,8 +146,9 @@ public final class FormDO extends javax.swing.JInternalFrame {
                 tampilDO(dis);
                 tampilDORinci(listDO);
                 pilihJTabbedPane(jTabbedPane1, 0);
+
                 settingtombol(false, false, false, false, false);
-            } else if(pil.equals("view retur")){
+            } else if (pil.equals("view retur")) {
                 List<Returdorinci> listReturdorinci = ReturdorinciDao.getReturdorinciList(c, id);
                 Returdo returdo = ReturdoDao.getDetails(c, id);
                 tampilDORetur(returdo);
@@ -157,12 +168,73 @@ public final class FormDO extends javax.swing.JInternalFrame {
 
             /////
             settingPosisi();
-            this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2 - 40);
+            this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2 - 50);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public FormDOPO(FormPO formPO, int id, String pil) {
+        try {
+            initComponents();
+            this.formPO = formPO;
+            c = koneksi.getKoneksiJ();
+            controller = new PoController(this, c);
+            tglDO.setDateFormat(d);
+            tglDO1.setDateFormat(d);
+            tglExpire.setDateFormat(d);
+            cm = koneksi.getKoneksiM();
+            stat = cm.createStatement();
+            lh = new loghistory();
+            lhdao = new loghistoryDao();
+            dis = DODao.getDetails(this.c, id);
+            kosongBarang();
+            hapusTabel();
+            buatTabel();
+            List<DORinci> listDO = DORinciDao.getDetailDORinci(c, id);
+            if (pil.equals("view")) {
+                tampilDO(dis);
+                tampilDORinci(listDO);
+                pilihJTabbedPane(jTabbedPane1, 0);
+                reloadTotal();
+                btnInsert.setText("Update"); 
+                settingtombol(true, false, false, false, false);
+            } else if (pil.equals("view retur")) {
+                List<Returdorinci> listReturdorinci = ReturdorinciDao.getReturdorinciList(c, id);
+                Returdo returdo = ReturdoDao.getDetails(this.c, id);
+                tampilDORetur(returdo);
+                tampilReturDoRinci(listReturdorinci);
+                pilihJTabbedPane(jTabbedPane1, 1);
+                settingtombol(false, false, false, false, false);
+            } else if (pil.equals("retur")) {
+                txtKodeRetur.setText(ReturdoDao.getKodeReturDO(c));
+                txtKdDO.setText(dis.getKODEDO());
+                txtKodePelanggan1.setText(dis.getKODEPELANGGAN());
+                txtNamaPelanggan1.setText(new pelangganDao(this.c).getDetails(dis.getKODEPELANGGAN()).getNAMA());
+                tampilDORinci(listDO);
+                pilihJTabbedPane(jTabbedPane1, 1);
+                settingtombol(false, true, false, false, false);
+
+            }
+
+            /////
+            settingPosisi();
+            this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2 - 50);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public DO getDis() {
+        return dis;
+    }
+
+    public JTable getjTable1() {
+        return jTable1;
     }
 
     /**
@@ -203,7 +275,6 @@ public final class FormDO extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         txtKodeBarang = new javax.swing.JTextField();
         txtNamaBarang = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -216,6 +287,8 @@ public final class FormDO extends javax.swing.JInternalFrame {
         jLabel30 = new javax.swing.JLabel();
         cboSatuan = new javax.swing.JComboBox();
         txtBatch = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        txtHarga = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -231,18 +304,21 @@ public final class FormDO extends javax.swing.JInternalFrame {
         jLabel35 = new javax.swing.JLabel();
         RadioPanjang = new javax.swing.JRadioButton();
         RadioPendek = new javax.swing.JRadioButton();
+        jPanel4 = new javax.swing.JPanel();
+        hasilTotal = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
 
         setClosable(true);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormDO.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormDOPO.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
             }
             public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameClosing(evt);
             }
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -431,7 +507,7 @@ public final class FormDO extends javax.swing.JInternalFrame {
         jTabbedPane1.addTab(resourceMap.getString("jPanel5.TabConstraints.tabTitle"), jPanel5); // NOI18N
 
         panelCool1.add(jTabbedPane1);
-        jTabbedPane1.setBounds(10, 10, 960, 170);
+        jTabbedPane1.setBounds(10, 10, 960, 140);
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -444,7 +520,7 @@ public final class FormDO extends javax.swing.JInternalFrame {
         jScrollPane3.setViewportView(jTable3);
 
         panelCool1.add(jScrollPane3);
-        jScrollPane3.setBounds(20, 220, 120, 10);
+        jScrollPane3.setBounds(20, 190, 120, 10);
 
         jPanel2.setName("jPanel2"); // NOI18N
         jPanel2.setLayout(null);
@@ -464,14 +540,6 @@ public final class FormDO extends javax.swing.JInternalFrame {
         jLabel7.setName("jLabel7"); // NOI18N
         jPanel2.add(jLabel7);
         jLabel7.setBounds(510, 0, 110, 20);
-
-        jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
-        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel5.setName("jLabel5"); // NOI18N
-        jPanel2.add(jLabel5);
-        jLabel5.setBounds(760, 0, 200, 20);
 
         txtKodeBarang.setFont(resourceMap.getFont("txtKodeBarang.font")); // NOI18N
         txtKodeBarang.setName("txtKodeBarang"); // NOI18N
@@ -500,7 +568,7 @@ public final class FormDO extends javax.swing.JInternalFrame {
         jLabel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel8.setName("jLabel8"); // NOI18N
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(680, 0, 80, 20);
+        jLabel8.setBounds(780, 0, 80, 20);
 
         txtJumlah.setFont(resourceMap.getFont("txtJumlah.font")); // NOI18N
         txtJumlah.setName("txtJumlah"); // NOI18N
@@ -515,7 +583,7 @@ public final class FormDO extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(txtJumlah);
-        txtJumlah.setBounds(680, 20, 80, 21);
+        txtJumlah.setBounds(780, 20, 80, 21);
 
         btnInsertBarang.setFont(resourceMap.getFont("btnDeleteBarang.font")); // NOI18N
         btnInsertBarang.setText(resourceMap.getString("btnInsertBarang.text")); // NOI18N
@@ -526,7 +594,7 @@ public final class FormDO extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(btnInsertBarang);
-        btnInsertBarang.setBounds(760, 20, 100, 28);
+        btnInsertBarang.setBounds(860, 0, 100, 20);
 
         btnDeleteBarang.setFont(resourceMap.getFont("btnDeleteBarang.font")); // NOI18N
         btnDeleteBarang.setText(resourceMap.getString("btnDeleteBarang.text")); // NOI18N
@@ -537,7 +605,7 @@ public final class FormDO extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(btnDeleteBarang);
-        btnDeleteBarang.setBounds(860, 20, 100, 28);
+        btnDeleteBarang.setBounds(860, 20, 100, 20);
 
         jLabel10.setFont(resourceMap.getFont("jLabel10.font")); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -597,8 +665,26 @@ public final class FormDO extends javax.swing.JInternalFrame {
         jPanel2.add(txtBatch);
         txtBatch.setBounds(410, 20, 100, 22);
 
+        jLabel15.setFont(resourceMap.getFont("jLabel15.font")); // NOI18N
+        jLabel15.setText(resourceMap.getString("jLabel15.text")); // NOI18N
+        jLabel15.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel15.setName("jLabel15"); // NOI18N
+        jPanel2.add(jLabel15);
+        jLabel15.setBounds(680, 0, 100, 20);
+
+        txtHarga.setFont(resourceMap.getFont("txtHarga.font")); // NOI18N
+        txtHarga.setText(resourceMap.getString("txtHarga.text")); // NOI18N
+        txtHarga.setName("txtHarga"); // NOI18N
+        txtHarga.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtHargaKeyPressed(evt);
+            }
+        });
+        jPanel2.add(txtHarga);
+        txtHarga.setBounds(680, 20, 100, 21);
+
         panelCool1.add(jPanel2);
-        jPanel2.setBounds(10, 180, 960, 50);
+        jPanel2.setBounds(10, 150, 960, 50);
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -607,9 +693,24 @@ public final class FormDO extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No", "Kode Barang", "Nama Barang", "Batch", "Expire", "Jumlah", "Satuan", "Jumlah Kecil"
+                "No", "Kode Barang", "Nama Barang", "Batch", "Expire", "Jumlah", "Satuan", "Jumlah Kecil", "Harga", "Total"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setCellSelectionEnabled(true);
         jTable1.setName("jTable1"); // NOI18N
         jTable1.setRowHeight(20);
@@ -619,9 +720,22 @@ public final class FormDO extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
+            jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
+            jTable1.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
+            jTable1.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
+            jTable1.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
+            jTable1.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title5")); // NOI18N
+            jTable1.getColumnModel().getColumn(6).setHeaderValue(resourceMap.getString("jTable1.columnModel.title6")); // NOI18N
+            jTable1.getColumnModel().getColumn(7).setHeaderValue(resourceMap.getString("jTable1.columnModel.title7")); // NOI18N
+            jTable1.getColumnModel().getColumn(8).setHeaderValue(resourceMap.getString("jTable1.columnModel.title8")); // NOI18N
+            jTable1.getColumnModel().getColumn(9).setHeaderValue(resourceMap.getString("jTable1.columnModel.title9")); // NOI18N
+        }
 
         panelCool1.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 230, 960, 280);
+        jScrollPane1.setBounds(10, 200, 960, 260);
 
         jPanel3.setName("jPanel3"); // NOI18N
         jPanel3.setLayout(null);
@@ -738,6 +852,7 @@ public final class FormDO extends javax.swing.JInternalFrame {
         RadioPanjang.setBounds(830, 50, 120, 25);
 
         RadioPendek.setFont(resourceMap.getFont("RadioPendek.font")); // NOI18N
+        RadioPendek.setSelected(true);
         RadioPendek.setText(resourceMap.getString("RadioPendek.text")); // NOI18N
         RadioPendek.setName("RadioPendek"); // NOI18N
         RadioPendek.addActionListener(new java.awt.event.ActionListener() {
@@ -750,6 +865,25 @@ public final class FormDO extends javax.swing.JInternalFrame {
 
         panelCool1.add(jPanel3);
         jPanel3.setBounds(10, 510, 960, 100);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.setName("jPanel4"); // NOI18N
+        jPanel4.setLayout(null);
+
+        hasilTotal.setEditable(false);
+        hasilTotal.setFont(resourceMap.getFont("hasilTotal.font")); // NOI18N
+        hasilTotal.setName("hasilTotal"); // NOI18N
+        jPanel4.add(hasilTotal);
+        hasilTotal.setBounds(790, 10, 160, 22);
+
+        jLabel16.setFont(resourceMap.getFont("jLabel16.font")); // NOI18N
+        jLabel16.setText(resourceMap.getString("jLabel16.text")); // NOI18N
+        jLabel16.setName("jLabel16"); // NOI18N
+        jPanel4.add(jLabel16);
+        jLabel16.setBounds(680, 10, 120, 20);
+
+        panelCool1.add(jPanel4);
+        jPanel4.setBounds(10, 460, 960, 50);
 
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
@@ -793,17 +927,8 @@ private void txtKodeBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN
         jScrollPane3.getViewport().add(jTable3);
         jScrollPane3.repaint();
     } catch (Exception ex) {
-        Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
     }
-//    finally {
-//        if (c != null) {
-//            try {
-//                c.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
 }//GEN-LAST:event_txtKodeBarangActionPerformed
 
 private void txtKodeBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKodeBarangKeyPressed
@@ -824,31 +949,31 @@ private void txtJumlahFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:even
 
 private void txtJumlahKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtJumlahKeyPressed
 // TODO add your handling code here:
-if (evt.getKeyCode() == 10) {
+    if (evt.getKeyCode() == 10) {
         //Connection c = null;
-    try {
+        try {
             //c = koneksi.getKoneksiJ();
-        if (jTabbedPane1.getSelectedIndex() == 0) {
-            Barangstok b = BarangstokDao.getDetailKodeBarang(c, txtKodeBarang.getText());
-            if (b.getSTOK() < Integer.parseInt(txtJumlah.getText())) {
-                txtJumlah.requestFocus();
-                JOptionPane.showMessageDialog(null, "Stok Tinggal " + b.getSTOK());
+            if (jTabbedPane1.getSelectedIndex() == 0) {
+                Barangstok b = BarangstokDao.getDetailKodeBarang(c, txtKodeBarang.getText());
+                if (b.getSTOK() < Integer.parseInt(txtJumlah.getText())) {
+                    txtJumlah.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Stok Tinggal " + b.getSTOK());
+                } else {
+                    btnInsertBarang.requestFocus();
+                }
+                b = null;
             } else {
-                btnInsertBarang.requestFocus();
+                int stokdo = DORinciDao.getStokDO(c, txtKdDO.getText(), txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText());
+                if (stokdo < Integer.parseInt(txtJumlah.getText())) {
+                    //            kosongBarang();
+                    txtJumlah.requestFocus();
+                    throw new JavarieException("Jumlah Retur DO Lebih Besar Dari Jumlah Sisa DO, Cek Laporan History Barang DO ..!!");
+                }
             }
-            b = null;
-        }else{
-            int stokdo = DORinciDao.getStokDO(c, txtKdDO.getText() , txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText());
-            if(stokdo < Integer.parseInt(txtJumlah.getText())){
-  //            kosongBarang();
-                txtJumlah.requestFocus();
-                throw new JavarieException("Jumlah Retur DO Lebih Besar Dari Jumlah Sisa DO, Cek Laporan History Barang DO ..!!");
-            }
-        }
-    } catch (Exception ex) {
+        } catch (Exception ex) {
 //        Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
-        JOptionPane.showMessageDialog(this, ex.getMessage());
-    }
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
 //        finally {
 //            if (c != null) {
 //                try {
@@ -859,104 +984,106 @@ if (evt.getKeyCode() == 10) {
 //            }
 //        }
 
-}
+    }
 }//GEN-LAST:event_txtJumlahKeyPressed
 
 private void btnInsertBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertBarangActionPerformed
     //Connection c = null;
     try {
         // c = koneksi.getKoneksiJ();
-        barang b = new barangDao().getDetails(c, txtKodeBarang.getText()); 
+        barang b = new barangDao().getDetails(c, txtKodeBarang.getText());
         if (jTabbedPane1.getSelectedIndex() == 0) {
             Barangstok bs = BarangstokDao.getDetailKodeBarang(c, txtKodeBarang.getText());
             if (barangDao.cekKodeBarang(c, txtKodeBarang.getText()) != true) {
                 JOptionPane.showMessageDialog(null, "Produk Ini Tidak Ada..!!");
                 kosongBarang();
                 txtKodeBarang.requestFocus();
-            }else if (bs.getSTOK() < Integer.parseInt(txtJumlah.getText())) {
+            } else if (bs.getSTOK() < Integer.parseInt(txtJumlah.getText())) {
                 txtJumlah.requestFocus();
                 JOptionPane.showMessageDialog(null, "Stok Tinggal " + bs.getSTOK());
-            }else if (bs.getCOGS() <= 0) {    
+            } else if (bs.getCOGS() <= 0) {
                 kosongBarang();
                 txtKodeBarang.requestFocus();
                 throw new JavarieException("Harga Modal Barang Belum Ada..!!");
-            }else{
+            } else {
                 if (btnInsertBarang.getText().equals("Insert")) {
-                        String s = "select max(no) from rinci";
-                        Statement stemp = cm.createStatement();
-                        ResultSet r = stemp.executeQuery(s);
-                        if (r.next()) {
-                            no = r.getInt(1) + 1;
-                        } else {
-                            no = 1;
-                        }
+                    String s = "select max(no) from rinci";
+                    Statement stemp = cm.createStatement();
+                    ResultSet r = stemp.executeQuery(s);
+                    if (r.next()) {
+                        no = r.getInt(1) + 1;
                     } else {
-                        btnInsertBarang.setText("Insert");
+                        no = 1;
                     }
+                } else {
+                    btnInsertBarang.setText("Insert");
+                }
 
                 stat.execute("insert into rinci values("
                         + no //0
                         + ",'" + txtKodeBarang.getText() //1
-                        + "','" + txtNamaBarang.getText()  //2
+                        + "','" + txtNamaBarang.getText() //2
                         + "','" + txtBatch.getText() //3
-        ////                + "','" + ((txtBatch.getText().length() > 0) ? txtBatch.getText() : "")
-                        + "','" + ((txtBatch.getText().equals("")) ? "" : tglExpire.getText())  //
-        ////                + "','" + tglExpire.getText()
-                        + "'," + txtJumlah.getText()  //5
-                        + ",'" + cboSatuan.getSelectedItem()  //6
+                        ////                + "','" + ((txtBatch.getText().length() > 0) ? txtBatch.getText() : "")
+                        + "','" + ((txtBatch.getText().equals("")) ? "" : tglExpire.getText()) //
+                        ////                + "','" + tglExpire.getText()
+                        + "'," + txtJumlah.getText() //5
+                        + ",'" + cboSatuan.getSelectedItem() //6
+                        + "'," + b.getJumlah(Integer.parseInt(txtJumlah.getText()), cboSatuan.getSelectedItem().toString()) //7
+                        + "," + txtHarga.getText()
+                        + ")");
+                reloadData();
+                reloadTotal();
+                kosongBarang();
+                txtKodeBarang.requestFocus();
+            }
+        } else {
+            int stokdo = DORinciDao.getStokDO(c, txtKdDO.getText(), txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText());
+            if (barangDao.cekKodeBarang(c, txtKodeBarang.getText()) != true) {
+                JOptionPane.showMessageDialog(null, "Produk Ini Tidak Ada..!!");
+                kosongBarang();
+                txtKodeBarang.requestFocus();
+            } else if (DORinciDao.cekKodeBarangDO(c, txtKdDO.getText(), txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText()) != true) {
+                kosongBarang();
+                txtKodeBarang.requestFocus();
+                throw new JavarieException("Produk Ini Tidak Ada ..!!");
+            } else if (stokdo < Integer.parseInt(txtJumlah.getText())) {
+                //            kosongBarang();
+                txtJumlah.requestFocus();
+                throw new JavarieException("Jumlah Retur DO Lebih Besar Dari Jumlah Sisa DO, Cek Laporan History Barang DO ..!!");
+            } else {
+                if (btnInsertBarang.getText().equals("Insert")) {
+                    String s = "select max(no) from rinci";
+                    Statement stemp = cm.createStatement();
+                    ResultSet r = stemp.executeQuery(s);
+                    if (r.next()) {
+                        no = r.getInt(1) + 1;
+                    } else {
+                        no = 1;
+                    }
+                } else {
+                    btnInsertBarang.setText("Insert");
+                }
+
+                stat.execute("insert into rinci values("
+                        + no //0
+                        + ",'" + txtKodeBarang.getText() //1
+                        + "','" + txtNamaBarang.getText() //2
+                        + "','" + txtBatch.getText() //3
+                        ////                + "','" + ((txtBatch.getText().length() > 0) ? txtBatch.getText() : "")
+                        + "','" + ((txtBatch.getText().equals("")) ? "" : tglExpire.getText()) //
+                        ////                + "','" + tglExpire.getText()
+                        + "'," + txtJumlah.getText() //5
+                        + ",'" + cboSatuan.getSelectedItem() //6
                         + "'," + b.getJumlah(Integer.parseInt(txtJumlah.getText()), cboSatuan.getSelectedItem().toString()) //7
                         + ")");
                 reloadData();
                 kosongBarang();
                 txtKodeBarang.requestFocus();
             }
-        }else{
-            int stokdo = DORinciDao.getStokDO(c, txtKdDO.getText() , txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText());
-            if (barangDao.cekKodeBarang(c, txtKodeBarang.getText()) != true) {
-                JOptionPane.showMessageDialog(null, "Produk Ini Tidak Ada..!!");
-                kosongBarang();
-                txtKodeBarang.requestFocus();
-            }else if(DORinciDao.cekKodeBarangDO(c, txtKdDO.getText() , txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText()) != true){
-                kosongBarang();
-                txtKodeBarang.requestFocus();
-                throw new JavarieException("Produk Ini Tidak Ada ..!!");
-            }else if(stokdo < Integer.parseInt(txtJumlah.getText())){
-    //            kosongBarang();
-                txtJumlah.requestFocus();
-                throw new JavarieException("Jumlah Retur DO Lebih Besar Dari Jumlah Sisa DO, Cek Laporan History Barang DO ..!!");
-            }else{
-                if (btnInsertBarang.getText().equals("Insert")) {
-                        String s = "select max(no) from rinci";
-                        Statement stemp = cm.createStatement();
-                        ResultSet r = stemp.executeQuery(s);
-                        if (r.next()) {
-                            no = r.getInt(1) + 1;
-                        } else {
-                            no = 1;
-                        }
-                    } else {
-                        btnInsertBarang.setText("Insert");
-                    }
-
-                stat.execute("insert into rinci values("
-                    + no //0
-                    + ",'" + txtKodeBarang.getText() //1
-                    + "','" + txtNamaBarang.getText()  //2
-                    + "','" + txtBatch.getText() //3
-    ////                + "','" + ((txtBatch.getText().length() > 0) ? txtBatch.getText() : "")
-                    + "','" + ((txtBatch.getText().equals("")) ? "" : tglExpire.getText())  //
-    ////                + "','" + tglExpire.getText()
-                    + "'," + txtJumlah.getText()  //5
-                    + ",'" + cboSatuan.getSelectedItem()  //6
-                    + "'," + b.getJumlah(Integer.parseInt(txtJumlah.getText()), cboSatuan.getSelectedItem().toString()) //7
-                    + ")");
-                reloadData();
-                kosongBarang();
-                txtKodeBarang.requestFocus();
-            }
         }
     } catch (Exception ex) {
-    //    Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+        //    Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
         JOptionPane.showMessageDialog(this, ex.getMessage());
     }
 }//GEN-LAST:event_btnInsertBarangActionPerformed
@@ -974,7 +1101,7 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
             try {
                 prosesPilihDO(c);
             } catch (SQLException ex) {
-                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -982,142 +1109,13 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
 
 private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
     //Connection c = null;
-    try {
-        // TODO add your handling code here:
-        //c = koneksi.getKoneksiJ();
-        c.createStatement().execute("set autocommit false");
-        int x = JOptionPane.showConfirmDialog(this, "Apakah Data Disimpan?", "", JOptionPane.YES_NO_OPTION);
-        if (x == 0) {
-            if ((txtKODEDO.getText().equals("")) || (txtKodePelanggan.getText().equals(""))) {
-                JOptionPane.showMessageDialog(null, "Data Belum Lengkap.. !");
-                txtKodePelanggan.requestFocus();
-            } else if (!KontrolTanggalDao.cekHarian(c, tglDO.getText())) {
-                JOptionPane.showMessageDialog(null, "Transaksi Tidak Bisa Dilakukan Karena :\n"
-                                    + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
-                                    + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
-            } else {
-                String tgal[] = Util.split(tglDO.getText(), "-");
-                String per = tgal[0] + "." + Integer.parseInt(tgal[1]);
-                if (cekperiodeAda(c, per)) {
-                    if (cekperiode(c, per)) {
-                        DO d1 = new DO();
-                        ID = DODao.getID(c);
-                        d1.setID(ID);
-                        d1.setKODEDO(DODao.getKODEDO(c));
-                        d1.setKODEPELANGGAN(txtKodePelanggan.getText());
-                        d1.setTANGGAL(tglDO.getText());
-                        d1.setSTATUS("A");
-                        d1.setTGLTUTUP(tglDO.getText());
-                        d1.setSTATUSAKTIF("1");
-                        if (DODao.insertIntoDO(c, d1)) {
-                            Statement s = cm.createStatement();
-                            ResultSet r = s.executeQuery("select * from rinci");
-                            DORinci dr = new DORinci();
-                            stok st = new stok();
-                            while (r.next()) {
-                                dr.setIDDO(ID);
-                                dr.setKODEBARANG(r.getString("KODEBARANG"));
-                                dr.setJUMLAH(r.getInt("JUMLAH"));
-                                dr.setSATUAN(r.getString("SATUAN"));
-                                dr.setKODEBATCH(r.getString("BATCH"));
-                                dr.setEXPIRE(r.getString("EXPIRE"));
-                                if (r.getString("EXPIRE").equals("")) {
-                                    dr.setEXPIRE(null);
-                                }
-                                dr.setJUMLAHKECIL(r.getInt("JUMLAHKECIL"));
-                                DORinciDao.insertIntoDORinci(c, dr);
-                                st.setIDPENJUALAN(ID);
-                                st.setKODEBARANG(r.getString("KODEBARANG"));
-                                st.setTANGGAL(tglDO.getText());
-                                st.setIN(0);
-                                st.setOUT(r.getInt("JUMLAHKECIL"));
-                                st.setKODETRANS("D");
-                                st.setKODEBATCH(dr.getKODEBATCH());
-                                stokDao.insertIntoSTOK(c, st);
-//                                if (dr.getKODEBATCH().equals("")) {
-//                                    StokDO stokDO = StokDODao.getDetails(c, "select * from STOKDO where KODEBARANG='" + dr.getKODEBARANG() + "'");
-//                                    if (stokDO == null) {
-//                                        stokDO = new StokDO();
-//                                        stokDO.setKODEBARANG(r.getString("KODEBARANG"));
-//                                        stokDO.setKODEBATCH("");
-//                                        stokDO.setEXPIRE(null);
-//                                        stokDO.setSTOK(dr.getJUMLAHKECIL());
-//                                        StokDODao.insertIntoSTOKDO(c, stokDO);
-//                                    } else {
-//                                        stokDO.setSTOK(stokDO.getSTOK() + dr.getJUMLAHKECIL());
-//                                        StokDODao.updateSTOKDO(c, stokDO);
-//                                    }
-//                                } else {
-//                                    StokDO stokDO = StokDODao.getDetails(c, "select * from STOKDO where KODEBARANG='" + dr.getKODEBARANG() + "' AND KODEBATCH='" + dr.getKODEBATCH() + "'");
-//                                    if (stokDO == null) {
-//                                        stokDO = new StokDO();
-//                                        stokDO.setKODEBARANG(dr.getKODEBARANG());
-//                                        stokDO.setKODEBATCH(dr.getKODEBATCH());
-//                                        stokDO.setEXPIRE(dr.getEXPIRE());
-//                                        stokDO.setSTOK(dr.getJUMLAHKECIL());
-//                                        StokDODao.insertIntoSTOKDO(c, stokDO);
-//                                    } else {
-//                                        stokDO.setSTOK(stokDO.getSTOK() + dr.getJUMLAHKECIL());
-//                                        StokDODao.updateSTOKDO(c, stokDO);
-//                                    }
-//                                }
-                            }
-                            r.close();
-                            s.close();
-                            prosesUpdateLog(c, "Insert");
-                            hapusTabel();
-                            buatTabel();
-                            String nofakDO = txtKODEDO.getText();
-                            txtNoDOPrint.setText(nofakDO);
-
-                            kosongDO(c);
-                            kosongBarang();
-                            reloadData();
-                            settingtombol(true, false, false, false, false);
-                            JOptionPane.showMessageDialog(this, "Entri DO Berhasil");
-                            c.commit();
-                            try {
-                                if (txtNoDOPrint.getText().equals("")) {
-                                    JOptionPane.showMessageDialog(null, "Isi No Faktur DO yang akan di Print.. !");
-                                    txtNoDOPrint.requestFocus();
-                                } else {
-                                    CetakFakturDO(txtNoDOPrint.getText());
-                                }
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(null, e.toString());
-                            }
-
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
-                        txtKodePelanggan.requestFocus();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
-                    txtKodePelanggan.requestFocus();
-                }
-            }
-        } else {
-            txtKodePelanggan.requestFocus();
-        }
-    } catch (SQLException ex) {
-        try {
-            c.rollback();
-        } catch (SQLException ex1) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex1);
-        }
-        JOptionPane.showMessageDialog(this, ex.getMessage());
+    if (btnInsert.getText().equals("Simpan")) {
+        simpan();
+    }else if(btnInsert.getText().equals("Update")){
+        controller.updateDOPO();
     }
-//    finally {
-//        if (c != null) {
-//            try {
-//                c.createStatement().execute("set autocommit true");
-//                c.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
+
+
 }//GEN-LAST:event_btnInsertActionPerformed
 
 private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -1145,10 +1143,19 @@ private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         try {
             c.rollback();
         } catch (SQLException ex1) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex1);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex1);
         }
         JOptionPane.showMessageDialog(this, ex.getMessage());
     }
+//    finally {
+//        if (c != null) {
+//            try {
+//                c.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
 //    finally {
 //        if (c != null) {
 //            try {
@@ -1212,8 +1219,18 @@ private void btnTutupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             txtKodePelanggan.requestFocus();
         }
     } catch (Exception ex) {
-        Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
     }
+//    finally {
+//        if (c != null) {
+//            try {
+//                c.createStatement().execute("set autocommit true");
+//                c.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
 //    finally {
 //        if (c != null) {
 //            try {
@@ -1282,22 +1299,14 @@ private void jTable3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_j
                 cld.setTime(d.parse(jTable3.getValueAt(jTable3.getSelectedRow(), 3).toString()));
                 tglExpire.setSelectedDate(cld);
             }
-
+            txtHarga.setText("" + b.getHarga(cboSatuan.getSelectedItem().toString()));
+            txtHarga.setEnabled(true);
             cboSatuan.requestFocus();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         } catch (ParseException ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        finally {
-//            if (c != null) {
-//                try {
-//                    c.close();
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
     }
 }//GEN-LAST:event_jTable3KeyPressed
 
@@ -1322,8 +1331,17 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             txtKodePelanggan.requestFocus();
         }
     } catch (SQLException ex) {
-        Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
     }
+//    finally {
+//        if (c != null) {
+//            try {
+//                c.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
 //    finally {
 //        if (c != null) {
 //            try {
@@ -1339,18 +1357,6 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         dispose();
     }//GEN-LAST:event_btnKeluarActionPerformed
 
-    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
-        try {
-            // TODO add your handling code here:
-            stat.close();
-            cm.close();
-            c.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_formInternalFrameClosing
-
     private void tglExpireOnCommit(datechooser.events.CommitEvent evt) {//GEN-FIRST:event_tglExpireOnCommit
         // TODO add your handling code here:
     }//GEN-LAST:event_tglExpireOnCommit
@@ -1363,7 +1369,8 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private void cboSatuanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cboSatuanKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txtJumlah.requestFocus();
+            txtHarga.requestFocus();
+            txtHarga.selectAll();
         }
     }//GEN-LAST:event_cboSatuanKeyPressed
 
@@ -1452,7 +1459,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                 c.rollback();
                 System.out.println(c.isClosed());
             } catch (SQLException ex) {
-                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -1495,7 +1502,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             jScrollPane2.getViewport().add(jTable2);
             jScrollPane2.validate();
         } catch (Exception ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_txtKodePelanggan1ActionPerformed
 
@@ -1515,16 +1522,42 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         //Connection c = null;
         try {
             // TODO add your handling code here:
+            //c = koneksi.getKoneksiJ();
             jScrollPane2.setVisible(true);
             JDBCAdapter j = new JDBCAdapter(c);
             j.executeQuery("select KODEPELANGGAN,NAMA from PELANGGAN where STATUSAKTIF='0' AND KODEPELANGGAN like '" + txtKodePelanggan.getText() + "%' or lower(NAMA) like '%" + txtKodePelanggan.getText().toLowerCase() + "%'");
-            jTable2.setModel(j);
+            jScrollPane2.getViewport().remove(jTable2);
+            jTable2 = new JTable(j);
+            jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+
+                @Override
+                public void keyPressed(java.awt.event.KeyEvent evt) {
+                    jTable2KeyPressed(evt);
+                }
+            });
+            jScrollPane2.getViewport().add(jTable2);
             jScrollPane2.validate();
-            j.close();
         } catch (Exception ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        //    finally {
+        //        if (c != null) {
+        //            try {
+        //                c.close();
+        //            } catch (SQLException ex) {
+        //                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+        //            }
+        //        }
+        //    }
+        //    finally {
+        //        if (c != null) {
+        //            try {
+        //                c.close();
+        //            } catch (SQLException ex) {
+        //                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+        //            }
+        //        }
+        //    }
     }//GEN-LAST:event_txtKodePelangganActionPerformed
 
     private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
@@ -1579,8 +1612,17 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             jScrollPane2.getViewport().add(jTable2);
             jScrollPane2.validate();
         } catch (Exception ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //    finally {
+        //        if (c != null) {
+        //            try {
+        //                c.close();
+        //            } catch (SQLException ex) {
+        //                Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+        //            }
+        //        }
+        //    }
         //    finally {
         //        if (c != null) {
         //            try {
@@ -1619,6 +1661,26 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         pilihanKertasPendek();
     }//GEN-LAST:event_RadioPendekActionPerformed
 
+    private void txtHargaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHargaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtJumlah.requestFocus();
+            txtJumlah.selectAll();
+        }
+    }//GEN-LAST:event_txtHargaKeyPressed
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            stat.close();
+            cm.close();
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formInternalFrameClosed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton RadioPanjang;
     private javax.swing.JRadioButton RadioPendek;
@@ -1634,18 +1696,20 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JButton btnRetur;
     private javax.swing.JButton btnTutup;
     private javax.swing.JComboBox cboSatuan;
+    private javax.swing.JTextField hasilTotal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1653,6 +1717,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1666,6 +1731,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private datechooser.beans.DateChooserCombo tglDO1;
     private datechooser.beans.DateChooserCombo tglExpire;
     private javax.swing.JTextField txtBatch;
+    private javax.swing.JTextField txtHarga;
     private javax.swing.JFormattedTextField txtJumlah;
     private javax.swing.JTextField txtKODEDO;
     private javax.swing.JTextField txtKdDO;
@@ -1690,20 +1756,22 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         txtKodeBarang.setText("");
         txtNamaBarang.setText("");
         txtNamaBarang.setEditable(false);
-        txtJumlah.setText("");
+        txtJumlah.setText("1");
         txtBatch.setText("");
+        txtHarga.setText("0");
     }
 
     private void buatTabel() {
         String sqlCreate = "create table rinci ("
-                + "NO int primary key, "      //1
-                + "KODEBARANG varchar(20), "  //2
+                + "NO int primary key, " //1
+                + "KODEBARANG varchar(20), " //2
                 + "NAMABARANG varchar(150), " //3
-                + "BATCH varchar(20), "   //4
-                + "EXPIRE varchar(10), "  //5
-                + "JUMLAH int, "          //6
-                + "SATUAN varchar(30), "  //7
-                + "JUMLAHKECIL int)";     //8
+                + "BATCH varchar(20), " //4
+                + "EXPIRE varchar(10), " //5
+                + "JUMLAH int, " //6
+                + "SATUAN varchar(30), " //7
+                + "JUMLAHKECIL int,"
+                + "HARGA double)";     //8
         try {
             stat.execute(sqlCreate);
         } catch (SQLException ex) {
@@ -1726,40 +1794,16 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         }
     }
 
-//    void reloadDO(Connection c) {
-//        JDBCAdapter j = new JDBCAdapter(c);
-//        String sql = "select ID, KODEDO, TANGGAL,KODEPELANGGAN, "
-//                + "case STATUS when 'A' then 'Open' when 'N' then 'Close' end as STATUSDO "
-//                + "from DO where KODEPELANGGAN='" + jTable4.getValueAt(jTable4.getSelectedRow(), 0) + "' AND STATUSAKTIF='1'";
-//        j.executeQuery(sql);
-//        jScrollPane1.getViewport().remove(jTable1);
-//        jTable1 = new JTable(j);
-//        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-//
-//            @Override
-//            public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                jTable1MouseClicked(evt);
-//            }
-//        });
-//        jScrollPane1.getViewport().add(jTable1);
-//        jScrollPane1.validate();
-//    }
     void reloadData() throws SQLException {
         JDBCAdapter j = new JDBCAdapter(cm);
-        j.executeQuery("select * from rinci order by no");
-        jScrollPane1.getViewport().remove(jTable1);
-        jTable1 = new JTable(j);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
+        j.executeQuery("select *, jumlah * harga as total from rinci order by no");
+        jTable1.setModel(j);
 ////        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTable1.setFont(new Font("Tahoma", Font.BOLD, 12));
         TableColumn col = jTable1.getColumnModel().getColumn(0);
         col.setPreferredWidth(8);
         col = jTable1.getColumnModel().getColumn(1);
-        col.setPreferredWidth(20);
+        col.setPreferredWidth(40);
         col = jTable1.getColumnModel().getColumn(2);
         col.setPreferredWidth(300);
         col = jTable1.getColumnModel().getColumn(3);
@@ -1771,11 +1815,9 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         col = jTable1.getColumnModel().getColumn(6);
         col.setPreferredWidth(50);
         TableColumn col1 = jTable1.getColumnModel().getColumn(6);
-        col1.setMinWidth(0);
-        col1.setMaxWidth(0);
+        col1.setPreferredWidth(50);
         jScrollPane1.setFocusable(false);
         jTable1.setFocusable(false);
-        jScrollPane1.getViewport().add(jTable1);
         jScrollPane1.repaint();
         j.close();
     }
@@ -1826,6 +1868,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     tglExpire.setText(rs.getString("EXPIRE"));
                 }
                 txtJumlah.setText(rs.getString("JUMLAH"));
+                txtHarga.setText(rs.getString("HARGA"));
                 barang b = new barangDao().getDetails(c, rs.getString(2));
                 try {
                     cboSatuan.removeAllItems();
@@ -1920,39 +1963,6 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         return hasil1;
     }
 
-//    public void isiComboBatch(List<Barangstokbatch> ls) {
-//        //cboBatch.removeAllItems();
-//        jPanel2.remove(cboBatch);
-//        cboBatch = new JComboBox();
-//        expire = new String[ls.size()];
-//        int count = 0;
-//        for (Iterator<Barangstokbatch> it = ls.iterator(); it.hasNext();) {
-//            Barangstokbatch barangstokbatch = it.next();
-//            cboBatch.addItem(barangstokbatch.getKODEBATCH());
-//            expire[count] = barangstokbatch.getEXPIRE().toString();
-//            count++;
-//        }
-//        Calendar cld = Calendar.getInstance();
-//        try {
-//            cld.setTime(d.parse(expire[0]));
-//        } catch (ParseException ex) {
-//            Logger.getLogger(DialogPenjualan.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        tglExpire.setSelectedDate(cld);
-//        cboBatch.addItemListener(new java.awt.event.ItemListener() {
-//            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-//                cboBatchItemStateChanged(evt);
-//            }
-//        });
-//        cboBatch.addKeyListener(new java.awt.event.KeyAdapter() {
-//            public void keyPressed(java.awt.event.KeyEvent evt) {
-//                cboBatchKeyPressed(evt);
-//            }
-//        });
-//        cboBatch.setFont(resourceMap1.getFont("cboBatch.font")); // NOI18N
-//        jPanel2.add(cboBatch);
-//        cboBatch.setBounds(410, 20, 100, 20);
-//    }
     private void tampilDO(DO d) throws SQLException {
         txtKODEDO.setText(d.getKODEDO());
         txtKodePelanggan.setText(d.getKODEPELANGGAN());
@@ -1967,14 +1977,14 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             barang b = new barangDao().getDetails(c, dorinci.getKODEBARANG());
             stat.execute("insert into rinci values("
                     + no
-                    + ",'" +dorinci.getKODEBARANG()
+                    + ",'" + dorinci.getKODEBARANG()
                     + "','" + b.getNAMABARANG()
                     + "','" + ((dorinci.getKODEBATCH().length() > 0) ? dorinci.getKODEBATCH() : "")
-                    + "','" + ((dorinci.getEXPIRE()==null)?"":dorinci.getEXPIRE())
+                    + "','" + ((dorinci.getEXPIRE() == null) ? "" : dorinci.getEXPIRE())
                     + "'," + dorinci.getJUMLAH()
                     + ",'" + dorinci.getSATUAN()
                     + "'," + b.getJumlah(dorinci.getJUMLAH(), dorinci.getSATUAN())
-                    + ")");
+                    + "," + dorinci.getHARGA() + ")");
         }
         reloadData();
     }
@@ -1998,18 +2008,18 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }
 
     void viewFakturDOPendek(String nofakturDO) {
-        Map<String, Object> p = ClassPrintDO.cetakfakturMap(c, nofakturDO);
-        ViewFakturDO f = new ViewFakturDO(p);
+        Map<String, Object> p = ClassPrintDO.cetakfakturDOMap(c, nofakturDO);
+        ViewFakturDO f = new ViewFakturDO(p,"fakturDOPO.json");
         JavarieSoftView.panelCool1.add(f);
         f.setSize(800, 400);
         f.toFront();
         f.setVisible(true);
 
     }
-    
+
     void viewFakturDOPanjang(String nofakturDO) {
-        Map<String, Object> p = ClassPrintDOKertasPanjang.cetakfakturMap(c, nofakturDO);
-        ViewFakturDOPanjang f = new ViewFakturDOPanjang(p);
+        Map<String, Object> p = ClassPrintDOKertasPanjang.cetakfakturDOMap(c, nofakturDO);
+        ViewFakturDO f = new ViewFakturDO(p, "fakturDOPOPanjang.json");
         JavarieSoftView.panelCool1.add(f);
         f.setSize(800, 400);
         f.toFront();
@@ -2040,7 +2050,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             txtNamaPelanggan1.setText(new pelangganDao(c).getDetails(returdo.getKodepelanggan()).getNAMA());
             tglDO1.setText(returdo.getTanggal());
         } catch (SQLException ex) {
-            Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -2050,16 +2060,16 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             stat.execute("insert into rinci values('"
                     + returdorinci.getKodebarang()
                     + "','" + b.getNAMABARANG()
-                    + "','" + ((returdorinci.getKodebatch().length() > 0) ? returdorinci.getKodebatch(): "")
-                    + "','" + (returdorinci.getExpire()==null?"":returdorinci.getExpire())
+                    + "','" + ((returdorinci.getKodebatch().length() > 0) ? returdorinci.getKodebatch() : "")
+                    + "','" + (returdorinci.getExpire() == null ? "" : returdorinci.getExpire())
                     + "'," + returdorinci.getJumlah()
                     + ",'" + returdorinci.getSatuan()
                     + "'," + b.getJumlah(returdorinci.getJumlah(), returdorinci.getSatuan())
                     + ")");
         }
-        reloadData();    
+        reloadData();
     }
-    
+
     void pilihanKertasPendek() {
         RadioPendek.setSelected(true);
         RadioPanjang.setSelected(false);
@@ -2068,6 +2078,131 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     void pilihanKertasPanjang() {
         RadioPendek.setSelected(false);
         RadioPanjang.setSelected(true);
+    }
+
+    private void reloadTotal() throws SQLException {
+        ResultSet rs = stat.executeQuery("select sum(jumlah*harga) as total from rinci");
+        if (rs.next()) {
+            hasilTotal.setText(com.erv.function.Util.toMoney(rs.getDouble(1)));
+        } else {
+            hasilTotal.setText(com.erv.function.Util.toMoney(0));
+        }
+        rs.close();
+    }
+
+    private void simpan() {
+        try {
+            // TODO add your handling code here:
+            //c = koneksi.getKoneksiJ();
+            c.createStatement().execute("set autocommit false");
+            int x = JOptionPane.showConfirmDialog(this, "Apakah Data Disimpan?", "", JOptionPane.YES_NO_OPTION);
+            if (x == 0) {
+                if ((txtKODEDO.getText().equals("")) || (txtKodePelanggan.getText().equals(""))) {
+                    JOptionPane.showMessageDialog(null, "Data Belum Lengkap.. !");
+                    txtKodePelanggan.requestFocus();
+                } else if (!KontrolTanggalDao.cekHarian(c, tglDO.getText())) {
+                    JOptionPane.showMessageDialog(null, "Transaksi Tidak Bisa Dilakukan Karena :\n"
+                            + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
+                            + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
+                } else {
+                    String tgal[] = Util.split(tglDO.getText(), "-");
+                    String per = tgal[0] + "." + Integer.parseInt(tgal[1]);
+                    if (cekperiodeAda(c, per)) {
+                        if (cekperiode(c, per)) {
+                            DO d1 = new DO();
+                            ID = DODao.getID(c);
+                            d1.setID(ID);
+                            d1.setKODEDO(DODao.getKODEDO(c));
+                            d1.setKODEPELANGGAN(txtKodePelanggan.getText());
+                            d1.setTANGGAL(tglDO.getText());
+                            d1.setSTATUS("A");
+                            d1.setTGLTUTUP(tglDO.getText());
+                            d1.setSTATUSAKTIF("1");
+                            if (DODao.insertIntoDO(c, d1)) {
+                                Statement s = cm.createStatement();
+                                ResultSet r = s.executeQuery("select * from rinci");
+                                DORinci dr = new DORinci();
+                                stok st = new stok();
+                                while (r.next()) {
+                                    dr.setIDDO(ID);
+                                    dr.setKODEBARANG(r.getString("KODEBARANG"));
+                                    dr.setJUMLAH(r.getInt("JUMLAH"));
+                                    dr.setSATUAN(r.getString("SATUAN"));
+                                    dr.setKODEBATCH(r.getString("BATCH"));
+                                    dr.setEXPIRE(r.getString("EXPIRE"));
+                                    if (r.getString("EXPIRE").equals("")) {
+                                        dr.setEXPIRE(null);
+                                    }
+                                    dr.setJUMLAHKECIL(r.getInt("JUMLAHKECIL"));
+                                    dr.setHARGA(r.getDouble("HARGA"));
+                                    DORinciDao.insertIntoDORinci(c, dr);
+                                    st.setIDPENJUALAN(ID);
+                                    st.setKODEBARANG(r.getString("KODEBARANG"));
+                                    st.setTANGGAL(tglDO.getText());
+                                    st.setIN(0);
+                                    st.setOUT(r.getInt("JUMLAHKECIL"));
+                                    st.setKODETRANS("D");
+                                    st.setKODEBATCH(dr.getKODEBATCH());
+                                    stokDao.insertIntoSTOK(c, st);
+                                }
+
+                                r.close();
+                                s.close();
+                                prosesUpdateLog(c, "Insert");
+                                hapusTabel();
+                                buatTabel();
+                                String nofakDO = txtKODEDO.getText();
+                                txtNoDOPrint.setText(nofakDO);
+
+                                kosongDO(c);
+                                kosongBarang();
+                                reloadData();
+
+                                settingtombol(true, false, false, false, false);
+                                JOptionPane.showMessageDialog(this, "Entri DO Berhasil");
+                                formPO.controller.setIdpo(formPO.getId());
+                                formPO.controller.setIddo(ID);
+                                formPO.controller.insertDO(c);
+                                c.commit();
+                                try {
+                                    if (txtNoDOPrint.getText().equals("")) {
+                                        JOptionPane.showMessageDialog(null, "Isi No Faktur DO yang akan di Print.. !");
+                                        txtNoDOPrint.requestFocus();
+                                    } else {
+                                        CetakFakturDO(txtNoDOPrint.getText());
+                                    }
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(null, e.toString());
+                                }
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
+                            txtKodePelanggan.requestFocus();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
+                        txtKodePelanggan.requestFocus();
+                    }
+                }
+            } else {
+                txtKodePelanggan.requestFocus();
+            }
+        } catch (SQLException ex) {
+            try {
+                c.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(FormDOPO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } finally {
+            if (c != null) {
+                try {
+                    c.createStatement().execute("set autocommit true");
+                } catch (SQLException ex) {
+                    Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 
 }
