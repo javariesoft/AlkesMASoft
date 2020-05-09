@@ -226,7 +226,6 @@ public class JavarieSoftView extends FrameView {
         Mtutupbuku = new javax.swing.JMenuItem();
         MTutupHarian = new javax.swing.JMenuItem();
         MPajak = new javax.swing.JMenuItem();
-        MPO = new javax.swing.JMenuItem();
         MLaporan = new javax.swing.JMenu();
         Mlappembelian = new javax.swing.JMenu();
         MLBPerFaktur = new javax.swing.JMenuItem();
@@ -806,15 +805,6 @@ public class JavarieSoftView extends FrameView {
             }
         });
         MTransaksi.add(MPajak);
-
-        MPO.setText(resourceMap.getString("MPO.text")); // NOI18N
-        MPO.setName("MPO"); // NOI18N
-        MPO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MPOActionPerformed(evt);
-            }
-        });
-        MTransaksi.add(MPO);
 
         menuBar.add(MTransaksi);
 
@@ -2486,14 +2476,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MLJRekapPerJenisPajakActionPerformed
 
-    private void MPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MPOActionPerformed
-        // TODO add your handling code here:
-        FormPO p= new FormPO();
-        p.toFront();
-        panelCool1.add(p);
-        p.setVisible(true);
-    }//GEN-LAST:event_MPOActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
     private javax.swing.JLabel LblJenis1;
@@ -2569,7 +2551,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private javax.swing.JMenuItem MLapSisaDO;
     public static javax.swing.JMenu MLaporan;
     private static javax.swing.JMenuItem MNomorPajak;
-    private javax.swing.JMenuItem MPO;
     private static javax.swing.JMenuItem MPajak;
     private javax.swing.JMenuItem MRekapReturCabang;
     public static javax.swing.JMenuItem MRetur;

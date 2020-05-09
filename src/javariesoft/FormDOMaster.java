@@ -239,10 +239,17 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
-        FormDO p = new FormDO();
-        p.toFront();
-        panelCool1.add(p);
-        p.setVisible(true);
+        if (cboTrans.getSelectedIndex() == 0) {
+            FormDO p = new FormDO();
+            p.toFront();
+            panelCool1.add(p);
+            p.setVisible(true);
+        } else {
+            FormPO p = new FormPO();
+            p.toFront();
+            panelCool1.add(p);
+            p.setVisible(true);
+        }
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -258,8 +265,8 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
                 p.toFront();
                 panelCool1.add(p);
                 p.setVisible(true);
-            } else if(cboTrans.getSelectedIndex()==2){
-                int id =Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+            } else if (cboTrans.getSelectedIndex() == 2) {
+                int id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
                 FormPO p = new FormPO(id);
                 p.toFront();
                 panelCool1.add(p);
@@ -404,7 +411,7 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
         jScrollPane1.repaint();
         j.close();
     }
-    
+
     public void reloadPO(int pil) throws SQLException {
         JDBCAdapter j = new JDBCAdapter(c);
         String sql = "select * from po "
@@ -478,7 +485,7 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
             } else if (pil == 1) {
                 settingtombol(true, true, false, false, false);
                 reloadRetur(cboKriteria.getSelectedIndex());
-            } else if(pil == 2){
+            } else if (pil == 2) {
                 settingtombol(true, true, false, false, false);
                 reloadPO(cboKriteria.getSelectedIndex());
             }

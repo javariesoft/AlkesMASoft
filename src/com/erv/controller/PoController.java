@@ -141,10 +141,24 @@ public class PoController {
 
     public void insert() {
         try {
+            String tgal[] = Util.split(formPO.getTgl().getText(), "-");
+            String per = tgal[0] + "." + Integer.parseInt(tgal[1]);
+            if (!Fungsi.cekperiodeAda(con, per)) {
+                throw new JavarieException("Transaksi Untuk Periode Ini Belum Dibuka.. !");
+            }
+            if (!Fungsi.cekperiode(con, per)) {
+                throw new JavarieException("Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
+            }
+            if (!KontrolTanggalDao.cekHarian(con, formPO.getTgl().getText())) {
+                throw new JavarieException("Transaksi Tidak Bisa Dilakukan Karena :\n"
+                        + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
+                        + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
+            }
             po = new PO();
             po.setKodepo(formPO.getTxtKodePO().getText());
             po.setTanggal(formPO.getTgl().getText());
             po.setKodepelanggan(formPO.getTxtKodePelanggan().getText());
+            po.setNofaktur(""); 
             idpo = PoDao.insertIntoPO(con, po.getKodepo(), po.getTanggal(), po.getKodepelanggan(), "");
             formPO.setId(idpo);
             po.setId(iddo);
@@ -152,6 +166,8 @@ public class PoController {
             JOptionPane.showMessageDialog(formPO, "Entri PO Ok");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(formPO, "Error :" + ex.getMessage());
+        } catch (JavarieException ex) {
+            JOptionPane.showMessageDialog(formPO, ex.getMessage());
         }
     }
 

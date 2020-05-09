@@ -342,11 +342,6 @@ private void btnDeletePenjualanAllActionPerformed(java.awt.event.ActionEvent evt
         int x = JOptionPane.showConfirmDialog(this, "Apakah Data Akan Dihapus?", "", JOptionPane.YES_NO_OPTION);
         if (x == 0) {
             Statement sf = null;
-//            if (!KontrolTanggalDao.cekHarian(c, jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString())) {
-//                JOptionPane.showMessageDialog(null, "Transaksi Tidak Bisa Dilakukan Karena :\n"
-//                        + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
-//                        + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
-//            } else {
                 String tgal[] = Util.split(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString(), "-");
                 String per = tgal[0] + "." + Integer.parseInt(tgal[1]);
                 if (cekperiodeAda(c, per)) {
@@ -375,9 +370,6 @@ private void btnDeletePenjualanAllActionPerformed(java.awt.event.ActionEvent evt
                     JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
                     btnDeletePenjualanAll.requestFocus();
                 }
-                //sf.execute("delete from RINCIPENJUALAN where IDPENJUALAN=" + IDjual + "");
-//            }
-
         } else {
             System.out.print("tidak");
         }
