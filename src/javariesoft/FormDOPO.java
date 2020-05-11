@@ -38,11 +38,13 @@ import com.eigher.model.loghistory;
 import com.erv.controller.PoController;
 import com.erv.db.BarangstokDao;
 import com.erv.db.KontrolTanggalDao;
+import com.erv.db.PoDao;
 import com.erv.db.ReturdoDao;
 import com.erv.db.ReturdorinciDao;
 import com.erv.exception.JavarieException;
 import com.erv.function.Util;
 import com.erv.model.Barangstok;
+import com.erv.model.PO;
 import com.erv.model.Returdo;
 import com.erv.model.Returdorinci;
 import java.awt.Dimension;
@@ -50,7 +52,6 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +97,7 @@ public final class FormDOPO extends javax.swing.JInternalFrame {
      * @param c
      */
     PoController controller;
+    private int idpo;
 
     public FormDOPO(FormPO formPO) {
         try {
@@ -116,7 +118,7 @@ public final class FormDOPO extends javax.swing.JInternalFrame {
             pilihanKertasPendek();
             settingPosisi();
             txtKodePelanggan.setText(this.formPO.getTxtKodePelanggan().getText());
-            txtNamaPelanggan.setText(this.formPO.getTxtNamaPelanggan().getText()); 
+            txtNamaPelanggan.setText(this.formPO.getTxtNamaPelanggan().getText());
             pilihJTabbedPane(jTabbedPane1, 0);
             this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2 - 50);
         } catch (ClassNotFoundException ex) {
@@ -176,10 +178,11 @@ public final class FormDOPO extends javax.swing.JInternalFrame {
         }
     }
 
-    public FormDOPO(FormPO formPO, int id, String pil) {
+    public FormDOPO(FormPO formPO, int iddo,int idpo, String pil) {
         try {
             initComponents();
             this.formPO = formPO;
+            this.idpo = idpo;
             c = koneksi.getKoneksiJ();
             controller = new PoController(this, c);
             tglDO.setDateFormat(d);
@@ -189,21 +192,21 @@ public final class FormDOPO extends javax.swing.JInternalFrame {
             stat = cm.createStatement();
             lh = new loghistory();
             lhdao = new loghistoryDao();
-            dis = DODao.getDetails(this.c, id);
+            dis = DODao.getDetails(this.c, iddo);
             kosongBarang();
             hapusTabel();
             buatTabel();
-            List<DORinci> listDO = DORinciDao.getDetailDORinci(c, id);
+            List<DORinci> listDO = DORinciDao.getDetailDORinci(c, iddo);
             if (pil.equals("view")) {
                 tampilDO(dis);
                 tampilDORinci(listDO);
                 pilihJTabbedPane(jTabbedPane1, 0);
                 reloadTotal();
-                btnInsert.setText("Update"); 
+                btnInsert.setText("Update");
                 settingtombol(true, false, false, false, false);
             } else if (pil.equals("view retur")) {
-                List<Returdorinci> listReturdorinci = ReturdorinciDao.getReturdorinciList(c, id);
-                Returdo returdo = ReturdoDao.getDetails(this.c, id);
+                List<Returdorinci> listReturdorinci = ReturdorinciDao.getReturdorinciList(c, iddo);
+                Returdo returdo = ReturdoDao.getDetails(this.c, iddo);
                 tampilDORetur(returdo);
                 tampilReturDoRinci(listReturdorinci);
                 pilihJTabbedPane(jTabbedPane1, 1);
@@ -1111,8 +1114,12 @@ private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     //Connection c = null;
     if (btnInsert.getText().equals("Simpan")) {
         simpan();
-    }else if(btnInsert.getText().equals("Update")){
-        controller.updateDOPO();
+    } else if (btnInsert.getText().equals("Update")) {
+        if(dis.getSTATUSAKTIF().equals("A")){
+            controller.updateDOPO();
+        }else{
+            JOptionPane.showMessageDialog(this, "DO ini sudah Close");
+        }
     }
 
 
@@ -1968,6 +1975,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         txtKodePelanggan.setText(d.getKODEPELANGGAN());
         txtNamaPelanggan.setText(new pelangganDao(c).getDetails(d.getKODEPELANGGAN()).getNAMA());
         tglDO.setText(d.getTANGGAL());
+        txtNoDOPrint.setText(d.getKODEDO()); 
     }
 
     private void tampilDORinci(List<DORinci> listDO) throws SQLException {
@@ -2007,21 +2015,23 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         txtNamaPelanggan1.setText("");
     }
 
-    void viewFakturDOPendek(String nofakturDO) {
-        Map<String, Object> p = ClassPrintDO.cetakfakturDOMap(c, nofakturDO);
-        ViewFakturDO f = new ViewFakturDO(p,"fakturDOPO.json");
+    void viewFakturDOPendek(String nofakturDO) throws SQLException {
+        PO po = PoDao.getPO(c, idpo);
+        Map<String, Object> p = ClassPrintDO.cetakfakturDOMap(c, nofakturDO, po);
+        ViewFakturDO f = new ViewFakturDO(p, "fakturDOPO.json");
         JavarieSoftView.panelCool1.add(f);
-        f.setSize(800, 400);
+        //f.setSize(800, 400);
         f.toFront();
         f.setVisible(true);
 
     }
 
-    void viewFakturDOPanjang(String nofakturDO) {
-        Map<String, Object> p = ClassPrintDOKertasPanjang.cetakfakturDOMap(c, nofakturDO);
+    void viewFakturDOPanjang(String nofakturDO) throws SQLException {
+        PO po = PoDao.getPO(c, idpo);
+        Map<String, Object> p = ClassPrintDOKertasPanjang.cetakfakturDOMap(c, nofakturDO, po);
         ViewFakturDO f = new ViewFakturDO(p, "fakturDOPOPanjang.json");
         JavarieSoftView.panelCool1.add(f);
-        f.setSize(800, 400);
+        //f.setSize(800, 400);
         f.toFront();
         f.setVisible(true);
 

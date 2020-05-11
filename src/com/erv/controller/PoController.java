@@ -106,6 +106,7 @@ public class PoController {
                     rp.setEXPIRE(dORinci.getEXPIRE());
                     rp.setDISKONP(0);
                     rp.setBONUS("");
+                    rp.setJUMLAHKECIL(dORinci.getJUMLAHKECIL()); 
                     rincijuals.add(rp);
                 }
             }
@@ -202,11 +203,13 @@ public class PoController {
             model.setRowCount(0);
             List<PoRinci> poRincis = po.getPoRincis();
             for (PoRinci p : poRincis) {
+                DO do1 = DODao.getDetails(con, p.getIddo());
+                String status = (do1.getSTATUS().equals("A"))?"AKTIF":"CLOSE";
                 Object[] data = {
                     p.getId(),
                     p.getIdpo(),
                     p.getIddo(),
-                    p.getStatus()
+                    status
                 };
                 model.addRow(data);
             }

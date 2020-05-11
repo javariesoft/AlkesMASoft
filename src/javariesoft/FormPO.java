@@ -113,8 +113,6 @@ public class FormPO extends javax.swing.JInternalFrame {
     public void setPo(PO po) {
         this.po = po;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -349,7 +347,7 @@ public class FormPO extends javax.swing.JInternalFrame {
     private void btnViewDOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDOActionPerformed
         // TODO add your handling code here:
         int iddo = Integer.parseInt(tabelPO.getValueAt(tabelPO.getSelectedRow(), 2).toString());
-        FormDOPO p = new FormDOPO(this, iddo, "view");
+        FormDOPO p = new FormDOPO(this, iddo, id, "view");
         p.toFront();
         JavarieSoftView.panelCool1.add(p);
         p.setVisible(true);

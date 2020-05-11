@@ -414,10 +414,13 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
 
     public void reloadPO(int pil) throws SQLException {
         JDBCAdapter j = new JDBCAdapter(c);
-        String sql = "select * from po "
+        String sql = "select PO.ID, PO.KODEPO, PO.TANGGAL, PO.KODEPELANGGAN, plg.NAMA, NOFAKTUR "
+                + "from PO inner join pelanggan plg on po.KODEPELANGGAN = plg.KODEPELANGGAN "
                 + "WHERE 1=1 ";
         if (pil == 0) {
             sql += " AND kodepo LIKE '" + txtKriteria.getText() + "%'";
+        } else if(pil == 1) {
+            sql += " AND lower(nama) LIKE '" + txtKriteria.getText().toLowerCase() + "%'";
         }
         j.executeQuery(sql);
         jScrollPane1.getViewport().remove(jTable1);
@@ -473,6 +476,7 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
         } else if (pil == 2) {
             cboKriteria.removeAllItems();
             cboKriteria.addItem("Kode PO");
+            cboKriteria.addItem("Pelanggan");
         }
     }
 

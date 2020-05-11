@@ -8,6 +8,8 @@ package javariesoft;
 
 import com.erv.model.penjualan;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Map;
 import simple.escp.Template;
 import simple.escp.json.JsonTemplate;
@@ -22,6 +24,8 @@ public class ViewFakturDO extends javax.swing.JInternalFrame {
     /**
      * Creates new form ViewFaktur
      */
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    
     public ViewFakturDO(Map<String,Object> p) {
         initComponents();
         Template template  = null;
@@ -33,6 +37,8 @@ public class ViewFakturDO extends javax.swing.JInternalFrame {
         PrintPreviewPane preview = new PrintPreviewPane(template, p, null);
         setLayout(new BorderLayout());
         add(preview, BorderLayout.CENTER);
+        setSize(dim.width, dim.height - 100);
+        setLocation(0, 0);
     }
     
     public ViewFakturDO(Map<String,Object> p, String json) {
@@ -46,6 +52,8 @@ public class ViewFakturDO extends javax.swing.JInternalFrame {
         PrintPreviewPane preview = new PrintPreviewPane(template, p, null);
         setLayout(new BorderLayout());
         add(preview, BorderLayout.CENTER);
+        setSize(dim.width, dim.height - 100);
+        setLocation(0, 0);
     }
     
 

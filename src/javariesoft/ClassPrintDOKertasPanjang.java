@@ -15,6 +15,7 @@ import jzebra.PrintRaw;
 import jzebra.PrintServiceMatcher;
 import com.erv.db.koneksi;
 import com.erv.function.Util;
+import com.erv.model.PO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -352,7 +353,7 @@ public class ClassPrintDOKertasPanjang {
         return p;
     }
 
-    public static Map<String, Object> cetakfakturDOMap(Connection con, String nfak) {
+    public static Map<String, Object> cetakfakturDOMap(Connection con, String nfak,PO po) {
         java.text.DateFormat d = new SimpleDateFormat("dd-MMMM-yyyy");
         java.util.Date tgl=new java.util.Date();
         DecimalFormat df = new DecimalFormat("###,###,###,###");
@@ -401,8 +402,9 @@ public class ClassPrintDOKertasPanjang {
 
             Altpel = rs1.getString(12);
             p.put("FAKTURDO", rs1.getString(2));
+            p.put("KODEPO", po.getKodepo());
             p.put("TANGGAL", rs1.getString(13));
-           // p.put("TGLLUNAS", rs1.getString(6));
+            p.put("TGLPO", po.getTanggal());
             p.put("STATDO", rs1.getString(14));
             p.put("PELANGGAN", pel);
             p.put("ALAMATPELANGGAN", Altpel);
@@ -453,8 +455,13 @@ public class ClassPrintDOKertasPanjang {
                     break;
                 }
             }
+            ppn = 0.1 * totalbersih;
+            bayar = totalbersih + ppn;
             p.put("table_source", tables);
             p.put("TOTQTY", totqty);
+            p.put("totalbersih", totalbersih);
+            p.put("ppn", ppn);
+            p.put("bayar", bayar);
             p.put("totalbersih", totalbersih);
             p.put("tglcetak",d.format(tgl));
             p.put("namauser",JavarieSoftApp.jenisuser);
