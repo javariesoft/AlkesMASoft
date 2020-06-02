@@ -7,6 +7,7 @@ package javariesoft;
 
 import com.eigher.db.loghistoryDao;
 import com.eigher.model.loghistory;
+import com.erv.db.BarangstokDao;
 import com.erv.db.DODao;
 import com.erv.db.hutangDao;
 import com.erv.db.hutangbayarDao;
@@ -20,6 +21,7 @@ import com.erv.db.returbeliDao;
 import com.erv.db.returbelirinciDao;
 import com.erv.db.ReturdoDao;
 import com.erv.db.ReturdorinciDao;
+import com.erv.db.rincijurnalDao;
 import com.erv.db.settingDao;
 import com.erv.db.stokDao;
 import com.erv.db.supplierDao;
@@ -27,6 +29,7 @@ import com.erv.exception.JavarieException;
 import com.erv.function.JDBCAdapter;
 import com.erv.function.Util;
 import com.erv.fungsi.DecimalFormatRenderer;
+import com.erv.model.Barangstok;
 import com.erv.model.hutang;
 import com.erv.model.hutangbayar;
 import com.erv.model.jurnal;
@@ -37,6 +40,8 @@ import com.erv.model.returbeli;
 import com.erv.model.DO;
 import com.erv.model.Returdo;
 import com.erv.model.Returdorinci;
+import com.erv.model.rincijurnal;
+import com.erv.model.rinciretur;
 import com.erv.model.stok;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -109,6 +114,7 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
         btnBatalRetur = new javax.swing.JButton();
         cbStatus = new javax.swing.JComboBox<>();
         btnKeluar = new javax.swing.JButton();
+        btnUpdateHpp = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelData = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -124,14 +130,13 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
 
         jPanel2.setName("jPanel2"); // NOI18N
         jPanel2.setPreferredSize(new java.awt.Dimension(1113, 73));
-        jPanel2.setLayout(null);
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING));
 
         jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
-        jLabel1.setPreferredSize(new java.awt.Dimension(100, 20));
+        jLabel1.setPreferredSize(new java.awt.Dimension(100, 15));
         jPanel2.add(jLabel1);
-        jLabel1.setBounds(20, 10, 63, 20);
 
         cboRetur.setFont(resourceMap.getFont("cboRetur.font")); // NOI18N
         cboRetur.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Retur Penjualan", "Retur Pembelian", "Retur DO" }));
@@ -142,7 +147,6 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             }
         });
         jPanel2.add(cboRetur);
-        cboRetur.setBounds(90, 10, 140, 21);
 
         cboKriteria.setFont(resourceMap.getFont("cboKriteria.font")); // NOI18N
         cboKriteria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Kode Retur", "Tanggal", "Pelanggan", "Status" }));
@@ -153,7 +157,6 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             }
         });
         jPanel2.add(cboKriteria);
-        cboKriteria.setBounds(240, 10, 96, 21);
 
         txtKriteria.setFont(resourceMap.getFont("txtKriteria.font")); // NOI18N
         txtKriteria.setText(resourceMap.getString("txtKriteria.text")); // NOI18N
@@ -165,24 +168,20 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             }
         });
         jPanel2.add(txtKriteria);
-        txtKriteria.setBounds(350, 8, 200, 26);
 
         tanggal.setFieldFont(resourceMap.getFont("tanggal.dch_combo_fieldFont")); // NOI18N
         jPanel2.add(tanggal);
-        tanggal.setBounds(350, 10, 180, 20);
 
         btnFilter.setFont(resourceMap.getFont("btnFilter.font")); // NOI18N
         btnFilter.setIcon(resourceMap.getIcon("btnFilter.icon")); // NOI18N
         btnFilter.setText(resourceMap.getString("btnFilter.text")); // NOI18N
         btnFilter.setName("btnFilter"); // NOI18N
-        btnFilter.setPreferredSize(new java.awt.Dimension(80, 29));
         btnFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFilterActionPerformed(evt);
             }
         });
         jPanel2.add(btnFilter);
-        btnFilter.setBounds(560, 7, 105, 29);
 
         btnValidasi.setFont(resourceMap.getFont("btnValidasi.font")); // NOI18N
         btnValidasi.setIcon(resourceMap.getIcon("btnValidasi.icon")); // NOI18N
@@ -194,20 +193,17 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             }
         });
         jPanel2.add(btnValidasi);
-        btnValidasi.setBounds(670, 7, 97, 29);
 
         btnDeleteValidasi.setFont(resourceMap.getFont("btnDeleteValidasi.font")); // NOI18N
         btnDeleteValidasi.setIcon(resourceMap.getIcon("btnDeleteValidasi.icon")); // NOI18N
         btnDeleteValidasi.setText(resourceMap.getString("btnDeleteValidasi.text")); // NOI18N
         btnDeleteValidasi.setName("btnDeleteValidasi"); // NOI18N
-        btnDeleteValidasi.setPreferredSize(new java.awt.Dimension(80, 29));
         btnDeleteValidasi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteValidasiActionPerformed(evt);
             }
         });
         jPanel2.add(btnDeleteValidasi);
-        btnDeleteValidasi.setBounds(880, 7, 102, 29);
 
         btnbayarhutang.setText(resourceMap.getString("btnbayarhutang.text")); // NOI18N
         btnbayarhutang.setName("btnbayarhutang"); // NOI18N
@@ -217,7 +213,6 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             }
         });
         jPanel2.add(btnbayarhutang);
-        btnbayarhutang.setBounds(1141, 8, 99, 23);
 
         btnBatalRetur.setFont(resourceMap.getFont("btnBatalRetur.font")); // NOI18N
         btnBatalRetur.setIcon(resourceMap.getIcon("btnBatalRetur.icon")); // NOI18N
@@ -229,13 +224,11 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             }
         });
         jPanel2.add(btnBatalRetur);
-        btnBatalRetur.setBounds(780, 7, 97, 29);
 
         cbStatus.setFont(resourceMap.getFont("cbStatus.font")); // NOI18N
         cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Draft", "Release", "Batal" }));
         cbStatus.setName("cbStatus"); // NOI18N
         jPanel2.add(cbStatus);
-        cbStatus.setBounds(350, 10, 190, 20);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -247,7 +240,16 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             }
         });
         jPanel2.add(btnKeluar);
-        btnKeluar.setBounds(990, 7, 102, 29);
+
+        btnUpdateHpp.setFont(resourceMap.getFont("btnUpdateHpp.font")); // NOI18N
+        btnUpdateHpp.setText(resourceMap.getString("btnUpdateHpp.text")); // NOI18N
+        btnUpdateHpp.setName("btnUpdateHpp"); // NOI18N
+        btnUpdateHpp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateHppActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnUpdateHpp);
 
         panelCool1.add(jPanel2);
         jPanel2.setBounds(10, 10, 1250, 50);
@@ -403,7 +405,7 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
                 c.createStatement().execute("set autocommit false");
                 if (cboRetur.getSelectedIndex() == 0) {
                     int idjual = Integer.parseInt(tabelData.getValueAt(tabelData.getSelectedRow(), 6).toString());
-                    hpp = Double.parseDouble(tabelData.getValueAt(tabelData.getSelectedRow(), 10).toString());
+                    //hpp = Double.parseDouble(tabelData.getValueAt(tabelData.getSelectedRow(), 10).toString());
                     totalpiutang = piutangDao.getJumlahHutangJual(c, tabelData.getValueAt(tabelData.getSelectedRow(), 6).toString());
                     total = Double.parseDouble(tabelData.getValueAt(tabelData.getSelectedRow(), 7).toString());
                     diskont = Double.parseDouble(tabelData.getValueAt(tabelData.getSelectedRow(), 8).toString());
@@ -416,6 +418,7 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
                     } else if (rj.getSTATUS() == 2) {
                         JOptionPane.showMessageDialog(this, "Retur Penjualan Ini di Batalkan");
                     } else {
+                        hpp = getHpp(c, rj.getRincireturList());
                         List<piutang> piutangList = piutangDao.getAllPiutangPlgBL(c, rj.getKODEPELANGGAN());
                         bayarPiutangDenganRetur(c, piutangList, ttotalbayar, rj);
                         rj.setSTATUS(1);
@@ -652,6 +655,50 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnKeluarActionPerformed
+
+    private void btnUpdateHppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateHppActionPerformed
+        Connection c = null;
+        try {
+            // TODO add your handling code here:
+            c = koneksi.getKoneksiJ();
+            c.createStatement().execute("set autocommit false");
+            if (cboRetur.getSelectedIndex() == 0) {
+                retur rj = returDao.getRetur(c, Integer.parseInt(tabelData.getValueAt(tabelData.getSelectedRow(), 0).toString()));
+                hpp = getHpp(c, rj.getRincireturList());
+                rj.setTOTALHPP(hpp);
+                jurnal j = rj.getJurnal();
+                List<rincijurnal> rjList = j.getRincijurnals();
+                for (rincijurnal rc : rjList) {
+                    if (rc.getNO() == 5) {
+                        rc.setDEBET(hpp);
+                        rincijurnalDao.updateRINCIJURNAL(c, rc);
+                    }
+                    if (rc.getNO() == 6) {
+                        rc.setKREDIT(hpp);
+                        rincijurnalDao.updateRINCIJURNAL(c, rc);
+                    }
+                }
+                returDao.updateRETUR(c, rj);
+            }
+            c.commit();
+            JOptionPane.showMessageDialog(this, "Update HPP ok");
+        } catch (SQLException ex) {
+            try {
+                c.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(FormRetur.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            JOptionPane.showMessageDialog(this, "Error :" + ex.getMessage());
+        } finally {
+            try {
+                if (c != null) {
+                    c.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FormRetur.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnUpdateHppActionPerformed
 
     private void setLayar() {
         jPanel2.setSize(dim.width - 40, 40);
@@ -1160,6 +1207,7 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
     private javax.swing.JButton btnDeleteValidasi;
     private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnKeluar;
+    private javax.swing.JButton btnUpdateHpp;
     private javax.swing.JButton btnValidasi;
     private javax.swing.JButton btnbayarhutang;
     private javax.swing.JComboBox<String> cbStatus;
@@ -1493,6 +1541,15 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             btnDeleteValidasi.setVisible(false);
             btnBatalRetur.setVisible(false);
         }
+    }
+
+    private double getHpp(Connection c, List<rinciretur> rincireturList) throws SQLException {
+        double temp = 0;
+        for (rinciretur rr : rincireturList) {
+            Barangstok bs = BarangstokDao.getDetailKodeBarang(c, rr.getKODEBARANG());
+            temp += bs.getCOGS() * rr.getJUMLAHKECIL();
+        }
+        return temp;
     }
 
 }

@@ -20,6 +20,22 @@ public class loghistory {
     private String AKSI;
     private String KETERANGAN;
 
+    public loghistory() {
+    }
+    
+    public loghistory(int ID, String USERIDENTITY, String TANGGAL, String JAM, String TABEL, String NOREFF, String AKSI, String KETERANGAN) {
+        this.ID = ID;
+        this.USERIDENTITY = USERIDENTITY;
+        this.TANGGAL = TANGGAL;
+        this.JAM = JAM;
+        this.TABEL = TABEL;
+        this.NOREFF = NOREFF;
+        this.AKSI = AKSI;
+        this.KETERANGAN = KETERANGAN;
+    }
+    
+    
+
     public String getAKSI() {
         return AKSI;
     }

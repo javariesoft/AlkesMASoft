@@ -414,7 +414,9 @@ public class ClassPrintDO {
                     + "(select namalengkap from usertable where groupuser='Apoteker' and statusaktif='0') as apoteker, "  //15
                     + "(select keterangan from usertable where groupuser='Apoteker' and statusaktif='0') as ketapoteker, " //16
                     + "PELANGGAN.NPWP AS PELANGGAN_NPWP, " //17
-                    + "DORINCI.HARGA " // 18
+                    + "DORINCI.HARGA, " // 18
+                    + "PELANGGAN.APOTEKER, "//19
+                    + "PELANGGAN.STRAAPOTEKER " //20
                     + "FROM PELANGGAN PELANGGAN "  
                     + "INNER JOIN DO DO ON PELANGGAN.KODEPELANGGAN = DO.KODEPELANGGAN "
                     + "INNER JOIN DORINCI DORINCI ON DO.ID = DORINCI.IDDO "
@@ -434,6 +436,9 @@ public class ClassPrintDO {
             } else {
                 pel = rs1.getString(11);
             }
+            
+            String apoteker =rs1.getString(19);
+            String sipa_apoteker =rs1.getString(20).trim();
 
             Altpel = rs1.getString(12);
             p.put("FAKTURDO", rs1.getString(2));
@@ -444,6 +449,7 @@ public class ClassPrintDO {
             p.put("PELANGGAN", pel);
             p.put("ALAMATPELANGGAN", Altpel);
             p.put("NPWP", rs1.getString(17));
+            
             //p.put("INISIAL", rs1.getString(39));
 
             int no = 0, totqty = 0;
@@ -499,8 +505,8 @@ public class ClassPrintDO {
             p.put("bayar", bayar);
             p.put("tglcetak",d.format(tgl));
             p.put("namauser",JavarieSoftApp.jenisuser);
-            p.put("apotek", rs1.getString(15));
-            p.put("ketapotek", rs1.getString(16));
+            p.put("apotek", apoteker);
+            p.put("ketapotek", sipa_apoteker);
         } catch (Exception e) {
             System.out.println(e);
         }

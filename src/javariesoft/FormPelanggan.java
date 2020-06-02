@@ -774,6 +774,8 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
         txtNomor.setText(p.getNOMOR());
         txtBlok.setText(p.getBLOK());
         cboJenisPajak.setSelectedIndex(getIndexCboJenisPajak(p.getJENISPAJAK()));
+        txtApoteker.setText(p.getAPOTEKER());
+        txtStra.setText(p.getSTRAAPOTEKER()); 
         txtkodePelanggan.requestFocus();
         cektombol();
     } catch (Exception ex) {
@@ -1069,6 +1071,8 @@ private void txtNamaPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         txtRW.setText("");
         txtNomor.setText("");
         txtBlok.setText("-");
+        txtApoteker.setText("");
+        txtStra.setText(""); 
         CheckCabang.setVisible(false);
     }
 

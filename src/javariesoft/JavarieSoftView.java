@@ -1886,13 +1886,13 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     private void MpiutangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MpiutangActionPerformed
         // TODO add your handling code here:
-        DialogPiutang p = new DialogPiutang(null, false);
+        DialogPiutang p = new DialogPiutang(null, true);
         p.setVisible(true);
     }//GEN-LAST:event_MpiutangActionPerformed
 
     private void MhutangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MhutangActionPerformed
         // TODO add your handling code here:
-        DialogHutang p = new DialogHutang(null, false);
+        DialogHutang p = new DialogHutang(null, true);
         p.setVisible(true);
     }//GEN-LAST:event_MhutangActionPerformed
 

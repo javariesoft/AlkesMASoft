@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * FormPenjualan.java
  *
  * Created on Nov 6, 2011, 1:07:44 AM
@@ -26,11 +26,16 @@ import javax.swing.table.TableColumn;
 import com.eigher.db.loghistoryDao;
 import com.eigher.model.loghistory;
 import com.erv.db.KontrolTanggalDao;
+import com.erv.db.piutangDao;
+import com.erv.exception.JavarieException;
 import com.erv.function.Util;
+import com.erv.model.piutang;
+import com.erv.model.piutangbayar;
 import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
+import java.util.List;
 import static javariesoft.JavarieSoftView.panelCool1;
 
 /**
@@ -338,38 +343,44 @@ private void btnDeletePenjualanAllActionPerformed(java.awt.event.ActionEvent evt
     try {
         // TODO add your handling code here:
         //c = koneksi.getKoneksiJ();
+        piutang p = piutangDao.getDetailPiutangperJual(c, Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+        if (p != null) {
+            if (p.getSTATUS().trim().equals("0")) {
+                throw new JavarieException("Piutang Sudah Lunas, Silahkan Delete Piutang Bayar.");
+            }
+        }
         c.createStatement().execute("set autocommit false");
         int x = JOptionPane.showConfirmDialog(this, "Apakah Data Akan Dihapus?", "", JOptionPane.YES_NO_OPTION);
         if (x == 0) {
             Statement sf = null;
-                String tgal[] = Util.split(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString(), "-");
-                String per = tgal[0] + "." + Integer.parseInt(tgal[1]);
-                if (cekperiodeAda(c, per)) {
-                    if (cekperiode(c, per)) {
-                        aksilog = "Delete";
-                        sf = c.createStatement();
-                        sf.execute("delete from PENJUALAN where ID=" + jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
-                        String sql = "SELECT ID from PIUTANG where IDPENJUALAN ='" + jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "'";
-                        ResultSet rs = sf.executeQuery(sql);
-                        if (rs.next()) {
-                            if (rs.getInt(1) != 0) {
-                                sf.executeUpdate("delete from PIUTANGBAYAR where IDPIUTANG='" + rs.getInt(1) + "'");
-                            }
+            String tgal[] = Util.split(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString(), "-");
+            String per = tgal[0] + "." + Integer.parseInt(tgal[1]);
+            if (cekperiodeAda(c, per)) {
+                if (cekperiode(c, per)) {
+                    aksilog = "Delete";
+                    sf = c.createStatement();
+                    sf.execute("delete from PENJUALAN where ID=" + jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "");
+                    String sql = "SELECT ID from PIUTANG where IDPENJUALAN ='" + jTable1.getValueAt(jTable1.getSelectedRow(), 0) + "'";
+                    ResultSet rs = sf.executeQuery(sql);
+                    if (rs.next()) {
+                        if (rs.getInt(1) != 0) {
+                            sf.executeUpdate("delete from PIUTANGBAYAR where IDPIUTANG='" + rs.getInt(1) + "'");
                         }
-                        //sf.execute("delete from STOK where IDPENJUALAN="+ jTable1.getValueAt(jTable1.getSelectedRow(), 0) +" AND KODETRANS='J'");
-                        prosesUpdateLog(c);
-                        JOptionPane.showMessageDialog(this, "Delete Ok");
-                        c.commit();
-                        sf.close();
-                        reloadData(c);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
-                        btnDeletePenjualanAll.requestFocus();
                     }
+                    //sf.execute("delete from STOK where IDPENJUALAN="+ jTable1.getValueAt(jTable1.getSelectedRow(), 0) +" AND KODETRANS='J'");
+                    prosesUpdateLog(c);
+                    JOptionPane.showMessageDialog(this, "Delete Ok");
+                    c.commit();
+                    sf.close();
+                    reloadData(c);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
+                    JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
                     btnDeletePenjualanAll.requestFocus();
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
+                btnDeletePenjualanAll.requestFocus();
+            }
         } else {
             System.out.print("tidak");
         }
@@ -380,15 +391,16 @@ private void btnDeletePenjualanAllActionPerformed(java.awt.event.ActionEvent evt
             Logger.getLogger(FormPenjualan.class.getName()).log(Level.SEVERE, null, ex1);
         }
         JOptionPane.showMessageDialog(this, "Rollback :" + ex.getMessage());
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(FormPenjualan.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (JavarieException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
     } finally {
-//        if(c!=null){
         try {
             c.createStatement().execute("set autocommit true");
-//                c.close();
         } catch (SQLException ex) {
             Logger.getLogger(FormPenjualan.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        }
     }
 }//GEN-LAST:event_btnDeletePenjualanAllActionPerformed
 
@@ -429,14 +441,14 @@ private void btnBayarPenerimaanPiutangActionPerformed(java.awt.event.ActionEvent
     private void txtKriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKriteriaActionPerformed
         // TODO add your handling code here:
         try {
-        // TODO add your handling code here:
-        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        //c = koneksi.getKoneksiJ();
-        reloadData(c);
-        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-    } catch (Exception ex) {
-        Logger.getLogger(FormPenjualan.class.getName()).log(Level.SEVERE, null, ex);
-    }
+            // TODO add your handling code here:
+            this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            //c = koneksi.getKoneksiJ();
+            reloadData(c);
+            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        } catch (Exception ex) {
+            Logger.getLogger(FormPenjualan.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txtKriteriaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

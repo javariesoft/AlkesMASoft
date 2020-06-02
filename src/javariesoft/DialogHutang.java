@@ -41,6 +41,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import com.eigher.db.loghistoryDao;
 import com.eigher.model.loghistory;
+import com.erv.controller.HutangController;
 import com.erv.db.KontrolTanggalDao;
 import com.erv.function.PrintfFormat;
 import java.text.DecimalFormat;
@@ -84,14 +85,14 @@ public class DialogHutang extends javax.swing.JDialog {
     String kodeakun[];
     String namaAkun[];
     Connection c = null;
-
+    HutangController controller;
     /**
      * Creates new form DialogHutang
      */
     public DialogHutang(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
+        controller = new HutangController(this);
         try {
             c = koneksi.getKoneksiJ();
             setting(c);
@@ -105,6 +106,7 @@ public class DialogHutang extends javax.swing.JDialog {
     public DialogHutang(java.awt.Frame parent, boolean modal, String idpembelian) {
         super(parent, modal);
         initComponents();
+        controller = new HutangController(this);
         try {
             c = koneksi.getKoneksiJ();
             setting(c);
@@ -123,7 +125,7 @@ public class DialogHutang extends javax.swing.JDialog {
     public DialogHutang(java.awt.Frame parent, boolean modal, String idsupplier, String supplier, double nilai) {
         super(parent, modal);
         initComponents();
-
+        controller = new HutangController(this);
         try {
             c = koneksi.getKoneksiJ();
             setting(c);
@@ -149,6 +151,14 @@ public class DialogHutang extends javax.swing.JDialog {
 
     }
 
+    public JTextField getTxtNorefHK() {
+        return txtNorefHK;
+    }
+
+    public JTable getjTable6() {
+        return jTable6;
+    }
+    
     private void setting(Connection c) throws ClassNotFoundException, SQLException {
         cm = koneksi.getKoneksiM();
         statm = cm.createStatement();
@@ -309,6 +319,11 @@ public class DialogHutang extends javax.swing.JDialog {
         txtGenerate1 = new javax.swing.JButton();
         jLabel33 = new javax.swing.JLabel();
         LabelTotalHutang3 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel41 = new javax.swing.JLabel();
+        txtNorefHK = new javax.swing.JTextField();
+        btnFilter = new javax.swing.JButton();
+        btnDeleteHK = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         tglBayar1 = new datechooser.beans.DateChooserCombo();
@@ -1010,19 +1025,19 @@ public class DialogHutang extends javax.swing.JDialog {
         jScrollPane5.setViewportView(jTable5);
 
         jPanel3.add(jScrollPane5);
-        jScrollPane5.setBounds(20, 170, 870, 200);
+        jScrollPane5.setBounds(20, 170, 870, 180);
 
         jLabel22.setFont(resourceMap.getFont("jLabel22.font")); // NOI18N
         jLabel22.setText(resourceMap.getString("jLabel22.text")); // NOI18N
         jLabel22.setName("jLabel22"); // NOI18N
         jPanel3.add(jLabel22);
-        jLabel22.setBounds(330, 380, 100, 16);
+        jLabel22.setBounds(330, 360, 100, 16);
 
         txtTotalHutang1.setEditable(false);
         txtTotalHutang1.setFont(resourceMap.getFont("txtTotalHutang1.font")); // NOI18N
         txtTotalHutang1.setName("txtTotalHutang1"); // NOI18N
         jPanel3.add(txtTotalHutang1);
-        txtTotalHutang1.setBounds(140, 380, 160, 22);
+        txtTotalHutang1.setBounds(140, 360, 160, 22);
 
         jSeparator3.setName("jSeparator3"); // NOI18N
         jPanel3.add(jSeparator3);
@@ -1034,7 +1049,7 @@ public class DialogHutang extends javax.swing.JDialog {
         jScrollPane6.setViewportView(jTable6);
 
         jPanel3.add(jScrollPane6);
-        jScrollPane6.setBounds(150, 420, 740, 170);
+        jScrollPane6.setBounds(150, 460, 740, 120);
 
         btnTambahHutangKhusus.setFont(resourceMap.getFont("btnTambahHutangKhusus.font")); // NOI18N
         btnTambahHutangKhusus.setIcon(resourceMap.getIcon("btnTambahHutangKhusus.icon")); // NOI18N
@@ -1046,7 +1061,7 @@ public class DialogHutang extends javax.swing.JDialog {
             }
         });
         jPanel3.add(btnTambahHutangKhusus);
-        btnTambahHutangKhusus.setBounds(30, 420, 110, 30);
+        btnTambahHutangKhusus.setBounds(30, 460, 110, 30);
 
         btnHapusHutangKhusus.setFont(resourceMap.getFont("btnHapusHutangKhusus.font")); // NOI18N
         btnHapusHutangKhusus.setIcon(resourceMap.getIcon("btnHapusHutangKhusus.icon")); // NOI18N
@@ -1058,7 +1073,7 @@ public class DialogHutang extends javax.swing.JDialog {
             }
         });
         jPanel3.add(btnHapusHutangKhusus);
-        btnHapusHutangKhusus.setBounds(30, 450, 110, 30);
+        btnHapusHutangKhusus.setBounds(30, 490, 110, 30);
 
         btnSimpanSemua.setFont(resourceMap.getFont("btnSimpanSemua.font")); // NOI18N
         btnSimpanSemua.setIcon(resourceMap.getIcon("btnSimpanSemua.icon")); // NOI18N
@@ -1070,19 +1085,19 @@ public class DialogHutang extends javax.swing.JDialog {
             }
         });
         jPanel3.add(btnSimpanSemua);
-        btnSimpanSemua.setBounds(150, 600, 190, 40);
+        btnSimpanSemua.setBounds(150, 590, 190, 30);
 
         jLabel23.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
         jLabel23.setText(resourceMap.getString("jLabel23.text")); // NOI18N
         jLabel23.setName("jLabel23"); // NOI18N
         jPanel3.add(jLabel23);
-        jLabel23.setBounds(620, 600, 70, 16);
+        jLabel23.setBounds(620, 590, 70, 16);
 
         txtTotalKhusus.setEditable(false);
         txtTotalKhusus.setFont(resourceMap.getFont("txtTotalKhusus.font")); // NOI18N
         txtTotalKhusus.setName("txtTotalKhusus"); // NOI18N
         jPanel3.add(txtTotalKhusus);
-        txtTotalKhusus.setBounds(670, 600, 200, 22);
+        txtTotalKhusus.setBounds(670, 590, 200, 22);
 
         pilihKhusus.setFont(resourceMap.getFont("pilihKhusus.font")); // NOI18N
         pilihKhusus.setText(resourceMap.getString("pilihKhusus.text")); // NOI18N
@@ -1105,7 +1120,7 @@ public class DialogHutang extends javax.swing.JDialog {
             }
         });
         jPanel3.add(btnClear);
-        btnClear.setBounds(30, 480, 110, 30);
+        btnClear.setBounds(30, 520, 110, 30);
 
         txtcari.setFont(resourceMap.getFont("txtcari.font")); // NOI18N
         txtcari.setName("txtcari"); // NOI18N
@@ -1143,12 +1158,12 @@ public class DialogHutang extends javax.swing.JDialog {
         jLabel27.setText(resourceMap.getString("jLabel27.text")); // NOI18N
         jLabel27.setName("jLabel27"); // NOI18N
         jPanel3.add(jLabel27);
-        jLabel27.setBounds(20, 380, 100, 16);
+        jLabel27.setBounds(20, 360, 100, 16);
 
         txtKetBayarHutangKhusus.setText(resourceMap.getString("txtKetBayarHutangKhusus.text")); // NOI18N
         txtKetBayarHutangKhusus.setName("txtKetBayarHutangKhusus"); // NOI18N
         jPanel3.add(txtKetBayarHutangKhusus);
-        txtKetBayarHutangKhusus.setBounds(440, 380, 420, 20);
+        txtKetBayarHutangKhusus.setBounds(440, 360, 420, 20);
 
         btnKeluar2.setFont(resourceMap.getFont("btnKeluar2.font")); // NOI18N
         btnKeluar2.setIcon(resourceMap.getIcon("btnKeluar2.icon")); // NOI18N
@@ -1160,7 +1175,7 @@ public class DialogHutang extends javax.swing.JDialog {
             }
         });
         jPanel3.add(btnKeluar2);
-        btnKeluar2.setBounds(30, 510, 110, 30);
+        btnKeluar2.setBounds(30, 550, 110, 30);
 
         txtGenerate1.setFont(resourceMap.getFont("txtGenerate1.font")); // NOI18N
         txtGenerate1.setText(resourceMap.getString("txtGenerate1.text")); // NOI18N
@@ -1185,6 +1200,44 @@ public class DialogHutang extends javax.swing.JDialog {
         LabelTotalHutang3.setName("LabelTotalHutang3"); // NOI18N
         jPanel3.add(LabelTotalHutang3);
         LabelTotalHutang3.setBounds(670, 140, 210, 20);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel5.setName("jPanel5"); // NOI18N
+        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING));
+
+        jLabel41.setFont(resourceMap.getFont("jLabel41.font")); // NOI18N
+        jLabel41.setText(resourceMap.getString("jLabel41.text")); // NOI18N
+        jLabel41.setName("jLabel41"); // NOI18N
+        jPanel5.add(jLabel41);
+
+        txtNorefHK.setFont(resourceMap.getFont("txtNorefHK.font")); // NOI18N
+        txtNorefHK.setText(resourceMap.getString("txtNorefHK.text")); // NOI18N
+        txtNorefHK.setName("txtNorefHK"); // NOI18N
+        txtNorefHK.setPreferredSize(new java.awt.Dimension(200, 20));
+        jPanel5.add(txtNorefHK);
+
+        btnFilter.setFont(resourceMap.getFont("btnFilter.font")); // NOI18N
+        btnFilter.setText(resourceMap.getString("btnFilter.text")); // NOI18N
+        btnFilter.setName("btnFilter"); // NOI18N
+        btnFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFilterActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnFilter);
+
+        btnDeleteHK.setFont(resourceMap.getFont("btnDeleteHK.font")); // NOI18N
+        btnDeleteHK.setText(resourceMap.getString("btnDeleteHK.text")); // NOI18N
+        btnDeleteHK.setName("btnDeleteHK"); // NOI18N
+        btnDeleteHK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteHKActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnDeleteHK);
+
+        jPanel3.add(jPanel5);
+        jPanel5.setBounds(150, 410, 740, 40);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
 
@@ -1422,11 +1475,11 @@ public class DialogHutang extends javax.swing.JDialog {
         jTabbedPane1.addTab(resourceMap.getString("jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
 
         panelCool1.add(jTabbedPane1);
-        jTabbedPane1.setBounds(10, 10, 910, 680);
+        jTabbedPane1.setBounds(10, 10, 910, 660);
 
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(951, 761));
+        setSize(new java.awt.Dimension(951, 726));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -2647,6 +2700,16 @@ private void TxtFilter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         txtKetBayarHutang.requestFocus();
     }//GEN-LAST:event_btnGenerate1ActionPerformed
 
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+        // TODO add your handling code here:
+        controller.onClickFilter();
+    }//GEN-LAST:event_btnFilterActionPerformed
+
+    private void btnDeleteHKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteHKActionPerformed
+        // TODO add your handling code here:
+        controller.deleteHK();
+    }//GEN-LAST:event_btnDeleteHKActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2704,6 +2767,8 @@ private void TxtFilter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JButton btnClear1;
     private javax.swing.JButton btnClear2;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteHK;
+    private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnGenerate;
     private javax.swing.JButton btnGenerate1;
     private javax.swing.JButton btnHapusBayarHutang;
@@ -2761,6 +2826,7 @@ private void TxtFilter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -2770,6 +2836,7 @@ private void TxtFilter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -2823,6 +2890,7 @@ private void TxtFilter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JTextField txtNoTrans;
     private javax.swing.JTextField txtNoTrans1;
     private javax.swing.JTextField txtNoref;
+    private javax.swing.JTextField txtNorefHK;
     private javax.swing.JFormattedTextField txtSisa;
     private javax.swing.JTextField txtSupplier;
     private javax.swing.JFormattedTextField txtTotalHutang;

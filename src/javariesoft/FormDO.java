@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * FormDO.java
  *
  * Created on Mar 13, 2012, 7:10:03 AM
@@ -137,7 +137,7 @@ public final class FormDO extends javax.swing.JInternalFrame {
                 tampilDORinci(listDO);
                 pilihJTabbedPane(jTabbedPane1, 0);
                 settingtombol(false, false, false, false, false);
-            } else if(pil.equals("view retur")){
+            } else if (pil.equals("view retur")) {
                 List<Returdorinci> listReturdorinci = ReturdorinciDao.getReturdorinciList(c, id);
                 Returdo returdo = ReturdoDao.getDetails(c, id);
                 tampilDORetur(returdo);
@@ -152,9 +152,7 @@ public final class FormDO extends javax.swing.JInternalFrame {
                 tampilDORinci(listDO);
                 pilihJTabbedPane(jTabbedPane1, 1);
                 settingtombol(false, true, false, false, false);
-
             }
-
             /////
             settingPosisi();
             this.setLocation(((int) dim.getWidth() - this.getWidth()) / 2, ((int) dim.getHeight() - this.getHeight()) / 2 - 40);
@@ -824,31 +822,31 @@ private void txtJumlahFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:even
 
 private void txtJumlahKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtJumlahKeyPressed
 // TODO add your handling code here:
-if (evt.getKeyCode() == 10) {
+    if (evt.getKeyCode() == 10) {
         //Connection c = null;
-    try {
+        try {
             //c = koneksi.getKoneksiJ();
-        if (jTabbedPane1.getSelectedIndex() == 0) {
-            Barangstok b = BarangstokDao.getDetailKodeBarang(c, txtKodeBarang.getText());
-            if (b.getSTOK() < Integer.parseInt(txtJumlah.getText())) {
-                txtJumlah.requestFocus();
-                JOptionPane.showMessageDialog(null, "Stok Tinggal " + b.getSTOK());
+            if (jTabbedPane1.getSelectedIndex() == 0) {
+                Barangstok b = BarangstokDao.getDetailKodeBarang(c, txtKodeBarang.getText());
+                if (b.getSTOK() < Integer.parseInt(txtJumlah.getText())) {
+                    txtJumlah.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Stok Tinggal " + b.getSTOK());
+                } else {
+                    btnInsertBarang.requestFocus();
+                }
+                b = null;
             } else {
-                btnInsertBarang.requestFocus();
+                int stokdo = DORinciDao.getStokDO(c, txtKdDO.getText(), txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText());
+                if (stokdo < Integer.parseInt(txtJumlah.getText())) {
+                    //            kosongBarang();
+                    txtJumlah.requestFocus();
+                    throw new JavarieException("Jumlah Retur DO Lebih Besar Dari Jumlah Sisa DO, Cek Laporan History Barang DO ..!!");
+                }
             }
-            b = null;
-        }else{
-            int stokdo = DORinciDao.getStokDO(c, txtKdDO.getText() , txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText());
-            if(stokdo < Integer.parseInt(txtJumlah.getText())){
-  //            kosongBarang();
-                txtJumlah.requestFocus();
-                throw new JavarieException("Jumlah Retur DO Lebih Besar Dari Jumlah Sisa DO, Cek Laporan History Barang DO ..!!");
-            }
-        }
-    } catch (Exception ex) {
+        } catch (Exception ex) {
 //        Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
-        JOptionPane.showMessageDialog(this, ex.getMessage());
-    }
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
 //        finally {
 //            if (c != null) {
 //                try {
@@ -859,104 +857,104 @@ if (evt.getKeyCode() == 10) {
 //            }
 //        }
 
-}
+    }
 }//GEN-LAST:event_txtJumlahKeyPressed
 
 private void btnInsertBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertBarangActionPerformed
     //Connection c = null;
     try {
         // c = koneksi.getKoneksiJ();
-        barang b = new barangDao().getDetails(c, txtKodeBarang.getText()); 
+        barang b = new barangDao().getDetails(c, txtKodeBarang.getText());
         if (jTabbedPane1.getSelectedIndex() == 0) {
             Barangstok bs = BarangstokDao.getDetailKodeBarang(c, txtKodeBarang.getText());
             if (barangDao.cekKodeBarang(c, txtKodeBarang.getText()) != true) {
                 JOptionPane.showMessageDialog(null, "Produk Ini Tidak Ada..!!");
                 kosongBarang();
                 txtKodeBarang.requestFocus();
-            }else if (bs.getSTOK() < Integer.parseInt(txtJumlah.getText())) {
+            } else if (bs.getSTOK() < Integer.parseInt(txtJumlah.getText())) {
                 txtJumlah.requestFocus();
                 JOptionPane.showMessageDialog(null, "Stok Tinggal " + bs.getSTOK());
-            }else if (bs.getCOGS() <= 0) {    
+            } else if (bs.getCOGS() <= 0) {
                 kosongBarang();
                 txtKodeBarang.requestFocus();
                 throw new JavarieException("Harga Modal Barang Belum Ada..!!");
-            }else{
+            } else {
                 if (btnInsertBarang.getText().equals("Insert")) {
-                        String s = "select max(no) from rinci";
-                        Statement stemp = cm.createStatement();
-                        ResultSet r = stemp.executeQuery(s);
-                        if (r.next()) {
-                            no = r.getInt(1) + 1;
-                        } else {
-                            no = 1;
-                        }
+                    String s = "select max(no) from rinci";
+                    Statement stemp = cm.createStatement();
+                    ResultSet r = stemp.executeQuery(s);
+                    if (r.next()) {
+                        no = r.getInt(1) + 1;
                     } else {
-                        btnInsertBarang.setText("Insert");
+                        no = 1;
                     }
+                } else {
+                    btnInsertBarang.setText("Insert");
+                }
 
                 stat.execute("insert into rinci values("
                         + no //0
                         + ",'" + txtKodeBarang.getText() //1
-                        + "','" + txtNamaBarang.getText()  //2
+                        + "','" + txtNamaBarang.getText() //2
                         + "','" + txtBatch.getText() //3
-        ////                + "','" + ((txtBatch.getText().length() > 0) ? txtBatch.getText() : "")
-                        + "','" + ((txtBatch.getText().equals("")) ? "" : tglExpire.getText())  //
-        ////                + "','" + tglExpire.getText()
-                        + "'," + txtJumlah.getText()  //5
-                        + ",'" + cboSatuan.getSelectedItem()  //6
+                        ////                + "','" + ((txtBatch.getText().length() > 0) ? txtBatch.getText() : "")
+                        + "','" + ((txtBatch.getText().equals("")) ? "" : tglExpire.getText()) //
+                        ////                + "','" + tglExpire.getText()
+                        + "'," + txtJumlah.getText() //5
+                        + ",'" + cboSatuan.getSelectedItem() //6
                         + "'," + b.getJumlah(Integer.parseInt(txtJumlah.getText()), cboSatuan.getSelectedItem().toString()) //7
                         + ")");
                 reloadData();
                 kosongBarang();
                 txtKodeBarang.requestFocus();
             }
-        }else{
-            int stokdo = DORinciDao.getStokDO(c, txtKdDO.getText() , txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText());
+        } else {
+            int stokdo = DORinciDao.getStokDO(c, txtKdDO.getText(), txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText());
             if (barangDao.cekKodeBarang(c, txtKodeBarang.getText()) != true) {
                 JOptionPane.showMessageDialog(null, "Produk Ini Tidak Ada..!!");
                 kosongBarang();
                 txtKodeBarang.requestFocus();
-            }else if(DORinciDao.cekKodeBarangDO(c, txtKdDO.getText() , txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText()) != true){
+            } else if (DORinciDao.cekKodeBarangDO(c, txtKdDO.getText(), txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText()) != true) {
                 kosongBarang();
                 txtKodeBarang.requestFocus();
                 throw new JavarieException("Produk Ini Tidak Ada ..!!");
-            }else if(stokdo < Integer.parseInt(txtJumlah.getText())){
-    //            kosongBarang();
+            } else if (stokdo < Integer.parseInt(txtJumlah.getText())) {
+                //            kosongBarang();
                 txtJumlah.requestFocus();
                 throw new JavarieException("Jumlah Retur DO Lebih Besar Dari Jumlah Sisa DO, Cek Laporan History Barang DO ..!!");
-            }else{
+            } else {
                 if (btnInsertBarang.getText().equals("Insert")) {
-                        String s = "select max(no) from rinci";
-                        Statement stemp = cm.createStatement();
-                        ResultSet r = stemp.executeQuery(s);
-                        if (r.next()) {
-                            no = r.getInt(1) + 1;
-                        } else {
-                            no = 1;
-                        }
+                    String s = "select max(no) from rinci";
+                    Statement stemp = cm.createStatement();
+                    ResultSet r = stemp.executeQuery(s);
+                    if (r.next()) {
+                        no = r.getInt(1) + 1;
                     } else {
-                        btnInsertBarang.setText("Insert");
+                        no = 1;
                     }
+                } else {
+                    btnInsertBarang.setText("Insert");
+                }
 
                 stat.execute("insert into rinci values("
-                    + no //0
-                    + ",'" + txtKodeBarang.getText() //1
-                    + "','" + txtNamaBarang.getText()  //2
-                    + "','" + txtBatch.getText() //3
-    ////                + "','" + ((txtBatch.getText().length() > 0) ? txtBatch.getText() : "")
-                    + "','" + ((txtBatch.getText().equals("")) ? "" : tglExpire.getText())  //
-    ////                + "','" + tglExpire.getText()
-                    + "'," + txtJumlah.getText()  //5
-                    + ",'" + cboSatuan.getSelectedItem()  //6
-                    + "'," + b.getJumlah(Integer.parseInt(txtJumlah.getText()), cboSatuan.getSelectedItem().toString()) //7
-                    + ")");
+                        + no //0
+                        + ",'" + txtKodeBarang.getText() //1
+                        + "','" + txtNamaBarang.getText() //2
+                        + "','" + txtBatch.getText() //3
+                        ////                + "','" + ((txtBatch.getText().length() > 0) ? txtBatch.getText() : "")
+                        + "','" + ((txtBatch.getText().equals("")) ? "" : tglExpire.getText()) //
+                        ////                + "','" + tglExpire.getText()
+                        + "'," + txtJumlah.getText() //5
+                        + ",'" + cboSatuan.getSelectedItem() //6
+                        + "'," + b.getJumlah(Integer.parseInt(txtJumlah.getText()), cboSatuan.getSelectedItem().toString()) //7
+                        + ")");
                 reloadData();
                 kosongBarang();
                 txtKodeBarang.requestFocus();
             }
         }
     } catch (Exception ex) {
-    //    Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
+        //    Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
         JOptionPane.showMessageDialog(this, ex.getMessage());
     }
 }//GEN-LAST:event_btnInsertBarangActionPerformed
@@ -993,8 +991,8 @@ private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                 txtKodePelanggan.requestFocus();
             } else if (!KontrolTanggalDao.cekHarian(c, tglDO.getText())) {
                 JOptionPane.showMessageDialog(null, "Transaksi Tidak Bisa Dilakukan Karena :\n"
-                                    + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
-                                    + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
+                        + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
+                        + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
             } else {
                 String tgal[] = Util.split(tglDO.getText(), "-");
                 String per = tgal[0] + "." + Integer.parseInt(tgal[1]);
@@ -1524,7 +1522,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         } catch (Exception ex) {
             Logger.getLogger(FormDO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_txtKodePelangganActionPerformed
 
     private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
@@ -1696,13 +1694,13 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
     private void buatTabel() {
         String sqlCreate = "create table rinci ("
-                + "NO int primary key, "      //1
-                + "KODEBARANG varchar(20), "  //2
+                + "NO int primary key, " //1
+                + "KODEBARANG varchar(20), " //2
                 + "NAMABARANG varchar(150), " //3
-                + "BATCH varchar(20), "   //4
-                + "EXPIRE varchar(10), "  //5
-                + "JUMLAH int, "          //6
-                + "SATUAN varchar(30), "  //7
+                + "BATCH varchar(20), " //4
+                + "EXPIRE varchar(10), " //5
+                + "JUMLAH int, " //6
+                + "SATUAN varchar(30), " //7
                 + "JUMLAHKECIL int)";     //8
         try {
             stat.execute(sqlCreate);
@@ -1967,10 +1965,10 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             barang b = new barangDao().getDetails(c, dorinci.getKODEBARANG());
             stat.execute("insert into rinci values("
                     + no
-                    + ",'" +dorinci.getKODEBARANG()
+                    + ",'" + dorinci.getKODEBARANG()
                     + "','" + b.getNAMABARANG()
                     + "','" + ((dorinci.getKODEBATCH().length() > 0) ? dorinci.getKODEBATCH() : "")
-                    + "','" + ((dorinci.getEXPIRE()==null)?"":dorinci.getEXPIRE())
+                    + "','" + ((dorinci.getEXPIRE() == null) ? "" : dorinci.getEXPIRE())
                     + "'," + dorinci.getJUMLAH()
                     + ",'" + dorinci.getSATUAN()
                     + "'," + b.getJumlah(dorinci.getJUMLAH(), dorinci.getSATUAN())
@@ -2006,7 +2004,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         f.setVisible(true);
 
     }
-    
+
     void viewFakturDOPanjang(String nofakturDO) {
         Map<String, Object> p = ClassPrintDOKertasPanjang.cetakfakturMap(c, nofakturDO);
         ViewFakturDOPanjang f = new ViewFakturDOPanjang(p);
@@ -2045,21 +2043,24 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }
 
     private void tampilReturDoRinci(List<Returdorinci> listReturdorinci) throws SQLException {
+        int no = 0;
         for (Returdorinci returdorinci : listReturdorinci) {
+            no++;
             barang b = new barangDao().getDetails(c, returdorinci.getKodebarang());
-            stat.execute("insert into rinci values('"
-                    + returdorinci.getKodebarang()
+            stat.execute("insert into rinci values("
+                    + no
+                    + ",'" + returdorinci.getKodebarang()
                     + "','" + b.getNAMABARANG()
-                    + "','" + ((returdorinci.getKodebatch().length() > 0) ? returdorinci.getKodebatch(): "")
-                    + "','" + (returdorinci.getExpire()==null?"":returdorinci.getExpire())
+                    + "','" + ((returdorinci.getKodebatch().length() > 0) ? returdorinci.getKodebatch() : "")
+                    + "','" + (returdorinci.getExpire() == null ? "" : returdorinci.getExpire())
                     + "'," + returdorinci.getJumlah()
                     + ",'" + returdorinci.getSatuan()
                     + "'," + b.getJumlah(returdorinci.getJumlah(), returdorinci.getSatuan())
                     + ")");
         }
-        reloadData();    
+        reloadData();
     }
-    
+
     void pilihanKertasPendek() {
         RadioPendek.setSelected(true);
         RadioPanjang.setSelected(false);

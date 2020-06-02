@@ -389,9 +389,12 @@ public class FormDOMaster extends javax.swing.JInternalFrame {
 
     public void reload(int pil) throws SQLException {
         JDBCAdapter j = new JDBCAdapter(c);
+//        String sql = "select DO.ID, DO.KODEDO, DO.TANGGAL, PEL.NAMA, casewhen(DO.STATUS='A','Delivery Order','Close') AS STATUSDO "
+//                + "from DO inner join PELANGGAN PEL ON DO.KODEPELANGGAN = PEL.KODEPELANGGAN "
+//                + "WHERE DO.ID not in (select PORINCI.iddo from PORINCI) ";
         String sql = "select DO.ID, DO.KODEDO, DO.TANGGAL, PEL.NAMA, casewhen(DO.STATUS='A','Delivery Order','Close') AS STATUSDO "
                 + "from DO inner join PELANGGAN PEL ON DO.KODEPELANGGAN = PEL.KODEPELANGGAN "
-                + "WHERE DO.ID not in (select PORINCI.iddo from PORINCI) ";
+                + "WHERE 1=1 ";
         if (pil == 0) {
             sql += " AND DO.KODEDO LIKE '" + txtKriteria.getText() + "%'";
         }

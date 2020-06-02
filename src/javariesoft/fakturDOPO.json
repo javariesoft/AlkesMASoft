@@ -51,8 +51,8 @@
         "lastPageFooter": [
             "%{179}%{32 R58}Jumlah :${TOTQTY:4:right:number}%{179} DPP :${totalbersih:12:right:number}%{179} PPN :${ppn:12:right:number}%{179} Total :${bayar:12:right:number}│",
             "%{192}%{196 R129}%{217}",
-            "     Ttd,                                                                                            Padang,${tglcetak}",
-            "  Penerima                                        Apoteker,                                             Pimpinan",
+            "Untuk Kebutuhan,                                                                                    Padang,${tglcetak}",
+            "${PELANGGAN:50}  Apoteker,                                             Pimpinan",
             "%{32 R92}",
             "%{32 R92}",
             "%{32 R92}",

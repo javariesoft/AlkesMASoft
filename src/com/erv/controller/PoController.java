@@ -5,6 +5,8 @@
  */
 package com.erv.controller;
 
+import com.eigher.db.loghistoryDao;
+import com.eigher.model.loghistory;
 import com.erv.db.BarangstokDao;
 import com.erv.db.DODao;
 import com.erv.db.DORinciDao;
@@ -40,6 +42,7 @@ import javariesoft.DialogPenjualanInternal;
 import javariesoft.FormDOPO;
 import javariesoft.FormPO;
 import javariesoft.Fungsi;
+import javariesoft.JavarieSoftApp;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -106,7 +109,7 @@ public class PoController {
                     rp.setEXPIRE(dORinci.getEXPIRE());
                     rp.setDISKONP(0);
                     rp.setBONUS("");
-                    rp.setJUMLAHKECIL(dORinci.getJUMLAHKECIL()); 
+                    rp.setJUMLAHKECIL(dORinci.getJUMLAHKECIL());
                     rincijuals.add(rp);
                 }
             }
@@ -142,6 +145,8 @@ public class PoController {
 
     public void insert() {
         try {
+            loghistoryDao lhdao = new loghistoryDao();
+            Util u = new Util();
             String tgal[] = Util.split(formPO.getTgl().getText(), "-");
             String per = tgal[0] + "." + Integer.parseInt(tgal[1]);
             if (!Fungsi.cekperiodeAda(con, per)) {
@@ -159,11 +164,19 @@ public class PoController {
             po.setKodepo(formPO.getTxtKodePO().getText());
             po.setTanggal(formPO.getTgl().getText());
             po.setKodepelanggan(formPO.getTxtKodePelanggan().getText());
-            po.setNofaktur(""); 
+            po.setNofaktur("");
             idpo = PoDao.insertIntoPO(con, po.getKodepo(), po.getTanggal(), po.getKodepelanggan(), "");
             formPO.setId(idpo);
             po.setId(iddo);
             formPO.setPo(po);
+            loghistory lh = new loghistory(0,
+                    JavarieSoftApp.jenisuser,
+                    u.thnsekarang + "-" + u.blnsekarang + "-" + u.tglsekarang,
+                    u.jamsekarang + ":" + u.menitsekarang + ":" + u.detiksekarang,
+                    "PO",
+                    po.getKodepo(),
+                    "INSERT", po.toString());
+            lhdao.insert(con, lh);
             JOptionPane.showMessageDialog(formPO, "Entri PO Ok");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(formPO, "Error :" + ex.getMessage());
@@ -204,7 +217,7 @@ public class PoController {
             List<PoRinci> poRincis = po.getPoRincis();
             for (PoRinci p : poRincis) {
                 DO do1 = DODao.getDetails(con, p.getIddo());
-                String status = (do1.getSTATUS().equals("A"))?"AKTIF":"CLOSE";
+                String status = (do1.getSTATUS().equals("A")) ? "AKTIF" : "CLOSE";
                 Object[] data = {
                     p.getId(),
                     p.getIdpo(),
@@ -270,6 +283,16 @@ public class PoController {
                 st.setKODEBATCH(dORinci.getKODEBATCH());
                 stokDao.insertIntoSTOK(con, st);
             }
+            loghistoryDao lhdao = new loghistoryDao();
+            Util u = new Util();
+            loghistory lh = new loghistory(0,
+                    JavarieSoftApp.jenisuser,
+                    u.thnsekarang + "-" + u.blnsekarang + "-" + u.tglsekarang,
+                    u.jamsekarang + ":" + u.menitsekarang + ":" + u.detiksekarang,
+                    "DO",
+                    dis.getKODEDO(),
+                    "UPDATE", dis.toString());
+            lhdao.insert(con, lh);
             con.commit();
             JOptionPane.showMessageDialog(formDOPO, "Update Data PO Sukses");
         } catch (SQLException ex) {
