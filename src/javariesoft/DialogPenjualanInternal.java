@@ -1150,13 +1150,13 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel5.add(kodebarang);
-        kodebarang.setBounds(0, 20, 85, 22);
+        kodebarang.setBounds(60, 20, 90, 22);
 
         namabarang.setFont(resourceMap.getFont("namabarang.font")); // NOI18N
         namabarang.setEnabled(false);
         namabarang.setName("namabarang"); // NOI18N
         jPanel5.add(namabarang);
-        namabarang.setBounds(86, 20, 320, 22);
+        namabarang.setBounds(150, 20, 320, 22);
 
         jumlah.setFont(resourceMap.getFont("jumlah.font")); // NOI18N
         jumlah.setName("jumlah"); // NOI18N
@@ -1176,21 +1176,21 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel5.add(jumlah);
-        jumlah.setBounds(810, 20, 50, 20);
+        jumlah.setBounds(870, 20, 50, 20);
 
         jLabel22.setFont(resourceMap.getFont("jLabel22.font")); // NOI18N
         jLabel22.setText(resourceMap.getString("jLabel22.text")); // NOI18N
         jLabel22.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel22.setName("jLabel22"); // NOI18N
         jPanel5.add(jLabel22);
-        jLabel22.setBounds(0, 0, 86, 20);
+        jLabel22.setBounds(60, 0, 90, 20);
 
         jLabel23.setFont(resourceMap.getFont("jLabel23.font")); // NOI18N
         jLabel23.setText(resourceMap.getString("jLabel23.text")); // NOI18N
         jLabel23.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel23.setName("jLabel23"); // NOI18N
         jPanel5.add(jLabel23);
-        jLabel23.setBounds(86, 0, 320, 20);
+        jLabel23.setBounds(150, 0, 320, 20);
 
         harga.setFont(resourceMap.getFont("harga.font")); // NOI18N
         harga.setName("harga"); // NOI18N
@@ -1205,7 +1205,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel5.add(harga);
-        harga.setBounds(713, 20, 96, 20);
+        harga.setBounds(770, 20, 100, 20);
 
         btninsert.setFont(resourceMap.getFont("btninsert.font")); // NOI18N
         btninsert.setText(resourceMap.getString("btninsert.text")); // NOI18N
@@ -1234,7 +1234,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         jLabel16.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel16.setName("jLabel16"); // NOI18N
         jPanel5.add(jLabel16);
-        jLabel16.setBounds(810, 0, 50, 20);
+        jLabel16.setBounds(870, 0, 50, 20);
 
         cboStatDiskonItem.setFont(resourceMap.getFont("cboStatDiskonItem.font")); // NOI18N
         cboStatDiskonItem.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "%", "Rp" }));
@@ -1250,7 +1250,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel5.add(cboStatDiskonItem);
-        cboStatDiskonItem.setBounds(950, 20, 50, 20);
+        cboStatDiskonItem.setBounds(1010, 20, 50, 20);
 
         jLabel25.setFont(resourceMap.getFont("jLabel25.font")); // NOI18N
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1258,7 +1258,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         jLabel25.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel25.setName("jLabel25"); // NOI18N
         jPanel5.add(jLabel25);
-        jLabel25.setBounds(860, 0, 140, 20);
+        jLabel25.setBounds(920, 0, 140, 20);
 
         diskonitem.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         diskonitem.setFont(resourceMap.getFont("diskonitem.font")); // NOI18N
@@ -1274,7 +1274,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel5.add(diskonitem);
-        diskonitem.setBounds(860, 20, 90, 20);
+        diskonitem.setBounds(920, 20, 90, 20);
 
         jTextField1.setFont(resourceMap.getFont("jTextField1.font")); // NOI18N
         jTextField1.setEnabled(false);
@@ -1287,7 +1287,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         jLabel19.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel19.setName("jLabel19"); // NOI18N
         jPanel5.add(jLabel19);
-        jLabel19.setBounds(713, 0, 96, 20);
+        jLabel19.setBounds(770, 0, 100, 20);
 
         jLabel30.setFont(resourceMap.getFont("jLabel30.font")); // NOI18N
         jLabel30.setText(resourceMap.getString("jLabel30.text")); // NOI18N
@@ -1297,7 +1297,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         jLabel30.setName("jLabel30"); // NOI18N
         jLabel30.setPreferredSize(new java.awt.Dimension(52, 20));
         jPanel5.add(jLabel30);
-        jLabel30.setBounds(618, 0, 93, 20);
+        jLabel30.setBounds(680, 0, 93, 20);
 
         cboSatuan.setFont(resourceMap.getFont("cboSatuan.font")); // NOI18N
         cboSatuan.setName("cboSatuan"); // NOI18N
@@ -1312,21 +1312,21 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel5.add(cboSatuan);
-        cboSatuan.setBounds(618, 20, 93, 20);
+        cboSatuan.setBounds(680, 20, 93, 20);
 
         jLabel31.setFont(resourceMap.getFont("jLabel31.font")); // NOI18N
         jLabel31.setText(resourceMap.getString("jLabel31.text")); // NOI18N
         jLabel31.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel31.setName("jLabel31"); // NOI18N
         jPanel5.add(jLabel31);
-        jLabel31.setBounds(407, 0, 100, 20);
+        jLabel31.setBounds(470, 0, 100, 20);
 
         jLabel32.setFont(resourceMap.getFont("jLabel32.font")); // NOI18N
         jLabel32.setText(resourceMap.getString("jLabel32.text")); // NOI18N
         jLabel32.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel32.setName("jLabel32"); // NOI18N
         jPanel5.add(jLabel32);
-        jLabel32.setBounds(507, 0, 110, 20);
+        jLabel32.setBounds(570, 0, 110, 20);
 
         tglExpire.addCommitListener(new datechooser.events.CommitListener() {
             public void onCommit(datechooser.events.CommitEvent evt) {
@@ -1334,7 +1334,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel5.add(tglExpire);
-        tglExpire.setBounds(507, 20, 110, 20);
+        tglExpire.setBounds(570, 20, 110, 20);
         tglExpire.setDateFormat(d);
 
         txtBatch.setFont(resourceMap.getFont("txtBatch.font")); // NOI18N
@@ -1342,7 +1342,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         txtBatch.setEnabled(false);
         txtBatch.setName("txtBatch"); // NOI18N
         jPanel5.add(txtBatch);
-        txtBatch.setBounds(407, 20, 99, 22);
+        txtBatch.setBounds(470, 20, 99, 22);
 
         jLabel33.setFont(resourceMap.getFont("jLabel33.font")); // NOI18N
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1350,7 +1350,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
         jLabel33.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel33.setName("jLabel33"); // NOI18N
         jPanel5.add(jLabel33);
-        jLabel33.setBounds(1000, 0, 60, 20);
+        jLabel33.setBounds(0, 0, 60, 20);
 
         cbBonus.setFont(resourceMap.getFont("cbBonus.font")); // NOI18N
         cbBonus.setName("cbBonus"); // NOI18N
@@ -1365,7 +1365,7 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
             }
         });
         jPanel5.add(cbBonus);
-        cbBonus.setBounds(1020, 20, 30, 20);
+        cbBonus.setBounds(20, 20, 30, 20);
 
         panelCool2.add(jPanel5);
         jPanel5.setBounds(10, 180, 1060, 60);
@@ -3213,12 +3213,16 @@ public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 
                         kodebarang.setText(b.getKODEBARANG());
                         namabarang.setText(b.getNAMABARANG());
+
                         if (jTable2.getValueAt(jTable2.getSelectedRow(), 2) != null) {
-                            txtBatch.setText(jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
-                            Calendar cld = Calendar.getInstance();
-                            cld.setTime(d.parse(jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString()));
-                            tglExpire.setSelectedDate(cld);
-                            tglExpire.setLocked(true);
+                            String t_batch = jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString();
+                            if (!t_batch.equals("")) {
+                                txtBatch.setText(t_batch);
+                                Calendar cld = Calendar.getInstance();
+                                cld.setTime(d.parse(jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString()));
+                                tglExpire.setSelectedDate(cld);
+                                tglExpire.setLocked(true);
+                            }
                         }
 
                         if (CboJenisTrans.getSelectedIndex() == 0) {

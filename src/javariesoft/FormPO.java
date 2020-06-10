@@ -346,11 +346,15 @@ public class FormPO extends javax.swing.JInternalFrame {
 
     private void btnViewDOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDOActionPerformed
         // TODO add your handling code here:
-        int iddo = Integer.parseInt(tabelPO.getValueAt(tabelPO.getSelectedRow(), 2).toString());
-        FormDOPO p = new FormDOPO(this, iddo, id, "view");
-        p.toFront();
-        JavarieSoftView.panelCool1.add(p);
-        p.setVisible(true);
+        try {
+            int iddo = Integer.parseInt(tabelPO.getValueAt(tabelPO.getSelectedRow(), 2).toString());
+            FormDOPO p = new FormDOPO(this, iddo, id, "view");
+            p.toFront();
+            JavarieSoftView.panelCool1.add(p);
+            p.setVisible(true);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }//GEN-LAST:event_btnViewDOActionPerformed
 
     private void txtNamaPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPelangganActionPerformed

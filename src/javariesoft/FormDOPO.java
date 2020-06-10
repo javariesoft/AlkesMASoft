@@ -203,7 +203,11 @@ public final class FormDOPO extends javax.swing.JInternalFrame {
                 pilihJTabbedPane(jTabbedPane1, 0);
                 reloadTotal();
                 btnInsert.setText("Update");
-                settingtombol(true, false, false, false, false);
+                if(dis.getSTATUS().equals("N")){
+                    settingtombol(false, false, false, false, false);
+                }else{
+                    settingtombol(true, false, false, false, false);
+                }
             } else if (pil.equals("view retur")) {
                 List<Returdorinci> listReturdorinci = ReturdorinciDao.getReturdorinciList(c, iddo);
                 Returdo returdo = ReturdoDao.getDetails(this.c, iddo);
