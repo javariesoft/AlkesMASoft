@@ -1119,7 +1119,7 @@ private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     if (btnInsert.getText().equals("Simpan")) {
         simpan();
     } else if (btnInsert.getText().equals("Update")) {
-        if(dis.getSTATUSAKTIF().equals("A")){
+        if(dis.getSTATUS().equals("A")){
             controller.updateDOPO();
         }else{
             JOptionPane.showMessageDialog(this, "DO ini sudah Close");
