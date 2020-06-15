@@ -522,7 +522,7 @@ public class DialogPiutang extends javax.swing.JDialog {
         jScrollPane2.setViewportView(jTable2);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(20, 250, 860, 380);
+        jScrollPane2.setBounds(20, 240, 860, 360);
 
         btnDelete.setFont(resourceMap.getFont("btnDelete.font")); // NOI18N
         btnDelete.setIcon(resourceMap.getIcon("btnDelete.icon")); // NOI18N
@@ -1369,7 +1369,7 @@ public class DialogPiutang extends javax.swing.JDialog {
         jScrollPane8.setViewportView(jTable8);
 
         jPanel4.add(jScrollPane8);
-        jScrollPane8.setBounds(10, 430, 890, 200);
+        jScrollPane8.setBounds(10, 430, 890, 175);
 
         pilihan1.setFont(resourceMap.getFont("pilihan1.font")); // NOI18N
         pilihan1.setText(resourceMap.getString("pilihan1.text")); // NOI18N

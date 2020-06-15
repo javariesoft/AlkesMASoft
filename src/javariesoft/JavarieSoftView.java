@@ -74,7 +74,7 @@ public class JavarieSoftView extends FrameView {
         jLabel2.setSize(dim.width - 40, 60);
         jLabel2.setLocation(dim.width / 2 - jLabel2.getWidth() / 2, jLabel2.getY() + jLabel2.getHeight() + 10);
         nonaktif();
-        aktif();
+//        aktif();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -1886,13 +1886,13 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     private void MpiutangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MpiutangActionPerformed
         // TODO add your handling code here:
-        DialogPiutang p = new DialogPiutang(null, true);
+        DialogPiutang p = new DialogPiutang(null, false);
         p.setVisible(true);
     }//GEN-LAST:event_MpiutangActionPerformed
 
     private void MhutangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MhutangActionPerformed
         // TODO add your handling code here:
-        DialogHutang p = new DialogHutang(null, true);
+        DialogHutang p = new DialogHutang(null, false);
         p.setVisible(true);
     }//GEN-LAST:event_MhutangActionPerformed
 

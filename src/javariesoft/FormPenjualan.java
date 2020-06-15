@@ -510,6 +510,7 @@ private void btnBayarPenerimaanPiutangActionPerformed(java.awt.event.ActionEvent
 
     void reloadData(Connection c) {
         try {
+            int opt =0 ; //option default false
             JDBCAdapter j = new JDBCAdapter(c);
             String sql = "select p.ID,p.FAKTUR,p.TANGGAL,pl.NAMA, "
                     + "ifnull((SELECT case PIUTANG.STATUS when '0' then 'LUNAS' when '1' then 'BELUM LUNAS' end FROM PIUTANG WHERE PIUTANG.IDPENJUALAN = p.ID),0) as STATUS ,"
@@ -527,7 +528,11 @@ private void btnBayarPenerimaanPiutangActionPerformed(java.awt.event.ActionEvent
                 sql += " and p.TANGGAL='" + tglTransaksi.getText() + "'";
             }
             if (cbokriteria.getSelectedIndex() == 1) {
-                sql += " and lower(pl.NAMA) like '%" + txtKriteria.getText().toLowerCase() + "%'";
+                if(txtKriteria.getText().equals("")){
+                    opt=1;
+                }else{
+                    sql += " and lower(pl.NAMA) like '%" + txtKriteria.getText().toLowerCase() + "%'";
+                }
             }
             if (cbokriteria.getSelectedIndex() == 2) {
                 if (cboStatus.getSelectedIndex() == 0) {
@@ -537,26 +542,35 @@ private void btnBayarPenerimaanPiutangActionPerformed(java.awt.event.ActionEvent
                 }
             }
             if (cbokriteria.getSelectedIndex() == 3) {
-                sql += " and p.FAKTUR like '%" + txtKriteria.getText() + "%'";
+                if(txtKriteria.getText().equals("")){
+                    opt=1;
+                }else{
+                    sql += " and p.FAKTUR like '%" + txtKriteria.getText() + "%'";
+                }
             }
-            j.executeQuery(sql);
-            jScrollPane1.getViewport().remove(jTable1);
-            jTable1 = new JTable(j);
-            jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-            TableColumn col = jTable1.getColumnModel().getColumn(0);
-            col.setPreferredWidth(50);
-            col = jTable1.getColumnModel().getColumn(1);
-            col.setPreferredWidth(100);
-            col = jTable1.getColumnModel().getColumn(2);
-            col.setPreferredWidth(100);
-            col = jTable1.getColumnModel().getColumn(3);
-            col.setPreferredWidth(200);
-            col = jTable1.getColumnModel().getColumn(4);
-            col.setPreferredWidth(100);
-            jTable1.setRowHeight(20);
-            jTable1.setFont(new Font("Tahoma", Font.BOLD, 12));
-            jScrollPane1.getViewport().add(jTable1);
-            jScrollPane1.repaint();
+            if (opt==1){
+                JOptionPane.showMessageDialog(null, "Lengkapi Isian Data..!");
+                txtKriteria.requestFocus();
+            }else{
+                j.executeQuery(sql);  
+                jScrollPane1.getViewport().remove(jTable1);
+                jTable1 = new JTable(j);
+                jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+                TableColumn col = jTable1.getColumnModel().getColumn(0);
+                col.setPreferredWidth(50);
+                col = jTable1.getColumnModel().getColumn(1);
+                col.setPreferredWidth(100);
+                col = jTable1.getColumnModel().getColumn(2);
+                col.setPreferredWidth(100);
+                col = jTable1.getColumnModel().getColumn(3);
+                col.setPreferredWidth(200);
+                col = jTable1.getColumnModel().getColumn(4);
+                col.setPreferredWidth(100);
+                jTable1.setRowHeight(20);
+                jTable1.setFont(new Font("Tahoma", Font.BOLD, 12));
+                jScrollPane1.getViewport().add(jTable1);
+                jScrollPane1.repaint();
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.toString());
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

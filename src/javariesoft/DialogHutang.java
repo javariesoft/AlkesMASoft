@@ -549,7 +549,7 @@ public class DialogHutang extends javax.swing.JDialog {
         jScrollPane2.setViewportView(jTable2);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(20, 258, 860, 380);
+        jScrollPane2.setBounds(20, 258, 860, 370);
 
         jSeparator1.setName("jSeparator1"); // NOI18N
         jPanel1.add(jSeparator1);
@@ -1349,7 +1349,7 @@ public class DialogHutang extends javax.swing.JDialog {
         jScrollPane8.setViewportView(jTable8);
 
         jPanel4.add(jScrollPane8);
-        jScrollPane8.setBounds(10, 460, 870, 200);
+        jScrollPane8.setBounds(10, 460, 870, 168);
 
         btnSimpan1.setFont(resourceMap.getFont("btnSimpan1.font")); // NOI18N
         btnSimpan1.setText(resourceMap.getString("btnSimpan1.text")); // NOI18N
