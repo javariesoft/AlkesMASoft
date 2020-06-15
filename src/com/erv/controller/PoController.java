@@ -75,7 +75,7 @@ public class PoController {
             p.setFAKTUR(penjualanDao.setFakturPajak(con));
             p.setTANGGAL(po.getTanggal());
             p.setKODEPELANGGAN(po.getKodepelanggan());
-            p.setCASH("0");
+            p.setCASH("3");
             p.setTGLLUNAS(po.getTanggal());
             p.setPPN(1);
             p.setDP(0);
@@ -210,13 +210,13 @@ public class PoController {
             cld.setTime(d.parse(po.getTanggal()));
             formPO.getTgl().setSelectedDate(cld);
             formPO.getTxtKodePelanggan().setText(po.getKodepelanggan());
-            pelangganDao pdao = new pelangganDao(con);
+            pelangganDao pdao = new pelangganDao(c);
             formPO.getTxtNamaPelanggan().setText(pdao.getDetails(po.getKodepelanggan()).getNAMA());
             DefaultTableModel model = (DefaultTableModel) formPO.getTabelPO().getModel();
             model.setRowCount(0);
             List<PoRinci> poRincis = po.getPoRincis();
             for (PoRinci p : poRincis) {
-                DO do1 = DODao.getDetails(con, p.getIddo());
+                DO do1 = DODao.getDetails(c, p.getIddo());
                 String status = (do1.getSTATUS().equals("A")) ? "AKTIF" : "CLOSE";
                 Object[] data = {
                     p.getId(),

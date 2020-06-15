@@ -1469,11 +1469,11 @@ public class DialogPiutang extends javax.swing.JDialog {
         jTabbedPane1.addTab(resourceMap.getString("jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
 
         panelCool1.add(jTabbedPane1);
-        jTabbedPane1.setBounds(10, 10, 910, 640);
+        jTabbedPane1.setBounds(10, 10, 910, 670);
 
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(947, 702));
+        setSize(new java.awt.Dimension(947, 730));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
