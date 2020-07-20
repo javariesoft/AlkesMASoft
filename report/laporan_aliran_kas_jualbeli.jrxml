@@ -57,6 +57,12 @@ WHERE
 	<variable name="variable1" class="java.lang.Double">
 		<variableExpression><![CDATA[($F{GRUP}==1 || $F{GRUP}==5 || $F{GRUP}==6) ? ($F{SALDO}+$F{DEBET}-$F{KREDIT}):($F{SALDO}-$F{DEBET}+$F{KREDIT})]]></variableExpression>
 	</variable>
+	<variable name="DEBET_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{DEBET}]]></variableExpression>
+	</variable>
+	<variable name="KREDIT_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{KREDIT}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -256,6 +262,23 @@ WHERE
 				<reportElement x="655" y="0" width="95" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{variable1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="431" y="0" width="54" height="20"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL :]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="485" y="0" width="85" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{DEBET_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="570" y="0" width="85" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{KREDIT_1}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
