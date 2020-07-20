@@ -299,6 +299,7 @@ public class JavarieSoftView extends FrameView {
         MLAKT_BukuBesarHarian = new javax.swing.JMenuItem();
         MLAKT_BukuBesarBulanan = new javax.swing.JMenuItem();
         MLAKT_BukuBesarBiayaTahunan = new javax.swing.JMenuItem();
+        M_AKPP = new javax.swing.JMenuItem();
         MlapNeraca = new javax.swing.JMenuItem();
         MlapRugiLaba = new javax.swing.JMenuItem();
         MlapEkuitas = new javax.swing.JMenuItem();
@@ -1404,6 +1405,15 @@ public class JavarieSoftView extends FrameView {
         });
         MLapBukuBesar.add(MLAKT_BukuBesarBiayaTahunan);
 
+        M_AKPP.setText(resourceMap.getString("M_AKPP.text")); // NOI18N
+        M_AKPP.setName("M_AKPP"); // NOI18N
+        M_AKPP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                M_AKPPActionPerformed(evt);
+            }
+        });
+        MLapBukuBesar.add(M_AKPP);
+
         MLaporan.add(MLapBukuBesar);
 
         MlapNeraca.setText(resourceMap.getString("MlapNeraca.text")); // NOI18N
@@ -2476,6 +2486,14 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MLJRekapPerJenisPajakActionPerformed
 
+    private void M_AKPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_M_AKPPActionPerformed
+        // TODO add your handling code here:
+        FormLaporanAliranKas p= new FormLaporanAliranKas();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_M_AKPPActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
     private javax.swing.JLabel LblJenis1;
@@ -2559,6 +2577,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MSearchingBarang;
     public static javax.swing.JMenu MTransaksi;
     public static javax.swing.JMenuItem MTutupHarian;
+    private javax.swing.JMenuItem M_AKPP;
     public static javax.swing.JMenuItem MaktivaTetap;
     public static javax.swing.JMenu Manalisa;
     public static javax.swing.JMenuItem Manalisastokbrg;
