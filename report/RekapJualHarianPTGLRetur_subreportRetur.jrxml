@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RekapJualHarianPTGLRetur_subreportRetur" language="groovy" pageWidth="842" pageHeight="802" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idjual" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[10]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     RETUR."KODERETUR" AS RETUR_KODERETUR,
+     sum(RETURRINCI."JUMLAH" * RETURRINCI."HARGA") as JUMLAH,
+     sum(RETURRINCI."DISKON") AS RETURRINCI_DISKON,
+     sum(RETURRINCI."PPN") AS RETURRINCI_PPN,
+     sum(RETURRINCI."JUMLAH" * RETURRINCI."HARGA" - RETURRINCI."DISKON" + RETURRINCI."PPN") as TOTAL,
+     RETUR."IDPENJUALAN" AS RETUR_IDPENJUALAN, plg.nama,retur.tanggal
+FROM
+     "PUBLIC"."RETUR" RETUR INNER JOIN "PUBLIC"."RETURRINCI" RETURRINCI ON RETUR."ID" = RETURRINCI."IDRETUR" inner join pelanggan plg on RETUR.kodepelanggan = plg.kodepelanggan
+where RETUR."IDPENJUALAN" = $P{idjual}
+group by RETUR."KODERETUR"]]>
+	</queryString>
+	<field name="RETUR_KODERETUR" class="java.lang.String"/>
+	<field name="JUMLAH" class="java.lang.Double"/>
+	<field name="RETURRINCI_DISKON" class="java.lang.Double"/>
+	<field name="RETURRINCI_PPN" class="java.lang.Double"/>
+	<field name="TOTAL" class="java.lang.Double"/>
+	<field name="RETUR_IDPENJUALAN" class="java.lang.Integer"/>
+	<field name="NAMA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TANGGAL" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="777" height="14"/>
+			</rectangle>
+			<textField>
+				<reportElement x="33" y="0" width="44" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RETUR_KODERETUR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="427" y="0" width="58" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JUMLAH}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="485" y="0" width="53" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RETURRINCI_DISKON}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="543" y="0" width="54" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RETURRINCI_PPN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="706" y="0" width="70" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="166" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="305" y="0" width="45" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TANGGAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

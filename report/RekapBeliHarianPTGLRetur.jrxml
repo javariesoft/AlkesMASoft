@@ -9,6 +9,9 @@
 	<parameter name="Ptgl2" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\JAVA\\Miranti\\MRTA02\\AlkesMASoft\\report\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      PEMBELIAN."ID" AS PEMBELIAN_ID,
@@ -220,7 +223,7 @@ GROUP BY PEMBELIAN."ID" ORDER BY PEMBELIAN."NOFAKTUR"]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="17" splitType="Stretch">
+		<band height="71" splitType="Stretch">
 			<rectangle>
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="-1" width="777" height="18"/>
 			</rectangle>

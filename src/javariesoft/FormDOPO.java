@@ -98,6 +98,7 @@ public final class FormDOPO extends javax.swing.JInternalFrame {
      */
     PoController controller;
     private int idpo;
+    private int jumlah=0;
 
     public FormDOPO(FormPO formPO) {
         try {
@@ -700,24 +701,9 @@ public final class FormDOPO extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "No", "Kode Barang", "Nama Barang", "Batch", "Expire", "Jumlah", "Satuan", "Jumlah Kecil", "Harga", "Total"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jTable1.setCellSelectionEnabled(true);
         jTable1.setName("jTable1"); // NOI18N
         jTable1.setRowHeight(20);
@@ -728,18 +714,6 @@ public final class FormDOPO extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
-            jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
-            jTable1.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
-            jTable1.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
-            jTable1.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
-            jTable1.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title5")); // NOI18N
-            jTable1.getColumnModel().getColumn(6).setHeaderValue(resourceMap.getString("jTable1.columnModel.title6")); // NOI18N
-            jTable1.getColumnModel().getColumn(7).setHeaderValue(resourceMap.getString("jTable1.columnModel.title7")); // NOI18N
-            jTable1.getColumnModel().getColumn(8).setHeaderValue(resourceMap.getString("jTable1.columnModel.title8")); // NOI18N
-            jTable1.getColumnModel().getColumn(9).setHeaderValue(resourceMap.getString("jTable1.columnModel.title9")); // NOI18N
-        }
 
         panelCool1.add(jScrollPane1);
         jScrollPane1.setBounds(10, 200, 960, 260);
@@ -1005,7 +979,7 @@ private void btnInsertBarangActionPerformed(java.awt.event.ActionEvent evt) {//G
                 JOptionPane.showMessageDialog(null, "Produk Ini Tidak Ada..!!");
                 kosongBarang();
                 txtKodeBarang.requestFocus();
-            } else if (bs.getSTOK() < Integer.parseInt(txtJumlah.getText())) {
+            } else if ((bs.getSTOK()+jumlah) < Integer.parseInt(txtJumlah.getText())) {
                 txtJumlah.requestFocus();
                 JOptionPane.showMessageDialog(null, "Stok Tinggal " + bs.getSTOK());
             } else if (bs.getCOGS() <= 0) {
@@ -1043,6 +1017,7 @@ private void btnInsertBarangActionPerformed(java.awt.event.ActionEvent evt) {//G
                 reloadTotal();
                 kosongBarang();
                 txtKodeBarang.requestFocus();
+                jumlah = 0;
             }
         } else {
             int stokdo = DORinciDao.getStokDO(c, txtKdDO.getText(), txtKodePelanggan1.getText(), txtKodeBarang.getText(), txtBatch.getText());
@@ -1808,7 +1783,14 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     void reloadData() throws SQLException {
         JDBCAdapter j = new JDBCAdapter(cm);
         j.executeQuery("select *, jumlah * harga as total from rinci order by no");
-        jTable1.setModel(j);
+        //jTable1.setModel(j);
+        jScrollPane1.getViewport().remove(jTable1);
+        jTable1 = new JTable(j);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
 ////        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTable1.setFont(new Font("Tahoma", Font.BOLD, 12));
         TableColumn col = jTable1.getColumnModel().getColumn(0);
@@ -1829,6 +1811,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         col1.setPreferredWidth(50);
         jScrollPane1.setFocusable(false);
         jTable1.setFocusable(false);
+        jScrollPane1.getViewport().add(jTable1);
         jScrollPane1.repaint();
         j.close();
     }
@@ -1879,6 +1862,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     tglExpire.setText(rs.getString("EXPIRE"));
                 }
                 txtJumlah.setText(rs.getString("JUMLAH"));
+                jumlah = rs.getInt("JUMLAH");
                 txtHarga.setText(rs.getString("HARGA"));
                 barang b = new barangDao().getDetails(c, rs.getString(2));
                 try {

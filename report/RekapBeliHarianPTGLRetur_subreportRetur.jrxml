@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RekapBeliHarianPTGLRetur_subreportRetur" language="groovy" pageWidth="842" pageHeight="572" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     RETURBELI."KODERETURBELI" AS RETURBELI_KODERETURBELI,
+     RETURBELI."TANGGAL" AS RETURBELI_TANGGAL,
+     RETURBELIRINCI."JUMLAH" AS RETURBELIRINCI_JUMLAH,
+     RETURBELIRINCI."HARGA" AS RETURBELIRINCI_HARGA,
+     RETURBELIRINCI."TOTAL" AS RETURBELIRINCI_TOTAL,
+     RETURBELIRINCI."DISKON" AS RETURBELIRINCI_DISKON,
+     RETURBELIRINCI."PPN" AS RETURBELIRINCI_PPN
+FROM
+     "PUBLIC"."RETURBELI" RETURBELI,
+     "PUBLIC"."RETURBELIRINCI" RETURBELIRINCI
+WHERE
+     returbeli.id = returbelirinci.idreturbeli]]>
+	</queryString>
+	<field name="RETURBELI_KODERETURBELI" class="java.lang.String"/>
+	<field name="RETURBELI_TANGGAL" class="java.sql.Date"/>
+	<field name="RETURBELIRINCI_JUMLAH" class="java.lang.Integer"/>
+	<field name="RETURBELIRINCI_HARGA" class="java.lang.Double"/>
+	<field name="RETURBELIRINCI_TOTAL" class="java.lang.Double"/>
+	<field name="RETURBELIRINCI_DISKON" class="java.lang.Double"/>
+	<field name="RETURBELIRINCI_PPN" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
