@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RekapBeliHarianPTGLPajak" language="groovy" pageWidth="842" pageHeight="600" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="10" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RekapBeliHarianPTGLRetur" language="groovy" pageWidth="842" pageHeight="600" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="10" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="299"/>
 	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1">
+		<parameter name="idbeli" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     RETURBELI."ID" AS RETURBELI_ID,
+     RETURBELI."KODERETURBELI" AS RETURBELI_KODERETURBELI,
+     RETURBELI."TANGGAL" AS RETURBELI_TANGGAL,
+     SUM(JUMLAH * HARGA) AS JUMLAH,
+     SUM(DISKON) AS DISKON,
+     SUM(PPN) AS PPN,
+     SUM(JUMLAH * HARGA-DISKON+PPN) AS TOTAL, sp.nama
+FROM
+     "PUBLIC"."RETURBELI" RETURBELI INNER JOIN "PUBLIC"."RETURBELIRINCI" RETURBELIRINCI ON RETURBELI."ID" = RETURBELIRINCI."IDRETURBELI"
+INNER JOIN SUPPLIER sp on RETURBELI.IDSUPPLIER = sp.IDSUPPLIER
+WHERE RETURBELI.IDPEMBELIAN=$P{idbeli}
+GROUP BY
+     RETURBELI_KODERETURBELI]]>
+		</queryString>
+		<field name="RETURBELI_ID" class="java.lang.Integer"/>
+		<field name="RETURBELI_KODERETURBELI" class="java.lang.String"/>
+		<field name="RETURBELI_TANGGAL" class="java.sql.Date"/>
+		<field name="JUMLAH" class="java.lang.Double"/>
+		<field name="DISKON" class="java.lang.Double"/>
+		<field name="PPN" class="java.lang.Double"/>
+		<field name="TOTAL" class="java.lang.Double"/>
+		<field name="NAMA" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
 	<parameter name="Ptgl1" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2020-04-01"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Ptgl2" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2020-04-30"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\JAVA\\Miranti\\MRTA02\\AlkesMASoft\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="retur" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[0.0]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -78,6 +112,9 @@ GROUP BY PEMBELIAN."ID" ORDER BY PEMBELIAN."NOFAKTUR"]]>
 	</variable>
 	<variable name="VTotDiskon" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{NILAIDISKON}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{Vtotsemua}-$P{retur}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -223,7 +260,7 @@ GROUP BY PEMBELIAN."ID" ORDER BY PEMBELIAN."NOFAKTUR"]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="71" splitType="Stretch">
+		<band height="33" splitType="Stretch">
 			<rectangle>
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="-1" width="777" height="18"/>
 			</rectangle>
@@ -259,10 +296,10 @@ GROUP BY PEMBELIAN."ID" ORDER BY PEMBELIAN."NOFAKTUR"]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PEMBELIAN_NOFAKTUR}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField>
 				<reportElement stretchType="RelativeToBandHeight" x="192" y="1" width="136" height="15"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SUPPLIER_NAMA}]]></textFieldExpression>
 			</textField>
@@ -344,6 +381,79 @@ GROUP BY PEMBELIAN."ID" ORDER BY PEMBELIAN."NOFAKTUR"]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NILAIRIEL}]]></textFieldExpression>
 			</textField>
+			<componentElement>
+				<reportElement x="0" y="17" width="777" height="16" isRemoveLineWhenBlank="true"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset1">
+						<datasetParameter name="idbeli">
+							<datasetParameterExpression><![CDATA[$F{PEMBELIAN_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="16" width="777">
+						<textField>
+							<reportElement x="79" y="0" width="43" height="15"/>
+							<textElement textAlignment="Center">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RETURBELI_KODERETURBELI}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="192" y="0" width="136" height="15"/>
+							<textElement>
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{NAMA}]]></textFieldExpression>
+						</textField>
+						<textField pattern="dd/MM/yyyy">
+							<reportElement x="332" y="0" width="42" height="15"/>
+							<textElement textAlignment="Center">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RETURBELI_TANGGAL}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0">
+							<reportElement x="457" y="0" width="79" height="15"/>
+							<textElement textAlignment="Right">
+								<font size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{JUMLAH}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0">
+							<reportElement x="542" y="0" width="57" height="15"/>
+							<textElement textAlignment="Right">
+								<font size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{DISKON}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0">
+							<reportElement x="605" y="0" width="65" height="15"/>
+							<textElement textAlignment="Right">
+								<font size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PPN}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0">
+							<reportElement x="677" y="0" width="100" height="15"/>
+							<box>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="0" y="0" width="75" height="15"/>
+							<box>
+								<leftPen lineWidth="1.0"/>
+							</box>
+							<textElement/>
+							<text><![CDATA[]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
 		</band>
 	</detail>
 	<columnFooter>
@@ -382,7 +492,7 @@ GROUP BY PEMBELIAN."ID" ORDER BY PEMBELIAN."NOFAKTUR"]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="15" splitType="Stretch">
+		<band height="55" splitType="Stretch">
 			<rectangle>
 				<reportElement x="672" y="0" width="105" height="14"/>
 			</rectangle>
@@ -425,6 +535,30 @@ GROUP BY PEMBELIAN."ID" ORDER BY PEMBELIAN."NOFAKTUR"]]>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{VTotDiskon}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="676" y="14" width="101" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{retur}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="605" y="14" width="71" height="15"/>
+				<textElement/>
+				<text><![CDATA[Retur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="605" y="29" width="71" height="15"/>
+				<textElement/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="677" y="29" width="100" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

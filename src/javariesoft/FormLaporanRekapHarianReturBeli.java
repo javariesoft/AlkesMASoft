@@ -27,15 +27,13 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author USER
  */
-public class FormLaporanRekapHarianRetur extends javax.swing.JInternalFrame {
+public class FormLaporanRekapHarianReturBeli extends javax.swing.JInternalFrame {
 
-    Connection c;
     java.text.DateFormat d = new SimpleDateFormat("yyyy-MM-dd");
-
     /**
-     * Creates new form FormLaporanRekapHarianRetur
+     * Creates new form FormLaporanRekapHarianReturBeli
      */
-    public FormLaporanRekapHarianRetur() {
+    public FormLaporanRekapHarianReturBeli() {
         initComponents();
         tgl1.setDateFormat(d);
         tgl2.setDateFormat(d);
@@ -50,34 +48,18 @@ public class FormLaporanRekapHarianRetur extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
-        tgl1 = new datechooser.beans.DateChooserCombo();
-        tgl2 = new datechooser.beans.DateChooserCombo();
-        jLabel3 = new javax.swing.JLabel();
         btnPreview = new javax.swing.JButton();
         btnKeluar = new javax.swing.JButton();
+        tgl2 = new datechooser.beans.DateChooserCombo();
+        tgl1 = new datechooser.beans.DateChooserCombo();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormLaporanRekapHarianRetur.class);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormLaporanRekapHarianReturBeli.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         getContentPane().setLayout(null);
-
-        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 20, 70, 16);
-        getContentPane().add(tgl1);
-        tgl1.setBounds(110, 20, 120, 20);
-        getContentPane().add(tgl2);
-        tgl2.setBounds(270, 20, 140, 20);
-
-        jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(240, 20, 30, 16);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setText(resourceMap.getString("btnPreview.text")); // NOI18N
@@ -100,8 +82,24 @@ public class FormLaporanRekapHarianRetur extends javax.swing.JInternalFrame {
         });
         getContentPane().add(btnKeluar);
         btnKeluar.setBounds(220, 60, 170, 40);
+        getContentPane().add(tgl2);
+        tgl2.setBounds(250, 20, 140, 20);
+        getContentPane().add(tgl1);
+        tgl1.setBounds(90, 20, 120, 20);
 
-        setBounds(0, 0, 460, 171);
+        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(20, 20, 60, 16);
+
+        jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(220, 20, 30, 16);
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
@@ -111,13 +109,13 @@ public class FormLaporanRekapHarianRetur extends javax.swing.JInternalFrame {
         JasperPrint jasperPrint = null;
         String kode = "";
         try {
-            c = koneksi.getKoneksiJ();
+            Connection c = koneksi.getKoneksiJ();
             parameter.put("Ptgl1", tgl1.getText());
             parameter.put("Ptgl2", tgl2.getText());
             //System.out.println(new URL(global.REPORT).getPath());
             //parameter.put("SUBREPORT_DIR", new URL(global.REPORT).getPath());
             parameter.put("retur", getRetur(tgl1.getText(), tgl2.getText()));
-            URL url = new URL(global.REPORT + "/RekapJualHarianPTGLRetur1.jasper");
+            URL url = new URL(global.REPORT + "/RekapBeliHarianPTGLRetur.jasper");
             InputStream in = url.openStream();
             jasperPrint = JasperFillManager.fillReport(in, parameter, c);
             JasperViewer.viewReport(jasperPrint, false);
@@ -153,20 +151,20 @@ public class FormLaporanRekapHarianRetur extends javax.swing.JInternalFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormLaporanRekapHarianRetur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLaporanRekapHarianReturBeli.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormLaporanRekapHarianRetur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLaporanRekapHarianReturBeli.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormLaporanRekapHarianRetur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLaporanRekapHarianReturBeli.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormLaporanRekapHarianRetur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLaporanRekapHarianReturBeli.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormLaporanRekapHarianRetur().setVisible(true);
+                new FormLaporanRekapHarianReturBeli().setVisible(true);
             }
         });
     }
@@ -184,11 +182,12 @@ public class FormLaporanRekapHarianRetur extends javax.swing.JInternalFrame {
         double hasil = 0;
         try {
             Connection con = koneksi.getKoneksiJ();
-            String sql = "SELECT  "
-                    + "     sum(RETURRINCI.\"JUMLAH\" * RETURRINCI.\"HARGA\" - RETURRINCI.\"DISKON\" + RETURRINCI.\"PPN\") as TOTAL  "
-                    + "FROM  "
-                    + "     \"PUBLIC\".\"RETUR\" RETUR INNER JOIN \"PUBLIC\".\"RETURRINCI\" RETURRINCI ON RETUR.\"ID\" = RETURRINCI.\"IDRETUR\"  "
-                    + "where retur.IDPENJUALAN in (select IDPENJUALAN FROM PENJUALAN jual where retur.idpenjualan = jual.id and jual.TANGGAL >= '"+tgl1+"' and jual.TANGGAL <= '"+tgl2+"')  "
+            String sql = "SELECT   "
+                    + "     sum(RBR.\"JUMLAH\" * RBR.\"HARGA\" - RBR.\"DISKON\" + RBR.\"PPN\") as TOTAL   "
+                    + "FROM   "
+                    + "     RETURBELI RB INNER JOIN RETURBELIRINCI RBR ON RB.\"ID\" = RBR.IDRETURBELI  "
+                    + "where RB.IDPEMBELIAN in  "
+                    + "(select IDPEMBELIAN FROM PEMBELIAN beli where RB.IDPEMBELIAN = beli.id and beli.TANGGAL >= '"+tgl1+"' and beli.TANGGAL <= '"+tgl2+"')   "
                     + "";
             Statement stat = con.createStatement();
             ResultSet rs = stat.executeQuery(sql);
@@ -203,5 +202,4 @@ public class FormLaporanRekapHarianRetur extends javax.swing.JInternalFrame {
         }
         return hasil;
     }
-
 }

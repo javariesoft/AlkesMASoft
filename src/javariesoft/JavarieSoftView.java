@@ -232,6 +232,7 @@ public class JavarieSoftView extends FrameView {
         MLBDetailHarian = new javax.swing.JMenuItem();
         MLBRekapHarian = new javax.swing.JMenuItem();
         MLBPerSupplier = new javax.swing.JMenuItem();
+        MRekapHRB = new javax.swing.JMenuItem();
         Mreturpembelian = new javax.swing.JMenu();
         MLRBelifaktur = new javax.swing.JMenuItem();
         MLRBRekapreturbeli = new javax.swing.JMenuItem();
@@ -852,6 +853,15 @@ public class JavarieSoftView extends FrameView {
             }
         });
         Mlappembelian.add(MLBPerSupplier);
+
+        MRekapHRB.setText(resourceMap.getString("MRekapHRB.text")); // NOI18N
+        MRekapHRB.setName("MRekapHRB"); // NOI18N
+        MRekapHRB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MRekapHRBActionPerformed(evt);
+            }
+        });
+        Mlappembelian.add(MRekapHRB);
 
         MLaporan.add(Mlappembelian);
 
@@ -2513,6 +2523,14 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MRekapHRActionPerformed
 
+    private void MRekapHRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MRekapHRBActionPerformed
+        // TODO add your handling code here:
+        FormLaporanRekapHarianRetur p = new FormLaporanRekapHarianRetur();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_MRekapHRBActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
     private javax.swing.JLabel LblJenis1;
@@ -2590,6 +2608,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private static javax.swing.JMenuItem MNomorPajak;
     private static javax.swing.JMenuItem MPajak;
     private javax.swing.JMenuItem MRekapHR;
+    private javax.swing.JMenuItem MRekapHRB;
     private javax.swing.JMenuItem MRekapReturCabang;
     public static javax.swing.JMenuItem MRetur;
     public static javax.swing.JMenu MReturCabang;
