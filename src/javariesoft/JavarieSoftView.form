@@ -936,6 +936,15 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLJRekapPerJenisPajakActionPerformed"/>
                   </Events>
                 </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MRekapHR">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="MRekapHR.text"/>
+                    <Property name="name" type="java.lang.String" value="MRekapHR" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MRekapHRActionPerformed"/>
+                  </Events>
+                </MenuItem>
               </SubComponents>
             </Menu>
             <Menu class="javax.swing.JMenu" name="Mreturpenjualan">

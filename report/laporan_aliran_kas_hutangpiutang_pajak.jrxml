@@ -1,46 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan_aliran_kas_jualbeli" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan_aliran_kas_hutangpiutang_pajak" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="tanggal" class="java.lang.String">
-		<defaultValueExpression><![CDATA["2020-01-01"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2020-06-01"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="tanggal1" class="java.lang.String">
-		<defaultValueExpression><![CDATA["2020-07-19"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2020-06-30"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="kodeperkiraan" class="java.lang.String">
 		<defaultValueExpression><![CDATA["11110"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="saldo" class="java.lang.Double">
-		<defaultValueExpression><![CDATA[0.0]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT j.*, rj.*,
-     1 AS ppn,
-     'JUAL' AS jenis,
-     pr.grup as grup
-FROM
-     "JURNAL" j INNER JOIN "RINCIJURNAL" rj ON j.id = rj.KODEJURNAL
-     INNER JOIN PERKIRAAN pr ON rj."KODEPERKIRAAN" = pr."KODEPERKIRAAN"
-WHERE
-     j.KODEJURNAL IN ( SELECT faktur FROM penjualan WHERE ppn = 0 )
-     and rj.KODEPERKIRAAN LIKE $P{kodeperkiraan}
-     and tanggal >= $P{tanggal}
-     and tanggal <= $P{tanggal1}
-UNION ALL
-SELECT j.*, rj.*,
-     1 AS ppn,
-     'BELI' AS jenis,
-     pr.grup as grup
-FROM
-     "JURNAL" j INNER JOIN "RINCIJURNAL" rj ON j.id = rj.KODEJURNAL
-     INNER JOIN PERKIRAAN pr ON rj."KODEPERKIRAAN" = pr."KODEPERKIRAAN"
-WHERE
-     j.KODEJURNAL IN ( SELECT nofaktur FROM PEMBELIAN WHERE pajak = 0 )
-     and rj.KODEPERKIRAAN LIKE $P{kodeperkiraan}
-     and tanggal >= $P{tanggal}
-     and tanggal <= $P{tanggal1}]]>
+		<![CDATA[(
+select
+    *, 1 as GRUP, 0 as SALDO
+from
+    JURNAL j
+inner join
+    RINCIJURNAL rj
+        on j.id = rj.KODEJURNAL
+where
+    (
+        j.KODEJURNAL in (
+            select
+                KODEPIUTANGBAYAR
+            from
+                PIUTANGBAYAR pb,
+                PIUTANG pt,
+                penjualan jual
+            where
+                pt.id = pb.idpiutang
+                and pt.idpenjualan = jual.id
+                and ppn <> 0
+        )
+        OR (
+            j.KODEJURNAL in (
+                select
+                    REF
+                from
+                    PIUTANGBAYAR pb,
+                    PIUTANG pt,
+                    penjualan jual
+                where
+                    pt.id = pb.idpiutang
+                    and pt.idpenjualan = jual.id
+                    and ppn <> 0
+            )
+        )
+    )
+    and rj.KODEPERKIRAAN like '11110'
+    and tanggal >= $P{tanggal} AND tanggal <=  $P{tanggal1}
+)
+union
+(
+select
+    *,
+    1 as GRUP,
+    0 as SALDO
+from
+    JURNAL j
+inner join
+    RINCIJURNAL rj
+        on j.id = rj.KODEJURNAL
+where
+    (
+        j.KODEJURNAL in (
+            select
+                KODEHUTANGBAYAR
+            from
+                HUTANGBAYAR hb,
+                HUTANG h,
+                PEMBELIAN beli
+            where
+                h.id = hb.IDHUTANG
+                and h.IDPEMBELIAN = beli.id
+                and pajak <> 0
+        )
+        OR (
+            j.KODEJURNAL in (
+                select
+                    REF
+                from
+                    HUTANGBAYAR hb,
+                    HUTANG h,
+                    PEMBELIAN beli
+                where
+                    h.id = hb.IDHUTANG
+                    and h.IDPEMBELIAN = beli.id
+                    and pajak <> 0
+            )
+        )
+    )
+    and rj.KODEPERKIRAAN like '11110'
+   and tanggal >= $P{tanggal} AND tanggal <=  $P{tanggal1}
+)
+order by 3]]>
 	</queryString>
 	<field name="ID" class="java.lang.Integer"/>
 	<field name="KODEJURNAL" class="java.lang.String"/>
@@ -51,9 +110,8 @@ WHERE
 	<field name="KREDIT" class="java.lang.Double"/>
 	<field name="NO" class="java.lang.Integer"/>
 	<field name="REF" class="java.lang.String"/>
-	<field name="PPN" class="java.lang.Integer"/>
-	<field name="JENIS" class="java.lang.String"/>
 	<field name="GRUP" class="java.lang.Integer"/>
+	<field name="SALDO" class="java.lang.Integer"/>
 	<variable name="DEBET_1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{DEBET}]]></variableExpression>
 	</variable>
@@ -61,7 +119,7 @@ WHERE
 		<variableExpression><![CDATA[$F{KREDIT}]]></variableExpression>
 	</variable>
 	<variable name="variable1" class="java.lang.Double">
-		<variableExpression><![CDATA[($F{GRUP}==1 || $F{GRUP}==5 || $F{GRUP}==6) ? ($P{saldo}+$V{DEBET_1}-$V{KREDIT_1}):($P{saldo}-$V{DEBET_1}+$V{KREDIT_1})]]></variableExpression>
+		<variableExpression><![CDATA[($F{GRUP}==1) ? ($P{saldo}+$V{DEBET_1}-$V{KREDIT_1}):($P{saldo}-$V{DEBET_1}+$V{KREDIT_1})]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -76,11 +134,11 @@ WHERE
 				<text><![CDATA[PT.MIRANTI ADILHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="17" width="298" height="17"/>
+				<reportElement x="0" y="17" width="402" height="17"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Laporan Detail Buku Bantu Kas Non Pajak]]></text>
+				<text><![CDATA[Laporan Detail Buku Bantu Kas Hutang Piutang Pajak]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="151" y="34" width="84" height="16"/>
@@ -212,11 +270,6 @@ WHERE
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textField>
-					<reportElement x="2" y="0" width="25" height="20"/>
-					<textElement/>
-					<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
-				</textField>
 				<textField pattern="#,##0">
 					<reportElement x="570" y="0" width="83" height="20"/>
 					<textElement textAlignment="Right"/>
@@ -224,7 +277,9 @@ WHERE
 				</textField>
 				<textField pattern="dd/MM/yyyy">
 					<reportElement x="26" y="0" width="61" height="20"/>
-					<textElement/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{TANGGAL}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
@@ -234,18 +289,29 @@ WHERE
 				</textField>
 				<textField>
 					<reportElement x="87" y="0" width="78" height="20"/>
-					<textElement/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{KODEJURNAL}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="165" y="0" width="237" height="20"/>
-					<textElement/>
+					<reportElement x="165" y="0" width="320" height="20"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{DESKRIPSI}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
 					<reportElement x="655" y="0" width="95" height="20"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$V{variable1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="27" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

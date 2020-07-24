@@ -58,7 +58,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class JavarieSoftView extends FrameView {
 //public static String jenisuser="";
 
-     //public static Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    //public static Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
     public JavarieSoftView(SingleFrameApplication app) {
@@ -69,8 +69,8 @@ public class JavarieSoftView extends FrameView {
 //        jLabel1.setLocation(dim.width / 2 - jLabel1.getWidth() / 2, jLabel1.getY() + jLabel1.getHeight() - 14);
 //        jLabel2.setSize(dim.width - 40, 60);
 //        jLabel2.setLocation(dim.width / 2 - jLabel2.getWidth() / 2, jLabel2.getY() + jLabel2.getHeight() + 8);
-        jLabel1.setSize(dim.width - 40, 80);       
-        jLabel1.setLocation(dim.width / 2 - jLabel1.getWidth() /2, jLabel1.getY() + jLabel1.getHeight() - 14);        
+        jLabel1.setSize(dim.width - 40, 80);
+        jLabel1.setLocation(dim.width / 2 - jLabel1.getWidth() / 2, jLabel1.getY() + jLabel1.getHeight() - 14);
         jLabel2.setSize(dim.width - 40, 60);
         jLabel2.setLocation(dim.width / 2 - jLabel2.getWidth() / 2, jLabel2.getY() + jLabel2.getHeight() + 10);
         nonaktif();
@@ -247,6 +247,7 @@ public class JavarieSoftView extends FrameView {
         MLJRekapPerPelanggan = new javax.swing.JMenuItem();
         MLJRekapPerMerk = new javax.swing.JMenuItem();
         MLJRekapPerJenisPajak = new javax.swing.JMenuItem();
+        MRekapHR = new javax.swing.JMenuItem();
         Mreturpenjualan = new javax.swing.JMenu();
         MLRJualfaktur = new javax.swing.JMenuItem();
         MLRJRekapreturjual = new javax.swing.JMenuItem();
@@ -972,6 +973,15 @@ public class JavarieSoftView extends FrameView {
             }
         });
         MlapPenjualan.add(MLJRekapPerJenisPajak);
+
+        MRekapHR.setText(resourceMap.getString("MRekapHR.text")); // NOI18N
+        MRekapHR.setName("MRekapHR"); // NOI18N
+        MRekapHR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MRekapHRActionPerformed(evt);
+            }
+        });
+        MlapPenjualan.add(MRekapHR);
 
         MLaporan.add(MlapPenjualan);
 
@@ -2456,7 +2466,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     private void MLB_MerkKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLB_MerkKategoriActionPerformed
         // TODO add your handling code here:
-        FlapBarangMerkKategori p= new FlapBarangMerkKategori();
+        FlapBarangMerkKategori p = new FlapBarangMerkKategori();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
@@ -2464,7 +2474,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     private void MLP_RekapPiutangJatuhTempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLP_RekapPiutangJatuhTempoActionPerformed
         // TODO add your handling code here:
-        FLapPiutangJatuhTempo p= new FLapPiutangJatuhTempo();
+        FLapPiutangJatuhTempo p = new FLapPiutangJatuhTempo();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
@@ -2472,7 +2482,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     private void MLB_BarangPembelianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLB_BarangPembelianActionPerformed
         // TODO add your handling code here:
-        FLapBarangPembelian p= new FLapBarangPembelian();
+        FLapBarangPembelian p = new FLapBarangPembelian();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
@@ -2480,7 +2490,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     private void MLJRekapPerJenisPajakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLJRekapPerJenisPajakActionPerformed
         // TODO add your handling code here:
-        FRekapJualJenisPajak p= new FRekapJualJenisPajak();
+        FRekapJualJenisPajak p = new FRekapJualJenisPajak();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
@@ -2488,11 +2498,20 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     private void M_AKPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_M_AKPPActionPerformed
         // TODO add your handling code here:
-        FormLaporanAliranKas p= new FormLaporanAliranKas();
+        FormLaporanAliranKas p = new FormLaporanAliranKas();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
     }//GEN-LAST:event_M_AKPPActionPerformed
+
+    private void MRekapHRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MRekapHRActionPerformed
+        // TODO add your handling code here:
+
+        FormLaporanRekapHarianRetur p = new FormLaporanRekapHarianRetur();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_MRekapHRActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
@@ -2570,6 +2589,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenu MLaporan;
     private static javax.swing.JMenuItem MNomorPajak;
     private static javax.swing.JMenuItem MPajak;
+    private javax.swing.JMenuItem MRekapHR;
     private javax.swing.JMenuItem MRekapReturCabang;
     public static javax.swing.JMenuItem MRetur;
     public static javax.swing.JMenu MReturCabang;
@@ -2770,7 +2790,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MTutupHarian.setVisible(false);
         MkoreksiStok.setVisible(false);
         Mmutasibarang.setVisible(false);
-        MRetur.setVisible(false); 
+        MRetur.setVisible(false);
         MDeliveryOrder.setVisible(false);
         //End Menu Transaksi
         //Start Menu Laporan
@@ -2864,7 +2884,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 //        MlapRugiLaba.setVisible(false);
 //        MlapEkuitas.setVisible(false);
 //    }
-
 //    public static void penjualanakses() {
 //        Mkonfigurasi.setVisible(false);
 //        MBackupdatabase.setVisible(false);
@@ -2918,7 +2937,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 //        MlapRugiLaba.setVisible(false);
 //        MlapEkuitas.setVisible(false);
 //    }
-
     public static void accountingakses() {
         //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
@@ -3119,7 +3137,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         Mtutupstok.setVisible(false);
         MTutupHarian.setVisible(false);
         MkoreksiStok.setVisible(false);
-        Mmutasibarang.setVisible(false); 
+        Mmutasibarang.setVisible(false);
         MDeliveryOrder.setVisible(true);
         //End Menu Transaksi
         //Start Menu Laporan
@@ -3246,7 +3264,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MPajak.setVisible(false);
         //End Menu Laporan
     }
-    
+
     public static void generalakses() {
         //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(false);
@@ -3326,7 +3344,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MPajak.setVisible(false);
         //End Menu Laporan
     }
-    
+
     public static void asistenadminakses() {
         //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
@@ -3407,7 +3425,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MPajak.setVisible(true);
         //End Menu Laporan
     }
-    
+
     public static void masterdataakses() {
         //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
@@ -3489,7 +3507,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MPajak.setVisible(false);
         //End Menu Laporan
     }
-    
+
     public static void gudangakses() {
         //Start Menu Konfigurasi
         Mkonfigurasi.setVisible(true);
@@ -3588,12 +3606,12 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 //            JOptionPane.showMessageDialog(panelCool1, ex.toString()+" "+IPDB);
 //        }
     }
-    
-    void backupDB() throws SQLException{
+
+    void backupDB() throws SQLException {
         Connection c = null;
         c = koneksi.getKoneksiJ();
         java.text.DateFormat d = new SimpleDateFormat("yyyyMMdd");
-        java.util.Date tgl=new java.util.Date();
+        java.util.Date tgl = new java.util.Date();
         JOptionPane.showMessageDialog(null, "Keluar Windows");
         DatabaseBackup backup = new H2DatabaseBackup();
         Calendar cal = Calendar.getInstance();
@@ -3602,13 +3620,13 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         try {
 //            backup.backupDatabase(koneksi.getKoneksiJ(), fileName);
 //            JavarieSoftApp.server.stop();
-            String sql="BACKUP TO '"+fileName+"'";         
-            c.createStatement().executeUpdate(sql);          
+            String sql = "BACKUP TO '" + fileName + "'";
+            c.createStatement().executeUpdate(sql);
             System.out.println("BackUp Ok " + fileName);
             System.out.println("Server Stop ");
         } catch (Throwable t) {
             // Log something, alert the user, format the user's hard drive out of spite....
             JOptionPane.showMessageDialog(null, t.getMessage());
-        }      
+        }
     }
 }

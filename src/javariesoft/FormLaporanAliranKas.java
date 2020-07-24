@@ -32,6 +32,8 @@ public class FormLaporanAliranKas extends javax.swing.JInternalFrame {
         initComponents();
         tglTrans.setDateFormat(d);
         tglTrans1.setDateFormat(d);
+        tglTrans2.setDateFormat(d);
+        tglTrans3.setDateFormat(d);
     }
 
     /**
@@ -43,13 +45,22 @@ public class FormLaporanAliranKas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pil = new javax.swing.JCheckBox();
-        btnPreview = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        tglTrans = new datechooser.beans.DateChooserCombo();
-        jLabel2 = new javax.swing.JLabel();
-        tglTrans1 = new datechooser.beans.DateChooserCombo();
+        jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        tglTrans = new datechooser.beans.DateChooserCombo();
+        tglTrans1 = new datechooser.beans.DateChooserCombo();
+        pil = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        btnPreview = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        pil1 = new javax.swing.JCheckBox();
+        tglTrans2 = new datechooser.beans.DateChooserCombo();
+        tglTrans3 = new datechooser.beans.DateChooserCombo();
+        jLabel6 = new javax.swing.JLabel();
+        btnPreview1 = new javax.swing.JButton();
 
         setClosable(true);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormLaporanAliranKas.class);
@@ -57,11 +68,46 @@ public class FormLaporanAliranKas extends javax.swing.JInternalFrame {
         setName("Form"); // NOI18N
         getContentPane().setLayout(null);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel1.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel1.border.titleFont"))); // NOI18N
+        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setLayout(null);
+
+        jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(20, 50, 100, 15);
+
+        tglTrans.setFieldFont(resourceMap.getFont("tglTrans.dch_combo_fieldFont")); // NOI18N
+        tglTrans.addCommitListener(new datechooser.events.CommitListener() {
+            public void onCommit(datechooser.events.CommitEvent evt) {
+                tglTransOnCommit(evt);
+            }
+        });
+        jPanel1.add(tglTrans);
+        tglTrans.setBounds(140, 50, 120, 20);
+
+        tglTrans1.setFieldFont(resourceMap.getFont("tglTrans.dch_combo_fieldFont")); // NOI18N
+        jPanel1.add(tglTrans1);
+        tglTrans1.setBounds(300, 50, 110, 20);
+
         pil.setFont(resourceMap.getFont("pil.font")); // NOI18N
         pil.setText(resourceMap.getString("pil.text")); // NOI18N
         pil.setName("pil"); // NOI18N
-        getContentPane().add(pil);
+        jPanel1.add(pil);
         pil.setBounds(140, 20, 120, 20);
+
+        jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(20, 20, 120, 15);
+
+        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(270, 50, 30, 16);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setText(resourceMap.getString("btnPreview.text")); // NOI18N
@@ -71,41 +117,68 @@ public class FormLaporanAliranKas extends javax.swing.JInternalFrame {
                 btnPreviewActionPerformed(evt);
             }
         });
-        getContentPane().add(btnPreview);
-        btnPreview.setBounds(20, 90, 390, 23);
+        jPanel1.add(btnPreview);
+        btnPreview.setBounds(20, 80, 390, 23);
 
-        jLabel1.setFont(resourceMap.getFont("jCheckBox1.font")); // NOI18N
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 20, 120, 15);
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(20, 20, 430, 120);
 
-        tglTrans.setFieldFont(resourceMap.getFont("tglTrans.dch_combo_fieldFont")); // NOI18N
-        tglTrans.addCommitListener(new datechooser.events.CommitListener() {
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel2.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel2.border.titleFont"))); // NOI18N
+        jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setLayout(null);
+
+        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+        jPanel2.add(jLabel4);
+        jLabel4.setBounds(20, 20, 120, 15);
+
+        jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+        jPanel2.add(jLabel5);
+        jLabel5.setBounds(20, 50, 100, 15);
+
+        pil1.setFont(resourceMap.getFont("pil1.font")); // NOI18N
+        pil1.setText(resourceMap.getString("pil1.text")); // NOI18N
+        pil1.setName("pil1"); // NOI18N
+        jPanel2.add(pil1);
+        pil1.setBounds(140, 20, 120, 20);
+
+        tglTrans2.setFieldFont(resourceMap.getFont("tglTrans2.dch_combo_fieldFont")); // NOI18N
+        tglTrans2.addCommitListener(new datechooser.events.CommitListener() {
             public void onCommit(datechooser.events.CommitEvent evt) {
-                tglTransOnCommit(evt);
+                tglTrans2OnCommit(evt);
             }
         });
-        getContentPane().add(tglTrans);
-        tglTrans.setBounds(140, 50, 120, 20);
+        jPanel2.add(tglTrans2);
+        tglTrans2.setBounds(140, 50, 120, 20);
 
-        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(270, 50, 30, 16);
+        tglTrans3.setFieldFont(resourceMap.getFont("tglTrans2.dch_combo_fieldFont")); // NOI18N
+        jPanel2.add(tglTrans3);
+        tglTrans3.setBounds(300, 50, 110, 20);
 
-        tglTrans1.setFieldFont(resourceMap.getFont("tglTrans1.dch_combo_fieldFont")); // NOI18N
-        getContentPane().add(tglTrans1);
-        tglTrans1.setBounds(300, 50, 110, 20);
+        jLabel6.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
+        jPanel2.add(jLabel6);
+        jLabel6.setBounds(270, 50, 30, 16);
 
-        jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 50, 100, 15);
+        btnPreview1.setFont(resourceMap.getFont("btnPreview1.font")); // NOI18N
+        btnPreview1.setText(resourceMap.getString("btnPreview1.text")); // NOI18N
+        btnPreview1.setName("btnPreview1"); // NOI18N
+        btnPreview1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreview1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnPreview1);
+        btnPreview1.setBounds(20, 80, 390, 23);
 
-        setBounds(0, 0, 446, 160);
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(20, 140, 430, 120);
+
+        setBounds(0, 0, 491, 305);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
@@ -113,17 +186,24 @@ public class FormLaporanAliranKas extends javax.swing.JInternalFrame {
         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         HashMap parameter = new HashMap();
         JasperPrint jasperPrint = null;
+        double saldo = 0.0;
         parameter.put("tanggal", tglTrans.getText());
         parameter.put("tanggal1", tglTrans1.getText());
         parameter.put("kodeperkiraan", "11110");
         try {
+            
             Connection c = koneksi.getKoneksiJ();
             URL url = null;
-            if(pil.isSelected()){
+            if (pil.isSelected()) {
+                saldo = com.erv.fungsi.Fungsi.getSaldoAwalKasPenjualan(c, "11110", tglTrans2.getText(), true) 
+                        + com.erv.fungsi.Fungsi.getSaldoAwalKasPembelian(c, "11110", tglTrans3.getText(), true);
                 url = new URL(global.REPORT + "/laporan_aliran_kas_jualbeli_pajak.jasper");
-            }else{
+            } else {
+                saldo = com.erv.fungsi.Fungsi.getSaldoAwalKasPenjualan(c, "11110", tglTrans2.getText(), false)
+                        + com.erv.fungsi.Fungsi.getSaldoAwalKasPembelian(c, "11110", tglTrans3.getText(), false);
                 url = new URL(global.REPORT + "/laporan_aliran_kas_jualbeli.jasper");
             }
+            parameter.put("saldo", saldo);
             InputStream in = url.openStream();
             jasperPrint = JasperFillManager.fillReport(in, parameter, c);
             JasperViewer.viewReport(jasperPrint, false);
@@ -143,14 +223,64 @@ public class FormLaporanAliranKas extends javax.swing.JInternalFrame {
         tglTrans1.setSelectedDate(cal);
     }//GEN-LAST:event_tglTransOnCommit
 
+    private void tglTrans2OnCommit(datechooser.events.CommitEvent evt) {//GEN-FIRST:event_tglTrans2OnCommit
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tglTrans2OnCommit
+
+    private void btnPreview1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreview1ActionPerformed
+        // TODO add your handling code here:
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        HashMap parameter = new HashMap();
+        double saldo = 0.0;
+        JasperPrint jasperPrint = null;
+        parameter.put("tanggal", tglTrans2.getText());
+        parameter.put("tanggal1", tglTrans3.getText());
+        parameter.put("kodeperkiraan", "11110");
+        try {
+            Connection c = koneksi.getKoneksiJ();
+            if (pil1.isSelected()) {
+                saldo = com.erv.fungsi.Fungsi.getSaldoAwalKasPiutang(c, "11110", tglTrans2.getText(), true) 
+                        + com.erv.fungsi.Fungsi.getSaldoAwalKasHutang(c, "11110", tglTrans3.getText(), true);
+            }else if(!pil1.isSelected()) {
+                saldo = com.erv.fungsi.Fungsi.getSaldoAwalKasPiutang(c, "11110", tglTrans2.getText(), false)
+                        + com.erv.fungsi.Fungsi.getSaldoAwalKasHutang(c, "11110", tglTrans3.getText(), false);
+            }
+            parameter.put("saldo", saldo);
+            URL url = null;
+            if (pil1.isSelected()) {
+
+                url = new URL(global.REPORT + "/laporan_aliran_kas_hutangpiutang_pajak.jasper");
+            } else {
+                url = new URL(global.REPORT + "/laporan_aliran_kas_hutangpiutang.jasper");
+            }
+            InputStream in = url.openStream();
+            jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+            JasperViewer.viewReport(jasperPrint, false);
+            c.close();
+        } catch (Exception ex) {
+            System.out.print(ex.toString());
+            //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_btnPreview1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPreview;
+    private javax.swing.JButton btnPreview1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JCheckBox pil;
+    private javax.swing.JCheckBox pil1;
     private datechooser.beans.DateChooserCombo tglTrans;
     private datechooser.beans.DateChooserCombo tglTrans1;
+    private datechooser.beans.DateChooserCombo tglTrans2;
+    private datechooser.beans.DateChooserCombo tglTrans3;
     // End of variables declaration//GEN-END:variables
 }

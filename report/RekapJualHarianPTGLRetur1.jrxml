@@ -1,13 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RekapJualHarianPTGLRetur" pageWidth="842" pageHeight="600" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="10" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RekapJualHarianPTGLRetur1" pageWidth="842" pageHeight="600" orientation="Landscape" columnWidth="777" leftMargin="45" rightMargin="20" topMargin="10" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="448"/>
 	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="New Dataset 1">
+		<parameter name="idjual" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     RETUR."KODERETUR" AS RETUR_KODERETUR,
+     sum(RETURRINCI."JUMLAH" * RETURRINCI."HARGA") as JUMLAH,
+     sum(RETURRINCI."DISKON") AS RETURRINCI_DISKON,
+     sum(RETURRINCI."PPN") AS RETURRINCI_PPN,
+     sum(RETURRINCI."JUMLAH" * RETURRINCI."HARGA" - RETURRINCI."DISKON" + RETURRINCI."PPN") as TOTAL,
+     RETUR."IDPENJUALAN" AS RETUR_IDPENJUALAN, plg.nama,retur.tanggal
+FROM
+     "PUBLIC"."RETUR" RETUR INNER JOIN "PUBLIC"."RETURRINCI" RETURRINCI ON RETUR."ID" = RETURRINCI."IDRETUR" inner join pelanggan plg on RETUR.kodepelanggan = plg.kodepelanggan
+where RETUR."IDPENJUALAN" = $P{idjual}
+group by RETUR."KODERETUR"]]>
+		</queryString>
+		<field name="RETUR_KODERETUR" class="java.lang.String"/>
+		<field name="JUMLAH" class="java.lang.Double"/>
+		<field name="RETURRINCI_DISKON" class="java.lang.Double"/>
+		<field name="RETURRINCI_PPN" class="java.lang.Double"/>
+		<field name="TOTAL" class="java.lang.Double"/>
+		<field name="RETUR_IDPENJUALAN" class="java.lang.Integer"/>
+		<field name="NAMA" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="TANGGAL" class="java.sql.Date">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
 	<parameter name="Ptgl1" class="java.lang.String">
 		<defaultValueExpression><![CDATA["2020-04-01"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Ptgl2" class="java.lang.String">
-		<defaultValueExpression><![CDATA["2020-06-30"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2020-04-07"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\JAVA\\Miranti\\MRTA02\\AlkesMASoft\\report\\"]]></defaultValueExpression>
@@ -92,6 +142,9 @@ GROUP BY PENJUALAN."FAKTUR" ORDER BY PENJUALAN."FAKTUR"]]>
 	<variable name="TotOngkir" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{PENJUALAN_ONGKOSKIRIM}]]></variableExpression>
 	</variable>
+	<variable name="total_kurang_retur" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{totalseluruh}-$P{retur}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -136,7 +189,7 @@ GROUP BY PENJUALAN."FAKTUR" ORDER BY PENJUALAN."FAKTUR"]]>
 				<textFieldExpression><![CDATA[$P{Ptgl1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="146" y="33" width="100" height="15"/>
+				<reportElement x="146" y="33" width="75" height="15"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
@@ -282,10 +335,20 @@ GROUP BY PENJUALAN."FAKTUR" ORDER BY PENJUALAN."FAKTUR"]]>
 				</textElement>
 				<text><![CDATA[5]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="84" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="679" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="27" splitType="Stretch">
+		<band height="29" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="0" width="777" height="14"/>
 			</rectangle>
@@ -416,14 +479,78 @@ GROUP BY PENJUALAN."FAKTUR" ORDER BY PENJUALAN."FAKTUR"]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PENJUALAN_DP}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement x="0" y="14" width="777" height="13" isRemoveLineWhenBlank="true"/>
-				<subreportParameter name="idjual">
-					<subreportParameterExpression><![CDATA[$F{PENJUALAN_ID}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RekapJualHarianPTGLRetur_subreportRetur.jasper"]]></subreportExpression>
-			</subreport>
+			<componentElement>
+				<reportElement x="0" y="14" width="778" height="15" isRemoveLineWhenBlank="true"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="New Dataset 1">
+						<datasetParameter name="idjual">
+							<datasetParameterExpression><![CDATA[$F{PENJUALAN_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="15" width="778">
+						<textField>
+							<reportElement x="32" y="1" width="44" height="13"/>
+							<textElement textAlignment="Center">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RETUR_KODERETUR}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="80" y="1" width="166" height="13"/>
+							<textElement>
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{NAMA}]]></textFieldExpression>
+						</textField>
+						<textField pattern="dd/MM/yyyy">
+							<reportElement x="305" y="1" width="45" height="13"/>
+							<textElement textAlignment="Center">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{TANGGAL}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0">
+							<reportElement x="427" y="1" width="58" height="13"/>
+							<textElement textAlignment="Right">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{JUMLAH}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0">
+							<reportElement x="487" y="1" width="53" height="13"/>
+							<textElement textAlignment="Right">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RETURRINCI_DISKON}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0">
+							<reportElement x="543" y="1" width="54" height="13"/>
+							<textElement textAlignment="Right">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RETURRINCI_PPN}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0">
+							<reportElement x="707" y="1" width="70" height="13"/>
+							<box>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement mode="Transparent" x="0" y="1" width="30" height="13"/>
+							<box>
+								<leftPen lineWidth="1.0"/>
+							</box>
+							<textElement/>
+							<text><![CDATA[]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
 		</band>
 	</detail>
 	<columnFooter>
@@ -462,7 +589,7 @@ GROUP BY PENJUALAN."FAKTUR" ORDER BY PENJUALAN."FAKTUR"]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="51" splitType="Stretch">
+		<band height="39" splitType="Stretch">
 			<rectangle>
 				<reportElement x="425" y="0" width="61" height="13"/>
 			</rectangle>
@@ -533,10 +660,24 @@ GROUP BY PENJUALAN."FAKTUR" ORDER BY PENJUALAN."FAKTUR"]]>
 			<staticText>
 				<reportElement x="650" y="13" width="56" height="13"/>
 				<textElement>
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nilai Retur]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="650" y="26" width="56" height="13"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total	]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="705" y="26" width="72" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_kurang_retur}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

@@ -12,12 +12,14 @@
 	<parameter name="kodeperkiraan" class="java.lang.String">
 		<defaultValueExpression><![CDATA["11110"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="saldo" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[0.0]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT j.*, rj.*,
      1 AS ppn,
      'JUAL' AS jenis,
-     pr.grup as grup,
-     getsaldoawalkaspenjualan($P{kodeperkiraan},$P{tanggal},true) as saldo
+     pr.grup as grup
 FROM
      "JURNAL" j INNER JOIN "RINCIJURNAL" rj ON j.id = rj.KODEJURNAL
      INNER JOIN PERKIRAAN pr ON rj."KODEPERKIRAAN" = pr."KODEPERKIRAAN"
@@ -30,8 +32,7 @@ UNION ALL
 SELECT j.*, rj.*,
      1 AS ppn,
      'BELI' AS jenis,
-     pr.grup as grup,
-     getsaldoawalkaspenjualan($P{kodeperkiraan},$P{tanggal},true) as saldo
+     pr.grup as grup
 FROM
      "JURNAL" j INNER JOIN "RINCIJURNAL" rj ON j.id = rj.KODEJURNAL
      INNER JOIN PERKIRAAN pr ON rj."KODEPERKIRAAN" = pr."KODEPERKIRAAN"
@@ -53,15 +54,14 @@ WHERE
 	<field name="PPN" class="java.lang.Integer"/>
 	<field name="JENIS" class="java.lang.String"/>
 	<field name="GRUP" class="java.lang.Integer"/>
-	<field name="SALDO" class="java.lang.Double"/>
-	<variable name="variable1" class="java.lang.Double">
-		<variableExpression><![CDATA[($F{GRUP}==1 || $F{GRUP}==5 || $F{GRUP}==6) ? ($F{SALDO}+$F{DEBET}-$F{KREDIT}):($F{SALDO}-$F{DEBET}+$F{KREDIT})]]></variableExpression>
-	</variable>
 	<variable name="DEBET_1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{DEBET}]]></variableExpression>
 	</variable>
 	<variable name="KREDIT_1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{KREDIT}]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{GRUP}==1) ? ($P{saldo}+$V{DEBET_1}-$V{KREDIT_1}):($P{saldo}-$V{DEBET_1}+$V{KREDIT_1})]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -187,7 +187,7 @@ WHERE
 			<textField pattern="#,##0">
 				<reportElement x="655" y="0" width="95" height="20"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{SALDO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{saldo}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="-1" y="0" width="1" height="20"/>
