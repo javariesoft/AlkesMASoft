@@ -48,6 +48,7 @@ public class LaporanBukuBesarBiayaTahunan extends javax.swing.JInternalFrame {
         txtTahun.setText(u.thnsekarang + "");
         try {
             c = koneksi.getKoneksiJ();
+            pilihOpsiBulan();
             jScrollPane1.setSize(500, 150);
             jScrollPane1.setVisible(false);
         } catch (SQLException ex) {
@@ -71,8 +72,13 @@ public class LaporanBukuBesarBiayaTahunan extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtKodePerkiraan = new javax.swing.JTextField();
         txtNamaPerkiraan = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        LabelNama = new javax.swing.JLabel();
         txtTahun = new javax.swing.JTextField();
+        RadioBulan = new javax.swing.JRadioButton();
+        RadioTahun = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        cboBulan = new javax.swing.JComboBox();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(LaporanBukuBesarBiayaTahunan.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
@@ -90,7 +96,7 @@ public class LaporanBukuBesarBiayaTahunan extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(130, 40, 60, 30);
+        jScrollPane1.setBounds(130, 70, 60, 30);
 
         btnOk.setFont(resourceMap.getFont("btnOk.font")); // NOI18N
         btnOk.setIcon(resourceMap.getIcon("btnOk.icon")); // NOI18N
@@ -120,7 +126,7 @@ public class LaporanBukuBesarBiayaTahunan extends javax.swing.JInternalFrame {
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(30, 20, 90, 16);
+        jLabel3.setBounds(30, 50, 90, 16);
 
         txtKodePerkiraan.setFont(resourceMap.getFont("txtKodePerkiraan.font")); // NOI18N
         txtKodePerkiraan.setText(resourceMap.getString("txtKodePerkiraan.text")); // NOI18N
@@ -136,19 +142,19 @@ public class LaporanBukuBesarBiayaTahunan extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txtKodePerkiraan);
-        txtKodePerkiraan.setBounds(130, 20, 120, 21);
+        txtKodePerkiraan.setBounds(130, 50, 120, 21);
 
         txtNamaPerkiraan.setFont(resourceMap.getFont("txtNamaPerkiraan.font")); // NOI18N
         txtNamaPerkiraan.setText(resourceMap.getString("txtNamaPerkiraan.text")); // NOI18N
         txtNamaPerkiraan.setName("txtNamaPerkiraan"); // NOI18N
         getContentPane().add(txtNamaPerkiraan);
-        txtNamaPerkiraan.setBounds(260, 20, 280, 20);
+        txtNamaPerkiraan.setBounds(260, 50, 280, 20);
 
-        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(30, 50, 80, 16);
+        LabelNama.setFont(resourceMap.getFont("LabelNama.font")); // NOI18N
+        LabelNama.setText(resourceMap.getString("LabelNama.text")); // NOI18N
+        LabelNama.setName("LabelNama"); // NOI18N
+        getContentPane().add(LabelNama);
+        LabelNama.setBounds(30, 80, 80, 16);
 
         txtTahun.setFont(resourceMap.getFont("txtTahun.font")); // NOI18N
         txtTahun.setName("txtTahun"); // NOI18N
@@ -158,9 +164,47 @@ public class LaporanBukuBesarBiayaTahunan extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txtTahun);
-        txtTahun.setBounds(130, 50, 80, 21);
+        txtTahun.setBounds(290, 80, 80, 22);
 
-        setBounds(0, 0, 652, 236);
+        RadioBulan.setFont(resourceMap.getFont("RadioBulan.font")); // NOI18N
+        RadioBulan.setText(resourceMap.getString("RadioBulan.text")); // NOI18N
+        RadioBulan.setName("RadioBulan"); // NOI18N
+        RadioBulan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioBulanActionPerformed(evt);
+            }
+        });
+        getContentPane().add(RadioBulan);
+        RadioBulan.setBounds(170, 10, 70, 25);
+
+        RadioTahun.setFont(resourceMap.getFont("RadioTahun.font")); // NOI18N
+        RadioTahun.setText(resourceMap.getString("RadioTahun.text")); // NOI18N
+        RadioTahun.setName("RadioTahun"); // NOI18N
+        RadioTahun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioTahunActionPerformed(evt);
+            }
+        });
+        getContentPane().add(RadioTahun);
+        RadioTahun.setBounds(250, 10, 100, 25);
+
+        jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(30, 14, 140, 15);
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
+        getContentPane().add(jSeparator1);
+        jSeparator1.setBounds(20, 40, 570, 10);
+
+        cboBulan.setFont(resourceMap.getFont("cboBulan.font")); // NOI18N
+        cboBulan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
+        cboBulan.setName("cboBulan"); // NOI18N
+        getContentPane().add(cboBulan);
+        cboBulan.setBounds(130, 80, 150, 21);
+
+        setBounds(0, 0, 617, 236);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
@@ -173,9 +217,17 @@ private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
     parameter.put("akun", (txtKodePerkiraan.getText()+"%"));
     parameter.put("namaakun", txtNamaPerkiraan.getText());
     parameter.put("akunnya", txtKodePerkiraan.getText());
-    URL url;
+    parameter.put("bulan", cboBulan.getSelectedIndex() + 1);
+    parameter.put("tahun", txtTahun.getText());
+    parameter.put("periode", cboBulan.getSelectedItem() + " - " + txtTahun.getText());
+    
     try {
-        url = new URL(global.REPORT+ "/BukuBesarBiayaTahunan.jasper");
+        URL url= null;
+        if(RadioBulan.isSelected()){
+            url = new URL(global.REPORT+ "/BukuBesarBiayaBulanan.jasper");
+        }else if(RadioTahun.isSelected()){
+            url = new URL(global.REPORT+ "/BukuBesarBiayaTahunan.jasper");
+        }
         InputStream in = url.openStream();
         jasperPrint = JasperFillManager.fillReport(in, parameter, c);
         JasperViewer.viewReport(jasperPrint, false);
@@ -224,12 +276,27 @@ private void txtKodePerkiraanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         btnOk.requestFocus();
     }//GEN-LAST:event_txtTahunActionPerformed
 
+    private void RadioBulanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioBulanActionPerformed
+        // TODO add your handling code here:
+        pilihOpsiBulan();
+    }//GEN-LAST:event_RadioBulanActionPerformed
+
+    private void RadioTahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioTahunActionPerformed
+        // TODO add your handling code here:
+        pilihOpsiTahun();
+    }//GEN-LAST:event_RadioTahunActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LabelNama;
+    private javax.swing.JRadioButton RadioBulan;
+    private javax.swing.JRadioButton RadioTahun;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnOk;
+    private javax.swing.JComboBox cboBulan;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtKodePerkiraan;
     private javax.swing.JTextField txtNamaPerkiraan;
@@ -255,6 +322,24 @@ private void txtKodePerkiraanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
 
     }
 
+    void pilihOpsiBulan() {
+        RadioBulan.setSelected(true);
+        RadioTahun.setSelected(false);
+        LabelNama.setText("Periode");
+        //txtIsiKriteria.setSize(120, 23);
+        cboBulan.setVisible(true);
+        cboBulan.setLocation(130, 80);
+        txtTahun.setLocation(290, 80);
+    }
+    
+    void pilihOpsiTahun() {
+        RadioBulan.setSelected(false);
+        RadioTahun.setSelected(true);
+        LabelNama.setText("Tahun");
+        cboBulan.setVisible(false);
+        txtTahun.setLocation(130, 80);
+    }
+    
 //    void isiComboGrup() {
 //        try {
 //            cboGrup.removeAllItems();

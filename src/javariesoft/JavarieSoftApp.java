@@ -30,8 +30,8 @@ public class JavarieSoftApp extends SingleFrameApplication {
 
     static Server server;
 
-    public static String VERSI = "VERSI8.0MRTAALKES";
-    public static String VERSISERVER = "V-1.9.8.0";
+    public static String VERSI = "VERSI8.1MRTAALKES";
+    public static String VERSISERVER = "V-1.9.8.1";
     public static String IPADDRESS = "localhost";
     public static String jenisuser = "";
     public static String groupuser = "";
