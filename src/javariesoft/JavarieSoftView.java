@@ -74,7 +74,7 @@ public class JavarieSoftView extends FrameView {
         jLabel2.setSize(dim.width - 40, 60);
         jLabel2.setLocation(dim.width / 2 - jLabel2.getWidth() / 2, jLabel2.getY() + jLabel2.getHeight() + 10);
         nonaktif();
-//        aktif();
+        aktif();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -210,6 +210,7 @@ public class JavarieSoftView extends FrameView {
         Manalisastokbrg = new javax.swing.JMenuItem();
         MSearchingBarang = new javax.swing.JMenuItem();
         MNomorPajak = new javax.swing.JMenuItem();
+        MNomorFaktur = new javax.swing.JMenuItem();
         MTransaksi = new javax.swing.JMenu();
         Mjurnal = new javax.swing.JMenuItem();
         Mpenjualan = new javax.swing.JMenuItem();
@@ -647,6 +648,15 @@ public class JavarieSoftView extends FrameView {
             }
         });
         MFile.add(MNomorPajak);
+
+        MNomorFaktur.setText(resourceMap.getString("MNomorFaktur.text")); // NOI18N
+        MNomorFaktur.setName("MNomorFaktur"); // NOI18N
+        MNomorFaktur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MNomorFakturActionPerformed(evt);
+            }
+        });
+        MFile.add(MNomorFaktur);
 
         menuBar.add(MFile);
 
@@ -2531,6 +2541,14 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MRekapHRBActionPerformed
 
+    private void MNomorFakturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNomorFakturActionPerformed
+        // TODO add your handling code here:
+        FormNoFaktur p = new FormNoFaktur();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_MNomorFakturActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
     private javax.swing.JLabel LblJenis1;
@@ -2605,6 +2623,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenu MLapReturDeliveryOrder;
     private javax.swing.JMenuItem MLapSisaDO;
     public static javax.swing.JMenu MLaporan;
+    private javax.swing.JMenuItem MNomorFaktur;
     private static javax.swing.JMenuItem MNomorPajak;
     private static javax.swing.JMenuItem MPajak;
     private javax.swing.JMenuItem MRekapHR;

@@ -495,6 +495,15 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
               </AuxValues>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MNomorFaktur">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="MNomorFaktur.text"/>
+                <Property name="name" type="java.lang.String" value="MNomorFaktur" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MNomorFakturActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="MTransaksi">
