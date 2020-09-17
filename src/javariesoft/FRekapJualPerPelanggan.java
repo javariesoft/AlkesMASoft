@@ -70,6 +70,10 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
         tgl1 = new datechooser.beans.DateChooserCombo();
         tgl2 = new datechooser.beans.DateChooserCombo();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        OptTanggal = new javax.swing.JCheckBox();
+        OptFaktur = new javax.swing.JCheckBox();
+        cbOpsiFaktur = new javax.swing.JComboBox();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FRekapJualPerPelanggan.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
@@ -104,19 +108,19 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(140, 80, 410, 100);
+        jScrollPane1.setBounds(140, 92, 410, 120);
 
         jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 60, 110, 15);
+        jLabel2.setBounds(20, 70, 110, 15);
 
         jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 30, 70, 15);
+        jLabel3.setBounds(20, 40, 70, 15);
 
         txtnamapelanggan.setFont(resourceMap.getFont("txtnamapelanggan.font")); // NOI18N
         txtnamapelanggan.setForeground(resourceMap.getColor("txtnamapelanggan.foreground")); // NOI18N
@@ -134,13 +138,13 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
             }
         });
         getContentPane().add(txtnamapelanggan);
-        txtnamapelanggan.setBounds(140, 60, 340, 21);
+        txtnamapelanggan.setBounds(140, 70, 340, 21);
 
         jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 90, 110, 15);
+        jLabel4.setBounds(20, 100, 110, 15);
 
         txtkodepelanggan.setEditable(false);
         txtkodepelanggan.setFont(resourceMap.getFont("txtkodepelanggan.font")); // NOI18N
@@ -157,7 +161,7 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
             }
         });
         getContentPane().add(txtkodepelanggan);
-        txtkodepelanggan.setBounds(140, 90, 340, 21);
+        txtkodepelanggan.setBounds(480, 70, 60, 21);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -169,7 +173,7 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
             }
         });
         getContentPane().add(btnKeluar);
-        btnKeluar.setBounds(220, 130, 130, 40);
+        btnKeluar.setBounds(390, 140, 150, 40);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
@@ -181,24 +185,49 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
             }
         });
         getContentPane().add(btnPreview);
-        btnPreview.setBounds(60, 130, 130, 40);
+        btnPreview.setBounds(230, 140, 150, 40);
 
         tgl1.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl1);
-        tgl1.setBounds(140, 30, 150, 20);
+        tgl1.setBounds(140, 40, 150, 20);
 
         tgl2.setFieldFont(resourceMap.getFont("tgl2.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl2);
-        tgl2.setBounds(326, 30, 150, 20);
+        tgl2.setBounds(330, 40, 150, 20);
 
         jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(290, 30, 30, 16);
+        jLabel5.setBounds(290, 40, 30, 16);
 
-        setBounds(0, 0, 577, 218);
+        jLabel6.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(20, 10, 140, 15);
+
+        OptTanggal.setFont(resourceMap.getFont("OptTanggal.font")); // NOI18N
+        OptTanggal.setText(resourceMap.getString("OptTanggal.text")); // NOI18N
+        OptTanggal.setEnabled(false);
+        OptTanggal.setName("OptTanggal"); // NOI18N
+        getContentPane().add(OptTanggal);
+        OptTanggal.setBounds(150, 7, 81, 25);
+
+        OptFaktur.setFont(resourceMap.getFont("OptFaktur.font")); // NOI18N
+        OptFaktur.setText(resourceMap.getString("OptFaktur.text")); // NOI18N
+        OptFaktur.setName("OptFaktur"); // NOI18N
+        getContentPane().add(OptFaktur);
+        OptFaktur.setBounds(240, 7, 100, 25);
+
+        cbOpsiFaktur.setFont(resourceMap.getFont("cbOpsiFaktur.font")); // NOI18N
+        cbOpsiFaktur.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pajak", "Non Pajak" }));
+        cbOpsiFaktur.setName("cbOpsiFaktur"); // NOI18N
+        getContentPane().add(cbOpsiFaktur);
+        cbOpsiFaktur.setBounds(140, 100, 130, 20);
+
+        setBounds(0, 0, 577, 247);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
@@ -282,12 +311,16 @@ java.text.DateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox OptFaktur;
+    private javax.swing.JCheckBox OptTanggal;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnPreview;
+    private javax.swing.JComboBox cbOpsiFaktur;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private datechooser.beans.DateChooserCombo tgl1;

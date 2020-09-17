@@ -124,7 +124,7 @@ public class LaporanPenjualanHarianPerPelangganForm extends javax.swing.JInterna
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(30, 60, 460, 120);
+        jScrollPane1.setBounds(40, 60, 450, 120);
 
         jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N

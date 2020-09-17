@@ -27,7 +27,7 @@ import com.eigher.model.loghistory;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIE-SOFT
  */
 public class FormPerkiraan extends javax.swing.JInternalFrame {
 
