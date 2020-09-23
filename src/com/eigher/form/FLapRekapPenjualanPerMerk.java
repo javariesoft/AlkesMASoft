@@ -34,7 +34,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIE-SOFT
  */
 public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
 
@@ -153,7 +153,7 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
         JPMerk.setViewportView(JTableMerk);
 
         getContentPane().add(JPMerk);
-        JPMerk.setBounds(124, 90, 410, 130);
+        JPMerk.setBounds(144, 90, 390, 130);
 
         JPPelanggan.setName("JPPelanggan"); // NOI18N
 
@@ -177,7 +177,7 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
         JPPelanggan.setViewportView(JTablePelanggan);
 
         getContentPane().add(JPPelanggan);
-        JPPelanggan.setBounds(94, 120, 440, 110);
+        JPPelanggan.setBounds(124, 120, 410, 110);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
@@ -189,7 +189,7 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnPreview);
-        btnPreview.setBounds(30, 160, 150, 40);
+        btnPreview.setBounds(40, 150, 150, 40);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -201,7 +201,7 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnKeluar);
-        btnKeluar.setBounds(350, 160, 150, 40);
+        btnKeluar.setBounds(360, 150, 150, 40);
 
         txtnamamerk.setFont(resourceMap.getFont("txtnamamerk.font")); // NOI18N
         txtnamamerk.setDisabledTextColor(resourceMap.getColor("txtnamamerk.disabledTextColor")); // NOI18N
@@ -230,19 +230,19 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
         OptTanggal.setEnabled(false);
         OptTanggal.setName("OptTanggal"); // NOI18N
         getContentPane().add(OptTanggal);
-        OptTanggal.setBounds(150, 7, 81, 25);
+        OptTanggal.setBounds(150, 7, 81, 23);
 
         OptMerk.setFont(resourceMap.getFont("OptMerk.font")); // NOI18N
         OptMerk.setText(resourceMap.getString("OptMerk.text")); // NOI18N
         OptMerk.setName("OptMerk"); // NOI18N
         getContentPane().add(OptMerk);
-        OptMerk.setBounds(240, 7, 70, 25);
+        OptMerk.setBounds(240, 7, 70, 23);
 
         OptPelanggan.setFont(resourceMap.getFont("OptPelanggan.font")); // NOI18N
         OptPelanggan.setText(resourceMap.getString("OptPelanggan.text")); // NOI18N
         OptPelanggan.setName("OptPelanggan"); // NOI18N
         getContentPane().add(OptPelanggan);
-        OptPelanggan.setBounds(320, 7, 110, 25);
+        OptPelanggan.setBounds(310, 7, 100, 23);
 
         jLabel6.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
@@ -264,13 +264,13 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txtnamapelanggan);
-        txtnamapelanggan.setBounds(150, 100, 330, 21);
+        txtnamapelanggan.setBounds(150, 100, 330, 22);
 
         txtkodepelanggan.setEditable(false);
         txtkodepelanggan.setFont(resourceMap.getFont("txtkodepelanggan.font")); // NOI18N
         txtkodepelanggan.setName("txtkodepelanggan"); // NOI18N
         getContentPane().add(txtkodepelanggan);
-        txtkodepelanggan.setBounds(484, 100, 50, 21);
+        txtkodepelanggan.setBounds(484, 100, 50, 22);
 
         btnClear.setFont(resourceMap.getFont("btnClear.font")); // NOI18N
         btnClear.setIcon(resourceMap.getIcon("btnClear.icon")); // NOI18N
@@ -282,9 +282,9 @@ public class FLapRekapPenjualanPerMerk extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnClear);
-        btnClear.setBounds(190, 160, 150, 40);
+        btnClear.setBounds(200, 150, 150, 40);
 
-        setBounds(0, 0, 560, 270);
+        setBounds(0, 0, 560, 268);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
@@ -331,7 +331,7 @@ private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         
         } else if (OptTanggal.isSelected() && OptPelanggan.isSelected()) {
             if(txtkodepelanggan.getText().trim().equals("")){
-                JOptionPane.showMessageDialog(null, "Isi Data Pelanggan .. !");
+                JOptionPane.showMessageDialog(null, "Isi Data Pelanggan ..!");
                 txtnamapelanggan.requestFocus();
             }else{
                p=dbpelanggan.getDetails(txtkodepelanggan.getText());
@@ -346,8 +346,7 @@ private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             jasperPrint = JasperFillManager.fillReport(in, parameter, c);
             JasperViewer.viewReport(jasperPrint, false);
         }
-        
-        
+
         c.close();
     } catch (Exception ex) {
         System.out.print(ex.toString());
@@ -403,7 +402,7 @@ private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             JTablePelanggan.getSelectionModel().setSelectionInterval(0, 0);
         }
         if (evt.getKeyCode() == 27) {
-            JTablePelanggan.setVisible(false);
+            JPPelanggan.setVisible(false);
         }
     }//GEN-LAST:event_txtnamapelangganKeyPressed
 

@@ -22,7 +22,6 @@ import com.eigher.form.LaporanKartuStokTanggal;
 import com.erv.db.DatabaseBackup;
 import com.erv.db.H2DatabaseBackup;
 import com.erv.db.koneksi;
-import com.erv.view.FLapAnalisaPenjualanMerk1;
 import com.erv.view.FormLapPajakBeli;
 import com.erv.view.FormLapPajakJual;
 import com.erv.view.FormLapPajakReturBeli;
@@ -210,7 +209,7 @@ public class JavarieSoftView extends FrameView {
         Manalisastokbrg = new javax.swing.JMenuItem();
         MSearchingBarang = new javax.swing.JMenuItem();
         MNomorPajak = new javax.swing.JMenuItem();
-        MNomorFaktur = new javax.swing.JMenuItem();
+        MNomorFakturJual = new javax.swing.JMenuItem();
         MTransaksi = new javax.swing.JMenu();
         Mjurnal = new javax.swing.JMenuItem();
         Mpenjualan = new javax.swing.JMenuItem();
@@ -241,6 +240,7 @@ public class JavarieSoftView extends FrameView {
         MLJPerFaktur = new javax.swing.JMenuItem();
         MLJDetailHarian = new javax.swing.JMenuItem();
         MLJDetailPerPelanggan = new javax.swing.JMenuItem();
+        MLJDetailPelangganPerBarang = new javax.swing.JMenuItem();
         MLJPerMerkSparindo = new javax.swing.JMenuItem();
         MLJPerMerkKemenkes = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -649,14 +649,15 @@ public class JavarieSoftView extends FrameView {
         });
         MFile.add(MNomorPajak);
 
-        MNomorFaktur.setText(resourceMap.getString("MNomorFaktur.text")); // NOI18N
-        MNomorFaktur.setName("MNomorFaktur"); // NOI18N
-        MNomorFaktur.addActionListener(new java.awt.event.ActionListener() {
+        MNomorFakturJual.setIcon(resourceMap.getIcon("MNomorFakturJual.icon")); // NOI18N
+        MNomorFakturJual.setText(resourceMap.getString("MNomorFakturJual.text")); // NOI18N
+        MNomorFakturJual.setName("MNomorFakturJual"); // NOI18N
+        MNomorFakturJual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MNomorFakturActionPerformed(evt);
+                MNomorFakturJualActionPerformed(evt);
             }
         });
-        MFile.add(MNomorFaktur);
+        MFile.add(MNomorFakturJual);
 
         menuBar.add(MFile);
 
@@ -927,6 +928,15 @@ public class JavarieSoftView extends FrameView {
             }
         });
         MlapPenjualan.add(MLJDetailPerPelanggan);
+
+        MLJDetailPelangganPerBarang.setText(resourceMap.getString("MLJDetailPelangganPerBarang.text")); // NOI18N
+        MLJDetailPelangganPerBarang.setName("MLJDetailPelangganPerBarang"); // NOI18N
+        MLJDetailPelangganPerBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MLJDetailPelangganPerBarangActionPerformed(evt);
+            }
+        });
+        MlapPenjualan.add(MLJDetailPelangganPerBarang);
 
         MLJPerMerkSparindo.setText(resourceMap.getString("MLJPerMerkSparindo.text")); // NOI18N
         MLJPerMerkSparindo.setName("MLJPerMerkSparindo"); // NOI18N
@@ -2278,7 +2288,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     private void MLJDetailPerPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLJDetailPerPelangganActionPerformed
         // TODO add your handling code here:
-        LaporanPenjualanHarianPerPelangganForm p = new LaporanPenjualanHarianPerPelangganForm();
+        FLapJualHarianPerPelanggan p = new FLapJualHarianPerPelanggan();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
@@ -2541,13 +2551,21 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MRekapHRBActionPerformed
 
-    private void MNomorFakturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNomorFakturActionPerformed
+    private void MNomorFakturJualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNomorFakturJualActionPerformed
         // TODO add your handling code here:
         FormNoFaktur p = new FormNoFaktur();
         p.toFront();
         panelCool1.add(p);
         p.setVisible(true);
-    }//GEN-LAST:event_MNomorFakturActionPerformed
+    }//GEN-LAST:event_MNomorFakturJualActionPerformed
+
+    private void MLJDetailPelangganPerBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLJDetailPelangganPerBarangActionPerformed
+        // TODO add your handling code here:
+        FLapJualPerPelangganBarang p = new FLapJualPerPelangganBarang();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true);
+    }//GEN-LAST:event_MLJDetailPelangganPerBarangActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
@@ -2590,6 +2608,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private javax.swing.JMenuItem MLH_RekapHutangALLSupplier;
     private javax.swing.JMenuItem MLH_RekapHutangPerSupplier;
     public static javax.swing.JMenuItem MLJDetailHarian;
+    private javax.swing.JMenuItem MLJDetailPelangganPerBarang;
     public static javax.swing.JMenuItem MLJDetailPerPelanggan;
     public static javax.swing.JMenuItem MLJPerFaktur;
     public static javax.swing.JMenuItem MLJPerMerkKemenkes;
@@ -2623,7 +2642,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenu MLapReturDeliveryOrder;
     private javax.swing.JMenuItem MLapSisaDO;
     public static javax.swing.JMenu MLaporan;
-    private javax.swing.JMenuItem MNomorFaktur;
+    public static javax.swing.JMenuItem MNomorFakturJual;
     private static javax.swing.JMenuItem MNomorPajak;
     private static javax.swing.JMenuItem MPajak;
     private javax.swing.JMenuItem MRekapHR;
@@ -2731,6 +2750,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(true);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
+        MNomorPajak.setVisible(true);
+        MNomorFakturJual.setVisible(true);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(true);
@@ -2782,7 +2803,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(true);
         MLapPajak.setVisible(true);
         MLapAnalisis.setVisible(true);
-        MNomorPajak.setVisible(true);
         MPajak.setVisible(true);
         //End Menu Laporan
     }
@@ -2813,6 +2833,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(false);
+        MNomorPajak.setVisible(false);
+        MNomorFakturJual.setVisible(false);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(false);
@@ -2864,7 +2886,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
         //End Menu Laporan
     }
@@ -3001,6 +3022,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
+        MNomorPajak.setVisible(false);
+        MNomorFakturJual.setVisible(false);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(true);
@@ -3050,7 +3073,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
         //End Menu Laporan
     }
@@ -3081,6 +3103,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(false);
+        MNomorPajak.setVisible(true);
+        MNomorFakturJual.setVisible(false);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(false);
@@ -3130,7 +3154,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(true);
         MPajak.setVisible(true);
         //End Menu Laporan
     }
@@ -3161,6 +3184,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
+        MNomorPajak.setVisible(true);
+        MNomorFakturJual.setVisible(false);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(true);
@@ -3211,7 +3236,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(true);
         MPajak.setVisible(true);
         //End Menu Laporan
     }
@@ -3242,6 +3266,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
+        MNomorPajak.setVisible(false);
+        MNomorFakturJual.setVisible(false);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(false);
@@ -3298,7 +3324,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
         //End Menu Laporan
     }
@@ -3329,6 +3354,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(false);
+        MNomorPajak.setVisible(false);
+        MNomorFakturJual.setVisible(false);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(false);
@@ -3378,7 +3405,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
         //End Menu Laporan
     }
@@ -3409,6 +3435,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
+        MNomorPajak.setVisible(true);
+        MNomorFakturJual.setVisible(true);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(true);
@@ -3459,7 +3487,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(true);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(true);
         MPajak.setVisible(true);
         //End Menu Laporan
     }
@@ -3490,6 +3517,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
+        MNomorPajak.setVisible(false);
+        MNomorFakturJual.setVisible(false);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(false);
@@ -3541,7 +3570,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
         //End Menu Laporan
     }
@@ -3572,6 +3600,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlogHistory.setVisible(false);
         Manalisa.setVisible(false);
         MSearchingBarang.setVisible(true);
+        MNomorPajak.setVisible(false);
+        MNomorFakturJual.setVisible(false);
         //End Menu File
         //Start Menu Transaksi
         MTransaksi.setVisible(false);
@@ -3628,7 +3658,6 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MlapEkuitas.setVisible(false);
         MLapPajak.setVisible(false);
         MLapAnalisis.setVisible(false);
-        MNomorPajak.setVisible(false);
         MPajak.setVisible(false);
         //End Menu Laporan
     }

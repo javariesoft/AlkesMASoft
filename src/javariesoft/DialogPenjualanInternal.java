@@ -92,7 +92,7 @@ import simple.escp.json.JsonTemplate;
 
 /**
  *
- * @author TI-PNP
+ * @author JAVARIE-SOFT
  */
 public class DialogPenjualanInternal extends javax.swing.JInternalFrame {
 

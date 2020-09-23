@@ -101,7 +101,7 @@ public class LaporanPenjualanHarianForm extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnOk);
-        btnOk.setBounds(30, 170, 170, 40);
+        btnOk.setBounds(90, 140, 170, 40);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -113,7 +113,7 @@ public class LaporanPenjualanHarianForm extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnKeluar);
-        btnKeluar.setBounds(220, 170, 170, 40);
+        btnKeluar.setBounds(280, 140, 170, 40);
 
         jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
@@ -156,7 +156,7 @@ public class LaporanPenjualanHarianForm extends javax.swing.JInternalFrame {
         OptPembayaran.setText(resourceMap.getString("OptPembayaran.text")); // NOI18N
         OptPembayaran.setName("OptPembayaran"); // NOI18N
         getContentPane().add(OptPembayaran);
-        OptPembayaran.setBounds(350, 7, 110, 25);
+        OptPembayaran.setBounds(345, 7, 110, 25);
 
         OptOpsiFaktur.setFont(resourceMap.getFont("OptOpsiFaktur.font")); // NOI18N
         OptOpsiFaktur.setText(resourceMap.getString("OptOpsiFaktur.text")); // NOI18N
@@ -164,7 +164,7 @@ public class LaporanPenjualanHarianForm extends javax.swing.JInternalFrame {
         getContentPane().add(OptOpsiFaktur);
         OptOpsiFaktur.setBounds(240, 7, 100, 25);
 
-        setBounds(0, 0, 503, 255);
+        setBounds(0, 0, 492, 227);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed

@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -29,9 +30,9 @@ import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIE-SOFT
  */
-public class LaporanPenjualanHarianPerPelangganForm extends javax.swing.JInternalFrame {
+public class FLapJualPerPelangganBarang extends javax.swing.JInternalFrame {
 
     Connection c;
     java.text.DateFormat d = new SimpleDateFormat("yyyy-MM-dd");
@@ -39,16 +40,17 @@ public class LaporanPenjualanHarianPerPelangganForm extends javax.swing.JInterna
     /**
      * Creates new form LaporanPenjualanHarianForm
      */
-    public LaporanPenjualanHarianPerPelangganForm() {
+    public FLapJualPerPelangganBarang() {
         initComponents();
         try {
             tgl1.setDateFormat(d);
             tgl2.setDateFormat(d);
             c = koneksi.getKoneksiJ();
         } catch (SQLException ex) {
-            Logger.getLogger(LaporanPenjualanHarianPerPelangganForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FLapJualPerPelangganBarang.class.getName()).log(Level.SEVERE, null, ex);
         }
             jScrollPane1.setVisible(false);
+            jScrollPane2.setVisible(false);
     }
 
     /**
@@ -67,13 +69,17 @@ public class LaporanPenjualanHarianPerPelangganForm extends javax.swing.JInterna
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         btnPreview = new javax.swing.JButton();
         btnKeluar = new javax.swing.JButton();
         txtnamapelanggan = new javax.swing.JTextField();
         txtkodepelanggan = new javax.swing.JTextField();
+        txtNamaBarang = new javax.swing.JTextField();
+        txtKodeBarang = new javax.swing.JTextField();
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(LaporanPenjualanHarianPerPelangganForm.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FLapJualPerPelangganBarang.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         getContentPane().setLayout(null);
@@ -124,7 +130,28 @@ public class LaporanPenjualanHarianPerPelangganForm extends javax.swing.JInterna
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(40, 60, 450, 120);
+        jScrollPane1.setBounds(180, 60, 340, 120);
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTable2.setName("jTable2"); // NOI18N
+        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable2KeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(140, 90, 380, 100);
 
         jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
@@ -186,32 +213,73 @@ public class LaporanPenjualanHarianPerPelangganForm extends javax.swing.JInterna
             }
         });
         getContentPane().add(txtkodepelanggan);
-        txtkodepelanggan.setBounds(140, 70, 330, 22);
+        txtkodepelanggan.setBounds(470, 40, 50, 22);
 
-        setBounds(0, 0, 517, 218);
+        txtNamaBarang.setFont(resourceMap.getFont("txtNamaBarang.font")); // NOI18N
+        txtNamaBarang.setDisabledTextColor(resourceMap.getColor("txtNamaBarang.disabledTextColor")); // NOI18N
+        txtNamaBarang.setName("txtNamaBarang"); // NOI18N
+        txtNamaBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNamaBarangActionPerformed(evt);
+            }
+        });
+        txtNamaBarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNamaBarangKeyPressed(evt);
+            }
+        });
+        getContentPane().add(txtNamaBarang);
+        txtNamaBarang.setBounds(140, 70, 330, 22);
+
+        txtKodeBarang.setEditable(false);
+        txtKodeBarang.setFont(resourceMap.getFont("txtKodeBarang.font")); // NOI18N
+        txtKodeBarang.setName("txtKodeBarang"); // NOI18N
+        txtKodeBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtKodeBarangActionPerformed(evt);
+            }
+        });
+        txtKodeBarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtKodeBarangKeyPressed(evt);
+            }
+        });
+        getContentPane().add(txtKodeBarang);
+        txtKodeBarang.setBounds(470, 70, 50, 22);
+
+        setBounds(0, 0, 554, 227);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
 // TODO add your handling code here:
-    this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-    HashMap parameter = new HashMap();
-    JasperPrint jasperPrint = null;
+    if ((txtkodepelanggan.getText().equals("")) || (txtKodeBarang.getText().equals(""))) {
+        JOptionPane.showMessageDialog(null, "Data Belum Lengkap.. !");
+        txtkodepelanggan.requestFocus();
+    }else{
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        HashMap parameter = new HashMap();
+        JasperPrint jasperPrint = null;
 
-    try {
-        Connection c = koneksi.getKoneksiJ();
-        parameter.put("tgl1", tgl1.getText());
-        parameter.put("tgl2", tgl2.getText());
-        parameter.put("PPelanggan", txtkodepelanggan.getText());
-        URL url = new URL(global.REPORT + "/penjualanHarianPerPelanggan.jasper");
-        InputStream in = url.openStream();
-        jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-        JasperViewer.viewReport(jasperPrint, false);
-        c.close();
-    } catch (Exception ex) {
-        System.out.print(ex.toString());
-        //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            Connection c = koneksi.getKoneksiJ();
+    //        if (OptTanggal.isSelected() && OptPelanggan.isSelected() && OptOpsiFaktur.isSelected()) {
+                parameter.put("tgl1", tgl1.getText());
+                parameter.put("tgl2", tgl2.getText());
+                parameter.put("PPelanggan", txtkodepelanggan.getText());
+                parameter.put("PBarang", txtKodeBarang.getText());
+                URL url = new URL(global.REPORT + "/LapJualPelBarangPTGLPelangganBarang.jasper");
+                InputStream in = url.openStream();
+                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+                JasperViewer.viewReport(jasperPrint, false);
+    //        }
+
+            c.close();
+        } catch (Exception ex) {
+            System.out.print(ex.toString());
+            //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
-    this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 }//GEN-LAST:event_btnPreviewActionPerformed
 
 private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
@@ -253,9 +321,45 @@ private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             txtkodepelanggan.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
             txtnamapelanggan.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
             jScrollPane1.setVisible(false);
-            btnPreview.requestFocus();
+            txtNamaBarang.requestFocus();
         }
     }//GEN-LAST:event_jTable1KeyPressed
+
+    private void txtNamaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaBarangActionPerformed
+        // TODO add your handling code here:
+        jScrollPane2.setVisible(true);
+        reloadDataBarang();
+    }//GEN-LAST:event_txtNamaBarangActionPerformed
+
+    private void txtNamaBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamaBarangKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 40) {
+            jScrollPane2.setVisible(true);
+            jTable2.requestFocus();
+            jTable2.getSelectionModel().setSelectionInterval(0, 0);
+        }
+        if (evt.getKeyCode() == 27) {
+            jScrollPane2.setVisible(false);
+        }
+    }//GEN-LAST:event_txtNamaBarangKeyPressed
+
+    private void txtKodeBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKodeBarangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtKodeBarangActionPerformed
+
+    private void txtKodeBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKodeBarangKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtKodeBarangKeyPressed
+
+    private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == 10) {
+            txtKodeBarang.setText(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString());
+            txtNamaBarang.setText(jTable2.getValueAt(jTable2.getSelectedRow(), 1).toString());
+            jScrollPane2.setVisible(false);
+            btnPreview.requestFocus();
+        }
+    }//GEN-LAST:event_jTable2KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKeluar;
@@ -265,9 +369,13 @@ private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private datechooser.beans.DateChooserCombo tgl1;
     private datechooser.beans.DateChooserCombo tgl2;
+    private javax.swing.JTextField txtKodeBarang;
+    private javax.swing.JTextField txtNamaBarang;
     private javax.swing.JTextField txtkodepelanggan;
     private javax.swing.JTextField txtnamapelanggan;
     // End of variables declaration//GEN-END:variables
@@ -292,6 +400,35 @@ private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             j.close();
         } catch (Exception ex) {
             Logger.getLogger(FRekapJualPerPelanggan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    void reloadDataBarang() {
+        try {
+            JDBCAdapter j = new JDBCAdapter(c);
+            j.executeQuery("SELECT BARANG.KODEBARANG,BARANG.NAMABARANG,JENISBARANG.JENIS "
+                    + "FROM BARANG,JENISBARANG WHERE BARANG.IDJENIS=JENISBARANG.ID "
+                    + "AND BARANG.STATUS='0' "
+                    + "AND (BARANG.KODEBARANG like '" + txtNamaBarang.getText() + "%' "
+                    + "OR LOWER(BARANG.NAMABARANG) like '%" + txtNamaBarang.getText().toLowerCase() + "%')");
+            jScrollPane2.getViewport().remove(jTable2);
+            jTable2 = new JTable(j);
+            jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyPressed(java.awt.event.KeyEvent evt) {
+                    jTable2KeyPressed(evt);
+                }
+            });
+            TableColumn col = jTable2.getColumnModel().getColumn(0);
+            col.setPreferredWidth(30);
+            col = jTable2.getColumnModel().getColumn(1);
+            col.setPreferredWidth(100);
+            col = jTable2.getColumnModel().getColumn(2);
+            col.setPreferredWidth(50);
+            jScrollPane2.getViewport().add(jTable2);
+            jScrollPane2.repaint();
+            j.close();
+        } catch (Exception ex) {
+            Logger.getLogger(FLapJualPerPelangganBarang.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

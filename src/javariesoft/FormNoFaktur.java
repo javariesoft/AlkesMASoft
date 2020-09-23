@@ -33,6 +33,7 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
             clearForm();
             con = koneksi.getKoneksiJ();
             reloadData();
+            cektombol();
         } catch (SQLException ex) {
             Logger.getLogger(FormNoFaktur.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,9 +53,10 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         btnInsert = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        btnExit = new javax.swing.JButton();
+        btnAktivasi = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnExit = new javax.swing.JButton();
 
         setClosable(true);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormNoFaktur.class);
@@ -81,10 +83,11 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
         panelCool1.setName("panelCool1"); // NOI18N
         panelCool1.setLayout(null);
 
+        txtNofak.setFont(resourceMap.getFont("txtNofak.font")); // NOI18N
         txtNofak.setText(resourceMap.getString("txtNofak.text")); // NOI18N
         txtNofak.setName("txtNofak"); // NOI18N
         panelCool1.add(txtNofak);
-        txtNofak.setBounds(170, 30, 170, 20);
+        txtNofak.setBounds(150, 30, 220, 20);
 
         jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel2.setForeground(resourceMap.getColor("jLabel2.foreground")); // NOI18N
@@ -94,6 +97,7 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
         jLabel2.setBounds(20, 30, 120, 16);
 
         btnInsert.setFont(resourceMap.getFont("btnInsert.font")); // NOI18N
+        btnInsert.setIcon(resourceMap.getIcon("btnInsert.icon")); // NOI18N
         btnInsert.setText(resourceMap.getString("btnInsert.text")); // NOI18N
         btnInsert.setName("btnInsert"); // NOI18N
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
@@ -102,9 +106,10 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnInsert);
-        btnInsert.setBounds(20, 70, 100, 23);
+        btnInsert.setBounds(20, 70, 100, 25);
 
         btnDelete.setFont(resourceMap.getFont("btnDelete.font")); // NOI18N
+        btnDelete.setIcon(resourceMap.getIcon("btnDelete.icon")); // NOI18N
         btnDelete.setText(resourceMap.getString("btnDelete.text")); // NOI18N
         btnDelete.setName("btnDelete"); // NOI18N
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -113,18 +118,19 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnDelete);
-        btnDelete.setBounds(130, 70, 100, 23);
+        btnDelete.setBounds(250, 70, 100, 25);
 
-        btnExit.setFont(resourceMap.getFont("btnExit.font")); // NOI18N
-        btnExit.setText(resourceMap.getString("btnExit.text")); // NOI18N
-        btnExit.setName("btnExit"); // NOI18N
-        btnExit.addActionListener(new java.awt.event.ActionListener() {
+        btnAktivasi.setFont(resourceMap.getFont("btnAktivasi.font")); // NOI18N
+        btnAktivasi.setIcon(resourceMap.getIcon("btnAktivasi.icon")); // NOI18N
+        btnAktivasi.setText(resourceMap.getString("btnAktivasi.text")); // NOI18N
+        btnAktivasi.setName("btnAktivasi"); // NOI18N
+        btnAktivasi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExitActionPerformed(evt);
+                btnAktivasiActionPerformed(evt);
             }
         });
-        panelCool1.add(btnExit);
-        btnExit.setBounds(240, 70, 100, 25);
+        panelCool1.add(btnAktivasi);
+        btnAktivasi.setBounds(130, 70, 110, 25);
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -150,6 +156,18 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
         panelCool1.add(jScrollPane1);
         jScrollPane1.setBounds(20, 110, 540, 240);
 
+        btnExit.setFont(resourceMap.getFont("btnExit.font")); // NOI18N
+        btnExit.setIcon(resourceMap.getIcon("btnExit.icon")); // NOI18N
+        btnExit.setText(resourceMap.getString("btnExit.text")); // NOI18N
+        btnExit.setName("btnExit"); // NOI18N
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+        panelCool1.add(btnExit);
+        btnExit.setBounds(450, 70, 100, 25);
+
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
         setBounds(0, 0, 593, 396);
@@ -158,13 +176,18 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         try {
             // TODO add your handling code here:
-            Nofak nofak = new Nofak();
-            nofak.setId(0);
-            nofak.setNofak(Integer.parseInt(txtNofak.getText()));
-            NofakDao.insertIntoNOFAK(con, nofak.getNofak());
-            JOptionPane.showMessageDialog(this, "Entri data ok");
-            clearForm();
-            reloadData();
+            if (!NofakDao.cekNoFakturAda(con, Integer.parseInt(txtNofak.getText()))) {
+                Nofak nofak = new Nofak();
+                nofak.setId(0);
+                nofak.setNofak(Integer.parseInt(txtNofak.getText()));
+                NofakDao.insertIntoNOFAK(con, nofak.getNofak());
+                JOptionPane.showMessageDialog(this, "Entri data ok");
+                clearForm();
+                reloadData();
+            }else{
+                JOptionPane.showMessageDialog(null, "Nomor Faktur Sudah Ada ..!");
+                txtNofak.requestFocus();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FormNoFaktur.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -175,7 +198,7 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+    private void btnAktivasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAktivasiActionPerformed
         try {
             // TODO add your handling code here:
             NofakDao.setAktif(con, Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
@@ -183,7 +206,7 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FormNoFaktur.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnExitActionPerformed
+    }//GEN-LAST:event_btnAktivasiActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         try {
@@ -204,8 +227,40 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_formInternalFrameClosed
 
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void settingtombol(boolean simp, boolean aktivasi, boolean hapus) {
+        btnInsert.setEnabled(simp);
+        btnAktivasi.setEnabled(aktivasi);
+        btnDelete.setEnabled(hapus);
+    }
+    
+    void cektombol() {
+        if (JavarieSoftApp.groupuser.equals("Pembelian")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Penjualan")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Administrator")) {
+            settingtombol(true, true, false);
+        } else if (JavarieSoftApp.groupuser.equals("KaGudang")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Operator")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Accounting")) {
+            settingtombol(false, false, false);
+        } else if (JavarieSoftApp.groupuser.equals("Asisten Administrator")) {
+            settingtombol(true, true, false);
+        } else if (JavarieSoftApp.groupuser.equals("Master Data")) {
+            settingtombol(false, false, false);
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAktivasi;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnInsert;
@@ -223,7 +278,7 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
     private void reloadData() {
         try {
             JDBCAdapter j = new JDBCAdapter(con);
-            String sql = "select * from nofak order by id";
+            String sql = "SELECT ID, NOFAK as `No Faktur Berikutnya`, case STATUS when 0 then 'Tidak Aktif' when 1 then 'Aktif' end as `Status Aktif` FROM nofak ORDER BY id";
             j.executeQuery(sql);
             jScrollPane1.getViewport().remove(jTable1);
             jTable1 = new JTable(j);
@@ -238,7 +293,7 @@ public class FormNoFaktur extends javax.swing.JInternalFrame {
             jScrollPane1.repaint();
             j.close();
         } catch (Exception ex) {
-            Logger.getLogger(FormBarang.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormNoFaktur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

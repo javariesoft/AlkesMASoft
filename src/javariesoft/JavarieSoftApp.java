@@ -30,8 +30,8 @@ public class JavarieSoftApp extends SingleFrameApplication {
 
     static Server server;
 
-    public static String VERSI = "VERSI8.1MRTAALKES";
-    public static String VERSISERVER = "V-1.9.8.1";
+    public static String VERSI = "VERSI8.2MRTAALKES";
+    public static String VERSISERVER = "V-1.9.8.2";
     public static String IPADDRESS = "localhost";
     public static String jenisuser = "";
     public static String groupuser = "";
@@ -118,7 +118,7 @@ public class JavarieSoftApp extends SingleFrameApplication {
             }
             ResultSet rs=stat.executeQuery("select * from KODEAKSES where KODE='"+h+"'");
             if(rs.next()){
-            launch(JavarieSoftApp.class, args);
+                launch(JavarieSoftApp.class, args);
             }else{
                 DialogRegister d=new DialogRegister(null, true);
                     d.setVisible(true);
@@ -129,6 +129,7 @@ public class JavarieSoftApp extends SingleFrameApplication {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         } catch (SQLException ex) {
+//            System.out.println("Error : "+ex.toString());
             JOptionPane.showMessageDialog(null, "Database Belum Aktif");
         }
 

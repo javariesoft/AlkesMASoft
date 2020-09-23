@@ -212,7 +212,7 @@ public class FormPenjualan extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnFilter);
-        btnFilter.setBounds(1040, 10, 90, 25);
+        btnFilter.setBounds(1040, 10, 100, 25);
 
         cboStatus.setFont(resourceMap.getFont("cboStatus.font")); // NOI18N
         cboStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -254,7 +254,7 @@ public class FormPenjualan extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnKeluar);
-        btnKeluar.setBounds(1150, 10, 99, 25);
+        btnKeluar.setBounds(1150, 10, 100, 25);
 
         btnLoadJual.setFont(resourceMap.getFont("btnLoadJual.font")); // NOI18N
         btnLoadJual.setIcon(resourceMap.getIcon("btnLoadJual.icon")); // NOI18N

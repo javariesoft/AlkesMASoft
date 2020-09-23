@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="penjualanHarianPerPelanggan" language="groovy" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26d95568-6466-4fed-abb0-17535fbbddd1">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LapJualPelangganPTGL" language="groovy" pageWidth="600" pageHeight="842" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26d95568-6466-4fed-abb0-17535fbbddd1">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="340"/>
-	<property name="ireport.y" value="131"/>
+	<property name="ireport.x" value="30"/>
+	<property name="ireport.y" value="35"/>
 	<parameter name="tgl1" class="java.lang.String">
 		<defaultValueExpression><![CDATA["2015-01-01"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="tgl2" class="java.lang.String">
 		<defaultValueExpression><![CDATA["2015-12-01"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PPelanggan" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -38,7 +35,7 @@ FROM
      INNER JOIN "PUBLIC"."PELANGGAN" PELANGGAN ON PENJUALAN."KODEPELANGGAN" = PELANGGAN."KODEPELANGGAN"
      INNER JOIN "PUBLIC"."JENISBARANG" JENISBARANG ON BARANG."IDJENIS" = JENISBARANG."ID"
      INNER JOIN "PUBLIC"."SALES" SALES ON PENJUALAN."IDSALES" = SALES."IDSALES"
-WHERE PELANGGAN.STATUSCABANG='0' and PENJUALAN."TANGGAL" >= $P{tgl1} AND PENJUALAN."TANGGAL" <= $P{tgl2} AND PENJUALAN."KODEPELANGGAN"=$P{PPelanggan}]]>
+WHERE PELANGGAN.STATUSCABANG='0' AND PENJUALAN."TANGGAL" >= $P{tgl1} AND PENJUALAN."TANGGAL" <= $P{tgl2}]]>
 	</queryString>
 	<field name="PENJUALAN_FAKTUR" class="java.lang.String"/>
 	<field name="PENJUALAN_TANGGAL" class="java.sql.Date"/>
