@@ -211,7 +211,9 @@ public class JavarieSoftView extends FrameView {
         MNomorPajak = new javax.swing.JMenuItem();
         MNomorFakturJual = new javax.swing.JMenuItem();
         MTransaksi = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
         Mjurnal = new javax.swing.JMenuItem();
+        MListJurnal = new javax.swing.JMenuItem();
         Mpenjualan = new javax.swing.JMenuItem();
         Mpembelian = new javax.swing.JMenuItem();
         Mhutang = new javax.swing.JMenuItem();
@@ -670,6 +672,9 @@ public class JavarieSoftView extends FrameView {
             }
         });
 
+        jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
+        jMenu1.setName("jMenu1"); // NOI18N
+
         Mjurnal.setIcon(resourceMap.getIcon("Mjurnal.icon")); // NOI18N
         Mjurnal.setText(resourceMap.getString("Mjurnal.text")); // NOI18N
         Mjurnal.setName("Mjurnal"); // NOI18N
@@ -678,7 +683,18 @@ public class JavarieSoftView extends FrameView {
                 MjurnalActionPerformed(evt);
             }
         });
-        MTransaksi.add(Mjurnal);
+        jMenu1.add(Mjurnal);
+
+        MListJurnal.setText(resourceMap.getString("MListJurnal.text")); // NOI18N
+        MListJurnal.setName("MListJurnal"); // NOI18N
+        MListJurnal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MListJurnalActionPerformed(evt);
+            }
+        });
+        jMenu1.add(MListJurnal);
+
+        MTransaksi.add(jMenu1);
 
         Mpenjualan.setIcon(resourceMap.getIcon("Mpenjualan.icon")); // NOI18N
         Mpenjualan.setText(resourceMap.getString("Mpenjualan.text")); // NOI18N
@@ -2567,6 +2583,14 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         p.setVisible(true);
     }//GEN-LAST:event_MLJDetailPelangganPerBarangActionPerformed
 
+    private void MListJurnalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MListJurnalActionPerformed
+        // TODO add your handling code here:
+        FormJurnalKelompok p = new FormJurnalKelompok();
+        p.toFront();
+        panelCool1.add(p);
+        p.setVisible(true); 
+    }//GEN-LAST:event_MListJurnalActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel LblJenis;
     private javax.swing.JLabel LblJenis1;
@@ -2642,6 +2666,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenu MLapReturDeliveryOrder;
     private javax.swing.JMenuItem MLapSisaDO;
     public static javax.swing.JMenu MLaporan;
+    private javax.swing.JMenuItem MListJurnal;
     public static javax.swing.JMenuItem MNomorFakturJual;
     private static javax.swing.JMenuItem MNomorPajak;
     private static javax.swing.JMenuItem MPajak;
@@ -2707,6 +2732,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     public static javax.swing.JMenuItem MuserAccount;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel mainPanel;
