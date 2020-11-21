@@ -523,19 +523,36 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="Mjurnal">
+            <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="Mjurnal.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="Mjurnal.text"/>
-                <Property name="name" type="java.lang.String" value="Mjurnal" noResource="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="jMenu1.text"/>
+                <Property name="name" type="java.lang.String" value="jMenu1" noResource="true"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MjurnalActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-              </AuxValues>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="Mjurnal">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" resourceKey="Mjurnal.icon"/>
+                    <Property name="text" type="java.lang.String" resourceKey="Mjurnal.text"/>
+                    <Property name="name" type="java.lang.String" value="Mjurnal" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MjurnalActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MListJurnal">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="MListJurnal.text"/>
+                    <Property name="name" type="java.lang.String" value="MListJurnal" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MListJurnalActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="Mpenjualan">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="Mpenjualan.icon"/>
