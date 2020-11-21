@@ -105,6 +105,7 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
         jLabel1 = new javax.swing.JLabel();
         cboRetur = new javax.swing.JComboBox();
         cboKriteria = new javax.swing.JComboBox();
+        cbStatus = new javax.swing.JComboBox<>();
         txtKriteria = new javax.swing.JTextField();
         tanggal = new datechooser.beans.DateChooserCombo();
         btnFilter = new javax.swing.JButton();
@@ -112,7 +113,6 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
         btnDeleteValidasi = new javax.swing.JButton();
         btnbayarhutang = new javax.swing.JButton();
         btnBatalRetur = new javax.swing.JButton();
-        cbStatus = new javax.swing.JComboBox<>();
         btnKeluar = new javax.swing.JButton();
         btnUpdateHpp = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -157,6 +157,11 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             }
         });
         jPanel2.add(cboKriteria);
+
+        cbStatus.setFont(resourceMap.getFont("cbStatus.font")); // NOI18N
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Draft", "Release", "Batal" }));
+        cbStatus.setName("cbStatus"); // NOI18N
+        jPanel2.add(cbStatus);
 
         txtKriteria.setFont(resourceMap.getFont("txtKriteria.font")); // NOI18N
         txtKriteria.setText(resourceMap.getString("txtKriteria.text")); // NOI18N
@@ -224,11 +229,6 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             }
         });
         jPanel2.add(btnBatalRetur);
-
-        cbStatus.setFont(resourceMap.getFont("cbStatus.font")); // NOI18N
-        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Draft", "Release", "Batal" }));
-        cbStatus.setName("cbStatus"); // NOI18N
-        jPanel2.add(cbStatus);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -838,16 +838,28 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             });
             tabelData.getSelectionModel().addListSelectionListener(this);
             //tabelData.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
-            tabelData.setFont(new Font("Tahoma", Font.BOLD, 12));
+            tabelData.setFont(new Font("Tahoma", Font.BOLD, 11));
             tabelData.setRowHeight(20);
             TableColumn col = tabelData.getColumnModel().getColumn(0);
             col.setPreferredWidth(30);
+            col = tabelData.getColumnModel().getColumn(1);
+            col.setPreferredWidth(70);
+            col = tabelData.getColumnModel().getColumn(2);
+            col.setPreferredWidth(70);
             col = tabelData.getColumnModel().getColumn(3);
             col.setPreferredWidth(250);
             col = tabelData.getColumnModel().getColumn(4);
-            col.setPreferredWidth(350);
+            col.setPreferredWidth(300);
             col = tabelData.getColumnModel().getColumn(6);
             col.setPreferredWidth(20);
+            col = tabelData.getColumnModel().getColumn(7);
+            col.setPreferredWidth(90);
+            col = tabelData.getColumnModel().getColumn(8);
+            col.setPreferredWidth(90);
+            col = tabelData.getColumnModel().getColumn(9);
+            col.setPreferredWidth(90);
+            col = tabelData.getColumnModel().getColumn(10);
+            col.setPreferredWidth(90);
             tabelData.getColumnModel().getColumn(7).setCellRenderer(new DecimalFormatRenderer());
             tabelData.getColumnModel().getColumn(8).setCellRenderer(new DecimalFormatRenderer());
             tabelData.getColumnModel().getColumn(9).setCellRenderer(new DecimalFormatRenderer());
@@ -897,16 +909,28 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             });
             tabelData.getSelectionModel().addListSelectionListener(this);
             //tabelData.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
-            tabelData.setFont(new Font("Tahoma", Font.BOLD, 12));
+            tabelData.setFont(new Font("Tahoma", Font.BOLD, 11));
             tabelData.setRowHeight(20);
             TableColumn col = tabelData.getColumnModel().getColumn(0);
             col.setPreferredWidth(30);
+            col = tabelData.getColumnModel().getColumn(1);
+            col.setPreferredWidth(70);
+            col = tabelData.getColumnModel().getColumn(2);
+            col.setPreferredWidth(70);
             col = tabelData.getColumnModel().getColumn(3);
             col.setPreferredWidth(250);
             col = tabelData.getColumnModel().getColumn(4);
-            col.setPreferredWidth(350);
+            col.setPreferredWidth(300);
             col = tabelData.getColumnModel().getColumn(6);
             col.setPreferredWidth(20);
+            col = tabelData.getColumnModel().getColumn(7);
+            col.setPreferredWidth(90);
+            col = tabelData.getColumnModel().getColumn(8);
+            col.setPreferredWidth(90);
+            col = tabelData.getColumnModel().getColumn(9);
+            col.setPreferredWidth(90);
+            col = tabelData.getColumnModel().getColumn(10);
+            col.setPreferredWidth(90);
             tabelData.getColumnModel().getColumn(7).setCellRenderer(new DecimalFormatRenderer());
             tabelData.getColumnModel().getColumn(8).setCellRenderer(new DecimalFormatRenderer());
             tabelData.getColumnModel().getColumn(9).setCellRenderer(new DecimalFormatRenderer());
@@ -949,16 +973,22 @@ public class FormRetur extends javax.swing.JInternalFrame implements ListSelecti
             });
             tabelData.getSelectionModel().addListSelectionListener(this);
             //tabelData.getColumnModel().getColumn(4).setCellRenderer(new DecimalFormatRenderer());
-            tabelData.setFont(new Font("Tahoma", Font.BOLD, 12));
+            tabelData.setFont(new Font("Tahoma", Font.BOLD, 11));
             tabelData.setRowHeight(20);
             TableColumn col = tabelData.getColumnModel().getColumn(0);
             col.setPreferredWidth(30);
+            col = tabelData.getColumnModel().getColumn(1);
+            col.setPreferredWidth(70);
+            col = tabelData.getColumnModel().getColumn(2);
+            col.setPreferredWidth(70);
             col = tabelData.getColumnModel().getColumn(3);
             col.setPreferredWidth(250);
             col = tabelData.getColumnModel().getColumn(4);
-            col.setPreferredWidth(350);
+            col.setPreferredWidth(300);
             col = tabelData.getColumnModel().getColumn(6);
             col.setPreferredWidth(20);
+            col = tabelData.getColumnModel().getColumn(7);
+            col.setPreferredWidth(90);
             jScrollPane1.getViewport().add(tabelData);
             jScrollPane1.repaint();
         }

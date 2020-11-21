@@ -60,7 +60,6 @@ public class FlapJualPerSales extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtnamasales = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         txtkodesales = new javax.swing.JTextField();
         btnKeluar = new javax.swing.JButton();
         btnPreview = new javax.swing.JButton();
@@ -101,7 +100,7 @@ public class FlapJualPerSales extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(120, 80, 310, 100);
+        jScrollPane1.setBounds(60, 80, 370, 100);
 
         jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
@@ -132,13 +131,7 @@ public class FlapJualPerSales extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txtnamasales);
-        txtnamasales.setBounds(120, 60, 260, 21);
-
-        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 90, 90, 15);
+        txtnamasales.setBounds(120, 60, 264, 21);
 
         txtkodesales.setEditable(false);
         txtkodesales.setFont(resourceMap.getFont("txtkodesales.font")); // NOI18N
@@ -155,7 +148,7 @@ public class FlapJualPerSales extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txtkodesales);
-        txtkodesales.setBounds(120, 90, 260, 21);
+        txtkodesales.setBounds(386, 60, 44, 21);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -167,7 +160,7 @@ public class FlapJualPerSales extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnKeluar);
-        btnKeluar.setBounds(220, 130, 130, 40);
+        btnKeluar.setBounds(280, 120, 150, 40);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
@@ -179,23 +172,23 @@ public class FlapJualPerSales extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnPreview);
-        btnPreview.setBounds(60, 130, 130, 40);
+        btnPreview.setBounds(130, 120, 150, 40);
 
         tgl1.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl1);
-        tgl1.setBounds(120, 30, 120, 26);
+        tgl1.setBounds(120, 30, 120, 20);
 
         tgl2.setFieldFont(resourceMap.getFont("tgl2.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl2);
-        tgl2.setBounds(270, 30, 130, 26);
+        tgl2.setBounds(270, 30, 130, 20);
 
         jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(20, 30, 70, 16);
+        jLabel5.setBounds(20, 30, 70, 15);
 
-        setBounds(0, 0, 454, 218);
+        setBounds(0, 0, 469, 218);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
@@ -275,7 +268,6 @@ public class FlapJualPerSales extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnPreview;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

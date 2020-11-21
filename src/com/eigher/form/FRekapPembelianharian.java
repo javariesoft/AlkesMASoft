@@ -14,6 +14,7 @@ import javariesoft.*;
 import com.erv.db.koneksi;
 import com.erv.function.JDBCAdapter;
 import java.awt.Cursor;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
@@ -26,6 +27,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 import java.text.SimpleDateFormat;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  *
@@ -96,7 +98,7 @@ public class FRekapPembelianharian extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(50, 120, 480, 110);
+        jScrollPane1.setBounds(60, 90, 460, 120);
 
         jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
@@ -114,7 +116,7 @@ public class FRekapPembelianharian extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnKeluar);
-        btnKeluar.setBounds(360, 160, 150, 40);
+        btnKeluar.setBounds(370, 160, 150, 40);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
@@ -126,7 +128,7 @@ public class FRekapPembelianharian extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnPreview);
-        btnPreview.setBounds(30, 160, 150, 40);
+        btnPreview.setBounds(62, 160, 150, 40);
 
         tgl1.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
         getContentPane().add(tgl1);
@@ -146,7 +148,7 @@ public class FRekapPembelianharian extends javax.swing.JInternalFrame {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 100, 110, 20);
+        jLabel1.setBounds(20, 70, 110, 20);
 
         txtnamasupplier.setName("txtnamasupplier"); // NOI18N
         txtnamasupplier.addActionListener(new java.awt.event.ActionListener() {
@@ -160,12 +162,12 @@ public class FRekapPembelianharian extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txtnamasupplier);
-        txtnamasupplier.setBounds(150, 100, 290, 20);
+        txtnamasupplier.setBounds(150, 70, 295, 20);
 
         txtkodesupplier.setEditable(false);
         txtkodesupplier.setName("txtkodesupplier"); // NOI18N
         getContentPane().add(txtkodesupplier);
-        txtkodesupplier.setBounds(450, 100, 70, 20);
+        txtkodesupplier.setBounds(450, 70, 70, 20);
 
         jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
@@ -184,25 +186,25 @@ public class FRekapPembelianharian extends javax.swing.JInternalFrame {
         OptOpsiFaktur.setText(resourceMap.getString("OptOpsiFaktur.text")); // NOI18N
         OptOpsiFaktur.setName("OptOpsiFaktur"); // NOI18N
         getContentPane().add(OptOpsiFaktur);
-        OptOpsiFaktur.setBounds(240, 7, 100, 25);
+        OptOpsiFaktur.setBounds(330, 7, 100, 25);
 
         OptSupplier.setFont(resourceMap.getFont("OptSupplier.font")); // NOI18N
         OptSupplier.setText(resourceMap.getString("OptSupplier.text")); // NOI18N
         OptSupplier.setName("OptSupplier"); // NOI18N
         getContentPane().add(OptSupplier);
-        OptSupplier.setBounds(350, 7, 110, 25);
+        OptSupplier.setBounds(240, 7, 90, 25);
 
         jLabel6.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(20, 70, 80, 20);
+        jLabel6.setBounds(20, 100, 80, 20);
 
         cbOpsiFaktur.setFont(resourceMap.getFont("cbOpsiFaktur.font")); // NOI18N
         cbOpsiFaktur.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pajak", "Non Pajak" }));
         cbOpsiFaktur.setName("cbOpsiFaktur"); // NOI18N
         getContentPane().add(cbOpsiFaktur);
-        cbOpsiFaktur.setBounds(150, 70, 120, 20);
+        cbOpsiFaktur.setBounds(150, 100, 120, 20);
 
         BtnClear.setFont(resourceMap.getFont("BtnClear.font")); // NOI18N
         BtnClear.setIcon(resourceMap.getIcon("BtnClear.icon")); // NOI18N
@@ -214,9 +216,9 @@ public class FRekapPembelianharian extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(BtnClear);
-        BtnClear.setBounds(190, 160, 160, 40);
+        BtnClear.setBounds(216, 160, 150, 40);
 
-        setBounds(0, 0, 568, 268);
+        setBounds(0, 0, 557, 256);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
@@ -280,29 +282,9 @@ public class FRekapPembelianharian extends javax.swing.JInternalFrame {
                 JasperViewer.viewReport(jasperPrint, false);
             }
             c.close();
-//            if (txtkodesupplier.getText().equals("")) {
-//
-//                parameter.put("Ptgl1", dateChooserCombo1.getText());
-//                parameter.put("Ptgl2", dateChooserCombo2.getText());
-//                URL url = new URL(global.REPORT + "/RekapBeliHarian.jasper");
-//                InputStream in = url.openStream();
-//                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-//                JasperViewer.viewReport(jasperPrint, false);
-//                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-//            } else {
-//                parameter.put("Ptgl1", dateChooserCombo1.getText());
-//                parameter.put("Ptgl2", dateChooserCombo2.getText());
-//                parameter.put("Psupplier", txtkodesupplier.getText());
-//                URL url = new URL(global.REPORT + "/RekapBeliHarianSupplier.jasper");
-//                InputStream in = url.openStream();
-//                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
-//                JasperViewer.viewReport(jasperPrint, false);
-//                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-//            }
-
-        } catch (Exception ex) {
-            System.out.print(ex.toString());
-            //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | SQLException | JRException ex) {
+//            System.out.print(ex.toString());
+            Logger.getLogger(FRekapPembelianharian.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnPreviewActionPerformed
@@ -377,7 +359,7 @@ void reloadData() {
             });
             jScrollPane1.getViewport().add(jTable1);
         } catch (Exception ex) {
-            Logger.getLogger(FRekapJualPerPelanggan.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FRekapPembelianharian.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

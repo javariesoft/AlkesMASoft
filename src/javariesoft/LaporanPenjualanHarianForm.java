@@ -26,7 +26,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIE-SOFT
  */
 public class LaporanPenjualanHarianForm extends javax.swing.JInternalFrame {
 
@@ -101,7 +101,7 @@ public class LaporanPenjualanHarianForm extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnOk);
-        btnOk.setBounds(90, 140, 170, 40);
+        btnOk.setBounds(144, 140, 150, 40);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -113,7 +113,7 @@ public class LaporanPenjualanHarianForm extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnKeluar);
-        btnKeluar.setBounds(280, 140, 170, 40);
+        btnKeluar.setBounds(300, 140, 150, 40);
 
         jLabel3.setFont(resourceMap.getFont("jLabel3.font")); // NOI18N
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N

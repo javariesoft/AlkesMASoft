@@ -1575,7 +1575,7 @@ private void btnNonaktifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             //c = koneksi.getKoneksiJ();
             jScrollPane2.setVisible(true);
             JDBCAdapter j = new JDBCAdapter(c);
-            j.executeQuery("select KODEPELANGGAN,NAMA from PELANGGAN where STATUSAKTIF='0' AND KODEPELANGGAN like '%" + txtNamaPelanggan.getText() + "%' or lower(NAMA) like '%" + txtNamaPelanggan.getText().toLowerCase() + "%'");
+            j.executeQuery("select KODEPELANGGAN,NAMA from PELANGGAN where STATUSAKTIF='0' AND (KODEPELANGGAN like '%" + txtNamaPelanggan.getText() + "%' or lower(NAMA) like '%" + txtNamaPelanggan.getText().toLowerCase() + "%')");
             jScrollPane2.getViewport().remove(jTable2);
             jTable2 = new JTable(j);
             jTable2.addKeyListener(new java.awt.event.KeyAdapter() {

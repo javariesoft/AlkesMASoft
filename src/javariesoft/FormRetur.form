@@ -98,6 +98,22 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboKriteriaActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JComboBox" name="cbStatus">
+              <Properties>
+                <Property name="font" type="java.awt.Font" resourceKey="cbStatus.font"/>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="3">
+                    <StringItem index="0" value="Draft"/>
+                    <StringItem index="1" value="Release"/>
+                    <StringItem index="2" value="Batal"/>
+                  </StringArray>
+                </Property>
+                <Property name="name" type="java.lang.String" value="cbStatus" noResource="true"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
             <Component class="javax.swing.JTextField" name="txtKriteria">
               <Properties>
                 <Property name="font" type="java.awt.Font" resourceKey="txtKriteria.font"/>
@@ -168,22 +184,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBatalReturActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="cbStatus">
-              <Properties>
-                <Property name="font" type="java.awt.Font" resourceKey="cbStatus.font"/>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
-                    <StringItem index="0" value="Draft"/>
-                    <StringItem index="1" value="Release"/>
-                    <StringItem index="2" value="Batal"/>
-                  </StringArray>
-                </Property>
-                <Property name="name" type="java.lang.String" value="cbStatus" noResource="true"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="btnKeluar">
               <Properties>

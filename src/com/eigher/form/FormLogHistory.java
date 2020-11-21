@@ -35,7 +35,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
- * @author erwadi
+ * @author JAVARIE-SOFT
  */
 public class FormLogHistory extends javax.swing.JInternalFrame {
 
@@ -58,6 +58,7 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
             utdao = new usertableDao();
             tgl1.setDateFormat(d);
             tgl2.setDateFormat(d);
+            kosongForm();
             reloadUser(c);
             reloadTabel(c);
         } catch (SQLException ex) {
@@ -95,29 +96,37 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
         btnExit = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         cmbTabel = new javax.swing.JComboBox();
-        txtCari = new javax.swing.JTextField();
+        txtNoReff = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnPreview = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        OptTanggal = new javax.swing.JCheckBox();
+        OptUsername = new javax.swing.JCheckBox();
+        OptTabel = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
+        OptNoreff = new javax.swing.JCheckBox();
+        OptAksi = new javax.swing.JCheckBox();
+        cmbAksi = new javax.swing.JComboBox();
 
         setClosable(true);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormLogHistory.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameClosing(evt);
-            }
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
         });
 
@@ -138,7 +147,7 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable1);
 
         panelCool1.add(jScrollPane2);
-        jScrollPane2.setBounds(10, 110, 960, 490);
+        jScrollPane2.setBounds(10, 190, 960, 410);
 
         lblKodeAkun.setFont(resourceMap.getFont("lblKodeAkun.font")); // NOI18N
         lblKodeAkun.setForeground(resourceMap.getColor("lblKodeAkun.foreground")); // NOI18N
@@ -152,14 +161,14 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
         panelCool1.add(jLabel3);
-        jLabel3.setBounds(360, 20, 30, 16);
+        jLabel3.setBounds(320, 50, 30, 16);
 
         jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
         jLabel4.setForeground(resourceMap.getColor("jLabel4.foreground")); // NOI18N
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
         panelCool1.add(jLabel4);
-        jLabel4.setBounds(340, 80, 50, 16);
+        jLabel4.setBounds(40, 127, 100, 16);
 
         cmbUser.setFont(resourceMap.getFont("cmbUser.font")); // NOI18N
         cmbUser.setName("cmbUser"); // NOI18N
@@ -169,7 +178,7 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(cmbUser);
-        cmbUser.setBounds(160, 50, 420, 21);
+        cmbUser.setBounds(170, 75, 170, 21);
 
         tgl1.setFieldFont(resourceMap.getFont("tgl1.dch_combo_fieldFont")); // NOI18N
         tgl1.addCommitListener(new datechooser.events.CommitListener() {
@@ -178,7 +187,7 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(tgl1);
-        tgl1.setBounds(160, 20, 180, 20);
+        tgl1.setBounds(170, 50, 140, 20);
 
         tgl2.setFieldFont(resourceMap.getFont("tgl2.dch_combo_fieldFont")); // NOI18N
         tgl2.addCommitListener(new datechooser.events.CommitListener() {
@@ -187,14 +196,14 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(tgl2);
-        tgl2.setBounds(400, 20, 180, 20);
+        tgl2.setBounds(350, 50, 140, 20);
 
         jLabel5.setFont(resourceMap.getFont("jLabel5.font")); // NOI18N
         jLabel5.setForeground(resourceMap.getColor("jLabel5.foreground")); // NOI18N
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
         panelCool1.add(jLabel5);
-        jLabel5.setBounds(40, 20, 110, 16);
+        jLabel5.setBounds(40, 50, 110, 16);
 
         btnExit.setFont(resourceMap.getFont("btnExit.font")); // NOI18N
         btnExit.setIcon(resourceMap.getIcon("btnExit.icon")); // NOI18N
@@ -206,14 +215,14 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnExit);
-        btnExit.setBounds(600, 60, 140, 40);
+        btnExit.setBounds(810, 130, 150, 40);
 
         jLabel6.setFont(resourceMap.getFont("jLabel6.font")); // NOI18N
         jLabel6.setForeground(resourceMap.getColor("jLabel6.foreground")); // NOI18N
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
         panelCool1.add(jLabel6);
-        jLabel6.setBounds(40, 50, 110, 16);
+        jLabel6.setBounds(40, 75, 110, 16);
 
         cmbTabel.setFont(resourceMap.getFont("cmbTabel.font")); // NOI18N
         cmbTabel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -224,26 +233,26 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(cmbTabel);
-        cmbTabel.setBounds(160, 80, 170, 21);
+        cmbTabel.setBounds(170, 101, 170, 21);
 
-        txtCari.setFont(resourceMap.getFont("txtCari.font")); // NOI18N
-        txtCari.setText(resourceMap.getString("txtCari.text")); // NOI18N
-        txtCari.setToolTipText(resourceMap.getString("txtCari.toolTipText")); // NOI18N
-        txtCari.setName("txtCari"); // NOI18N
-        txtCari.addActionListener(new java.awt.event.ActionListener() {
+        txtNoReff.setFont(resourceMap.getFont("txtNoReff.font")); // NOI18N
+        txtNoReff.setText(resourceMap.getString("txtNoReff.text")); // NOI18N
+        txtNoReff.setToolTipText(resourceMap.getString("txtNoReff.toolTipText")); // NOI18N
+        txtNoReff.setName("txtNoReff"); // NOI18N
+        txtNoReff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCariActionPerformed(evt);
+                txtNoReffActionPerformed(evt);
             }
         });
-        panelCool1.add(txtCari);
-        txtCari.setBounds(400, 80, 180, 21);
+        panelCool1.add(txtNoReff);
+        txtNoReff.setBounds(170, 127, 170, 21);
 
         jLabel7.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N
         jLabel7.setForeground(resourceMap.getColor("jLabel7.foreground")); // NOI18N
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
         panelCool1.add(jLabel7);
-        jLabel7.setBounds(40, 80, 110, 16);
+        jLabel7.setBounds(40, 101, 110, 16);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
@@ -255,7 +264,65 @@ public class FormLogHistory extends javax.swing.JInternalFrame {
             }
         });
         panelCool1.add(btnPreview);
-        btnPreview.setBounds(750, 60, 130, 40);
+        btnPreview.setBounds(650, 130, 150, 40);
+
+        jLabel8.setFont(resourceMap.getFont("jLabel8.font")); // NOI18N
+        jLabel8.setForeground(resourceMap.getColor("jLabel8.foreground")); // NOI18N
+        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
+        jLabel8.setName("jLabel8"); // NOI18N
+        panelCool1.add(jLabel8);
+        jLabel8.setBounds(40, 20, 140, 16);
+
+        OptTanggal.setFont(resourceMap.getFont("OptTanggal.font")); // NOI18N
+        OptTanggal.setText(resourceMap.getString("OptTanggal.text")); // NOI18N
+        OptTanggal.setEnabled(false);
+        OptTanggal.setName("OptTanggal"); // NOI18N
+        panelCool1.add(OptTanggal);
+        OptTanggal.setBounds(170, 20, 81, 25);
+
+        OptUsername.setFont(resourceMap.getFont("OptUsername.font")); // NOI18N
+        OptUsername.setText(resourceMap.getString("OptUsername.text")); // NOI18N
+        OptUsername.setEnabled(false);
+        OptUsername.setName("OptUsername"); // NOI18N
+        panelCool1.add(OptUsername);
+        OptUsername.setBounds(256, 20, 90, 25);
+
+        OptTabel.setFont(resourceMap.getFont("OptTabel.font")); // NOI18N
+        OptTabel.setText(resourceMap.getString("OptTabel.text")); // NOI18N
+        OptTabel.setEnabled(false);
+        OptTabel.setName("OptTabel"); // NOI18N
+        panelCool1.add(OptTabel);
+        OptTabel.setBounds(351, 20, 90, 25);
+
+        jLabel9.setFont(resourceMap.getFont("jLabel9.font")); // NOI18N
+        jLabel9.setForeground(resourceMap.getColor("jLabel9.foreground")); // NOI18N
+        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
+        jLabel9.setName("jLabel9"); // NOI18N
+        panelCool1.add(jLabel9);
+        jLabel9.setBounds(40, 153, 100, 16);
+
+        OptNoreff.setFont(resourceMap.getFont("OptNoreff.font")); // NOI18N
+        OptNoreff.setText(resourceMap.getString("OptNoreff.text")); // NOI18N
+        OptNoreff.setName("OptNoreff"); // NOI18N
+        panelCool1.add(OptNoreff);
+        OptNoreff.setBounds(446, 20, 90, 25);
+
+        OptAksi.setFont(resourceMap.getFont("OptAksi.font")); // NOI18N
+        OptAksi.setText(resourceMap.getString("OptAksi.text")); // NOI18N
+        OptAksi.setName("OptAksi"); // NOI18N
+        panelCool1.add(OptAksi);
+        OptAksi.setBounds(542, 20, 90, 25);
+
+        cmbAksi.setFont(resourceMap.getFont("cmbAksi.font")); // NOI18N
+        cmbAksi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbAksi.setName("cmbAksi"); // NOI18N
+        cmbAksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAksiActionPerformed(evt);
+            }
+        });
+        panelCool1.add(cmbAksi);
+        cmbAksi.setBounds(170, 153, 170, 22);
 
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
@@ -275,8 +342,9 @@ private void cmbUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     Connection c = null;
     try {
         c = koneksi.getKoneksiJ();
-        reloadData(c);
         reloadTabel(c);
+        reloadAksi(c);
+        reloadData(c);
     } catch (SQLException ex) {
         Logger.getLogger(FormLogHistory.class.getName()).log(Level.SEVERE, null, ex);
     } finally {
@@ -296,6 +364,7 @@ private void cmbTabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     Connection c = null;
     try {
         c = koneksi.getKoneksiJ();
+        reloadAksi(c);
         reloadData(c);
     } catch (SQLException ex) {
         Logger.getLogger(FormLogHistory.class.getName()).log(Level.SEVERE, null, ex);
@@ -310,7 +379,7 @@ private void cmbTabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
 }//GEN-LAST:event_cmbTabelActionPerformed
 
-private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
+private void txtNoReffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoReffActionPerformed
 // TODO add your handling code here:
     Connection c = null;
     try {
@@ -327,7 +396,7 @@ private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
             }
         }
     }
-}//GEN-LAST:event_txtCariActionPerformed
+}//GEN-LAST:event_txtNoReffActionPerformed
 
 private void tgl1OnCommit(datechooser.events.CommitEvent evt) {//GEN-FIRST:event_tgl1OnCommit
 // TODO add your handling code here:
@@ -385,43 +454,79 @@ private void tgl2OnCommit(datechooser.events.CommitEvent evt) {//GEN-FIRST:event
         JasperPrint jasperPrint = null;
         try {
             Connection c = koneksi.getKoneksiJ();
-            if (txtCari.getText().equals("")) {
+            if (OptNoreff.isSelected() && OptAksi.isSelected()) {
                 parameter.put("Ptgl1", tgl1.getText());
                 parameter.put("Ptgl2", tgl2.getText());
                 parameter.put("Puser", cmbUser.getSelectedItem());
                 parameter.put("Ptabel", cmbTabel.getSelectedItem());
+                parameter.put("Pnoreff", txtNoReff.getText());
+                parameter.put("Paksi", cmbAksi.getSelectedItem());
 
-                URL url = new URL(global.REPORT + "/LapLogHistory.jasper");
+                URL url = new URL(global.REPORT + "/LapLogHistoryPNoreffAksi.jasper");
                 InputStream in = url.openStream();
                 jasperPrint = JasperFillManager.fillReport(in, parameter, c);
                 JasperViewer.viewReport(jasperPrint, false);
-                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            } else {
+               
+            } else if(OptNoreff.isSelected()){
                 parameter.put("Ptgl1", tgl1.getText());
                 parameter.put("Ptgl2", tgl2.getText());
                 parameter.put("Puser", cmbUser.getSelectedItem());
                 parameter.put("Ptabel", cmbTabel.getSelectedItem());
-                parameter.put("PNoreff", txtCari.getText());
+                parameter.put("Pnoreff", txtNoReff.getText());
                 
-                URL url = new URL(global.REPORT + "/LapLogHistoryNoreff.jasper");
+                URL url = new URL(global.REPORT + "/LapLogHistoryPNoreff.jasper");
                 InputStream in = url.openStream();
                 jasperPrint = JasperFillManager.fillReport(in, parameter, c);
                 JasperViewer.viewReport(jasperPrint, false);
-                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }else{
+                parameter.put("Ptgl1", tgl1.getText());
+                parameter.put("Ptgl2", tgl2.getText());
+                parameter.put("Puser", cmbUser.getSelectedItem());
+                parameter.put("Ptabel", cmbTabel.getSelectedItem());
+                parameter.put("Paksi", cmbAksi.getSelectedItem());
+                
+                URL url = new URL(global.REPORT + "/LapLogHistoryPAksi.jasper");
+                InputStream in = url.openStream();
+                jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+                JasperViewer.viewReport(jasperPrint, false);
             }
-
             c.close();
         } catch (Exception ex) {
             System.out.print(ex.toString());
             //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         
     }//GEN-LAST:event_btnPreviewActionPerformed
 
+    private void cmbAksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAksiActionPerformed
+        // TODO add your handling code here:
+        Connection c = null;
+    try {
+        c = koneksi.getKoneksiJ();
+        reloadData(c);
+    } catch (SQLException ex) {
+        Logger.getLogger(FormLogHistory.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        if (c != null) {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(FormLogHistory.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    }//GEN-LAST:event_cmbAksiActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox OptAksi;
+    private javax.swing.JCheckBox OptNoreff;
+    private javax.swing.JCheckBox OptTabel;
+    private javax.swing.JCheckBox OptTanggal;
+    private javax.swing.JCheckBox OptUsername;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnPreview;
+    private javax.swing.JComboBox cmbAksi;
     private javax.swing.JComboBox cmbTabel;
     private javax.swing.JComboBox cmbUser;
     private javax.swing.JLabel jLabel3;
@@ -429,15 +534,24 @@ private void tgl2OnCommit(datechooser.events.CommitEvent evt) {//GEN-FIRST:event
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblKodeAkun;
     private com.erv.function.PanelCool panelCool1;
     private datechooser.beans.DateChooserCombo tgl1;
     private datechooser.beans.DateChooserCombo tgl2;
-    private javax.swing.JTextField txtCari;
+    private javax.swing.JTextField txtNoReff;
     // End of variables declaration//GEN-END:variables
 
+    void kosongForm() {
+        OptTanggal.setSelected(true);
+        OptUsername.setSelected(true);
+        OptTabel.setSelected(true);
+        txtNoReff.setText("");
+    }
+    
     void reloadData(Connection c) {
 
         try {
@@ -446,11 +560,19 @@ private void tgl2OnCommit(datechooser.events.CommitEvent evt) {//GEN-FIRST:event
             String sql = "SELECT * FROM LOGHISTORY where TANGGAL>='" + tgl1.getText() + "' "
                     + "and TANGGAL<='" + tgl2.getText() + "' AND USERIDENTITY='" + cmbUser.getSelectedItem() + "' "
                     + "and TABEL='" + cmbTabel.getSelectedItem() + "'";
-            if (txtCari.getText().equals("")) {
-                sql += "";
-            } else {
-                sql += " and NOREFF LIKE '%" + txtCari.getText() + "%'";
+            
+            if(OptNoreff.isSelected() && OptAksi.isSelected()){
+                sql += " and NOREFF LIKE '%" + txtNoReff.getText() + "%' and AKSI ='"+ cmbAksi.getSelectedItem()+"'";
+            }else if (OptNoreff.isSelected()){
+                sql += " and NOREFF LIKE '%" + txtNoReff.getText() + "%'";
+            }else if (OptAksi.isSelected()){
+                sql += " and AKSI ='"+ cmbAksi.getSelectedItem()+"'";
             }
+//            if (txtNoReff.getText().equals("")) {
+//                sql += "";
+//            } else {
+//                sql += " and NOREFF LIKE '%" + txtNoReff.getText() + "%'";
+//            }
 
             j.executeQuery(sql);
             jScrollPane2.getViewport().remove(jTable1);
@@ -532,6 +654,33 @@ private void tgl2OnCommit(datechooser.events.CommitEvent evt) {//GEN-FIRST:event
                 int ca = 0;
                 while (rs.next()) {
                     cmbTabel.addItem(rs.getString(1));
+                    ca++;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormLogHistory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    void reloadAksi(Connection c) {
+
+        cmbAksi.removeAllItems();
+        //cboBank.removeAllItems();
+        String sql = "SELECT DISTINCT(AKSI) FROM LOGHISTORY WHERE USERIDENTITY ='" + cmbUser.getSelectedItem() + "' AND TABEL ='" + cmbTabel.getSelectedItem() + "'";
+        try {
+            Statement stat = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stat.executeQuery(sql);
+
+            int j = 0;
+            if (rs.last()) {
+                j = rs.getRow();
+            }
+            if (j > 0) {
+                rs.beforeFirst();
+                int ca = 0;
+                while (rs.next()) {
+                    cmbAksi.addItem(rs.getString(1));
                     ca++;
                 }
             }

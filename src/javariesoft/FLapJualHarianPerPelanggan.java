@@ -145,7 +145,7 @@ public class FLapJualHarianPerPelanggan extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnPreview);
-        btnPreview.setBounds(130, 140, 190, 40);
+        btnPreview.setBounds(224, 140, 150, 40);
 
         btnKeluar.setFont(resourceMap.getFont("btnKeluar.font")); // NOI18N
         btnKeluar.setIcon(resourceMap.getIcon("btnKeluar.icon")); // NOI18N
@@ -157,7 +157,7 @@ public class FLapJualHarianPerPelanggan extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnKeluar);
-        btnKeluar.setBounds(330, 140, 200, 40);
+        btnKeluar.setBounds(380, 140, 150, 40);
 
         txtnamapelanggan.setFont(resourceMap.getFont("txtnamapelanggan.font")); // NOI18N
         txtnamapelanggan.setDisabledTextColor(resourceMap.getColor("txtnamapelanggan.disabledTextColor")); // NOI18N
