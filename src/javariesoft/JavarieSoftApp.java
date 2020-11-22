@@ -99,6 +99,10 @@ public class JavarieSoftApp extends SingleFrameApplication {
 ////            global.REPORT = p.getProperty("REPORT");
 ////NotUsed            server = Server.createTcpServer(connection).start();
             System.out.println("Server Database Aktif");
+            if(true){
+                launch(JavarieSoftApp.class, args);
+                return;
+            }
             
 //MulaiCdCPU
             c = koneksi.getKoneksiJ();
