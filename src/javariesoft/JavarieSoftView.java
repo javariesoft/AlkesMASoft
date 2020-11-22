@@ -1982,7 +1982,7 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         // TODO add your handling code here:
         FormJurnal p = new FormJurnal();
         p.toFront();
-        panelCool1.add(p);
+        //panelCool1.add(p);
         p.setVisible(true);
     }//GEN-LAST:event_MjurnalActionPerformed
 

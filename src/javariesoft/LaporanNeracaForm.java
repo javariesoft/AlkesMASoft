@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * LaporanNeracaForm.java
  *
  * Created on Jan 4, 2012, 2:08:54 PM
@@ -65,35 +65,52 @@ public class LaporanNeracaForm extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cboBulan = new javax.swing.JComboBox();
         txtTahun = new javax.swing.JTextField();
-        btnPreview = new javax.swing.JButton();
-        btnExit = new javax.swing.JButton();
         pilihan = new javax.swing.JCheckBox();
+        btnPreview = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        txtTahun1 = new javax.swing.JTextField();
+        btnPreviewTahun = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(LaporanNeracaForm.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         getContentPane().setLayout(null);
 
+        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
+
+        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setLayout(null);
+
         jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(27, 11, 80, 16);
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(10, 10, 80, 16);
 
         cboBulan.setFont(resourceMap.getFont("cboBulan.font")); // NOI18N
         cboBulan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
         cboBulan.setName("cboBulan"); // NOI18N
-        getContentPane().add(cboBulan);
-        cboBulan.setBounds(100, 10, 150, 21);
+        jPanel1.add(cboBulan);
+        cboBulan.setBounds(80, 10, 150, 21);
 
         txtTahun.setFont(resourceMap.getFont("txtTahun.font")); // NOI18N
         txtTahun.setText(resourceMap.getString("txtTahun.text")); // NOI18N
         txtTahun.setName("txtTahun"); // NOI18N
-        getContentPane().add(txtTahun);
-        txtTahun.setBounds(260, 10, 80, 21);
+        jPanel1.add(txtTahun);
+        txtTahun.setBounds(240, 10, 80, 21);
+
+        pilihan.setFont(resourceMap.getFont("pilihan.font")); // NOI18N
+        pilihan.setText(resourceMap.getString("pilihan.text")); // NOI18N
+        pilihan.setName("pilihan"); // NOI18N
+        jPanel1.add(pilihan);
+        pilihan.setBounds(80, 40, 120, 23);
 
         btnPreview.setFont(resourceMap.getFont("btnPreview.font")); // NOI18N
         btnPreview.setIcon(resourceMap.getIcon("btnPreview.icon")); // NOI18N
@@ -104,8 +121,41 @@ public class LaporanNeracaForm extends javax.swing.JInternalFrame {
                 btnPreviewActionPerformed(evt);
             }
         });
-        getContentPane().add(btnPreview);
-        btnPreview.setBounds(30, 70, 130, 40);
+        jPanel1.add(btnPreview);
+        btnPreview.setBounds(20, 80, 300, 40);
+
+        jTabbedPane1.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
+
+        jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setLayout(null);
+
+        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+        jPanel2.add(jLabel2);
+        jLabel2.setBounds(10, 20, 70, 15);
+
+        txtTahun1.setFont(resourceMap.getFont("txtTahun1.font")); // NOI18N
+        txtTahun1.setText(resourceMap.getString("txtTahun1.text")); // NOI18N
+        txtTahun1.setName("txtTahun1"); // NOI18N
+        jPanel2.add(txtTahun1);
+        txtTahun1.setBounds(90, 20, 120, 21);
+
+        btnPreviewTahun.setFont(resourceMap.getFont("btnPreviewTahun.font")); // NOI18N
+        btnPreviewTahun.setText(resourceMap.getString("btnPreviewTahun.text")); // NOI18N
+        btnPreviewTahun.setName("btnPreviewTahun"); // NOI18N
+        btnPreviewTahun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviewTahunActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnPreviewTahun);
+        btnPreviewTahun.setBounds(20, 70, 300, 40);
+
+        jTabbedPane1.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
+
+        getContentPane().add(jTabbedPane1);
+        jTabbedPane1.setBounds(10, 10, 340, 160);
 
         btnExit.setFont(resourceMap.getFont("btnExit.font")); // NOI18N
         btnExit.setIcon(resourceMap.getIcon("btnExit.icon")); // NOI18N
@@ -117,15 +167,9 @@ public class LaporanNeracaForm extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnExit);
-        btnExit.setBounds(180, 70, 140, 40);
+        btnExit.setBounds(10, 180, 340, 40);
 
-        pilihan.setFont(resourceMap.getFont("pilihan.font")); // NOI18N
-        pilihan.setText(resourceMap.getString("pilihan.text")); // NOI18N
-        pilihan.setName("pilihan"); // NOI18N
-        getContentPane().add(pilihan);
-        pilihan.setBounds(100, 40, 120, 29);
-
-        setBounds(0, 0, 377, 156);
+        setBounds(0, 0, 376, 264);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
@@ -153,7 +197,7 @@ private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         System.out.print(ex.toString());
         //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
     }
-    
+
     this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 }//GEN-LAST:event_btnPreviewActionPerformed
 
@@ -161,16 +205,48 @@ private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     dispose();
 }//GEN-LAST:event_btnExitActionPerformed
 
+    private void btnPreviewTahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewTahunActionPerformed
+        // TODO add your handling code here:
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        HashMap parameter = new HashMap();
+        JasperPrint jasperPrint = null;
+        int tahun = Integer.parseInt(txtTahun1.getText());
+        parameter.put("bulan", 1);
+        parameter.put("tahun", tahun);
+        parameter.put("tahunlap", tahun);
+        parameter.put("Pperiode", txtTahun1.getText());
+        try {
+            URL url;
+            InputStream in;
+            url = new URL(global.REPORT + "/neracatahun.jasper");
+            in = url.openStream();
+            jasperPrint = JasperFillManager.fillReport(in, parameter, c);
+            JasperViewer.viewReport(jasperPrint, false);
+            generateReport();
+        } catch (Exception ex) {
+            System.out.print(ex.toString());
+            //Logger.getLogger(formlaporan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_btnPreviewTahunActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnPreview;
+    private javax.swing.JButton btnPreviewTahun;
     private javax.swing.JComboBox cboBulan;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JCheckBox pilihan;
     private javax.swing.JTextField txtTahun;
+    private javax.swing.JTextField txtTahun1;
     // End of variables declaration//GEN-END:variables
 
-    public  void generateReport() throws JRException, MalformedURLException, IOException {
+    public void generateReport() throws JRException, MalformedURLException, IOException {
         HashMap parameter = new HashMap();
         JasperPrint jasperPrint = null;
         parameter.put("bulan", cboBulan.getSelectedIndex() + 1);

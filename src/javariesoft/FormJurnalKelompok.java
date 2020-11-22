@@ -8,14 +8,13 @@ package javariesoft;
 import com.erv.db.koneksi;
 import com.erv.function.JDBCAdapter;
 import com.erv.function.Util;
+import com.jacob.com.Dispatch;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -37,7 +36,8 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
         initComponents();
         isiCboAkun();
         setting();
-        setSize(dim.width,dim.height-100);
+        setSize(dim.width, dim.height - 100);
+
     }
 
     /**
@@ -55,8 +55,12 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
         cboBulan = new javax.swing.JComboBox<>();
         txtTahun = new javax.swing.JTextField();
         cboAkun = new javax.swing.JComboBox<>();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
+        txtKodeJurnal = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         btnFilter = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -104,6 +108,21 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
         cboAkun.setName("cboAkun"); // NOI18N
         jPanel1.add(cboAkun);
 
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator2.setName("jSeparator2"); // NOI18N
+        jSeparator2.setPreferredSize(new java.awt.Dimension(5, 30));
+        jPanel1.add(jSeparator2);
+
+        jLabel4.setFont(resourceMap.getFont("jLabel4.font")); // NOI18N
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+        jPanel1.add(jLabel4);
+
+        txtKodeJurnal.setText(resourceMap.getString("txtKodeJurnal.text")); // NOI18N
+        txtKodeJurnal.setName("txtKodeJurnal"); // NOI18N
+        txtKodeJurnal.setPreferredSize(new java.awt.Dimension(150, 20));
+        jPanel1.add(txtKodeJurnal);
+
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator1.setName("jSeparator1"); // NOI18N
         jSeparator1.setPreferredSize(new java.awt.Dimension(5, 30));
@@ -119,6 +138,16 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnFilter);
 
+        btnEdit.setFont(resourceMap.getFont("btnEdit.font")); // NOI18N
+        btnEdit.setText(resourceMap.getString("btnEdit.text")); // NOI18N
+        btnEdit.setName("btnEdit"); // NOI18N
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEdit);
+
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -131,14 +160,17 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
         jScrollPane1.setName("jScrollPane1"); // NOI18N
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 300));
 
+        tabelRinciJurnal.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("tabelRinciJurnal.border.title"))); // NOI18N
+        tabelRinciJurnal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
         tabelRinciJurnal.setName("tabelRinciJurnal"); // NOI18N
         jScrollPane1.setViewportView(tabelRinciJurnal);
-        if (tabelRinciJurnal.getColumnModel().getColumnCount() > 0) {
-            tabelRinciJurnal.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("tabelRinciJurnal.columnModel.title0")); // NOI18N
-            tabelRinciJurnal.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("tabelRinciJurnal.columnModel.title1")); // NOI18N
-            tabelRinciJurnal.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("tabelRinciJurnal.columnModel.title2")); // NOI18N
-            tabelRinciJurnal.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("tabelRinciJurnal.columnModel.title3")); // NOI18N
-        }
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
         jScrollPane1.getAccessibleContext().setAccessibleDescription(resourceMap.getString("jScrollPane1.AccessibleContext.accessibleDescription")); // NOI18N
@@ -209,9 +241,14 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
             Connection con = koneksi.getKoneksiJ();
             String kodeAkun = cboAkun.getSelectedItem().toString().split("-")[0];
             //String query = "select * from jurnal j inner join rincijurnal  where month(TANGGAL)="+cboBulan.getSelectedIndex()+" and year(tanggal)="+txtTahun.getText()+"";
-            String query = "select j.* from jurnal j inner join RINCIJURNAL rj on j.id = rj.KODEJURNAL "
+            String query = "";
+            if(txtKodeJurnal.getText().length()>0){
+                query = "select * from jurnal where kodejurnal like '"+ txtKodeJurnal.getText() +"%'";
+            } else {
+                query = "select j.* from jurnal j inner join RINCIJURNAL rj on j.id = rj.KODEJURNAL "
                     + "where month(TANGGAL)=" + cboBulan.getSelectedIndex() + " and year(tanggal)=" + txtTahun.getText() + " and KODEPERKIRAAN like '" + kodeAkun + "%' "
                     + "";
+            }
             JDBCAdapter j = new JDBCAdapter(con);
             j.executeQuery(query);
             jScrollPane2.getViewport().remove(tabelJurnal);
@@ -271,6 +308,7 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
 //                });
                 jScrollPane1.getViewport().add(tabelRinciJurnal);
                 jScrollPane1.repaint();
+                cetakDebetKredit(tabelRinciJurnal);
                 j.close();
                 con.close();
             } catch (SQLException ex) {
@@ -279,8 +317,17 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tabelJurnalMouseClicked
 
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        String kodejurnal = tabelJurnal.getValueAt(tabelJurnal.getSelectedRow(), 1).toString();
+        FormJurnal p = new FormJurnal(kodejurnal);
+        p.toFront();
+        p.setVisible(true);
+    }//GEN-LAST:event_btnEditActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnFilter;
     private javax.swing.JComboBox<String> cboAkun;
     private javax.swing.JComboBox<String> cboBulan;
@@ -289,6 +336,7 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -297,9 +345,11 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabelJurnal;
     private javax.swing.JTable tabelRinciJurnal;
+    private javax.swing.JTextField txtKodeJurnal;
     private javax.swing.JTextField txtTahun;
     // End of variables declaration//GEN-END:variables
 
@@ -321,9 +371,21 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
 
     private void setting() {
         txtTahun.setText("" + new Util().thnsekarang);
-        Dimension d = new Dimension(dim.width,(int) dim.height/3);
-        jScrollPane2.setPreferredSize(d); 
-        d = new Dimension(dim.width,(int) dim.height/4);
-        jScrollPane1.setPreferredSize(d); 
+        Dimension d = new Dimension(dim.width, (int) dim.height / 3 - 30);
+        jScrollPane2.setPreferredSize(d);
+        jScrollPane1.setPreferredSize(d);
+        jPanel4.setPreferredSize(d);
+    }
+
+    private void cetakDebetKredit(JTable table) {
+        int row = table.getRowCount();
+        double debet=0;
+        double kredit=0;
+        for (int i = 0; i < row; i++) {
+            debet += (Double)table.getValueAt(i, 2);
+            kredit += (Double)table.getValueAt(i, 3);
+        }
+        ftDebet.setValue(debet);
+        ftKredit.setValue(kredit); 
     }
 }

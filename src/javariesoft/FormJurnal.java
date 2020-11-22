@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-/*
+ /*
  * FormJurnal.java
  *
  * Created on Nov 19, 2011, 11:41:25 AM
@@ -40,13 +40,17 @@ import javax.swing.JTable;
 import com.eigher.db.loghistoryDao;
 import com.eigher.model.loghistory;
 import com.erv.db.KontrolTanggalDao;
+import com.erv.db.perkiraanDao;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
  * @author erwadi
  */
-public class FormJurnal extends javax.swing.JInternalFrame {
+public class FormJurnal extends javax.swing.JFrame {
 
     int IDJurnal = 0;
     String akunBank[];
@@ -97,6 +101,30 @@ public class FormJurnal extends javax.swing.JInternalFrame {
         tanggal.requestFocus();
     }
 
+    public FormJurnal(String kodejurnal) {
+        initComponents();
+        try {
+            c = koneksi.getKoneksiJ();
+            cm = koneksi.getKoneksiM();
+            j = jurnalDao.getJurnalKode(c, kodejurnal);
+            stat = cm.createStatement();
+
+            buatTabel();
+            isiTabel(j);
+            setTanggal();
+            isiCombo();
+            isiComboBank();
+            isiForm(j);
+            btnSimpanJurnal.setText("Update Semua");
+        } catch (SQLException ex) {
+            Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,7 +167,6 @@ public class FormJurnal extends javax.swing.JInternalFrame {
         txtKodeAkun = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
 
-        setClosable(true);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormJurnal.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
@@ -415,7 +442,7 @@ public class FormJurnal extends javax.swing.JInternalFrame {
 
         getContentPane().add(panelCool1, java.awt.BorderLayout.CENTER);
 
-        setBounds(0, 0, 690, 536);
+        setBounds(0, 0, 690, 542);
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
@@ -476,105 +503,12 @@ private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:eve
 
 private void btnSimpanJurnalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanJurnalActionPerformed
 // TODO add your handling code here:
-    boolean cekbalance = false;
-    if (Double.parseDouble(txtSelisih.getValue().toString()) != 0.00) {
-        if (JavarieSoftApp.groupuser.equals("Administrator")) {
-            cekbalance = true;
-        } else {
-            cekbalance = false;
-        }
+    if (btnSimpanJurnal.getText().equals("Simpan Semua")) {
+        simpan();
     } else {
-        if (JavarieSoftApp.groupuser.equals("Administrator")) {
-            cekbalance = true;
-        } else {
-            cekbalance = false;
-        }
+        update();
     }
-    try {
-        int x = JOptionPane.showConfirmDialog(this, "Apakah Data Disimpan?", "", JOptionPane.YES_NO_OPTION);
-        if (x == 0) {
-            c.createStatement().execute("set autocommit false");
-//            if ((deskripsi.getText().equals("")) || (Double.parseDouble(txtSelisih.getValue().toString()) != 0.00)) {           
-            if (JavarieSoftApp.groupuser.equals("Administrator")) {
-                if (deskripsi.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Data Tidak Benar.. !");
-                    deskripsi.requestFocus();
-                }else if (!KontrolTanggalDao.cekHarian(c, tanggal.getText())) {
-                    JOptionPane.showMessageDialog(null, "Transaksi Tidak Bisa Dilakukan Karena :\n"
-                        + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
-                        + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
-                } else {
-                    String tgl[] = Util.split(tanggal.getText(), "-");
-                    String per = tgl[0] + "." + Integer.parseInt(tgl[1]);
-                    if (cekperiodeAda(per)) {
-                        if (cekperiode(per)) {
-                            aksilog = "InsertJurnal";
-                            prosesInsert();
-                            prosesUpdateLog();
-                            kosong();
-                            kosongAkun();
-                            cektombol();
-                            c.commit();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
-                            deskripsi.requestFocus();
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
-                        deskripsi.requestFocus();
-                    }
-                }
-            } else {
-                if ((deskripsi.getText().equals("")) || (Double.parseDouble(txtSelisih.getValue().toString()) != 0.00)) {
-                    JOptionPane.showMessageDialog(null, "Data Tidak Benar.. !");
-                    deskripsi.requestFocus();
-                }else if (!KontrolTanggalDao.cekHarian(c, tanggal.getText())) {
-                    JOptionPane.showMessageDialog(null, "Transaksi Tidak Bisa Dilakukan Karena :\n"
-                        + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
-                        + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
-                } else {
-                    String tgl[] = Util.split(tanggal.getText(), "-");
-                    String per = tgl[0] + "." + Integer.parseInt(tgl[1]);
-                    if (cekperiodeAda(per)) {
-                        if (cekperiode(per)) {
-                            aksilog = "InsertJurnal";
-                            prosesInsert();
-                            prosesUpdateLog();
-                            kosong();
-                            kosongAkun();
-                            cektombol();
-                            c.commit();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
-                            deskripsi.requestFocus();
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
-                        deskripsi.requestFocus();
-                    }
-                }
-            }
 
-        } else {
-            deskripsi.requestFocus();
-        }
-    } catch (SQLException e) {
-        try {
-            c.rollback();
-            JOptionPane.showMessageDialog(this, "Rollback :" + e.getMessage());
-        } catch (SQLException ex1) {
-            Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex1);
-        }
-    } finally {
-//                if (c != null) {
-        try {
-            c.createStatement().execute("set autocommit true");
-//                        c.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-//                }
-    }
 }//GEN-LAST:event_btnSimpanJurnalActionPerformed
 
 private void rbKasMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbKasMasukActionPerformed
@@ -720,52 +654,52 @@ private void txtKodeAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         if (JavarieSoftApp.groupuser.equals("Administrator")) {
             sql = "select * from PERKIRAAN where (TIPE='D' or TIPE='SD') and (kodeperkiraan like '%" + txtKodeAkun.getText() + "%' OR lower(NAMAPERKIRAAN) like '%" + txtKodeAkun.getText().toLowerCase() + "%') order by 2";
         } else {
-            sql = "select * from PERKIRAAN where (TIPE='D' or TIPE='SD') \n" +
-"and (kodeperkiraan not like '%11120'  /*BANK*/\n" +
-"and kodeperkiraan not like '11130%'    /*UANG MUKA CAD. BP*/\n" +
-"and kodeperkiraan not like '11201%'   /*pelanggan*/\n" +
-"and kodeperkiraan not like '%11202'   /*PIUTANG PAJAK(D)*/\n" +
-"and kodeperkiraan not like '11202.1%'   /*PPN MASUKAN(SD)*/\n" +
-//"and kodeperkiraan not like '11202.2%'   /*PPH Pasal 22(SD)*/\n" +
-"and kodeperkiraan not like '11203%'   /*PIUTANG BANK dan Subdetail*/\n" +
-"and kodeperkiraan not like '11205%'   /*PIUTANG CABANG*/\n" +
-"and kodeperkiraan not like '11310%'     /*PERSEDIAAN BARANG DAGANGAN*/\n" +
-"and kodeperkiraan not like '11410%'     /*BIAYA DIBAYAR DIMUKA*/\n" +
-"and kodeperkiraan not like '11510%'     /*UANG MUKA PAJAK*/\n" +
-"and kodeperkiraan not like '11610%'     /*UANG MUKA PEMBELIAN*/\n" +
-"and kodeperkiraan not like '11710%'     /*UANG MUKA BIAYA PENJUALAN dan Subdetail*/\n" +
-"and kodeperkiraan not like '%11810'    /*ASURANSI*/\n" +
-"and kodeperkiraan not like '%11910'    /*PINJAMAN KARYAWAN*/\n" +
-"and kodeperkiraan not like '12100%'   /*TANAH(D)(SD)*/\n" +
-"and kodeperkiraan not like '12200%'   /*BANGUNAN(D)(SD)*/\n" +
-"and kodeperkiraan not like '12201%'   /*AKM. PENYUSUTAN BANGUNAN(D)(SD)*/\n" +
-"and kodeperkiraan not like '%12300'   /*KENDARAAN(D)*/\n" +
-"and kodeperkiraan not like '12301%'   /*AKUM. PENYUSUTAN KENDARAAN(D)*/\n" +
-"and kodeperkiraan not like '%12400'   /*InventarisKantor(D)*/\n" +
-"and kodeperkiraan not like '12401%'   /*AKUM. PENYUSUTAN INVENTARIS KANTOR*/\n" +
-"and kodeperkiraan not like '21101%'   /*Supplier*/\n" +
-//"or (kodeperkiraan like '21101.35')   /*PT. MODERN INTERNATIONAL TBK*/\n" +
-"and kodeperkiraan not like '%21102'   /*HUTANG EKSPEDISI(D)*/\n" +
-"and kodeperkiraan not like '21103%'   /*HUTANG GIRO(D)(SD)*/\n" +
-"and kodeperkiraan not like '21104%'   /*TITIPAN PIHAK KE 3(D)*/\n" +
-"and kodeperkiraan not like '21105%'   /*UANG MUKA PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '%21111'   /*HUTANG PAJAK(D)(SD)*/\n" +
-//"and kodeperkiraan not like '21111.1%'   /*PPN KELUARAN(SD)*/\n" +
-"and kodeperkiraan not like '21201%'   /*HUTANG BANK(D)*/\n" +
-"and kodeperkiraan not like '21301%'   /*HUTANG LEASING(D)*/\n" +
-"and kodeperkiraan not like '21401%'   /*HUTANG PEMBELIAN INVENTARIS(D)*/\n" +
-"and kodeperkiraan not like '3%'\n" +
-"and kodeperkiraan not like '3%'\n" +
-"and kodeperkiraan not like '41101%'   /*PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '41102%'   /*DISC PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '41103%'   /*RETUR PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '41201%'   /*PENDAPATAN CABANG(D)*/\n" +
-"and kodeperkiraan not like '41301%'   /*PENDAPATAN ONGKOS KIRIM(D)*/\n" +
-"and kodeperkiraan not like '41901%'   /*ONGKOS KIRIM PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '%49999'   /*PENDAPATAN LAIN_LAIN(D)*/\n" +
-"and kodeperkiraan not like '5%'       /*AkunHPP*/\n" +
-"and kodeperkiraan not like '%61101'  /*BIAYA ADM & UMUM*/  \n" +
-"and kodeperkiraan not like '%70001') and (kodeperkiraan like '%" + txtKodeAkun.getText() + "%' OR lower(NAMAPERKIRAAN) like '%" + txtKodeAkun.getText().toLowerCase() + "%') order by 2";
+            sql = "select * from PERKIRAAN where (TIPE='D' or TIPE='SD') \n"
+                    + "and (kodeperkiraan not like '%11120'  /*BANK*/\n"
+                    + "and kodeperkiraan not like '11130%'    /*UANG MUKA CAD. BP*/\n"
+                    + "and kodeperkiraan not like '11201%'   /*pelanggan*/\n"
+                    + "and kodeperkiraan not like '%11202'   /*PIUTANG PAJAK(D)*/\n"
+                    + "and kodeperkiraan not like '11202.1%'   /*PPN MASUKAN(SD)*/\n"
+                    + //"and kodeperkiraan not like '11202.2%'   /*PPH Pasal 22(SD)*/\n" +
+                    "and kodeperkiraan not like '11203%'   /*PIUTANG BANK dan Subdetail*/\n"
+                    + "and kodeperkiraan not like '11205%'   /*PIUTANG CABANG*/\n"
+                    + "and kodeperkiraan not like '11310%'     /*PERSEDIAAN BARANG DAGANGAN*/\n"
+                    + "and kodeperkiraan not like '11410%'     /*BIAYA DIBAYAR DIMUKA*/\n"
+                    + "and kodeperkiraan not like '11510%'     /*UANG MUKA PAJAK*/\n"
+                    + "and kodeperkiraan not like '11610%'     /*UANG MUKA PEMBELIAN*/\n"
+                    + "and kodeperkiraan not like '11710%'     /*UANG MUKA BIAYA PENJUALAN dan Subdetail*/\n"
+                    + "and kodeperkiraan not like '%11810'    /*ASURANSI*/\n"
+                    + "and kodeperkiraan not like '%11910'    /*PINJAMAN KARYAWAN*/\n"
+                    + "and kodeperkiraan not like '12100%'   /*TANAH(D)(SD)*/\n"
+                    + "and kodeperkiraan not like '12200%'   /*BANGUNAN(D)(SD)*/\n"
+                    + "and kodeperkiraan not like '12201%'   /*AKM. PENYUSUTAN BANGUNAN(D)(SD)*/\n"
+                    + "and kodeperkiraan not like '%12300'   /*KENDARAAN(D)*/\n"
+                    + "and kodeperkiraan not like '12301%'   /*AKUM. PENYUSUTAN KENDARAAN(D)*/\n"
+                    + "and kodeperkiraan not like '%12400'   /*InventarisKantor(D)*/\n"
+                    + "and kodeperkiraan not like '12401%'   /*AKUM. PENYUSUTAN INVENTARIS KANTOR*/\n"
+                    + "and kodeperkiraan not like '21101%'   /*Supplier*/\n"
+                    + //"or (kodeperkiraan like '21101.35')   /*PT. MODERN INTERNATIONAL TBK*/\n" +
+                    "and kodeperkiraan not like '%21102'   /*HUTANG EKSPEDISI(D)*/\n"
+                    + "and kodeperkiraan not like '21103%'   /*HUTANG GIRO(D)(SD)*/\n"
+                    + "and kodeperkiraan not like '21104%'   /*TITIPAN PIHAK KE 3(D)*/\n"
+                    + "and kodeperkiraan not like '21105%'   /*UANG MUKA PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '%21111'   /*HUTANG PAJAK(D)(SD)*/\n"
+                    + //"and kodeperkiraan not like '21111.1%'   /*PPN KELUARAN(SD)*/\n" +
+                    "and kodeperkiraan not like '21201%'   /*HUTANG BANK(D)*/\n"
+                    + "and kodeperkiraan not like '21301%'   /*HUTANG LEASING(D)*/\n"
+                    + "and kodeperkiraan not like '21401%'   /*HUTANG PEMBELIAN INVENTARIS(D)*/\n"
+                    + "and kodeperkiraan not like '3%'\n"
+                    + "and kodeperkiraan not like '3%'\n"
+                    + "and kodeperkiraan not like '41101%'   /*PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '41102%'   /*DISC PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '41103%'   /*RETUR PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '41201%'   /*PENDAPATAN CABANG(D)*/\n"
+                    + "and kodeperkiraan not like '41301%'   /*PENDAPATAN ONGKOS KIRIM(D)*/\n"
+                    + "and kodeperkiraan not like '41901%'   /*ONGKOS KIRIM PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '%49999'   /*PENDAPATAN LAIN_LAIN(D)*/\n"
+                    + "and kodeperkiraan not like '5%'       /*AkunHPP*/\n"
+                    + "and kodeperkiraan not like '%61101'  /*BIAYA ADM & UMUM*/  \n"
+                    + "and kodeperkiraan not like '%70001') and (kodeperkiraan like '%" + txtKodeAkun.getText() + "%' OR lower(NAMAPERKIRAAN) like '%" + txtKodeAkun.getText().toLowerCase() + "%') order by 2";
         }
         try {
             Statement stat1 = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -803,48 +737,48 @@ private void txtKodeAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         if (JavarieSoftApp.groupuser.equals("Administrator")) {
             sql = "select * from PERKIRAAN where (TIPE='D' or TIPE='SD') and GRUP=" + (cboGrup.getSelectedIndex() + 1) + " order by 2";
         } else {
-            sql = "select * from PERKIRAAN where (TIPE='D' or TIPE='SD') \n" +
-"and (kodeperkiraan not like '%11120'  /*BANK*/\n" +
-"and kodeperkiraan not like '11130%'    /*UANG MUKA CAD. BP*/\n" +
-"and kodeperkiraan not like '11201%'   /*pelanggan*/\n" +
-"and kodeperkiraan not like '11202%'   /*PIUTANG PAJAK dan Subdetail*/\n" +
-"and kodeperkiraan not like '11203%'   /*PIUTANG BANK dan Subdetail*/\n" +
-"and kodeperkiraan not like '11205%'   /*PIUTANG CABANG*/\n" +
-"and kodeperkiraan not like '11310%'     /*PERSEDIAAN BARANG DAGANGAN*/\n" +
-"and kodeperkiraan not like '11410%'     /*BIAYA DIBAYAR DIMUKA*/\n" +
-"and kodeperkiraan not like '11510%'     /*UANG MUKA PAJAK*/\n" +
-"and kodeperkiraan not like '11610%'     /*UANG MUKA PEMBELIAN*/\n" +
-"and kodeperkiraan not like '11710%'     /*UANG MUKA BIAYA PENJUALAN dan Subdetail*/\n" +
-"and kodeperkiraan not like '%11810'    /*ASURANSI*/\n" +
-"and kodeperkiraan not like '%11910'    /*PINJAMAN KARYAWAN*/\n" +
-"and kodeperkiraan not like '12100%'   /*TANAH(D)(SD)*/\n" +
-"and kodeperkiraan not like '12200%'   /*BANGUNAN(D)(SD)*/\n" +
-"and kodeperkiraan not like '12201%'   /*AKM. PENYUSUTAN BANGUNAN(D)(SD)*/\n" +
-"and kodeperkiraan not like '%12300'   /*KENDARAAN(D)*/\n" +
-"and kodeperkiraan not like '12301%'   /*AKUM. PENYUSUTAN KENDARAAN(D)*/\n" +
-"and kodeperkiraan not like '%12400'   /*InventarisKantor(D)*/\n" +
-"and kodeperkiraan not like '12401%'   /*AKUM. PENYUSUTAN INVENTARIS KANTOR*/\n" +
-"and kodeperkiraan not like '21101%'   /*Supplier*/\n" +
-"and kodeperkiraan not like '%21102'   /*HUTANG EKSPEDISI(D)*/\n" +
-"and kodeperkiraan not like '21103%'   /*HUTANG GIRO(D)(SD)*/\n" +
-"and kodeperkiraan not like '21104%'   /*TITIPAN PIHAK KE 3(D)*/\n" +
-"and kodeperkiraan not like '21105%'   /*UANG MUKA PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '21111%'   /*HUTANG PAJAK(D)(SD)*/\n" +
-"and kodeperkiraan not like '21201%'   /*HUTANG BANK(D)*/\n" +
-"and kodeperkiraan not like '21301%'   /*HUTANG LEASING(D)*/\n" +
-"and kodeperkiraan not like '21401%'   /*HUTANG PEMBELIAN INVENTARIS(D)*/\n" +
-"and kodeperkiraan not like '3%'\n" +
-"and kodeperkiraan not like '3%'\n" +
-"and kodeperkiraan not like '41101%'   /*PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '41102%'   /*DISC PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '41103%'   /*RETUR PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '41201%'   /*PENDAPATAN CABANG(D)*/\n" +
-"and kodeperkiraan not like '41301%'   /*PENDAPATAN ONGKOS KIRIM(D)*/\n" +
-"and kodeperkiraan not like '41901%'   /*ONGKOS KIRIM PENJUALAN(D)*/\n" +
-"and kodeperkiraan not like '%49999'   /*PENDAPATAN LAIN_LAIN(D)*/\n" +
-"and kodeperkiraan not like '5%'       /*AkunHPP*/\n" +
-"and kodeperkiraan not like '%61101'  /*BIAYA ADM & UMUM*/  \n" +
-"and kodeperkiraan not like '%70001') and GRUP=" + (cboGrup.getSelectedIndex() + 1) + " order by 2";
+            sql = "select * from PERKIRAAN where (TIPE='D' or TIPE='SD') \n"
+                    + "and (kodeperkiraan not like '%11120'  /*BANK*/\n"
+                    + "and kodeperkiraan not like '11130%'    /*UANG MUKA CAD. BP*/\n"
+                    + "and kodeperkiraan not like '11201%'   /*pelanggan*/\n"
+                    + "and kodeperkiraan not like '11202%'   /*PIUTANG PAJAK dan Subdetail*/\n"
+                    + "and kodeperkiraan not like '11203%'   /*PIUTANG BANK dan Subdetail*/\n"
+                    + "and kodeperkiraan not like '11205%'   /*PIUTANG CABANG*/\n"
+                    + "and kodeperkiraan not like '11310%'     /*PERSEDIAAN BARANG DAGANGAN*/\n"
+                    + "and kodeperkiraan not like '11410%'     /*BIAYA DIBAYAR DIMUKA*/\n"
+                    + "and kodeperkiraan not like '11510%'     /*UANG MUKA PAJAK*/\n"
+                    + "and kodeperkiraan not like '11610%'     /*UANG MUKA PEMBELIAN*/\n"
+                    + "and kodeperkiraan not like '11710%'     /*UANG MUKA BIAYA PENJUALAN dan Subdetail*/\n"
+                    + "and kodeperkiraan not like '%11810'    /*ASURANSI*/\n"
+                    + "and kodeperkiraan not like '%11910'    /*PINJAMAN KARYAWAN*/\n"
+                    + "and kodeperkiraan not like '12100%'   /*TANAH(D)(SD)*/\n"
+                    + "and kodeperkiraan not like '12200%'   /*BANGUNAN(D)(SD)*/\n"
+                    + "and kodeperkiraan not like '12201%'   /*AKM. PENYUSUTAN BANGUNAN(D)(SD)*/\n"
+                    + "and kodeperkiraan not like '%12300'   /*KENDARAAN(D)*/\n"
+                    + "and kodeperkiraan not like '12301%'   /*AKUM. PENYUSUTAN KENDARAAN(D)*/\n"
+                    + "and kodeperkiraan not like '%12400'   /*InventarisKantor(D)*/\n"
+                    + "and kodeperkiraan not like '12401%'   /*AKUM. PENYUSUTAN INVENTARIS KANTOR*/\n"
+                    + "and kodeperkiraan not like '21101%'   /*Supplier*/\n"
+                    + "and kodeperkiraan not like '%21102'   /*HUTANG EKSPEDISI(D)*/\n"
+                    + "and kodeperkiraan not like '21103%'   /*HUTANG GIRO(D)(SD)*/\n"
+                    + "and kodeperkiraan not like '21104%'   /*TITIPAN PIHAK KE 3(D)*/\n"
+                    + "and kodeperkiraan not like '21105%'   /*UANG MUKA PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '21111%'   /*HUTANG PAJAK(D)(SD)*/\n"
+                    + "and kodeperkiraan not like '21201%'   /*HUTANG BANK(D)*/\n"
+                    + "and kodeperkiraan not like '21301%'   /*HUTANG LEASING(D)*/\n"
+                    + "and kodeperkiraan not like '21401%'   /*HUTANG PEMBELIAN INVENTARIS(D)*/\n"
+                    + "and kodeperkiraan not like '3%'\n"
+                    + "and kodeperkiraan not like '3%'\n"
+                    + "and kodeperkiraan not like '41101%'   /*PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '41102%'   /*DISC PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '41103%'   /*RETUR PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '41201%'   /*PENDAPATAN CABANG(D)*/\n"
+                    + "and kodeperkiraan not like '41301%'   /*PENDAPATAN ONGKOS KIRIM(D)*/\n"
+                    + "and kodeperkiraan not like '41901%'   /*ONGKOS KIRIM PENJUALAN(D)*/\n"
+                    + "and kodeperkiraan not like '%49999'   /*PENDAPATAN LAIN_LAIN(D)*/\n"
+                    + "and kodeperkiraan not like '5%'       /*AkunHPP*/\n"
+                    + "and kodeperkiraan not like '%61101'  /*BIAYA ADM & UMUM*/  \n"
+                    + "and kodeperkiraan not like '%70001') and GRUP=" + (cboGrup.getSelectedIndex() + 1) + " order by 2";
         }
         try {
             Statement stat1 = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -1192,17 +1126,182 @@ private void txtKodeAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         DecimalFormat df = new DecimalFormat("###.00");
         return Double.parseDouble(df.format(a));
     }
-    
-    private void settingtombol(boolean simpJurnal,boolean hapusJurnal) {
+
+    private void settingtombol(boolean simpJurnal, boolean hapusJurnal) {
         btnSimpanJurnal.setEnabled(simpJurnal);
         btnDeleteJurnal.setEnabled(hapusJurnal);
     }
-    
-    void cektombol(){
+
+    void cektombol() {
         if (JavarieSoftApp.groupuser.equals("Administrator")) {
-           settingtombol(true, true);
+            settingtombol(true, true);
         } else if (JavarieSoftApp.groupuser.equals("Accounting")) {
-           settingtombol(true, false);
+            settingtombol(true, false);
+        }
+    }
+
+    private void isiTabel(jurnal j) throws SQLException {
+        List<rincijurnal> rinci = j.getRincijurnals();
+        for (rincijurnal rj : rinci) {
+            stat.execute("insert into rinciJurnal values('" + rj.getKODEPERKIRAAN() + "','" + new perkiraanDao().getDetails(c, rj.getKODEPERKIRAAN()).getNAMAPERKIRAAN() + "'," + rj.getDEBET() + "," + rj.getKREDIT() + ")");
+        }
+        reloadData();
+    }
+
+    private void isiForm(jurnal j1) throws ParseException {
+        idjurnal.setText(j1.getKODEJURNAL());
+        Calendar cld = Calendar.getInstance();
+        cld.setTime(d.parse(j1.getTANGGAL()));
+        tanggal.setSelectedDate(cld);
+        deskripsi.setText(j1.getDESKRIPSI());
+    }
+
+    private void simpan() {
+        boolean cekbalance = false;
+        if (Double.parseDouble(txtSelisih.getValue().toString()) != 0.00) {
+            if (JavarieSoftApp.groupuser.equals("Administrator")) {
+                cekbalance = true;
+            } else {
+                cekbalance = false;
+            }
+        } else {
+            if (JavarieSoftApp.groupuser.equals("Administrator")) {
+                cekbalance = true;
+            } else {
+                cekbalance = false;
+            }
+        }
+        try {
+            int x = JOptionPane.showConfirmDialog(this, "Apakah Data Disimpan?", "", JOptionPane.YES_NO_OPTION);
+            if (x == 0) {
+                c.createStatement().execute("set autocommit false");
+//            if ((deskripsi.getText().equals("")) || (Double.parseDouble(txtSelisih.getValue().toString()) != 0.00)) {           
+                if (JavarieSoftApp.groupuser.equals("Administrator")) {
+                    if (deskripsi.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Data Tidak Benar.. !");
+                        deskripsi.requestFocus();
+                    } else if (!KontrolTanggalDao.cekHarian(c, tanggal.getText())) {
+                        JOptionPane.showMessageDialog(null, "Transaksi Tidak Bisa Dilakukan Karena :\n"
+                                + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
+                                + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
+                    } else {
+                        String tgl[] = Util.split(tanggal.getText(), "-");
+                        String per = tgl[0] + "." + Integer.parseInt(tgl[1]);
+                        if (cekperiodeAda(per)) {
+                            if (cekperiode(per)) {
+                                aksilog = "InsertJurnal";
+                                prosesInsert();
+                                prosesUpdateLog();
+                                kosong();
+                                kosongAkun();
+                                cektombol();
+                                c.commit();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
+                                deskripsi.requestFocus();
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
+                            deskripsi.requestFocus();
+                        }
+                    }
+                } else {
+                    if ((deskripsi.getText().equals("")) || (Double.parseDouble(txtSelisih.getValue().toString()) != 0.00)) {
+                        JOptionPane.showMessageDialog(null, "Data Tidak Benar.. !");
+                        deskripsi.requestFocus();
+                    } else if (!KontrolTanggalDao.cekHarian(c, tanggal.getText())) {
+                        JOptionPane.showMessageDialog(null, "Transaksi Tidak Bisa Dilakukan Karena :\n"
+                                + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
+                                + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
+                    } else {
+                        String tgl[] = Util.split(tanggal.getText(), "-");
+                        String per = tgl[0] + "." + Integer.parseInt(tgl[1]);
+                        if (cekperiodeAda(per)) {
+                            if (cekperiode(per)) {
+                                aksilog = "InsertJurnal";
+                                prosesInsert();
+                                prosesUpdateLog();
+                                kosong();
+                                kosongAkun();
+                                cektombol();
+                                c.commit();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Sudah Di Tutup.. !");
+                                deskripsi.requestFocus();
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Transaksi Untuk Periode Ini Belum Dibuka.. !");
+                            deskripsi.requestFocus();
+                        }
+                    }
+                }
+
+            } else {
+                deskripsi.requestFocus();
+            }
+        } catch (SQLException e) {
+            try {
+                c.rollback();
+                JOptionPane.showMessageDialog(this, "Rollback :" + e.getMessage());
+            } catch (SQLException ex1) {
+                Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+//                if (c != null) {
+            try {
+                c.createStatement().execute("set autocommit true");
+//                        c.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+//                }
+        }
+    }
+
+    private void update() {
+        try {
+            if (Double.parseDouble(txtSelisih.getValue().toString()) != 0.00) {
+                throw new Exception("Entri data salah");
+            }
+            c.createStatement().execute("set autocommit false");
+            j.setDESKRIPSI(deskripsi.getText());
+            jurnalDao.updateJURNAL(c, j.getID(), j);
+            ResultSet rs = stat.executeQuery("select * from rinciJurnal");
+            rincijurnalDao.deleteFromRINCIJURNAL(c, j.getID() + "");
+            int count = 1;
+            while (rs.next()) {
+                r = new rincijurnal();
+                r.setKODEJURNAL("" + j.getID());
+                r.setKODEPERKIRAAN(rs.getString(1));
+                r.setDEBET(rs.getDouble(3));
+                r.setKREDIT(rs.getDouble(4));
+                r.setNO(count);
+                r.setREF("");
+                rincijurnalDao.insertIntoRINCIJURNAL(c, r);
+                count++;
+            }
+            c.commit();
+            JOptionPane.showMessageDialog(this, "Update Data Ok");
+            kosong();
+            kosongAkun();
+        } catch (SQLException ex) {
+            try {
+                c.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            JOptionPane.showMessageDialog(this, "Error  :"+ex.getMessage());
+            Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Entri data salah");
+            Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                c.createStatement().execute("set autocommit true");
+//                        c.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

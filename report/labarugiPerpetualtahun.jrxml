@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neraca" language="groovy" pageWidth="600" pageHeight="842" columnWidth="540" leftMargin="40" rightMargin="20" topMargin="20" bottomMargin="20" >
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="neraca" language="groovy" pageWidth="600" pageHeight="842" columnWidth="540" leftMargin="40" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -18,10 +18,10 @@
      NERACABANTU."NAMAPERKIRAAN" AS NERACABANTU_NAMAPERKIRAAN,
      NERACABANTU."GRUP" AS NERACABANTU_GRUP,
      NERACABANTU."TIPE" AS NERACABANTU_TIPE,
-     GRUP.grup AS NAMAGRUP,getLaba($P{bulan},$P{tahun}) as LABA,
-     getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) as DEBET,
-     getKredit(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) as KREDIT,
-     getKredit(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) - getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun})
+     GRUP.grup AS NAMAGRUP,getLaba($P{tahun}) as LABA,
+     getDebet(NERACABANTU.KODEPERKIRAAN,$P{tahun}) as DEBET,
+     getKredit(NERACABANTU.KODEPERKIRAAN,$P{tahun}) as KREDIT,
+     getKredit(NERACABANTU.KODEPERKIRAAN,$P{tahun}) - getDebet(NERACABANTU.KODEPERKIRAAN,$P{tahun})
     as SALDO,VIEWSHPERKIRAAN.NAMAPERKIRAAN,1 as no
 FROM
      "PUBLIC"."NERACABANTU" NERACABANTU
@@ -34,10 +34,10 @@ WHERE NERACABANTU."GRUP"=4 AND VIEWSHPERKIRAAN.KODEPERKIRAAN <> '412')
      NERACABANTU."NAMAPERKIRAAN" AS NERACABANTU_NAMAPERKIRAAN,
      NERACABANTU."GRUP" AS NERACABANTU_GRUP,
      NERACABANTU."TIPE" AS NERACABANTU_TIPE,
-     GRUP.grup AS NAMAGRUP,getLaba($P{bulan},$P{tahun}) as LABA,
-     getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) as DEBET,
-     getKredit(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) as KREDIT,
-     getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) - getKredit(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun})
+     GRUP.grup AS NAMAGRUP,getLaba($P{tahun}) as LABA,
+     getDebet(NERACABANTU.KODEPERKIRAAN,$P{tahun}) as DEBET,
+     getKredit(NERACABANTU.KODEPERKIRAAN,$P{tahun}) as KREDIT,
+     getDebet(NERACABANTU.KODEPERKIRAAN,$P{tahun}) - getKredit(NERACABANTU.KODEPERKIRAAN,$P{tahun})
     as SALDO,VIEWSHPERKIRAAN.NAMAPERKIRAAN,2 as no
 FROM
      "PUBLIC"."NERACABANTU" NERACABANTU
@@ -45,7 +45,7 @@ FROM
       INNER JOIN VIEWSHPERKIRAAN ON(left(NERACABANTU."KODEPERKIRAAN",3)=VIEWSHPERKIRAAN.KODEPERKIRAAN)
 WHERE NERACABANTU."GRUP"=5)
 union
-(select '51101','LABA KOTOR',8,'D','LABAKOTOR',getLaba($P{bulan},$P{tahun}),0.0,0.0,(getKredit('411',$P{bulan},$P{tahun}) - getDebet('411',$P{bulan},$P{tahun}))-(getSaldoLR('5',$P{bulan},$P{tahun})+getSaldoLR('61110',$P{bulan},$P{tahun})),'LABAKOTOR',4)
+(select '51101','LABA KOTOR',8,'D','LABAKOTOR',getLaba($P{tahun}),0.0,0.0,(getKredit('411',$P{tahun}) - getDebet('411',$P{tahun}))-(getSaldoLR('5',$P{tahun})+getSaldoLR('61110',$P{tahun})),'LABAKOTOR',4)
  union
 (
 (SELECT
@@ -53,29 +53,29 @@ union
      NERACABANTU."NAMAPERKIRAAN" AS NERACABANTU_NAMAPERKIRAAN,
      NERACABANTU."GRUP" AS NERACABANTU_GRUP,
      NERACABANTU."TIPE" AS NERACABANTU_TIPE,
-     GRUP.grup AS NAMAGRUP,getLaba($P{bulan},$P{tahun}) as LABA,
-     getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) as DEBET,
-     getKredit(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) as KREDIT,
-     - getKredit(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) + getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun})
+     GRUP.grup AS NAMAGRUP,getLaba($P{tahun}) as LABA,
+     getDebet(NERACABANTU.KODEPERKIRAAN,$P{tahun}) as DEBET,
+     getKredit(NERACABANTU.KODEPERKIRAAN,$P{tahun}) as KREDIT,
+     - getKredit(NERACABANTU.KODEPERKIRAAN,$P{tahun}) + getDebet(NERACABANTU.KODEPERKIRAAN,$P{tahun})
     as SALDO,VIEWSHPERKIRAAN.NAMAPERKIRAAN,5
 FROM
      "PUBLIC"."NERACABANTU" NERACABANTU INNER JOIN GRUP ON (NERACABANTU.GRUP=GRUP.KODE)
  INNER JOIN VIEWSHPERKIRAAN ON(left(NERACABANTU."KODEPERKIRAAN",3)=VIEWSHPERKIRAAN.KODEPERKIRAAN)
-WHERE NERACABANTU."GRUP"=6 AND ((getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun})- getKredit(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) )>0) AND NERACABANTU."KODEPERKIRAAN" <> '61110'
+WHERE NERACABANTU."GRUP"=6 AND ((getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan})- getKredit(NERACABANTU.KODEPERKIRAAN,$P{tahun}) )>0) AND NERACABANTU."KODEPERKIRAAN" <> '61110'
 )
 )
  union
-(select '62000','LABA USAHA',9,'D','LABAUSAHA',getLaba($P{bulan},$P{tahun}),0.0,0.0,(getKredit('411',$P{bulan},$P{tahun}) - getDebet('411',$P{bulan},$P{tahun}))-(getSaldoLR('5',$P{bulan},$P{tahun}))-(- getKredit('61',$P{bulan},$P{tahun}) + getDebet('61',$P{bulan},$P{tahun})),'LABAUSAHA',6)
+(select '62000','LABA USAHA',9,'D','LABAUSAHA',getLaba($P{tahun}),0.0,0.0,(getKredit('411',$P{tahun}) - getDebet('411',$P{tahun}))-(getSaldoLR('5',$P{tahun}))-(- getKredit('61',$P{tahun}) + getDebet('61',$P{tahun})),'LABAUSAHA',6)
 union
 (SELECT
      NERACABANTU."KODEPERKIRAAN" AS NERACABANTU_KODEPERKIRAAN,
      NERACABANTU."NAMAPERKIRAAN" AS NERACABANTU_NAMAPERKIRAAN,
      '10' AS NERACABANTU_GRUP,
      NERACABANTU."TIPE" AS NERACABANTU_TIPE,
-     GRUP.grup AS NAMAGRUP,getLaba($P{bulan},$P{tahun}) as LABA,
-     getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) as DEBET,
-     getKredit(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) as KREDIT,
-     getKredit(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun}) - getDebet(NERACABANTU.KODEPERKIRAAN,$P{bulan},$P{tahun})
+     GRUP.grup AS NAMAGRUP,getLaba($P{tahun}) as LABA,
+     getDebet(NERACABANTU.KODEPERKIRAAN,$P{tahun}) as DEBET,
+     getKredit(NERACABANTU.KODEPERKIRAAN,$P{tahun}) as KREDIT,
+     getKredit(NERACABANTU.KODEPERKIRAAN,$P{tahun}) - getDebet(NERACABANTU.KODEPERKIRAAN,$P{tahun})
     as SALDO,VIEWSHPERKIRAAN.NAMAPERKIRAAN,7
 FROM
      "PUBLIC"."NERACABANTU" NERACABANTU
@@ -125,17 +125,17 @@ order by 11,1]]>
 		<groupFooter>
 			<band height="16">
 				<textField pattern="#,##0.00">
-					<reportElement  x="270" y="1" width="79" height="0" forecolor="#FFFFFF"/>
+					<reportElement x="270" y="1" width="79" height="0" forecolor="#FFFFFF"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$V{DEBET_1}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00">
-					<reportElement  x="369" y="0" width="75" height="1" forecolor="#FFFFFF"/>
+					<reportElement x="369" y="0" width="75" height="1" forecolor="#FFFFFF"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$V{KREDIT_1}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00">
-					<reportElement  x="437" y="1" width="100" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="GRUP">
+					<reportElement x="437" y="1" width="100" height="15" isRemoveLineWhenBlank="true" printWhenGroupChanges="GRUP">
 						<printWhenExpression><![CDATA[$F{NERACABANTU_GRUP}==6]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
@@ -144,12 +144,12 @@ order by 11,1]]>
 					<textFieldExpression><![CDATA[$V{totSaldo}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement  x="0" y="-1" width="540" height="1" isRemoveLineWhenBlank="true">
+					<reportElement x="0" y="-1" width="540" height="1" isRemoveLineWhenBlank="true">
 						<printWhenExpression><![CDATA[$F{NERACABANTU_GRUP}!=5]]></printWhenExpression>
 					</reportElement>
 				</line>
 				<staticText>
-					<reportElement  x="5" y="1" width="217" height="15" isRemoveLineWhenBlank="true">
+					<reportElement x="5" y="1" width="217" height="15" isRemoveLineWhenBlank="true">
 						<printWhenExpression><![CDATA[$F{NERACABANTU_GRUP}==6]]></printWhenExpression>
 					</reportElement>
 					<textElement>
@@ -165,7 +165,7 @@ order by 11,1]]>
 		<groupHeader>
 			<band height="15">
 				<textField>
-					<reportElement  x="5" y="0" width="239" height="15" isRemoveLineWhenBlank="true">
+					<reportElement x="5" y="0" width="239" height="15" isRemoveLineWhenBlank="true">
 						<printWhenExpression><![CDATA[$F{NERACABANTU_GRUP}!=7 && $F{NERACABANTU_GRUP}!=8]]></printWhenExpression>
 					</reportElement>
 					<textElement>
@@ -178,7 +178,7 @@ order by 11,1]]>
 		<groupFooter>
 			<band height="15">
 				<textField pattern="#,##0.00">
-					<reportElement  x="437" y="0" width="100" height="15" isRemoveLineWhenBlank="true">
+					<reportElement x="437" y="0" width="100" height="15" isRemoveLineWhenBlank="true">
 						<printWhenExpression><![CDATA[$F{NERACABANTU_GRUP}!=5 && $F{NERACABANTU_GRUP}!=8 && $F{NERACABANTU_GRUP}!=9]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Right">
@@ -187,10 +187,10 @@ order by 11,1]]>
 					<textFieldExpression><![CDATA[$V{SALDO_2}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement  stretchType="RelativeToBandHeight" x="435" y="-1" width="105" height="1"/>
+					<reportElement stretchType="RelativeToBandHeight" x="435" y="-1" width="105" height="1"/>
 				</line>
 				<textField>
-					<reportElement  x="5" y="0" width="239" height="15">
+					<reportElement x="5" y="0" width="239" height="15">
 						<printWhenExpression><![CDATA[$F{NERACABANTU_GRUP}!=5 && $F{NERACABANTU_GRUP}!=8 && $F{NERACABANTU_GRUP}!=9]]></printWhenExpression>
 					</reportElement>
 					<textElement>
@@ -207,35 +207,35 @@ order by 11,1]]>
 	<title>
 		<band height="51" splitType="Stretch">
 			<staticText>
-				<reportElement  x="2" y="32" width="38" height="15"/>
+				<reportElement x="2" y="32" width="38" height="15"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Bulan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement  x="2" y="0" width="255" height="17"/>
+				<reportElement x="2" y="0" width="255" height="17"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PT.MIRANTI ADILHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement  x="2" y="16" width="258" height="17"/>
+				<reportElement x="2" y="16" width="258" height="17"/>
 				<textElement>
 					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Laporan Laba Rugi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement  x="41" y="32" width="12" height="15"/>
+				<reportElement x="41" y="32" width="12" height="15"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement  x="55" y="32" width="205" height="15"/>
+				<reportElement x="55" y="32" width="205" height="15"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
@@ -249,32 +249,32 @@ order by 11,1]]>
 	<columnHeader>
 		<band height="19" splitType="Stretch">
 			<line>
-				<reportElement  x="0" y="0" width="540" height="1"/>
+				<reportElement x="0" y="0" width="540" height="1"/>
 			</line>
 			<staticText>
-				<reportElement  x="16" y="1" width="186" height="14"/>
+				<reportElement x="16" y="1" width="186" height="14"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Perkiraan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement  x="437" y="1" width="100" height="14"/>
+				<reportElement x="437" y="1" width="100" height="14"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Saldo]]></text>
 			</staticText>
 			<line>
-				<reportElement  x="0" y="15" width="540" height="1"/>
+				<reportElement x="0" y="15" width="540" height="1"/>
 			</line>
 			<staticText>
-				<reportElement  x="350" y="1" width="85" height="14" forecolor="#FFFFFF"/>
+				<reportElement x="350" y="1" width="85" height="14" forecolor="#FFFFFF"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Kredit]]></text>
 			</staticText>
 			<staticText>
-				<reportElement  x="257" y="1" width="92" height="14" forecolor="#FFFFFF"/>
+				<reportElement x="257" y="1" width="92" height="14" forecolor="#FFFFFF"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Debet]]></text>
 			</staticText>
@@ -283,21 +283,21 @@ order by 11,1]]>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField pattern="#,##0.00">
-				<reportElement  x="257" y="0" width="92" height="15" forecolor="#FFFFFF"/>
+				<reportElement x="257" y="0" width="92" height="15" forecolor="#FFFFFF"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DEBET}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement  x="350" y="0" width="85" height="15" forecolor="#FFFFFF"/>
+				<reportElement x="350" y="0" width="85" height="15" forecolor="#FFFFFF"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{KREDIT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement  x="437" y="0" width="100" height="15"/>
+				<reportElement x="437" y="0" width="100" height="15"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
@@ -305,7 +305,7 @@ order by 11,1]]>
 				<patternExpression><![CDATA[($F{SALDO}<0)?"(#,##0.00)":"#,##0.00"]]></patternExpression>
 			</textField>
 			<textField>
-				<reportElement  x="19" y="0" width="225" height="15"/>
+				<reportElement x="19" y="0" width="225" height="15"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -319,7 +319,7 @@ order by 11,1]]>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement  x="415" y="0" width="157" height="20"/>
+				<reportElement x="415" y="0" width="157" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -328,15 +328,15 @@ order by 11,1]]>
 	<summary>
 		<band height="24" splitType="Stretch">
 			<line>
-				<reportElement  x="0" y="0" width="540" height="1"/>
+				<reportElement x="0" y="0" width="540" height="1"/>
 			</line>
 			<staticText>
-				<reportElement  x="334" y="1" width="80" height="20"/>
+				<reportElement x="334" y="1" width="80" height="20"/>
 				<textElement/>
 				<text><![CDATA[Laba  =]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement  x="437" y="1" width="100" height="20"/>
+				<reportElement x="437" y="1" width="100" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{LABA}]]></textFieldExpression>
 			</textField>
