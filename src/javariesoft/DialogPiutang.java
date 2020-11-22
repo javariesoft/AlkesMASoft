@@ -3299,7 +3299,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
         if (TxtFilter.getText().equals("")) {
             sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND STATUS='BELUM LUNAS'";
         } else {
-            sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND NOFAKTUR=" + TxtFilter.getText() + " AND STATUS='BELUM LUNAS'";
+            sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND NOFAKTUR='" + TxtFilter.getText() + "' AND STATUS='BELUM LUNAS'";
         }
         th.executeQuery(sql);
         jScrollPane1.getViewport().remove(jTable1);
@@ -3325,7 +3325,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
             if (TxtFilter2.getText().equals("")) {
                 sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND STATUS='BELUM LUNAS'";
             } else {
-                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND NOFAKTUR=" + TxtFilter.getText() + " AND STATUS='BELUM LUNAS'";
+                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND NOFAKTUR='" + TxtFilter.getText() + "' AND STATUS='BELUM LUNAS'";
             }
             th.executeQuery(sql);
             jScrollPane7.getViewport().remove(jTable7);
@@ -3371,7 +3371,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
             if (TxtFilter.getText().equals("")) {
                 sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND (STATUS='LUNAS' OR STATUS='BELUM LUNAS')";
             } else {
-                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND NOFAKTUR=" + TxtFilter.getText() + " AND (STATUS='LUNAS' OR STATUS='BELUM LUNAS')";
+                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND NOFAKTUR='" + TxtFilter.getText() + "' AND (STATUS='LUNAS' OR STATUS='BELUM LUNAS')";
             }
             th.executeQuery(sql);
             jScrollPane1.getViewport().remove(jTable1);
@@ -3403,7 +3403,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
             if (TxtFilter2.getText().equals("")) {
                 sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND (STATUS='LUNAS' OR STATUS='BELUM LUNAS')";
             } else {
-                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND NOFAKTUR=" + TxtFilter.getText() + " AND (STATUS='LUNAS' OR STATUS='BELUM LUNAS')";
+                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + IdkodePelanggan + "' AND NOFAKTUR='" + TxtFilter.getText() + "' AND (STATUS='LUNAS' OR STATUS='BELUM LUNAS')";
             }
             th.executeQuery(sql);
             jScrollPane7.getViewport().remove(jTable7);
@@ -3449,7 +3449,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
             if (TxtFilter1.getText().equals("")) {
                 sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + txtKodePelangganKhusus.getText() + "' AND STATUS='BELUM LUNAS'";
             } else {
-                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + txtKodePelangganKhusus.getText() + "' AND NOFAKTUR=" + TxtFilter1.getText() + " AND STATUS='BELUM LUNAS'";
+                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + txtKodePelangganKhusus.getText() + "' AND NOFAKTUR='" + TxtFilter1.getText() + "' AND STATUS='BELUM LUNAS'";
             }
             th.executeQuery(sql);
             jScrollPane5.getViewport().remove(jTable5);
@@ -3495,7 +3495,7 @@ private void TxtFilter1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
             if (TxtFilter1.getText().equals("")) {
                 sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + txtKodePelangganKhusus.getText() + "' AND (STATUS='LUNAS' OR STATUS='BELUM LUNAS')";
             } else {
-                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + txtKodePelangganKhusus.getText() + "' AND NOFAKTUR=" + TxtFilter1.getText() + " AND (STATUS='LUNAS' OR STATUS='BELUM LUNAS')";
+                sql = "SELECT ID,KETERANGAN,NOFAKTUR,JUMLAH,JUMLAH - JUMLAHBAYAR as SISA,JATUHTEMPO,STATUS from VIEW_PIUTANG where IDPELANGGAN='" + txtKodePelangganKhusus.getText() + "' AND NOFAKTUR='" + TxtFilter1.getText() + "' AND (STATUS='LUNAS' OR STATUS='BELUM LUNAS')";
             }
             th.executeQuery(sql);
             jScrollPane5.getViewport().remove(jTable5);

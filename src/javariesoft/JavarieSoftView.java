@@ -2817,6 +2817,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
         MLB_PersediaanBrgDagang.setVisible(false);
+        MLB_PerMerk.setVisible(false);
+        MLB_PerKategori.setVisible(false);
         MlapHutang.setVisible(true);
         MlapPiutang.setVisible(true);
         MLapPerkiraan.setVisible(true);
@@ -3087,6 +3089,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
         MLB_PersediaanBrgDagang.setVisible(false);
+        MLB_PerMerk.setVisible(false);
+        MLB_PerKategori.setVisible(false);
         MlapHutang.setVisible(true);
         MlapPiutang.setVisible(true);
         MLapPerkiraan.setVisible(true);
@@ -3168,6 +3172,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapReturDeliveryOrder.setVisible(false);
         MlapBarang.setVisible(false);
         MLB_PersediaanBrgDagang.setVisible(false);
+        MLB_PerMerk.setVisible(false);
+        MLB_PerKategori.setVisible(false);
         MlapHutang.setVisible(false);
         MlapPiutang.setVisible(false);
         MLapPerkiraan.setVisible(false);
@@ -3250,6 +3256,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
         MLB_PersediaanBrgDagang.setVisible(false);
+        MLB_PerMerk.setVisible(false);
+        MLB_PerKategori.setVisible(false);
         MlapHutang.setVisible(false);
         MlapPiutang.setVisible(false);
         MLapPerkiraan.setVisible(false);
@@ -3330,8 +3338,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         Mlapdeliveryorder.setVisible(true);
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
-        MLB_PerMerk.setVisible(true);
-        MLB_PerKategori.setVisible(true);
+        MLB_PerMerk.setVisible(false);
+        MLB_PerKategori.setVisible(false);
         MLB_AkhirPeriode.setVisible(true);
         MLB_KartuStokBulan.setVisible(true);
         MLB_KartuStokTanggal.setVisible(true);
@@ -3419,6 +3427,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapReturDeliveryOrder.setVisible(false);
         MlapBarang.setVisible(true);
         MLB_PersediaanBrgDagang.setVisible(false);
+        MLB_PerMerk.setVisible(false);
+        MLB_PerKategori.setVisible(false);
         MlapHutang.setVisible(false);
         MlapPiutang.setVisible(false);
         MLapPerkiraan.setVisible(false);
@@ -3501,6 +3511,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
         MLB_PersediaanBrgDagang.setVisible(false);
+        MLB_PerMerk.setVisible(false);
+        MLB_PerKategori.setVisible(false);
         MlapHutang.setVisible(true);
         MlapPiutang.setVisible(true);
         MLapPerkiraan.setVisible(false);
@@ -3584,6 +3596,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
         MLB_PersediaanBrgDagang.setVisible(false);
+        MLB_PerMerk.setVisible(false);
+        MLB_PerKategori.setVisible(false);
         MlapHutang.setVisible(false);
         MlapPiutang.setVisible(false);
         MLapPerkiraan.setVisible(false);
@@ -3664,8 +3678,8 @@ private void panelCool1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         Mlapdeliveryorder.setVisible(true);
         MLapReturDeliveryOrder.setVisible(true);
         MlapBarang.setVisible(true);
-        MLB_PerMerk.setVisible(true);
-        MLB_PerKategori.setVisible(true);
+        MLB_PerMerk.setVisible(false);
+        MLB_PerKategori.setVisible(false);
         MLB_AkhirPeriode.setVisible(true);
         MLB_KartuStokBulan.setVisible(true);
         MLB_KartuStokTanggal.setVisible(true);

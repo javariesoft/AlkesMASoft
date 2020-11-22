@@ -364,7 +364,7 @@ public class FormPO extends javax.swing.JInternalFrame {
             //c = koneksi.getKoneksiJ();
             jScrollPane2.setVisible(true);
             JDBCAdapter j = new JDBCAdapter(con);
-            j.executeQuery("select KODEPELANGGAN,NAMA from PELANGGAN where STATUSAKTIF='0' AND KODEPELANGGAN like '%" + txtNamaPelanggan.getText() + "%' or lower(NAMA) like '%" + txtNamaPelanggan.getText().toLowerCase() + "%'");
+            j.executeQuery("select KODEPELANGGAN,NAMA from PELANGGAN where STATUSAKTIF='0' AND (KODEPELANGGAN like '%" + txtNamaPelanggan.getText() + "%' or lower(NAMA) like '%" + txtNamaPelanggan.getText().toLowerCase() + "%')");
             jTable2.setModel(j);
             jScrollPane2.validate();
             j.close();
