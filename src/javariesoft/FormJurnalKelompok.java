@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
@@ -242,12 +243,12 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
             String kodeAkun = cboAkun.getSelectedItem().toString().split("-")[0];
             //String query = "select * from jurnal j inner join rincijurnal  where month(TANGGAL)="+cboBulan.getSelectedIndex()+" and year(tanggal)="+txtTahun.getText()+"";
             String query = "";
-            if(txtKodeJurnal.getText().length()>0){
-                query = "select * from jurnal where kodejurnal like '"+ txtKodeJurnal.getText() +"%'";
+            if (txtKodeJurnal.getText().length() > 0) {
+                query = "select * from jurnal where kodejurnal like '" + txtKodeJurnal.getText() + "%'";
             } else {
                 query = "select j.* from jurnal j inner join RINCIJURNAL rj on j.id = rj.KODEJURNAL "
-                    + "where month(TANGGAL)=" + cboBulan.getSelectedIndex() + " and year(tanggal)=" + txtTahun.getText() + " and KODEPERKIRAAN like '" + kodeAkun + "%' "
-                    + "";
+                        + "where month(TANGGAL)=" + cboBulan.getSelectedIndex() + " and year(tanggal)=" + txtTahun.getText() + " and KODEPERKIRAAN like '" + kodeAkun + "%' "
+                        + "";
             }
             JDBCAdapter j = new JDBCAdapter(con);
             j.executeQuery(query);
@@ -319,10 +320,20 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
+
         String kodejurnal = tabelJurnal.getValueAt(tabelJurnal.getSelectedRow(), 1).toString();
-        FormJurnal p = new FormJurnal(kodejurnal);
-        p.toFront();
-        p.setVisible(true);
+        System.out.println(kodejurnal.substring(0,2));
+        String kd = kodejurnal.substring(0, 2);
+        if (kd.equals("KM")
+                || kd.equals("KK")
+                || kd.equals("BM")
+                || kd.equals("BK")) {
+            FormJurnal p = new FormJurnal(kodejurnal);
+            p.toFront();
+            p.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Jurnal ini tidak bisa di edit");
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
 
@@ -379,13 +390,13 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
 
     private void cetakDebetKredit(JTable table) {
         int row = table.getRowCount();
-        double debet=0;
-        double kredit=0;
+        double debet = 0;
+        double kredit = 0;
         for (int i = 0; i < row; i++) {
-            debet += (Double)table.getValueAt(i, 2);
-            kredit += (Double)table.getValueAt(i, 3);
+            debet += (Double) table.getValueAt(i, 2);
+            kredit += (Double) table.getValueAt(i, 3);
         }
         ftDebet.setValue(debet);
-        ftKredit.setValue(kredit); 
+        ftKredit.setValue(kredit);
     }
 }
