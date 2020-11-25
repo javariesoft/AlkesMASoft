@@ -170,6 +170,11 @@ public class FormJurnal extends javax.swing.JFrame {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(javariesoft.JavarieSoftApp.class).getContext().getResourceMap(FormJurnal.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         panelCool1.setName("panelCool1"); // NOI18N
         panelCool1.setLayout(null);
@@ -592,6 +597,16 @@ private void txtKodeAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        try {
+            // TODO add your handling code here:
+            c.close();
+            cm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaru;
@@ -1262,35 +1277,46 @@ private void txtKodeAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         try {
             if (Double.parseDouble(txtSelisih.getValue().toString()) != 0.00) {
                 throw new Exception("Entri data salah");
+            } else if (!KontrolTanggalDao.cekHarian(c, tanggal.getText())) {
+                JOptionPane.showMessageDialog(null, "Transaksi Tidak Bisa Dilakukan Karena :\n"
+                        + "1.Transaksi Untuk Tanggal Ini Sudah Tutup atau\n"
+                        + "2.Transaksi Untuk Tanggal Ini Belum Dibuka");
+            } else {
+                String tgl[] = Util.split(tanggal.getText(), "-");
+                String per = tgl[0] + "." + Integer.parseInt(tgl[1]);
+                if (cekperiodeAda(per)) {
+                    if (cekperiode(per)) {
+                        c.createStatement().execute("set autocommit false");
+                        j.setDESKRIPSI(deskripsi.getText());
+                        jurnalDao.updateJURNAL(c, j.getID(), j);
+                        ResultSet rs = stat.executeQuery("select * from rinciJurnal");
+                        rincijurnalDao.deleteFromRINCIJURNAL(c, j.getID() + "");
+                        int count = 1;
+                        while (rs.next()) {
+                            r = new rincijurnal();
+                            r.setKODEJURNAL("" + j.getID());
+                            r.setKODEPERKIRAAN(rs.getString(1));
+                            r.setDEBET(rs.getDouble(3));
+                            r.setKREDIT(rs.getDouble(4));
+                            r.setNO(count);
+                            r.setREF("");
+                            rincijurnalDao.insertIntoRINCIJURNAL(c, r);
+                            count++;
+                        }
+                        c.commit();
+                        JOptionPane.showMessageDialog(this, "Update Data Ok");
+                        kosong();
+                        kosongAkun();
+                    }
+                }
             }
-            c.createStatement().execute("set autocommit false");
-            j.setDESKRIPSI(deskripsi.getText());
-            jurnalDao.updateJURNAL(c, j.getID(), j);
-            ResultSet rs = stat.executeQuery("select * from rinciJurnal");
-            rincijurnalDao.deleteFromRINCIJURNAL(c, j.getID() + "");
-            int count = 1;
-            while (rs.next()) {
-                r = new rincijurnal();
-                r.setKODEJURNAL("" + j.getID());
-                r.setKODEPERKIRAAN(rs.getString(1));
-                r.setDEBET(rs.getDouble(3));
-                r.setKREDIT(rs.getDouble(4));
-                r.setNO(count);
-                r.setREF("");
-                rincijurnalDao.insertIntoRINCIJURNAL(c, r);
-                count++;
-            }
-            c.commit();
-            JOptionPane.showMessageDialog(this, "Update Data Ok");
-            kosong();
-            kosongAkun();
         } catch (SQLException ex) {
             try {
                 c.rollback();
             } catch (SQLException ex1) {
                 Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, "Error  :"+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error  :" + ex.getMessage());
             Logger.getLogger(FormJurnal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Entri data salah");

@@ -79,6 +79,7 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
         jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
         jTextField1.setName("jTextField1"); // NOI18N
 
+        setClosable(true);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
 
@@ -374,6 +375,7 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
                 cboAkun.addItem(rs.getString(1) + "-" + rs.getString(2));
             }
             rs.close();
+            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(FormJurnalKelompok.class.getName()).log(Level.SEVERE, null, ex);
         }
