@@ -80,6 +80,8 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
         jTextField1.setName("jTextField1"); // NOI18N
 
         setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
 
@@ -328,7 +330,8 @@ public class FormJurnalKelompok extends javax.swing.JInternalFrame {
         if (kd.equals("KM")
                 || kd.equals("KK")
                 || kd.equals("BM")
-                || kd.equals("BK")) {
+                || kd.equals("BK")
+                || kd.equals("JU")) {
             FormJurnal p = new FormJurnal(kodejurnal);
             p.toFront();
             p.setVisible(true);
